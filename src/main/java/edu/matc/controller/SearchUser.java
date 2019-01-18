@@ -25,6 +25,7 @@ public class SearchUser extends HttpServlet {
 
         UserData userData = new UserData();
         req.setAttribute("users", userData.getAllUsers());
+        req.setAttribute("title", "Week 1");
         RequestDispatcher dispatcher = req.getRequestDispatcher("/results.jsp");
         dispatcher.forward(req, resp);
     }
