@@ -20,7 +20,7 @@ public class UserData {
         List<User> users = new ArrayList<User>();
         Database database = Database.getInstance();
         Connection connection = null;
-        String sql = "SELECT * FROM users";
+        String sql = "SELECT * FROM user";
 
         try {
             database.connect();
@@ -45,7 +45,8 @@ public class UserData {
     private User createUserFromResults(ResultSet results) throws SQLException {
         User user = new User();
         user.setLastName(results.getString("last_name"));
-        // TODO map the remaining fields
+        user.setFirstName(results.getString("first_name"));
+        user.setUserName(results.getString("user_name"));
         return user;
     }
 
