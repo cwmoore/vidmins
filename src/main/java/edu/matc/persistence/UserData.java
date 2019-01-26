@@ -40,7 +40,32 @@ public class UserData {
         return users;
     }
 
-    //TODO add a method or methods to return a users based on search criteria
+    public List<User> findByLastName(String lastName) {
+        List<User> users = new ArrayList<>();
+
+        if (lastName != "") {
+            Database database = Database.getInstance();
+            Connection connection = null;
+            String sql = "SELECT * FROM user WHERE last_name LIKE '%" + lastName + "%'";
+
+            try {
+                database.connect();
+                connection = database.getConnection();
+                Statement selectLastNameStatement = connection.createStatement();
+                ResultSet results = selectLastNameStatement.executeQuery(sql);
+                while (results.next()) {
+                    users.add(createUserFromResults(results));
+                }
+                database.disconnect();
+            } catch (SQLException sqlException) {
+                System.out.println("UserData.findByLastName():" + sqlException);
+            } catch (Exception exception) {
+                System.out.println("UserData.findByLastName():" + exception);
+            }
+        }
+
+        return users;
+    }
 
     private User createUserFromResults(ResultSet results) throws SQLException {
         User user = new User();

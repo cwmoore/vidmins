@@ -24,8 +24,13 @@ public class SearchUser extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         UserData userData = new UserData();
-        req.setAttribute("users", userData.getAllUsers());
-        req.setAttribute("title", "Week 1");
+        if (req.getParameter("lastName") != null) {
+            req.setAttribute("users", userData.findByLastName(req.getParameter("lastName")));
+            req.setAttribute("title", "Lastname like " + req.getParameter("lastName"));
+        } else {
+            req.setAttribute("users", userData.getAllUsers());
+            req.setAttribute("title", "All users");
+        }
         RequestDispatcher dispatcher = req.getRequestDispatcher("/results.jsp");
         dispatcher.forward(req, resp);
     }

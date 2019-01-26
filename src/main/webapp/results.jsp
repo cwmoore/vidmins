@@ -1,7 +1,5 @@
 <%@include file="head.jsp"%>
-
-<html><body>
-
+<body>
 <div class="container-fluid">
     <h2>Search Results: </h2>
     <table class="table table-striped">
