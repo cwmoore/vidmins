@@ -1,8 +1,6 @@
 package edu.matc.entity;
 
-// TODO Add instance variable for the date of birth
-// TODO Add a calculation for the user's age. Age should not be stored, it should be calculated only.
-
+import java.time.*;
 /**
  * A class to represent a user.
  *
@@ -12,6 +10,8 @@ public class User {
     private String firstName;
     private String lastName;
     private String userName;
+    private String password;
+    private String dateOfBirth;
     private int id;
 
 
@@ -29,10 +29,12 @@ public class User {
      * @param userName  the user name
      * @param id        the id
      */
-    public User(String firstName, String lastName, String userName, int id) {
+    public User(String firstName, String lastName, String userName, String password, String dateOfBirth, int id) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
+        this.password = password;
+        this.dateOfBirth = dateOfBirth;
         this.id = id;
     }
 
@@ -89,6 +91,51 @@ public class User {
      */
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    /**
+     * Gets password.
+     *
+     * @return the password
+     */
+    public String getPassword() {
+        return "***";//password;
+    }
+
+    /**
+     * Sets password.
+     *
+     * @param password the password
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    /**
+     * Gets date of birth.
+     *
+     * @return the date of birth
+     */
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    /**
+     * Sets date of birth.
+     *
+     * @param dateOfBirth the date of birth
+     */
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    /**
+     * Gets user's age.
+     *
+     * @return the age
+     */
+    public int getAge() {
+        return Period.between(LocalDate.parse(dateOfBirth), LocalDate.now()).getYears();
     }
 
     /**
