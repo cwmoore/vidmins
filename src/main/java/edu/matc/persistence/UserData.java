@@ -44,7 +44,9 @@ public class UserData {
 
     private User createUserFromResults(ResultSet results) throws SQLException {
         User user = new User();
+        user.setFirstName(results.getString("first_name"));
         user.setLastName(results.getString("last_name"));
+        user.setUserName(results.getString("user_name"));
         // TODO map the remaining fields
         return user;
     }
