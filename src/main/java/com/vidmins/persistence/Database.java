@@ -1,4 +1,4 @@
-package edu.matc.persistence;
+package com.vidmins.persistence;
 
 import java.io.IOException;
 import java.sql.Connection;

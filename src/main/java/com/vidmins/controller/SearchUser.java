@@ -1,6 +1,6 @@
-package edu.matc.controller;
+package com.vidmins.controller;
 
-import edu.matc.persistence.UserData;
+import com.vidmins.persistence.UserData;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

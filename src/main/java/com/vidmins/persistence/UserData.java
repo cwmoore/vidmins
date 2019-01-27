@@ -1,6 +1,6 @@
-package edu.matc.persistence;
+package com.vidmins.persistence;
 
-import edu.matc.entity.User;
+import com.vidmins.entity.User;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

@@ -1,4 +1,4 @@
-package edu.matc.entity;
+package com.vidmins.entity;
 
 import java.time.*;
 /**
