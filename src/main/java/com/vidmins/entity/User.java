@@ -27,6 +27,8 @@ public class User {
      * @param firstName the first name
      * @param lastName  the last name
      * @param userName  the user name
+     * @param password the password
+     * @param dateOfBirth the date of birth
      * @param id        the id
      */
     public User(String firstName, String lastName, String userName, String password, String dateOfBirth, int id) {
@@ -99,7 +101,11 @@ public class User {
      * @return the password
      */
     public String getPassword() {
-        return "***";//password;
+        if (this.password == "") {
+            return "*";
+        } else {
+            return "*****";
+        }
     }
 
     /**

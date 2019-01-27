@@ -6,75 +6,92 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+// import java.security.*;
 
 /**
  * Access users in the user table.
  *
  * @author pwaite
+ *
+ * Authenticate a valid user
+ * @author cwmoore
  */
 public class UserData {
 
-    public List<User> getAllUsers() {
-        List<User> users = new ArrayList<User>();
-        Database database = Database.getInstance();
-        Connection connection = null;
-        String sql = "SELECT * FROM user";
+    /**
+     * Encrypt a pass phrase with SHA-512
+     * Adapted from: https://www.baeldung.com/java-password-hashing
+     */
+    public String encryptPassword(String password) {
+//        String encryptedPassword;
+//        SecureRandom random = new SecureRandom();
+//        byte[] salt = new byte[16];
+//        random.nextBytes(salt);
+//
+//        try {
+//            MessageDigest md = MessageDigest.getInstance("SHA-512");
+//            md.update(salt);
+//            String hashedPassword = md.digest(password);
+//
+//            encryptedPassword = new String(salt) + "|" + hashedPassword;
+//
+//        } catch (NoSuchAlgorithmException noAlgException) {
+//            System.out.println("UserData.encryptPassword");
+//            noAlgException.printStackTrace();
+//        }
 
-        try {
-            database.connect();
-            connection = database.getConnection();
-            Statement selectStatement = connection.createStatement();
-            ResultSet results = selectStatement.executeQuery(sql);
-            while (results.next()) {
-                User employee = createUserFromResults(results);
-                users.add(employee);
-            }
-            database.disconnect();
-        } catch (SQLException e) {
-            System.out.println("SearchUser.getAllUsers()...SQL Exception: " + e);
-        } catch (Exception e) {
-            System.out.println("SearchUser.getAllUsers()...Exception: " + e);
-        }
-        return users;
+        return password;
     }
 
-    public List<User> findByLastName(String lastName) {
-        List<User> users = new ArrayList<>();
+    /**
+     * Authenticate user credentials
+     * @param username the username
+     * @param password the password
+     * @return an authenticated user
+     */
+    public User authenticateUser(String username, String password) {
+        User authenticatedUser = null;
 
-        if (lastName != "") {
+        if (username != "") {
             Database database = Database.getInstance();
             Connection connection = null;
-            String sql = "SELECT * FROM user WHERE last_name LIKE '%" + lastName + "%'";
+            String sql = "SELECT * FROM user WHERE username = '" + username + "' AND  enc_pass = '" + password + "'";
 
             try {
                 database.connect();
                 connection = database.getConnection();
-                Statement selectLastNameStatement = connection.createStatement();
-                ResultSet results = selectLastNameStatement.executeQuery(sql);
-                while (results.next()) {
-                    users.add(createUserFromResults(results));
+                Statement selectUserAuthStatement = connection.createStatement();
+                ResultSet results = selectUserAuthStatement.executeQuery(sql);
+
+                if (results.next()) {
+                    authenticatedUser = createUserFromResults(results);
                 }
+
                 database.disconnect();
             } catch (SQLException sqlException) {
-                System.out.println("UserData.findByLastName():" + sqlException);
+                System.out.println("UserData.authenticateUser():" + sqlException);
             } catch (Exception exception) {
-                System.out.println("UserData.findByLastName():" + exception);
+                System.out.println("UserData.authenticateUser():" + exception);
             }
         }
 
-        return users;
+        return authenticatedUser;
     }
 
+    /**
+     * Create a user from search result
+     * @param results
+     * @return the user data object
+     * @throws SQLException
+     */
     private User createUserFromResults(ResultSet results) throws SQLException {
         User user = new User();
         user.setId(Integer.parseInt(results.getString("id")));
-        user.setFirstName(results.getString("first_name"));
-        user.setLastName(results.getString("last_name"));
-        user.setUserName(results.getString("user_name"));
-        user.setPassword(results.getString("password"));
-        user.setDateOfBirth(results.getString("date_of_birth"));
+        user.setFirstName(results.getString("firstName"));
+        user.setLastName(results.getString("lastName"));
+        user.setUserName(results.getString("username"));
+        user.setPassword(results.getString("enc_pass"));
+        user.setDateOfBirth(results.getString("dateOfBirth"));
         return user;
     }
 
