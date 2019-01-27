@@ -1,0 +1,38 @@
+.aquapanel {
+    border: solid 2px #00DDEE;
+    border-radius: 5px;
+    background-color: #FAFEFF;
+    margin: 5px;
+    padding: 25px;
+}
+/*
+label .fixed {
+    display: inline-block;
+    width: 5em;
+}
+*/
+
+#help {
+    display: block;
+}
+
+#note_input {
+    display: none;
+}
+
+#survey_input {
+    display: none;
+}
+
+#feedback_input {
+    display: none;
+}
+
+#question_input {
+    display: none;
+}
+
+#notes textarea {
+    height: 5em;
+    width: 90%;
+}
