@@ -89,7 +89,7 @@ public class UserData {
         user.setId(Integer.parseInt(results.getString("id")));
         user.setFirstName(results.getString("firstName"));
         user.setLastName(results.getString("lastName"));
-        user.setUserName(results.getString("user_name"));
+        user.setUserName(results.getString("username"));
         user.setPassword(results.getString("enc_pass"));
         user.setDateOfBirth(results.getString("dateOfBirth"));
         return user;
