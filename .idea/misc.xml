@@ -2,6 +2,10 @@
 <project version="4">
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$" />
+    <file type="web" url="file://$PROJECT_DIR$/../week-1-maven-demo-cwmoore/src/main/webapp/WEB-INF/web.xml" />
+    <file type="web" url="file://$PROJECT_DIR$/../week-1-maven-demo-cwmoore/target/firstmavenwebapp/WEB-INF/web.xml" />
+    <file type="web" url="file://$PROJECT_DIR$/../week-1-user-display-exercise-cwmoore/src/main/webapp/WEB-INF/web.xml" />
+    <file type="web" url="file://$PROJECT_DIR$/../week-1-user-display-exercise-cwmoore/target/week1userdisplayexercise/WEB-INF/web.xml" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">

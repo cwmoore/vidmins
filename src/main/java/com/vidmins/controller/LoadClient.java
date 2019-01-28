@@ -38,17 +38,13 @@ public class LoadClient extends HttpServlet {
         UserData userData = new UserData();
         if (req.getParameter("username") != null && req.getParameter("password") != null) {
             User user = userData.authenticateUser(req.getParameter("username"), req.getParameter("password"));
-            if (user == null) {
-                // could not log in
-                req.setAttribute("user", null);
-            } else {
-                req.setAttribute("user", user);
-            }
+            req.setAttribute("user", user);
+            req.setAttribute("videos", userData.getUserVideos(user));
             req.setAttribute("title", "The Video Minutes App");
         } else {
             req.setAttribute("title", "VidMins");
         }
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/results.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
         dispatcher.forward(req, resp);
     }
 }

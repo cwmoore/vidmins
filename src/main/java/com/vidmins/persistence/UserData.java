@@ -1,7 +1,7 @@
 package com.vidmins.persistence;
 
-import com.vidmins.entity.User;
-
+import com.vidmins.entity.*;
+import java.util.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -69,9 +69,9 @@ public class UserData {
 
                 database.disconnect();
             } catch (SQLException sqlException) {
-                System.out.println("UserData.authenticateUser():" + sqlException);
+                System.out.println("LoadClient.authenticateUser():" + sqlException);
             } catch (Exception exception) {
-                System.out.println("UserData.authenticateUser():" + exception);
+                System.out.println("LoadClient.authenticateUser():" + exception);
             }
         }
 
@@ -95,4 +95,31 @@ public class UserData {
         return user;
     }
 
+    public List<Video> getUserVideos(User user) {
+        List<Video> videos = new ArrayList();
+        Database database = Database.getInstance();
+        Connection connection = null;
+        // consider GROUP BY youTubeId
+        // duplication of a video may cause problems collecting user notes
+        // if a user has entered the same video more than once
+        String sql = "SELECT * FROM video WHERE id IN (SELECT videoId FROM user_videos WHERE userId='" + user.getId() + "')";
+
+        try {
+            database.connect();
+            connection = database.getConnection();
+            Statement selectUserAuthStatement = connection.createStatement();
+            ResultSet results = selectUserAuthStatement.executeQuery(sql);
+
+            while (results.next()) {
+                videos.add(new Video(results));
+            }
+
+            database.disconnect();
+        } catch (SQLException sqlException) {
+            System.out.println("LoadClient.getUserVideos():" + sqlException);
+        } catch (Exception exception) {
+            System.out.println("LoadClient.getUserVideos():" + exception);
+        }
+        return videos;
+    }
 }
