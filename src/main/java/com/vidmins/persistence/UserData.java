@@ -96,7 +96,7 @@ public class UserData {
     }
 
     public List<Video> getUserVideos(User user) {
-        List<Video> videos = new ArrayList();
+        List<Video> videos = new ArrayList<>();
         Database database = Database.getInstance();
         Connection connection = null;
         // consider GROUP BY youTubeId

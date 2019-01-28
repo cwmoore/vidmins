@@ -28,7 +28,7 @@
 
   </dependencies>
   <build>
-    <finalName>vidminsPrototype</finalName>
+    <finalName>Maven1.8</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

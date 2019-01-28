@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="vidminsPrototype:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="Maven1.8.war">
+      <element id="artifact" artifact-name="vidminsPrototype:war exploded" />
+    </root>
+  </artifact>
+</component>
