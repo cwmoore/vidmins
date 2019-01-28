@@ -40,7 +40,7 @@ public class LoadClient extends HttpServlet {
             User user = userData.authenticateUser(req.getParameter("username"), req.getParameter("password"));
             if (user == null) {
                 // could not log in
-                req.setAttribute("user", "Guest User");
+                req.setAttribute("user", null);
             } else {
                 req.setAttribute("user", user);
             }

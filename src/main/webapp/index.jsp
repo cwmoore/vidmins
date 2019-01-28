@@ -1,10 +1,10 @@
 <%@include file="head.jsp"%>
 <body>
-<h2>User Display Exercise - Week 1</h2>
-<a href = "searchUser">Go to the User Search</a>
-<form action="searchUser" method="GET">
-    <input type="text" name="lastName" placeholder="Last name search" />
-    <input type="submit" value="Search" />
-</form>
+    <h2>VidMins Login</h2>
+    <form action="loadClient" method="GET">
+        <input type="text" name="username" placeholder="username" />
+        <input type="text" name="password" placeholder="password" />
+        <input type="submit" value="Login" />
+    </form>
 </body>
 </html>

@@ -55,7 +55,7 @@ public class UserData {
         if (username != "") {
             Database database = Database.getInstance();
             Connection connection = null;
-            String sql = "SELECT * FROM user WHERE username = '" + username + "' AND  enc_pass = '" + password + "'";
+            String sql = "SELECT * FROM user WHERE username = '" + username + "' AND enc_pass = '" + password + "'";
 
             try {
                 database.connect();
@@ -89,7 +89,7 @@ public class UserData {
         user.setId(Integer.parseInt(results.getString("id")));
         user.setFirstName(results.getString("firstName"));
         user.setLastName(results.getString("lastName"));
-        user.setUserName(results.getString("username"));
+        user.setUserName(results.getString("user_name"));
         user.setPassword(results.getString("enc_pass"));
         user.setDateOfBirth(results.getString("dateOfBirth"));
         return user;
