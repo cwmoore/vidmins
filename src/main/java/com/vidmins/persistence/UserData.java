@@ -1,6 +1,7 @@
 package com.vidmins.persistence;
 
 import com.vidmins.entity.*;
+
 import java.util.*;
 import java.sql.Connection;
 import java.sql.ResultSet;

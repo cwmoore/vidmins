@@ -1,9 +1,10 @@
-<%@ include file="head.jsp" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:import url="head.jsp" />
 
 <body>
 <div class="container">
-    <div class="row">
-        <nav class="navbar navbar-expand-md navbar-expand-lg navbar-expand-xl navbar-light bg-light">
+    <div class="row-fullwidth">
+        <nav class="navbar navbar-expand-sm navbar-expand-md navbar-expand-lg navbar-expand-xl navbar-light bg-light">
             <a class="navbar-brand" href="#">VidMins</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -19,7 +20,8 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            User
+                            <c:if test="${user == null}">User</c:if>
+                            <c:if test="${user != null}">${user.firstName}</c:if>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#">Profile</a>
@@ -32,10 +34,19 @@
                         <a class="nav-link disabled" href="#">About</a>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
+                <c:if test="${user == null}">
+                    <form class="form-inline my-2 my-lg-0" action="loadClient" method="GET">
+                        <input type="text" name="username" placeholder="username" class="form-control mr-sm-2" />
+                        <input type="password" name="password" placeholder="password" class="form-control mr-sm-2" />
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+                    </form>
+                </c:if>
+                <c:if test="${user != null}">
+                    <form class="form-inline my-2 my-lg-0" action="loadClient" method="GET">
+                        <input type="search" name="search" placeholder="Search query" class="form-control mr-sm-2" />
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </c:if>
             </div>
         </nav>
     </div>
@@ -49,10 +60,11 @@
             <h1>Video Minutes</h1>
             <div class="menu">
                 <button name="help" class="btn btn-info" onclick="showPanel('help');">?</button>
-                <button name="show-time" class="btn btn-info" onclick="showPanel('note_input');makeNote();">Make Note</button>
-                <button name="feedback" class="btn btn-info" onclick="showPanel('survey_input');makeSurveyQuestion();">Survey</button>
-                <button name="feedback" class="btn btn-info" onclick="showPanel('feedback_input');makeFeedbackComment();">Feedback</button>
-                <button name="ask-question" class="btn btn-info" onclick="showPanel('question_input');makeAskQuestion();">Ask question</button>
+                <button name="show-time" class="btn btn-info" onclick="showPanel('note_input');makeNote();">Note</button>
+                <button name="show-time" class="btn btn-info" onclick="showPanel('make_link');makeLink();">Link</button>
+                <%-- <button name="feedback" class="btn btn-info" onclick="showPanel('survey_input');makeSurveyQuestion();">Survey</button> --%>
+                <button name="feedback" class="btn btn-info" onclick="showPanel('comment_input');makeComment();">Comment</button>
+                <button name="ask-question" class="btn btn-info" onclick="showPanel('question_input');makeAskQuestion();">Ask</button>
             </div>
             <div id="notes">
                 <!-- TODO: use bootstrap navigation -->
@@ -85,6 +97,25 @@
                 <div id="notes">
                     <ul class="notes"></ul>
                 </div>
+                <div id="videos">
+                    <ul class="videos"></ul>
+                </div>
+
+
+                <div id="make_link"  class="aquapanel" method="get" action="#" onsubmit="processInput(); return false;">
+                    <form name="link_input_form">
+
+                        <label>YouTube Video URL:</label><br />
+                        <input type="text" name="userVideoUrl" /><br />
+
+                        <input type="hidden" name="timeStampPrompt" />
+                        <label>Prompt time:</label> <span id="time_stamp_prompt"></span><br />
+
+                        <br />
+                        <input type="submit" value="Link with time" />
+                    </form>
+                </div>
+
                 <div id="survey_input"  class="aquapanel" method="get" action="#" onsubmit="processInput(); return false;">
                     <form name="survey_input_form">
 
@@ -99,8 +130,8 @@
                     </form>
                 </div>
 
-                <div id="feedback_input"  class="aquapanel" method="get" action="#" onsubmit="processInput(); return false;">
-                    <form name="feedback_input_form">
+                <div id="comment_input"  class="aquapanel" method="get" action="#" onsubmit="processInput(); return false;">
+                    <form name="comment_input_form">
 
                         <label>Comment:</label><br />
                         <textarea name="comment"></textarea><br />
@@ -158,10 +189,36 @@
             </div>
         </div>
         <div class="col-lg-7">
-            <h4><a href="https://www.youtube.com/watch?v=4HzWKwExaeo">Week1Act5<br />https://www.youtube.com/watch?v=4HzWKwExaeo</a></h4>
             <!-- begin code from YouTube Dev -->
             <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-            <div id="player"></div>
+            <div class="player-frame">
+                <div id="player"></div>
+                <h4><a href="https://www.youtube.com/watch?v=4HzWKwExaeo">Week1Act5<br />https://www.youtube.com/watch?v=4HzWKwExaeo</a></h4>
+            </div>
+
+            <c:if test="${videos != null}">
+                <div class="row">
+                    <h2>Videos: </h2>
+                    <table class="table table-striped">
+                        <tr>
+                            <th>YouTubeId</th>
+                            <th>Title</th>
+                            <th>Duration</th>
+                            <th># Notes</th>
+                            <th>Add Date</th>
+                        </tr>
+                        <c:forEach items="${videos}" var="video">
+                            <tr class="">
+                                <td>${video.youTubeId}</td>
+                                <td>${video.title}</td>
+                                <td>${video.duration}</td>
+                                <td>0</td>
+                                <td>${video.addDate}</td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </div>
+            </c:if>
 
             <script>
                 // 2. This code loads the IFrame Player API code asynchronously.
@@ -227,29 +284,6 @@
                     <td>${user.age}</td>
                     <td>${user.password}</td>
                 </tr>
-            </table>
-        </div>
-    </c:if>
-    <c:if test="${videos != null}">
-        <div class="row">
-            <h2>Videos: </h2>
-            <table class="table table-striped">
-                <tr>
-                    <th>YouTubeId</th>
-                    <th>Title</th>
-                    <th>Duration</th>
-                    <th># Notes</th>
-                    <th>Add Date</th>
-                </tr>
-                <c:forEach items="${videos}" var="video">
-                <tr class="">
-                    <td>${video.youTubeId}</td>
-                    <td>${video.title}</td>
-                    <td>${video.duration}</td>
-                    <td>0</td>
-                    <td>${video.addDate}</td>
-                </tr>
-                </c:forEach>
             </table>
         </div>
     </c:if>

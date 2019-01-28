@@ -1,7 +1,7 @@
 package com.vidmins.controller;
 
 import com.vidmins.persistence.UserData;
-import com.vidmins.entity.User;
+import com.vidmins.entity.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -38,9 +38,11 @@ public class LoadClient extends HttpServlet {
         UserData userData = new UserData();
         if (req.getParameter("username") != null && req.getParameter("password") != null) {
             User user = userData.authenticateUser(req.getParameter("username"), req.getParameter("password"));
-            req.setAttribute("user", user);
-            req.setAttribute("videos", userData.getUserVideos(user));
-            req.setAttribute("title", "The Video Minutes App");
+            if (user != null) {
+                req.setAttribute("user", user);
+                req.setAttribute("videos", userData.getUserVideos(user));
+                req.setAttribute("title", "The Video Minutes App");
+            }
         } else {
             req.setAttribute("title", "VidMins");
         }

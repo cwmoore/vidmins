@@ -1,3 +1,7 @@
+body {
+    background-color: #FDFFFF;
+}
+
 .aquapanel {
     border: solid 2px #00DDEE;
     border-radius: 5px;
@@ -20,6 +24,14 @@ label .fixed {
     display: none;
 }
 
+#make_link {
+    display: none;
+}
+
+#comment_input {
+    display: none;
+}
+
 #survey_input {
     display: none;
 }
@@ -35,4 +47,13 @@ label .fixed {
 #notes textarea {
     height: 5em;
     width: 90%;
+}
+
+
+.player-frame {
+    width: 646px;
+    border: solid #00DDEE 3px;
+    border-radius: 5px;
+    margin: 0;
+    padding: 0;
 }

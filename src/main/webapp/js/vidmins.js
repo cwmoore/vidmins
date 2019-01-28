@@ -86,8 +86,9 @@ function showPanel(panelId) {
 function hidePanels() {
     document.getElementById("help").style.display = "none";
     document.getElementById("note_input").style.display = "none";
+    document.getElementById("make_link").style.display = "none";
     document.getElementById("survey_input").style.display = "none";
-    document.getElementById("feedback_input").style.display = "none";
+    document.getElementById("comment_input").style.display = "none";
     document.getElementById("question_input").style.display = "none";
 }
 
@@ -145,8 +146,8 @@ function makeSurveyQuestion() {
     setPromptTime(player.getCurrentTime());
     player.stopVideo();
 }
-function makeFeedbackComment() {
-    showPanel("feedback_input");
+function makeComment() {
+    showPanel("comment_input");
     setCommentTime(player.getCurrentTime());
     player.stopVideo();
 }
