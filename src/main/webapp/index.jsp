@@ -266,6 +266,29 @@
             <!-- end code from YouTube Dev -->
         </div>
     </div>
+    <c:if test="${notes != null}">
+        <div class="row">
+            <h2>Notes: </h2>
+            <table class="table table-striped">
+                <tr>
+                    <th>Label</th>
+                    <th>Text</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Created</th>
+                    <th>videoId</th>
+                </tr>
+                <tr class="">
+                    <td>${note.label}</td>
+                    <td>${note.text}</td>
+                    <td>${note.start}</td>
+                    <td>${note.end}</td>
+                    <td>${note.createDateTime}</td>
+                    <td>${note.videoId}</td>
+                </tr>
+            </table>
+        </div>
+    </c:if>
     <c:if test="${user != null}">
         <div class="row">
             <h2>User Info: </h2>

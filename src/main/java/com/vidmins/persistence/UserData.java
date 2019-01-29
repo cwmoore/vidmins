@@ -123,4 +123,32 @@ public class UserData {
         }
         return videos;
     }
+
+    public List<Note> getUserNotes(User user) {
+        List<Note> notes = new ArrayList<>();
+        Database database = Database.getInstance();
+        Connection connection = null;
+        // consider GROUP BY youTubeId
+        // duplication of a video may cause problems collecting user notes
+        // if a user has entered the same video more than once
+        String sql = "SELECT * FROM note WHERE userId='" + user.getId() + "' ORDER BY videoId DESC, start ASC";
+
+        try {
+            database.connect();
+            connection = database.getConnection();
+            Statement selectUserAuthStatement = connection.createStatement();
+            ResultSet results = selectUserAuthStatement.executeQuery(sql);
+
+            while (results.next()) {
+                notes.add(new Note(results));
+            }
+
+            database.disconnect();
+        } catch (SQLException sqlException) {
+            System.out.println("LoadClient.getUserVideos():" + sqlException);
+        } catch (Exception exception) {
+            System.out.println("LoadClient.getUserVideos():" + exception);
+        }
+        return notes;
+    }
 }

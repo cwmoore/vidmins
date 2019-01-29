@@ -41,6 +41,7 @@ public class LoadClient extends HttpServlet {
             if (user != null) {
                 req.setAttribute("user", user);
                 req.setAttribute("videos", userData.getUserVideos(user));
+                req.setAttribute("notes", userData.getUserNotes(user));
                 req.setAttribute("title", "The Video Minutes App");
             }
         } else {
