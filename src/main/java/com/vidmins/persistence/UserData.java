@@ -14,7 +14,7 @@ import java.sql.Statement;
  *
  * @author pwaite
  *
- * Authenticate a valid user
+ * Authenticate a valid user, get videos, notes
  * @author cwmoore
  */
 public class UserData {
@@ -128,10 +128,8 @@ public class UserData {
         List<Note> notes = new ArrayList<>();
         Database database = Database.getInstance();
         Connection connection = null;
-        // consider GROUP BY youTubeId
-        // duplication of a video may cause problems collecting user notes
-        // if a user has entered the same video more than once
-        String sql = "SELECT * FROM note WHERE userId='" + user.getId() + "' ORDER BY videoId DESC, start ASC";
+
+        String sql = "SELECT * FROM note WHERE userId=" + user.getId() + " ORDER BY videoId DESC, start ASC";
 
         try {
             database.connect();
@@ -145,9 +143,9 @@ public class UserData {
 
             database.disconnect();
         } catch (SQLException sqlException) {
-            System.out.println("LoadClient.getUserVideos():" + sqlException);
+            System.out.println("LoadClient.getUserNotes():" + sqlException);
         } catch (Exception exception) {
-            System.out.println("LoadClient.getUserVideos():" + exception);
+            System.out.println("LoadClient.getUserNotes():" + exception);
         }
         return notes;
     }

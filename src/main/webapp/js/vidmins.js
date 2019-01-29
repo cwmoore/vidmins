@@ -107,6 +107,11 @@ function getTimeParts(totalSeconds) {
     return {seconds: elSeconds, minutes: elMinutes, hours: elHours};
 }
 
+function makeLink() {
+    document.getElementById("videoLink").value = makeUrl(player.getCurrentTime());
+    document.getElementById("link_time_stamp_prompt").innerText = player.getCurrentTime();
+}
+
 function makeUrl(time) {
     // const time_parts = getTimeParts(time);
     // let timeString = "&t=";

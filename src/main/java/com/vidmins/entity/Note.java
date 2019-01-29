@@ -1,6 +1,7 @@
 package com.vidmins.entity;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * The type Note.
@@ -50,7 +51,7 @@ public class Note {
      * @param results the database results
      */
     public Note(ResultSet results)
-            throws java.sql.SQLException {
+            throws SQLException {
         this.id = results.getInt("id");
         this.label = results.getString("label");
         this.text = results.getString("text");

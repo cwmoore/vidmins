@@ -106,10 +106,10 @@
                     <form name="link_input_form">
 
                         <label>YouTube Video URL:</label><br />
-                        <input type="text" name="userVideoUrl" /><br />
+                        <input id="videoLink" type="text" name="userVideoUrl" /><br />
 
                         <input type="hidden" name="timeStampPrompt" />
-                        <label>Prompt time:</label> <span id="time_stamp_prompt"></span><br />
+                        <label>Prompt time:</label> <span id="link_time_stamp_prompt"></span><br />
 
                         <br />
                         <input type="submit" value="Link with time" />
@@ -278,14 +278,16 @@
                     <th>Created</th>
                     <th>videoId</th>
                 </tr>
+                <c:forEach items="${notes}" var="note">
                 <tr class="">
                     <td>${note.label}</td>
                     <td>${note.text}</td>
                     <td>${note.start}</td>
                     <td>${note.end}</td>
-                    <td>${note.createDateTime}</td>
+                    <td>${note.createDatetime}</td>
                     <td>${note.videoId}</td>
                 </tr>
+                </c:forEach>
             </table>
         </div>
     </c:if>
