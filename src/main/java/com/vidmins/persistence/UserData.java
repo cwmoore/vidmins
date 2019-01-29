@@ -129,7 +129,7 @@ public class UserData {
         Database database = Database.getInstance();
         Connection connection = null;
 
-        String sql = "SELECT * FROM note WHERE userId=" + user.getId() + " ORDER BY videoId DESC, start ASC";
+        String sql = "SELECT * FROM note WHERE userId=" + user.getId() + " ORDER BY videoId DESC, start ASC, end ASC";
 
         try {
             database.connect();
