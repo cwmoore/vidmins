@@ -109,7 +109,7 @@
                         <input id="videoLink" type="text" name="userVideoUrl" /><br />
 
                         <input type="hidden" name="timeStampPrompt" />
-                        <label>Prompt time:</label> <span id="link_time_stamp_prompt"></span><br />
+                        <label>Prompt time:</label> <span id="link_time_stamp_prompt"></span>s<br />
 
                         <br />
                         <input type="submit" value="Link with time" />
@@ -174,15 +174,29 @@
                         <li>obtain a list of timestamp links to multiple videos</li>
                         <li>view the provided video material</li>
                     </ul>
+                    <h4>A presenter might:</h4>
+                    <ul>
+                        <li>prepare a video with timely annotations</li>
+                        <li>pause the video at each point to explain</li>
+                        <li>include additional linked content</li>
+                    </ul>
+                    <h4>An online class might:</h4>
+                    <ul>
+                        <li>watch video</li>
+                        <li>at each point the video pauses</li>
+                        <li>answer quiz or survey question related to the video</li>
+                    </ul>
                     <h4>Likely target users:</h4>
                     <ul>
                         <li>A film afficionado</li>
                         <li>An online college student</li>
                         <li>An online college</li>
+                        <li>A music lover adding song titles/start times to a full album.</li>
                         <li>A video content creator looking for viewer response</li>
+                        <li>Political commentary on news coverage</li>
                         <li>Investigator analyzing event footage</li>
                         <li>Content owners defending copyright</li>
-                        <li>Trend exploration</li>
+                        <li>Trend/topic exploration</li>
                     </ul>
                 </div>
 
@@ -195,6 +209,32 @@
                 <div id="player"></div>
                 <h4><a href="https://www.youtube.com/watch?v=4HzWKwExaeo">Week1Act5<br />https://www.youtube.com/watch?v=4HzWKwExaeo</a></h4>
             </div>
+
+            <c:if test="${notes != null}">
+                <div class="row">
+                    <h2>Notes: </h2>
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Label</th>
+                            <th>Text</th>
+                            <th>Start</th>
+                            <th>End</th>
+                            <th>Created</th>
+                            <th>videoId</th>
+                        </tr>
+                        <c:forEach items="${notes}" var="note">
+                            <tr class="">
+                                <td>${note.label}</td>
+                                <td>${note.text}</td>
+                                <td>${note.start}</td>
+                                <td>${note.end}</td>
+                                <td>${note.createDatetime}</td>
+                                <td>${note.videoId}</td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </div>
+            </c:if>
 
             <c:if test="${videos != null}">
                 <div class="row">
@@ -266,31 +306,6 @@
             <!-- end code from YouTube Dev -->
         </div>
     </div>
-    <c:if test="${notes != null}">
-        <div class="row">
-            <h2>Notes: </h2>
-            <table class="table table-striped">
-                <tr>
-                    <th>Label</th>
-                    <th>Text</th>
-                    <th>Start</th>
-                    <th>End</th>
-                    <th>Created</th>
-                    <th>videoId</th>
-                </tr>
-                <c:forEach items="${notes}" var="note">
-                <tr class="">
-                    <td>${note.label}</td>
-                    <td>${note.text}</td>
-                    <td>${note.start}</td>
-                    <td>${note.end}</td>
-                    <td>${note.createDatetime}</td>
-                    <td>${note.videoId}</td>
-                </tr>
-                </c:forEach>
-            </table>
-        </div>
-    </c:if>
     <c:if test="${user != null}">
         <div class="row">
             <h2>User Info: </h2>

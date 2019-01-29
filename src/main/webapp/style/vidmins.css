@@ -49,6 +49,9 @@ label .fixed {
     width: 90%;
 }
 
+#videoLink {
+    width: 80%;
+}
 
 .player-frame {
     width: 646px;
