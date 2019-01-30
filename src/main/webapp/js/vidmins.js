@@ -219,3 +219,7 @@ function setRelatedTime(timeStamp) {
     document.getElementById("time_stamp_ask").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
     document.note_input_form.timeStampEnd = timeStamp;
 }
+
+function updateVideoWidth() {
+    // use as much space as possible but no more
+}
