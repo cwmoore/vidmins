@@ -242,32 +242,6 @@
                 </div>
             </c:if>
 
-            <c:if test="${videos != null}">
-                <div class="row">
-                    <h2>Videos: </h2>
-                    <table class="table table-striped">
-                        <tr>
-                            <th>ID</th>
-                            <th>YouTubeId</th>
-                            <th>Title</th>
-                            <th>Duration</th>
-                            <th># Notes</th>
-                            <th>Add Date</th>
-                        </tr>
-                        <c:forEach items="${videos}" var="video">
-                            <tr class="">
-                                <td>${video.id}</td>
-                                <td>${video.youTubeId}</td>
-                                <td>${video.title}</td>
-                                <td>${video.duration}</td>
-                                <td><a href="/loadClient?videoId=${video.id}"># Notes</a></td>
-                                <td>${video.addDate}</td>
-                            </tr>
-                        </c:forEach>
-                    </table>
-                </div>
-            </c:if>
-
             <script>
                 // 2. This code loads the IFrame Player API code asynchronously.
                 var tag = document.createElement('script');
@@ -315,8 +289,35 @@
             </c:if>
         </div>
     </div>
-    <c:if test="${user != null}">
-        <div class="row">
+
+
+        <c:if test="${videos != null}">
+            <div class="row">
+                <h2>Videos: </h2>
+                <table class="table table-striped">
+                    <tr>
+                        <th>ID</th>
+                        <th>YouTubeId</th>
+                        <th>Title</th>
+                        <th>Duration</th>
+                        <th># Notes</th>
+                        <th>Add Date</th>
+                    </tr>
+                    <c:forEach items="${videos}" var="video">
+                        <tr class="">
+                            <td>${video.id}</td>
+                            <td>${video.youTubeId}</td>
+                            <td>${video.title}</td>
+                            <td>${video.duration}</td>
+                            <td><a href="/loadClient?videoId=${video.id}"># Notes</a></td>
+                            <td>${video.addDate}</td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
+        </c:if>
+        <c:if test="${user != null}">
+            <div class="row">
             <h2>User Info: </h2>
             <table class="table table-striped">
                 <tr>
@@ -334,7 +335,7 @@
                     <td>${user.password}</td>
                 </tr>
             </table>
-        </div>
-    </c:if>
+            </div>
+        </c:if>
 </div>
 <%@ include file="footer.jsp" %>
