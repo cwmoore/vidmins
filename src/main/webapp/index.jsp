@@ -205,11 +205,15 @@
             </div>
         </div>
         <div class="col-lg-7">
+            <c:if test="${ currentVideo == null }">
+                <h3><i>Video will load here</i></h3>
+            </c:if>
+            <c:if test="${ currentVideo != null }">
             <!-- begin code from YouTube Dev -->
             <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
             <div class="player-frame">
                 <div id="player"></div>
-                <h4><a href="https://www.youtube.com/watch?v=4HzWKwExaeo">Week1Act5<br />https://www.youtube.com/watch?v=4HzWKwExaeo</a></h4>
+                <h4><a href="https://www.youtube.com/watch?v=${currentVideo.youTubeId}">${currentVideo.title}<br />https://www.youtube.com/watch?v=${currentVideo.youTubeId}</a></h4>
             </div>
 
             <c:if test="${notes != null}">
@@ -275,7 +279,7 @@
                 // 3. This function creates an <iframe> (and YouTube player)
                 //    after the API code downloads.
                 var player;
-                var youTubeId = '${youTubeId}';
+                var youTubeId = '${currentVideo.youTubeId}';
                 function onYouTubeIframeAPIReady() {
                     player = new YT.Player('player', {
                         height: '390',
@@ -308,6 +312,7 @@
                 }
             </script>
             <!-- end code from YouTube Dev -->
+            </c:if>
         </div>
     </div>
     <c:if test="${user != null}">

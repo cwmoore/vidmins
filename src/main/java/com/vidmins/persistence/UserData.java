@@ -234,4 +234,38 @@ public class UserData {
         }
         return notes;
     }
+
+    /**
+     * Gets video notes.
+     *
+     * @param videoId the video id
+     * @return the video notes
+     */
+    public Video getVideo(String videoId) {
+        Video video = null;
+
+        Database database = Database.getInstance();
+        Connection connection = null;
+
+        String sql = "SELECT * FROM video WHERE id='" + videoId + "' ORDER BY id ASC";
+
+        try {
+            database.connect();
+            connection = database.getConnection();
+            Statement selectUserAuthStatement = connection.createStatement();
+            ResultSet results = selectUserAuthStatement.executeQuery(sql);
+
+            if (results.next()) {
+                video = createVideoFromResults(results);
+            }
+
+            database.disconnect();
+        } catch (SQLException sqlException) {
+            System.out.println("UserData.getVideoNotes():" + sqlException);
+        } catch (Exception exception) {
+            System.out.println("UserData.getVideoNotes():" + exception);
+        }
+
+        return video;
+    }
 }

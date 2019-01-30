@@ -44,14 +44,18 @@ public class LoadClient extends HttpServlet {
             List<Video> videos = userData.getUserVideos(user);
             req.getSession().setAttribute("videos", videos);
 
-            if (req.getParameter("videoId") != null) {
+            if (req.getParameter("videoId") != "") {
+                req.getSession().setAttribute("currentVideo", userData.getVideo((String) req.getParameter("videoId")));
                 req.getSession().setAttribute("notes",
                         userData.getVideoNotes((String) req.getParameter("videoId")));
-
-            } else if (videos.size() > 0) {
-                req.getSession().setAttribute("notes", userData.getVideoNotes(Integer.toString(videos.get(0).getId())));
-                req.getSession().setAttribute("youTubeId", videos.get(0).getYouTubeId());
             }
+
+
+            if (req.getSession().getAttribute("currentVideo") != null) {
+                // req.getSession().setAttribute("notes", userData.getVideoNotes(Integer.toString(videos.get(1).getId())));
+                // req.getSession().setAttribute("currentVideo", videos.get(1));
+            }
+
 
             req.getSession().setAttribute("title", "The Video Minutes App");
         }
