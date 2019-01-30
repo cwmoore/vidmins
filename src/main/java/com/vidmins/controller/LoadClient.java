@@ -44,7 +44,7 @@ public class LoadClient extends HttpServlet {
             List<Video> videos = userData.getUserVideos(user);
             req.getSession().setAttribute("videos", videos);
 
-            if (req.getParameter("videoId") != "") {
+            if (req.getParameter("videoId") != null && req.getParameter("videoId").matches("\\d+")) {
                 req.getSession().setAttribute("currentVideo", userData.getVideo((String) req.getParameter("videoId")));
                 req.getSession().setAttribute("notes",
                         userData.getVideoNotes((String) req.getParameter("videoId")));

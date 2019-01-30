@@ -54,11 +54,6 @@
     </div>
     <div class="row">
         <div id="watcher" class="col-lg-5">
-
-
-
-
-
             <h1>Video Minutes</h1>
             <div class="menu">
                 <button id="help_button" name="help" class="btn btn-info" onclick="showPanel('help');">?</button>
