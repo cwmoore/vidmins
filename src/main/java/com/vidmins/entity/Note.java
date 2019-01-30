@@ -46,23 +46,6 @@ public class Note {
     }
 
     /**
-     * Instantiates a new Note from ResultSet.
-     *
-     * @param results the database results
-     */
-    public Note(ResultSet results)
-            throws SQLException {
-        this.id = results.getInt("id");
-        this.label = results.getString("label");
-        this.text = results.getString("text");
-        this.start = results.getInt("start");
-        this.end = results.getInt("end");
-        this.createDatetime = results.getString("createDatetime");
-        this.userId = results.getInt("userId");
-        this.videoId = results.getInt("videoId");
-    }
-
-    /**
      * Gets id.
      *
      * @return the id

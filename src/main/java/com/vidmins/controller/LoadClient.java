@@ -3,6 +3,7 @@ package com.vidmins.controller;
 import com.vidmins.persistence.UserData;
 import com.vidmins.entity.*;
 
+import java.util.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -36,17 +37,25 @@ public class LoadClient extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         UserData userData = new UserData();
-        if (req.getParameter("username") != null && req.getParameter("password") != null) {
-            User user = userData.authenticateUser(req.getParameter("username"), req.getParameter("password"));
-            if (user != null) {
-                req.setAttribute("user", user);
-                req.setAttribute("videos", userData.getUserVideos(user));
-                req.setAttribute("notes", userData.getUserNotes(user));
-                req.setAttribute("title", "The Video Minutes App");
+
+        if (req.getSession().getAttribute("user") != null) {
+            User user = (User) req.getSession().getAttribute("user");
+
+            List<Video> videos = userData.getUserVideos(user);
+            req.getSession().setAttribute("videos", videos);
+
+            if (req.getParameter("videoId") != null) {
+                req.getSession().setAttribute("notes",
+                        userData.getVideoNotes((String) req.getParameter("videoId")));
+
+            } else if (videos.size() > 0) {
+                req.getSession().setAttribute("notes", userData.getVideoNotes(Integer.toString(videos.get(0).getId())));
+                req.getSession().setAttribute("youTubeId", videos.get(0).getYouTubeId());
             }
-        } else {
-            req.setAttribute("title", "VidMins");
+
+            req.getSession().setAttribute("title", "The Video Minutes App");
         }
+
         RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
         dispatcher.forward(req, resp);
     }

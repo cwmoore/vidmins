@@ -78,18 +78,45 @@ function Note() {
 
 */
 
-function showPanel(panelId) {
+function replaceActiveFeature(activeFeature, newFeature) {
+
+}
+
+function showPanel(feature) {
     hidePanels();
-    document.getElementById(panelId).style.display = "block";
+    deselectButtons();
+    document.getElementById(feature + "_button").classList.add("active");
+    document.getElementById(feature + "_input").style.display = "block";
 }
 
 function hidePanels() {
-    document.getElementById("help").style.display = "none";
-    document.getElementById("note_input").style.display = "none";
-    document.getElementById("make_link").style.display = "none";
-    document.getElementById("survey_input").style.display = "none";
-    document.getElementById("comment_input").style.display = "none";
-    document.getElementById("question_input").style.display = "none";
+    let feature;
+    const features = ["help", "note", "link", "comment", "ask"];
+
+    for (feature of features) {
+        hidePanel(feature);
+    }
+}
+
+function hidePanel(feature) {
+    document.getElementById(feature + "_input").style.display = "none";
+}
+
+function deselectButtons() {
+    let feature;
+    const features = ["help", "note", "link", "comment", "ask"];
+
+    for (feature of features) {
+        deselectButton(feature);
+    }
+}
+
+function deselectButton(feature) {
+    const button = document.getElementById(feature + "_button");
+
+    if (button.classList.contains("active")) {
+        button.classList.remove("active");
+    }
 }
 
 function processInput() {
@@ -107,11 +134,40 @@ function getTimeParts(totalSeconds) {
     return {seconds: elSeconds, minutes: elMinutes, hours: elHours};
 }
 
+function showTime() {
+    let msg = "";
+
+    msg += "getCurrentTime: " + player.getCurrentTime();
+    msg += "\ngetDuration: " + player.getDuration();
+    msg += "\nRemaining: "
+        + (player.getDuration() - player.getCurrentTime());
+    alert(msg);
+}
+
+function makeNote() {
+    showPanel("note");
+    setStartTime(player.getCurrentTime());
+    setEndTime(player.getCurrentTime());
+    player.stopVideo();
+}
+function setStartTime(timeStamp) {
+    let timeLink = makeUrl(timeStamp);
+
+    document.getElementById("time_stamp_start").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
+    document.note_input_form.timeStampStart = timeStamp;
+}
+function setEndTime(timeStamp) {
+    let timeLink = makeUrl(timeStamp);
+
+    document.getElementById("time_stamp_end").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
+    document.note_input_form.timeStampEnd = timeStamp;
+}
+function addTag() {}
+
 function makeLink() {
     document.getElementById("videoLink").value = makeUrl(player.getCurrentTime());
     document.getElementById("link_time_stamp_prompt").innerText = player.getCurrentTime();
 }
-
 function makeUrl(time) {
     // const time_parts = getTimeParts(time);
     // let timeString = "&t=";
@@ -128,54 +184,11 @@ function makeUrl(time) {
     return "https://www.youtube.com/watch?v=" + youTubeId + timeString + "s";
 }
 
-function showTime() {
-    let msg = "";
-
-    msg += "getCurrentTime: " + player.getCurrentTime();
-    msg += "\ngetDuration: " + player.getDuration();
-    msg += "\nRemaining: "
-        + (player.getDuration() - player.getCurrentTime());
-    alert(msg);
-}
-
-function addTag() {}
-
-function makeNote() {
-    showPanel("note_input");
-    setStartTime(player.getCurrentTime());
-    setEndTime(player.getCurrentTime());
-    player.stopVideo();
-}
 function makeSurveyQuestion() {
-    showPanel("survey_input");
+    showPanel("survey");
     setPromptTime(player.getCurrentTime());
     player.stopVideo();
 }
-function makeComment() {
-    showPanel("comment_input");
-    setCommentTime(player.getCurrentTime());
-    player.stopVideo();
-}
-function makeAskQuestion() {
-    showPanel("question_input");
-    setRelatedTime(player.getCurrentTime());
-    player.stopVideo();
-}
-
-function setStartTime(timeStamp) {
-    let timeLink = makeUrl(timeStamp);
-
-    document.getElementById("time_stamp_start").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
-    document.note_input_form.timeStampStart = timeStamp;
-}
-
-function setEndTime(timeStamp) {
-    let timeLink = makeUrl(timeStamp);
-
-    document.getElementById("time_stamp_end").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
-    document.note_input_form.timeStampEnd = timeStamp;
-}
-
 function setPromptTime(timeStamp) {
     let timeLink = makeUrl(timeStamp);
 
@@ -183,6 +196,11 @@ function setPromptTime(timeStamp) {
     document.note_input_form.timeStampEnd = timeStamp;
 }
 
+function makeComment() {
+    showPanel("comment");
+    setCommentTime(player.getCurrentTime());
+    player.stopVideo();
+}
 function setCommentTime(timeStamp) {
     let timeLink = makeUrl(timeStamp);
 
@@ -190,6 +208,11 @@ function setCommentTime(timeStamp) {
     document.note_input_form.timeStampEnd = timeStamp;
 }
 
+function makeAskQuestion() {
+    showPanel("ask");
+    setRelatedTime(player.getCurrentTime());
+    player.stopVideo();
+}
 function setRelatedTime(timeStamp) {
     let timeLink = makeUrl(timeStamp);
 

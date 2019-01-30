@@ -1,8 +1,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:import url="head.jsp" />
 
-<body>
-<div class="container">
+<body onload="showPanel('help');">
+<div class="container-fluid">
     <div class="row-fullwidth">
         <nav class="navbar navbar-expand-sm navbar-expand-md navbar-expand-lg navbar-expand-xl navbar-light bg-light">
             <a class="navbar-brand" href="#">VidMins</a>
@@ -16,7 +16,7 @@
                         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Gallery</a>
+                        <a class="nav-link<c:if test="${videos == null}"> disabled</c:if>" href="#">Videos</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -24,10 +24,12 @@
                             <c:if test="${user != null}">${user.firstName}</c:if>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Profile</a>
-                            <a class="dropdown-item" href="#">Settings</a>
+                            <a class="dropdown-item<c:if test="${user == null}"> disabled</c:if>" href="#">Profile</a>
+                            <a class="dropdown-item<c:if test="${user == null}"> disabled</c:if>" href="#">Settings</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Data</a>
+                            <a class="dropdown-item<c:if test="${user == null}"> disabled</c:if>" href="#">Data</a>
+                            <c:if test="${user != null}"><div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="logout">Sign Out</a></c:if>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -35,7 +37,7 @@
                     </li>
                 </ul>
                 <c:if test="${user == null}">
-                    <form class="form-inline my-2 my-lg-0" action="loadClient" method="GET">
+                    <form class="form-inline my-2 my-lg-0" action="login" method="POST">
                         <input type="text" name="username" placeholder="username" class="form-control mr-sm-2" />
                         <input type="password" name="password" placeholder="password" class="form-control mr-sm-2" />
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
@@ -59,12 +61,12 @@
 
             <h1>Video Minutes</h1>
             <div class="menu">
-                <button name="help" class="btn btn-info" onclick="showPanel('help');">?</button>
-                <button name="show-time" class="btn btn-info" onclick="showPanel('note_input');makeNote();">Note</button>
-                <button name="show-time" class="btn btn-info" onclick="showPanel('make_link');makeLink();">Link</button>
-                <%-- <button name="feedback" class="btn btn-info" onclick="showPanel('survey_input');makeSurveyQuestion();">Survey</button> --%>
-                <button name="feedback" class="btn btn-info" onclick="showPanel('comment_input');makeComment();">Comment</button>
-                <button name="ask-question" class="btn btn-info" onclick="showPanel('question_input');makeAskQuestion();">Ask</button>
+                <button id="help_button" name="help" class="btn btn-info" onclick="showPanel('help');">?</button>
+                <button id="note_button" name="show-time" class="btn btn-info" onclick="showPanel('note');makeNote();">Note</button>
+                <button id="link_button" name="make-link" class="btn btn-info" onclick="showPanel('link');makeLink();">Link</button>
+                <%-- <button id="survey_button" name="survey" class="btn btn-info" onclick="showPanel('survey');makeSurveyQuestion();">Survey</button> --%>
+                <button id="comment_button" name="feedback" class="btn btn-info" onclick="showPanel('comment');makeComment();">Comment</button>
+                <button id="ask_button" name="ask-question" class="btn btn-info" onclick="showPanel('ask');makeAskQuestion();">Ask</button>
             </div>
             <div id="notes">
                 <!-- TODO: use bootstrap navigation -->
@@ -91,31 +93,31 @@
                         <label>End:</label> <span id="time_stamp_end"></span><br />
 
                         <br />
-                        <input type="submit" value="Store Annotation" />
+                        <input type="submit" class="btn btn-primary" value="Store Annotation" />
                     </form>
                 </div>
-                <div id="notes">
+                <%-- <div id="notes">
                     <ul class="notes"></ul>
                 </div>
                 <div id="videos">
                     <ul class="videos"></ul>
                 </div>
+--%>
 
-
-                <div id="make_link"  class="aquapanel" method="get" action="#" onsubmit="processInput(); return false;">
+                <div id="link_input" class="aquapanel" method="get" action="#" onsubmit="processInput(); return false;">
                     <form name="link_input_form">
 
                         <label>YouTube Video URL:</label><br />
-                        <input id="videoLink" type="text" name="userVideoUrl" /><br />
+                        <input id="videoLink" type="url" name="userVideoUrl" /><br />
 
                         <input type="hidden" name="timeStampPrompt" />
                         <label>Prompt time:</label> <span id="link_time_stamp_prompt"></span>s<br />
 
                         <br />
-                        <input type="submit" value="Link with time" />
+                        <input type="submit" class="btn btn-primary" value="Link with time" />
                     </form>
                 </div>
-
+<%--
                 <div id="survey_input"  class="aquapanel" method="get" action="#" onsubmit="processInput(); return false;">
                     <form name="survey_input_form">
 
@@ -129,7 +131,7 @@
                         <input type="submit" value="Update Survey" />
                     </form>
                 </div>
-
+--%>
                 <div id="comment_input"  class="aquapanel" method="get" action="#" onsubmit="processInput(); return false;">
                     <form name="comment_input_form">
 
@@ -140,11 +142,11 @@
                         <label>Comment time:</label> <span id="time_stamp_comment"></span><br />
 
                         <br />
-                        <input type="submit" value="Give Feedback" />
+                        <input type="submit" class="btn btn-primary" value="Give Feedback" />
                     </form>
                 </div>
 
-                <div id="question_input"  class="aquapanel" method="get" action="#" onsubmit="processInput(); return false;">
+                <div id="ask_input"  class="aquapanel" method="get" action="#" onsubmit="processInput(); return false;">
                     <form name="question_input_form">
 
                         <label>Ask Question:</label><br />
@@ -154,10 +156,10 @@
                         <label>Related time:</label> <span id="time_stamp_ask"></span><br />
 
                         <br />
-                        <input type="submit" value="Ask" />
+                        <input type="submit" class="btn btn-primary" value="Ask" />
                     </form>
                 </div>
-                <div id="help" class="aquapanel">
+                <div id="help_input" class="aquapanel">
                     <h3>App use cases:</h3>
                     <h4>One might:</h4>
                     <ul>
@@ -241,6 +243,7 @@
                     <h2>Videos: </h2>
                     <table class="table table-striped">
                         <tr>
+                            <th>ID</th>
                             <th>YouTubeId</th>
                             <th>Title</th>
                             <th>Duration</th>
@@ -249,10 +252,11 @@
                         </tr>
                         <c:forEach items="${videos}" var="video">
                             <tr class="">
+                                <td>${video.id}</td>
                                 <td>${video.youTubeId}</td>
                                 <td>${video.title}</td>
                                 <td>${video.duration}</td>
-                                <td>0</td>
+                                <td><a href="/loadClient?videoId=${video.id}"># Notes</a></td>
                                 <td>${video.addDate}</td>
                             </tr>
                         </c:forEach>
@@ -271,7 +275,7 @@
                 // 3. This function creates an <iframe> (and YouTube player)
                 //    after the API code downloads.
                 var player;
-                var youTubeId = '4HzWKwExaeo';
+                var youTubeId = '${youTubeId}';
                 function onYouTubeIframeAPIReady() {
                     player = new YT.Player('player', {
                         height: '390',

@@ -1,6 +1,7 @@
 package com.vidmins.entity;
 
 import java.time.*;
+
 /**
  * A class to represent a user.
  *
@@ -10,8 +11,13 @@ public class User {
     private String firstName;
     private String lastName;
     private String userName;
+    private String email;
     private String password;
+    private String joinDate;
     private String dateOfBirth;
+    private String organization;
+    private String introduction;
+    private String status;
     private int id;
 
 
@@ -24,12 +30,12 @@ public class User {
     /**
      * Instantiates a new User.
      *
-     * @param firstName the first name
-     * @param lastName  the last name
-     * @param userName  the user name
-     * @param password the password
+     * @param firstName   the first name
+     * @param lastName    the last name
+     * @param userName    the user name
+     * @param password    the password
      * @param dateOfBirth the date of birth
-     * @param id        the id
+     * @param id          the id
      */
     public User(String firstName, String lastName, String userName, String password, String dateOfBirth, int id) {
         this.firstName = firstName;
@@ -96,6 +102,43 @@ public class User {
     }
 
     /**
+     * Gets email
+     *
+     * @return the email address
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * Sets email.
+     *
+     * @param email the email address
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
+    /**
+     * Gets join date
+     *
+     * @return the join date
+     */
+    public String getJoinDate() {
+        return joinDate;
+    }
+
+    /**
+     * Sets join date.
+     *
+     * @param joinDate the join date
+     */
+    public void setJoinDate(String joinDate) {
+        this.joinDate = joinDate;
+    }
+
+    /**
      * Gets password.
      *
      * @return the password
@@ -142,6 +185,60 @@ public class User {
      */
     public int getAge() {
         return Period.between(LocalDate.parse(dateOfBirth), LocalDate.now()).getYears();
+    }
+
+    /**
+     * Gets organization.
+     *
+     * @return the organization
+     */
+    public String getOrganization() {
+        return organization;
+    }
+
+    /**
+     * Sets organization.
+     *
+     * @param organization the organization
+     */
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
+
+    /**
+     * Gets introduction.
+     *
+     * @return the introduction
+     */
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    /**
+     * Sets introduction.
+     *
+     * @param introduction the introduction
+     */
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
+    /**
+     * Gets status.
+     *
+     * @return the status
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * Sets status.
+     *
+     * @param status the status
+     */
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     /**

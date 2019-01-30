@@ -38,25 +38,6 @@ public class Video {
     }
 
     /**
-     * Instantiates a new Video from a ResultSet.
-     *
-     * @param results the query results
-     */
-    public Video(ResultSet results) {
-        try {
-            this.id = Integer.parseInt(results.getString("id"));
-            this.youTubeId = results.getString("youTubeId");
-            this.title = results.getString("title");
-            this.addDate = results.getString("addDate");
-            this.duration = Integer.parseInt(results.getString("duration"));
-        } catch (SQLException sqlException) {
-            System.out.println("Video constructor:" + sqlException);
-        } catch (Exception exception) {
-            System.out.println("Video constructor:" + exception);
-        }
-    }
-
-    /**
      * Gets id.
      *
      * @return the id

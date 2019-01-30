@@ -1,0 +1,50 @@
+{
+  user: {
+    id: ""
+    ,firstName:""
+    , lastName: ""
+    , username: ""
+    , email: ""
+    , joinDate: ""
+    , dateOfBirth: ""
+    , organization: ""
+    , introduction: ""
+    , status: ""
+  }
+  , videos: {
+    {
+      id: ""
+      , addDate: ""
+      , youTubeId: ""
+      , title: ""
+      , duration: ""
+    }, {
+      id: ""
+      , addDate: ""
+      , youTubeId: ""
+      , title: ""
+      , duration: ""
+    }
+  }
+  , notes: {
+    {
+      id: ""
+      , label: ""
+      , test: ""
+      , start: ""
+      , end: ""
+      , createDatetime: ""
+      , userId: ""
+      , videoId: ""
+    }, {
+      id: ""
+      , label: ""
+      , test: ""
+      , start: ""
+      , end: ""
+      , createDatetime: ""
+      , userId: ""
+      , videoId: ""
+    }
+  }
+}
