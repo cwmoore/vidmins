@@ -1,13 +1,16 @@
 package com.vidmins.entity;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.*;
+import java.util.*;
 
 /**
  * A class to represent a user.
  *
  * @author pwaite
  */
-public class User {
+public class User implements java.io.Serializable {
     private String firstName;
     private String lastName;
     private String userName;
@@ -18,6 +21,7 @@ public class User {
     private String organization;
     private String introduction;
     private String status;
+    private List<Directory> directories;
     private int id;
 
 
@@ -46,6 +50,16 @@ public class User {
         this.id = id;
     }
 
+    public User(ResultSet results) throws SQLException {
+        this.setId(Integer.parseInt(results.getString("id")));
+        this.setFirstName(results.getString("firstName"));
+        this.setLastName(results.getString("lastName"));
+        this.setUserName(results.getString("username"));
+        this.setEmail(results.getString("email"));
+        this.setPassword(results.getString("enc_pass"));
+        this.setJoinDate(results.getString("joinDate"));
+        this.setDateOfBirth(results.getString("dateOfBirth"));
+    }
 
     /**
      * Gets first name.
@@ -239,6 +253,24 @@ public class User {
      */
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    /**
+     * Gets directories.
+     *
+     * @return the directories
+     */
+    public List<Directory> getDirectories() {
+        return directories;
+    }
+
+    /**
+     * Sets the directories.
+     *
+     * @param directories the directories
+     */
+    public void setDirectories(List<Directory> directories) {
+        this.directories = directories;
     }
 
     /**

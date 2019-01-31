@@ -2,11 +2,8 @@ package com.vidmins.persistence;
 
 import com.vidmins.entity.*;
 
+import java.sql.*;
 import java.util.*;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 // import java.security.*;
 
 /**
@@ -60,18 +57,21 @@ public class UserData {
         if (username != "") {
             Database database = Database.getInstance();
             Connection connection = null;
-            String sql = "SELECT * FROM user WHERE username = '" + username + "' AND enc_pass = '" + password + "'";
 
             try {
                 database.connect();
                 connection = database.getConnection();
-                Statement selectUserAuthStatement = connection.createStatement();
-                ResultSet results = selectUserAuthStatement.executeQuery(sql);
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM user WHERE username=? AND enc_pass=?");
+                statement.setString(1, username);
+                statement.setString(2, password);
+                ResultSet results = statement.executeQuery();
 
                 if (results.next()) {
                     authenticatedUser = createUserFromResults(results);
                 }
 
+                results.close();
+                statement.close();
                 database.disconnect();
             } catch (SQLException sqlException) {
                 System.out.println("UserData.authenticateUser():" + sqlException);
@@ -82,27 +82,6 @@ public class UserData {
 
         return authenticatedUser;
     }
-
-    /**
-     * Create a user from search result
-     *
-     * @param results
-     * @return the user data object
-     * @throws SQLException
-     */
-    private User createUserFromResults(ResultSet results) throws SQLException {
-        User user = new User();
-        user.setId(Integer.parseInt(results.getString("id")));
-        user.setFirstName(results.getString("firstName"));
-        user.setLastName(results.getString("lastName"));
-        user.setUserName(results.getString("username"));
-        user.setEmail(results.getString("email"));
-        user.setPassword(results.getString("enc_pass"));
-        user.setJoinDate(results.getString("joinDate"));
-        user.setDateOfBirth(results.getString("dateOfBirth"));
-        return user;
-    }
-
     /**
      * Create a note from search result
      *
@@ -133,8 +112,45 @@ public class UserData {
         video.setTitle(results.getString("title"));
         video.setAddDate(results.getString("addDate"));
         video.setDuration(Integer.parseInt(results.getString("duration")));
+        // load notes
         return video;
     }
+
+    /**
+     * Create a video from search result
+     *
+     * @param results the database results
+     */
+    private Directory createDirectoryFromResults(ResultSet results) throws SQLException {
+        Directory directory = new Directory();
+        directory.setId(Integer.parseInt(results.getString("id")));
+        directory.setName(results.getString("name"));
+        directory.setDescription(results.getString("description"));
+        // load videos
+        return directory;
+    }
+
+    /**
+     * Create a user from search result
+     *
+     * @param results
+     * @return the user data object
+     * @throws SQLException
+     */
+    private User createUserFromResults(ResultSet results) throws SQLException {
+        User user = new User(results);
+//        user.setId(Integer.parseInt(results.getString("id")));
+//        user.setFirstName(results.getString("firstName"));
+//        user.setLastName(results.getString("lastName"));
+//        user.setUserName(results.getString("username"));
+//        user.setEmail(results.getString("email"));
+//        user.setPassword(results.getString("enc_pass"));
+//        user.setJoinDate(results.getString("joinDate"));
+//        user.setDateOfBirth(results.getString("dateOfBirth"));
+        // load directories
+        return user;
+    }
+
 
     /**
      * Gets user videos.
@@ -146,21 +162,25 @@ public class UserData {
         List<Video> videos = new ArrayList<>();
         Database database = Database.getInstance();
         Connection connection = null;
+        PreparedStatement statement = null;
         // consider GROUP BY youTubeId
         // duplication of a video may cause problems collecting user notes
         // if a user has entered the same video more than once
-        String sql = "SELECT * FROM video WHERE id IN (SELECT videoId FROM user_videos WHERE userId='" + user.getId() + "')";
+        //String sql = "SELECT * FROM video WHERE id IN (SELECT videoId FROM user_videos WHERE userId='" + user.getId() + "')";
 
         try {
             database.connect();
             connection = database.getConnection();
-            Statement selectUserAuthStatement = connection.createStatement();
-            ResultSet results = selectUserAuthStatement.executeQuery(sql);
+            statement = connection.prepareStatement("SELECT video.* FROM video JOIN user_videos ON video.id=user_videos.videoId WHERE user_videos.userId=?");
+            statement.setInt(1, user.getId());
+            ResultSet results = statement.executeQuery();
 
             while (results.next()) {
                 videos.add(createVideoFromResults(results));
             }
 
+            results.close();
+            statement.close();
             database.disconnect();
         } catch (SQLException sqlException) {
             System.out.println("UserData.getUserVideos():" + sqlException);
@@ -180,19 +200,21 @@ public class UserData {
         List<Note> notes = new ArrayList<>();
         Database database = Database.getInstance();
         Connection connection = null;
-
-        String sql = "SELECT * FROM note WHERE userId=" + user.getId() + " ORDER BY videoId DESC, start ASC, end ASC";
+        PreparedStatement statement = null;
 
         try {
             database.connect();
             connection = database.getConnection();
-            Statement selectUserAuthStatement = connection.createStatement();
-            ResultSet results = selectUserAuthStatement.executeQuery(sql);
+            statement = connection.prepareStatement("SELECT * FROM note WHERE userId=? ORDER BY videoId DESC, start ASC, end ASC");
+            statement.setInt(1, user.getId());
+            ResultSet results = statement.executeQuery();
 
             while (results.next()) {
                 notes.add(createNoteFromResults(results));
             }
 
+            results.close();
+            statement.close();
             database.disconnect();
         } catch (SQLException sqlException) {
             System.out.println("UserData.getUserNotes():" + sqlException);
@@ -208,24 +230,25 @@ public class UserData {
      * @param videoId the video id
      * @return the video notes
      */
-    public List<Note> getVideoNotes(String videoId) {
+    public List<Note> getVideoNotes(int videoId) {
         List<Note> notes = new ArrayList<>();
         Database database = Database.getInstance();
         Connection connection = null;
-
-        // !!!!!!!!!! TODO use prepared statement with wild data !!!!!!!!!!
-        String sql = "SELECT * FROM note WHERE videoId='" + videoId + "' ORDER BY start ASC, end ASC";
+        PreparedStatement statement = null;
 
         try {
             database.connect();
             connection = database.getConnection();
-            Statement selectUserAuthStatement = connection.createStatement();
-            ResultSet results = selectUserAuthStatement.executeQuery(sql);
+            statement = connection.prepareStatement("SELECT * FROM note WHERE videoId=? ORDER BY start ASC, end ASC");
+            statement.setInt(1, videoId);
+            ResultSet results = statement.executeQuery();
 
             while (results.next()) {
                 notes.add(createNoteFromResults(results));
             }
 
+            results.close();
+            statement.close();
             database.disconnect();
         } catch (SQLException sqlException) {
             System.out.println("UserData.getVideoNotes():" + sqlException);
@@ -241,24 +264,26 @@ public class UserData {
      * @param videoId the video id
      * @return the video notes
      */
-    public Video getVideo(String videoId) {
+    public Video getVideo(int videoId) {
         Video video = null;
 
         Database database = Database.getInstance();
         Connection connection = null;
-
-        String sql = "SELECT * FROM video WHERE id='" + videoId + "' ORDER BY id ASC";
+        PreparedStatement statement = null;
 
         try {
             database.connect();
             connection = database.getConnection();
-            Statement selectUserAuthStatement = connection.createStatement();
-            ResultSet results = selectUserAuthStatement.executeQuery(sql);
+            statement = connection.prepareStatement("SELECT * FROM video WHERE id=? ORDER BY id ASC");
+            statement.setInt(1, videoId);
+            ResultSet results = statement.executeQuery();
 
             if (results.next()) {
                 video = createVideoFromResults(results);
             }
 
+            results.close();
+            statement.close();
             database.disconnect();
         } catch (SQLException sqlException) {
             System.out.println("UserData.getVideoNotes():" + sqlException);

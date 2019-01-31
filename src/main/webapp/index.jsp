@@ -1,11 +1,11 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:import url="head.jsp" />
 
-<body onload="showPanel('help');">
+<body<%-- onload="showPanel('help');"--%>>
 <div class="container-fluid">
     <div class="row-fullwidth">
         <nav class="navbar navbar-expand-sm navbar-expand-md navbar-expand-lg navbar-expand-xl navbar-light bg-light">
-            <a class="navbar-brand" href="#">VidMins</a>
+            <a class="navbar-brand" href="/">VidMins</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -204,83 +204,85 @@
                 <h3><i>Video will load here</i></h3>
             </c:if>
             <c:if test="${ currentVideo != null }">
-            <!-- begin code from YouTube Dev -->
-            <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-            <div class="player-frame">
-                <div id="player"></div>
-                <h4><a href="https://www.youtube.com/watch?v=${currentVideo.youTubeId}">${currentVideo.title}<br />https://www.youtube.com/watch?v=${currentVideo.youTubeId}</a></h4>
-            </div>
-
-            <c:if test="${notes != null}">
-                <div class="row">
-                    <h2>Notes: </h2>
-                    <table class="table table-striped">
-                        <tr>
-                            <th>Label</th>
-                            <th>Text</th>
-                            <th>Start</th>
-                            <th>End</th>
-                            <th>Created</th>
-                            <th>videoId</th>
-                        </tr>
-                        <c:forEach items="${notes}" var="note">
-                            <tr class="">
-                                <td>${note.label}</td>
-                                <td>${note.text}</td>
-                                <td>${note.start}</td>
-                                <td>${note.end}</td>
-                                <td>${note.createDatetime}</td>
-                                <td>${note.videoId}</td>
-                            </tr>
-                        </c:forEach>
-                    </table>
+                <!-- begin code from YouTube Dev -->
+                <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+                <div class="player-frame">
+                    <div id="player"></div>
+                    <div class="video-title">
+                        <h4><a href="https://www.youtube.com/watch?v=${currentVideo.youTubeId}">${currentVideo.title}<%--<br />https://www.youtube.com/watch?v=${currentVideo.youTubeId}--%></a></h4>
+                    </div>
                 </div>
-            </c:if>
 
-            <script>
-                // 2. This code loads the IFrame Player API code asynchronously.
-                var tag = document.createElement('script');
+                <c:if test="${notes != null}">
+                    <div class="row">
+                        <h2>Notes: </h2>
+                        <table id="note_table" class="table table-compact table-striped">
+                            <tr>
+                                <th>Label</th>
+                                <th>Text</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Created</th>
+                                <th>videoId</th>
+                            </tr>
+                            <c:forEach items="${notes}" var="note">
+                                <tr class="">
+                                    <td>${note.label}</td>
+                                    <td>${note.text}</td>
+                                    <td>${note.start}</td>
+                                    <td>${note.end}</td>
+                                    <td>${note.createDatetime}</td>
+                                    <td>${note.videoId}</td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </div>
+                </c:if>
 
-                tag.src = "https://www.youtube.com/iframe_api";
-                var firstScriptTag = document.getElementsByTagName('script')[0];
-                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+                <script>
+                    // 2. This code loads the IFrame Player API code asynchronously.
+                    var tag = document.createElement('script');
 
-                // 3. This function creates an <iframe> (and YouTube player)
-                //    after the API code downloads.
-                var player;
-                var youTubeId = '${currentVideo.youTubeId}';
-                function onYouTubeIframeAPIReady() {
-                    player = new YT.Player('player', {
-                        height: '390',
-                        width: '640',
-                        videoId: youTubeId,
-                        events: {
-                            'onReady': onPlayerReady,
-                            'onStateChange': onPlayerStateChange
-                        }
-                    });
-                }
+                    tag.src = "https://www.youtube.com/iframe_api";
+                    var firstScriptTag = document.getElementsByTagName('script')[0];
+                    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-                // 4. The API will call this function when the video player is ready.
-                function onPlayerReady(event) {
-                    //event.target.playVideo();
-                }
+                    // 3. This function creates an <iframe> (and YouTube player)
+                    //    after the API code downloads.
+                    var player;
+                    var youTubeId = '${currentVideo.youTubeId}';
+                    function onYouTubeIframeAPIReady() {
+                        player = new YT.Player('player', {
+                            height: '390',
+                            width: '640',
+                            videoId: youTubeId,
+                            events: {
+                                'onReady': onPlayerReady,
+                                'onStateChange': onPlayerStateChange
+                            }
+                        });
+                    }
 
-                // 5. The API calls this function when the player's state changes.
-                //    The function indicates that when playing a video (state=1),
-                //    the player should play for six seconds and then stop.
-                var done = false;
-                function onPlayerStateChange(event) {
-                    // if (event.data == YT.PlayerState.PLAYING && !done) {
-                    //   setTimeout(stopVideo, 6000);
-                    //   done = true;
-                    // }
-                }
-                function stopVideo() {
-                    player.stopVideo();
-                }
-            </script>
-            <!-- end code from YouTube Dev -->
+                    // 4. The API will call this function when the video player is ready.
+                    function onPlayerReady(event) {
+                        //event.target.playVideo();
+                    }
+
+                    // 5. The API calls this function when the player's state changes.
+                    //    The function indicates that when playing a video (state=1),
+                    //    the player should play for six seconds and then stop.
+                    var done = false;
+                    function onPlayerStateChange(event) {
+                        // if (event.data == YT.PlayerState.PLAYING && !done) {
+                        //   setTimeout(stopVideo, 6000);
+                        //   done = true;
+                        // }
+                    }
+                    function stopVideo() {
+                        player.stopVideo();
+                    }
+                </script>
+                <!-- end code from YouTube Dev -->
             </c:if>
         </div>
     </div>
@@ -289,7 +291,7 @@
         <c:if test="${videos != null}">
             <div class="row">
                 <h2>Videos: </h2>
-                <table class="table table-striped">
+                <table id="video_table" class="table table-striped">
                     <tr>
                         <th>ID</th>
                         <th>YouTubeId</th>

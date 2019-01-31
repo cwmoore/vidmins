@@ -6,7 +6,7 @@ import java.sql.SQLException;
 /**
  * The type Note.
  */
-public class Note {
+public class Note implements java.io.Serializable {
     private int id;
     private String label;
     private String text;

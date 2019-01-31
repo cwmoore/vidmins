@@ -44,21 +44,22 @@ public class LoadClient extends HttpServlet {
             List<Video> videos = userData.getUserVideos(user);
             req.getSession().setAttribute("videos", videos);
 
-            if (req.getParameter("videoId") != null && req.getParameter("videoId").matches("\\d+")) {
-                req.getSession().setAttribute("currentVideo", userData.getVideo((String) req.getParameter("videoId")));
-                req.getSession().setAttribute("notes",
-                        userData.getVideoNotes((String) req.getParameter("videoId")));
+            if (req.getParameter("videoId") != null) {
+                if (req.getParameter("videoId").matches("\\d+")) {
+                    req.getSession().setAttribute("currentVideo", userData.getVideo(Integer.parseInt(req.getParameter("videoId"))));
+                    req.getSession().setAttribute("notes",
+                            userData.getVideoNotes(Integer.parseInt(req.getParameter("videoId"))));
+                }
             }
 
-
-            if (req.getSession().getAttribute("currentVideo") != null) {
+            //if (req.getSession().getAttribute("currentVideo") != null) {
                 // req.getSession().setAttribute("notes", userData.getVideoNotes(Integer.toString(videos.get(1).getId())));
                 // req.getSession().setAttribute("currentVideo", videos.get(1));
-            }
+            //}
 
 
             req.getSession().setAttribute("title", "The Video Minutes App");
-        }
+        } // else { // user is not logged in }
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
         dispatcher.forward(req, resp);

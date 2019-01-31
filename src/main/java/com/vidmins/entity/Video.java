@@ -7,7 +7,7 @@ import java.sql.SQLException;
  *
  * @author cwmoore
  */
-public class Video {
+public class Video implements java.io.Serializable {
     private int id;
     private String youTubeId;
     private String title;

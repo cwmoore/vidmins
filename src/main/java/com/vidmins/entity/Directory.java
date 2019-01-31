@@ -6,11 +6,11 @@ import java.sql.*;
 /**
  * The type Directory.
  */
-public class Directory {
+public class Directory implements java.io.Serializable {
     private int id;
     private String name;
     private String description;
-    private List<Integer> videoIds;
+    private Map<Integer, Video> videos;
 
     /**
      * Instantiates a new Directory.
@@ -24,13 +24,11 @@ public class Directory {
      * @param id          the id
      * @param name        the name
      * @param description the description
-     * @param videoIds    the video ids
      */
-    public Directory(int id, String name, String description, List<Integer> videoIds) {
+    public Directory(int id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.videoIds = videoIds;
     }
 
     /**
@@ -105,16 +103,25 @@ public class Directory {
      *
      * @return the video ids
      */
-    public List<Integer> getVideoIds() {
-        return videoIds;
+    public Set<Integer> getVideoIds() {
+        return videos.keySet();
     }
 
     /**
-     * Sets video ids.
+     * Gets videos.
      *
-     * @param videoIds the video ids
+     * @return the videos
      */
-    public void setVideoIds(List<Integer> videoIds) {
-        this.videoIds = videoIds;
+    public Map<Integer, Video> getVideos() {
+        return videos;
+    }
+
+    /**
+     * Sets videos.
+     *
+     * @param videos the videos
+     */
+    public void setVideos(Map<Integer, Video> videos) {
+        this.videos = videos;
     }
 }

@@ -223,3 +223,32 @@ function setRelatedTime(timeStamp) {
 function updateVideoWidth() {
     // use as much space as possible but no more
 }
+
+/*
+* from: https://stackoverflow.com/a/34008994
+* use a dummy element to intercept keyboard events and dispatch actions
+*
+var dummy=document.getElementById("dummyFocus");
+dummy.focus();
+dummy.addEventListener("keypress",function(event){
+  if(event.keyCode== 32){
+    if(player.getPlayerState() == 1){
+      player.pauseVideo();
+    }
+    else{
+      player.playVideo();
+    }
+  }
+});
+*
+*
+* */
+
+/*
+* for sortable tables, didn't work
+* https://stackoverflow.com/questions/31888566/sort-table-rows-in-bootstrap
+$(document).ready(function() {
+    $('#note_table').DataTable();
+    $('#video_table').DataTable();
+});
+*/
