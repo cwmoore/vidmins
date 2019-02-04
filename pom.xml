@@ -26,6 +26,7 @@
       <version>5.1.39</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
+      <!-- from: https://stackoverflow.com/a/53022476 -->
     <dependency>
         <groupId>javax.servlet</groupId>
         <artifactId>jstl</artifactId>
