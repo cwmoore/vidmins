@@ -22,7 +22,7 @@ label .fixed {
 }
 
 #note_input {
-    display: none;
+    display: block;
 }
 
 #link_input {
@@ -55,7 +55,7 @@ label .fixed {
 }
 
 .player-frame {
-    width: 646px;
+    width: 804px;
     border: solid black 1px;
     border-radius: 5px;
     margin: 0;
