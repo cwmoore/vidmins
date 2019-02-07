@@ -153,20 +153,20 @@ function makeNote() {
 function setStartTime(timeStamp) {
     let timeLink = makeUrl(timeStamp);
 
-    document.getElementById("time_stamp_start").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
-    document.note_input_form.timeStampStart = timeStamp;
+    document.querySelector("#time_stamp_start").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
+    document.querySelector("#note_input_form").timeStampStart = timeStamp;
 }
 function setEndTime(timeStamp) {
     let timeLink = makeUrl(timeStamp);
 
-    document.getElementById("time_stamp_end").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
-    document.note_input_form.timeStampEnd = timeStamp;
+    document.querySelector("#time_stamp_end").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
+    document.querySelector("#note_input_form").timeStampEnd = timeStamp;
 }
 function addTag() {}
 
 function makeLink() {
-    document.getElementById("videoLink").value = makeUrl(player.getCurrentTime());
-    document.getElementById("link_time_stamp_prompt").innerText = player.getCurrentTime();
+    document.querySelector("#videoLink").value = makeUrl(player.getCurrentTime());
+    document.querySelector("#link_time_stamp_prompt").innerText = player.getCurrentTime();
 }
 function makeUrl(time) {
     // const time_parts = getTimeParts(time);

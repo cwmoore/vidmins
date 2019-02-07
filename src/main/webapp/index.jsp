@@ -66,8 +66,8 @@
             <div id="notes">
                 <!-- TODO: use bootstrap navigation -->
 
-                <div id="note_input"  class="aquapanel" method="get" action="#" onsubmit="processInput(); return false;">
-                    <form name="note_input_form">
+                <div id="note_input" class="aquapanel">
+                    <form id="note_input_form" accept-charset="utf-8" method="post" action="http://localhost:8080/new-note"<%-- onsubmit="processInput(); return false;" --%>>
 
                         <label>Label:</label><br />
                         <input type="text" name="label" /><br />
@@ -259,6 +259,13 @@
                             events: {
                                 'onReady': onPlayerReady,
                                 'onStateChange': onPlayerStateChange
+                            },
+                            playerVars: {
+                                'autoplay': 0,
+                                'controls': 1,
+                                'autohide': 1,
+                                'wmode': 'opaque',
+                                'origin': 'http://localhost:8080/'
                             }
                         });
                     }
@@ -306,7 +313,7 @@
                             <td>${video.youTubeId}</td>
                             <td>${video.title}</td>
                             <td>${video.duration}</td>
-                            <td><a href="/loadClient?videoId=${video.id}"># Notes</a></td>
+                            <td><a href="http://localhost:8080/loadClient?videoId=${video.id}"># Notes</a></td>
                             <td>${video.addDate}</td>
                         </tr>
                     </c:forEach>

@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/vidmins.iml" filepath="$PROJECT_DIR$/vidmins.iml" />
       <module fileurl="file://$PROJECT_DIR$/vidminsPrototype.iml" filepath="$PROJECT_DIR$/vidminsPrototype.iml" />
-      <module fileurl="file://$PROJECT_DIR$/week1userdisplayexercise.iml" filepath="$PROJECT_DIR$/week1userdisplayexercise.iml" />
     </modules>
   </component>
 </project>
