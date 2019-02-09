@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="vidminsPrototype:war exploded">
-    <output-path>$PROJECT_DIR$/target/Week2Exercise</output-path>
+    <output-path>$PROJECT_DIR$/target/VidMins</output-path>
     <properties id="maven-jee-properties">
       <options>
         <exploded>true</exploded>
@@ -35,7 +35,7 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/target/Week2Exercise/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/target/VidMins/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="vidminsPrototype/web/Web" />
     </root>

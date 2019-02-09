@@ -7,7 +7,7 @@
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="Week2Exercise.war">
+    <root id="archive" name="VidMins.war">
       <element id="artifact" artifact-name="vidminsPrototype:war exploded" />
     </root>
   </artifact>

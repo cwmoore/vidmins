@@ -9,7 +9,7 @@
   <url>http://vidmins.com</url>
 
 <build>
-  <finalName>Week2Exercise</finalName>
+  <finalName>VidMins</finalName>
   <plugins>
     <plugin>
       <groupId>org.apache.maven.plugins</groupId>
