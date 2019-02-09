@@ -7,7 +7,7 @@
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="Maven1.8.war">
+    <root id="archive" name="Week2Exercise.war">
       <element id="artifact" artifact-name="vidminsPrototype:war exploded" />
     </root>
   </artifact>

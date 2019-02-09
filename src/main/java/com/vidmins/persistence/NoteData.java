@@ -130,7 +130,7 @@ public class NoteData {
         try {
             Database database = Database.getInstance();
             String sqli = "INSERT INTO note (label, text, tag, start, end, videoId, userId) VALUES " +
-                    "(?, ?, ?, ?, ?, ?)";
+                    "(?, ?, ?, ?, ?, ?, ?)";
             // TODO: preprocess request parameters to pass in plain Strings, ![]s
             PreparedStatement statement = database.getConnection().prepareStatement(sqli);
             statement.setString(1, noteFields.get("label")[0]);

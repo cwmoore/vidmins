@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="sample@localhost">
-  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.4">
+  <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.14">
     <root id="1"/>
     <schema id="2" parent="1" name="sample">
       <Current>1</Current>
@@ -14,29 +14,29 @@
     <table id="8" parent="2" name="user"/>
     <column id="9" parent="8" name="id">
       <Position>1</Position>
-      <DataType>int(11)|0</DataType>
+      <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
     <column id="10" parent="8" name="first_name">
       <Position>2</Position>
-      <DataType>varchar(25)|0</DataType>
+      <DataType>varchar(25)|0s</DataType>
     </column>
     <column id="11" parent="8" name="last_name">
       <Position>3</Position>
-      <DataType>varchar(30)|0</DataType>
+      <DataType>varchar(30)|0s</DataType>
     </column>
     <column id="12" parent="8" name="user_name">
       <Position>4</Position>
-      <DataType>varchar(15)|0</DataType>
+      <DataType>varchar(15)|0s</DataType>
     </column>
     <column id="13" parent="8" name="password">
       <Position>5</Position>
-      <DataType>varchar(30)|0</DataType>
+      <DataType>varchar(30)|0s</DataType>
     </column>
     <column id="14" parent="8" name="date_of_birth">
       <Position>6</Position>
-      <DataType>date|0</DataType>
+      <DataType>date|0s</DataType>
     </column>
     <index id="15" parent="8" name="users_user_name_uindex">
       <ColNames>user_name</ColNames>
