@@ -57,11 +57,21 @@ public class NewNote extends HttpServlet {
                 req.getParameter("videoId") != null &&
                 req.getParameter("userId") != null) {
 
-            Map<String, String[]> noteFields = new TreeMap<>(req.getParameterMap());
-            int insertId = noteData.setNewNote(noteFields);
+            Note noteFromFormData = new Note();
+            noteFromFormData.setLabel(req.getParameter("label"));
+            noteFromFormData.setText(req.getParameter("note_text"));
+            noteFromFormData.setStart(Integer.parseInt(req.getParameter("timeStampStart")));
+            noteFromFormData.setEnd(Integer.parseInt(req.getParameter("timeStampEnd")));
+            noteFromFormData.setVideoId(Integer.parseInt(req.getParameter("videoId")));
+            noteFromFormData.setUserId(Integer.parseInt(req.getParameter("userId")));
+
+            logger.debug("noteFromFormData: ", noteFromFormData.toString());
+            //Map<String, String[]> noteFields = new TreeMap<>(req.getParameterMap());
+            //int insertId = noteData.setNewNote(noteFields);
+            int insertId = noteData.setNewNote(noteFromFormData);
 
             req.getSession().setAttribute("noteId", insertId);
-            logger.debug("New Note succeeded: #" + insertId);
+            logger.debug("New Note id: #" + insertId);
         } else {
             // error messages
             logger.debug("New Note failed");

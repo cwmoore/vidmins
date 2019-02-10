@@ -46,6 +46,25 @@ public class Note implements java.io.Serializable {
     }
 
     /**
+     * Instantiates a new Note.
+     *
+     * @param label          the label
+     * @param text           the text
+     * @param start          the start
+     * @param end            the end
+     * @param userId         the user id
+     * @param videoId        the video id
+     */
+    public Note(String label, String text, int start, int end, int userId, int videoId) {
+        this.label = label;
+        this.text = text;
+        this.start = start;
+        this.end = end;
+        this.userId = userId;
+        this.videoId = videoId;
+    }
+
+    /**
      * Gets id.
      *
      * @return the id

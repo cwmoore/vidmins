@@ -81,14 +81,14 @@
                         <button name="add-tag" onclick="addTag()">Add Tag</button><br />
                         <span id="tags"></span>
 
-                        <input type="hidden" name="timeStampStart" />
+                        <input type="hidden" name="timeStampStart" value="0" />
                         <label>Start:</label> <span id="time_stamp_start"></span><br />
 
-                        <input type="hidden" name="timeStampEnd" />
+                        <input type="hidden" name="timeStampEnd" value="0" />
                         <label>End:</label> <span id="time_stamp_end"></span><br />
 
-                        <input type="hidden" name="userId" value="${userId}" />
-                        <input type="hidden" name="videoId" value="${videoId}" />
+                        <input type="hidden" name="userId" value="${sessionScope.user.id}" />
+                        <input type="hidden" name="videoId" value="${sessionScope.currentVideo.id}" />
 
                         <br />
                         <input type="submit" class="btn btn-primary" value="Store Annotation" />

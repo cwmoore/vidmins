@@ -18,7 +18,8 @@ public class NoteData {
 
     public NoteData() {
         logger = LogManager.getLogger(this.getClass());
-        logger.info("NodeData logger");}
+        logger.info("NodeData logger");
+    }
 
     /**
      * Create a user from search result
@@ -121,18 +122,21 @@ public class NoteData {
             database.disconnect();
 
         } catch (SQLException sqlException) {
-            System.out.println("In NoteData.notesFromVideoId(): " + sqlException);
+            System.out.println("In NoteData.getNotesFromVideoId(): " + sqlException);
         } catch (Exception exception) {
-            System.out.println("In NoteData.notesFromVideoId(): " + exception);
+            System.out.println("In NoteData.getNotesFromVideoId(): " + exception);
         }
 
         return notes;
     }
 
-    public int setNewNote(Map<String, String[]> noteFields) {
+    public int setNewNoteFromAttributes(Map<String, String[]> noteFields) {
         int insertId = -1;
 
+        newNoteCheckData(noteFields);
+
         try {
+            logger.debug("noteFields: ", noteFields.keySet(), noteFields.values());
             Database database = Database.getInstance();
             String sqli = "INSERT INTO note (label, text, tag, start, end, videoId, userId) VALUES " +
                     "(?, ?, ?, ?, ?, ?, ?)";
@@ -147,7 +151,7 @@ public class NoteData {
             statement.setInt(7, Integer.parseInt(noteFields.get("userId")[0]));
             insertId = statement.executeUpdate();
 
-            logger.debug(statement);
+            logger.debug("statement: ", statement);
 
             statement.close();
             database.disconnect();
@@ -159,5 +163,51 @@ public class NoteData {
         }
 
         return insertId;
+    }
+
+    public int setNewNote(Note newNote) {
+        int insertId = -1;
+
+        try {
+            logger.debug("note: ", newNote);
+            Database database = Database.getInstance();
+
+            // tags go in another table
+            String sqli = "INSERT INTO note (label, text, start, end, videoId, userId) VALUES " +
+                    "(?, ?, ?, ?, ?, ?)";
+            // TODO: preprocess request parameters to pass in plain Strings, ![]s
+            PreparedStatement statement = database.getConnection().prepareStatement(sqli);
+            statement.setString(1, newNote.getLabel());
+            statement.setString(2, newNote.getText());
+            statement.setInt(3, newNote.getStart());
+            statement.setInt(4, newNote.getEnd());
+            statement.setInt(5, newNote.getVideoId());
+            statement.setInt(6, newNote.getUserId());
+            
+            insertId = statement.executeUpdate();
+
+            logger.debug("statement: ", statement);
+
+            statement.close();
+            database.disconnect();
+
+        } catch (SQLException sqlException) {
+            System.out.println("In NoteData.notesFromVideoId(): " + sqlException);
+        } catch (Exception exception) {
+            System.out.println("In NoteData.notesFromVideoId(): " + exception);
+        }
+
+        return insertId;
+    }
+
+    public void newNoteCheckData(Map<String, String[]> noteFields) {
+        for (Map.Entry<String, String[]> entry : noteFields.entrySet()) {
+            logger.debug(entry.getKey());
+            String vals = "";
+            for (String val : entry.getValue()) {
+                vals += val + ", ";
+            }
+            logger.debug(vals + "\n");
+        }
     }
 }

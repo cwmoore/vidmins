@@ -2,6 +2,8 @@ package com.vidmins.controller;
 
 import com.vidmins.persistence.UserData;
 import com.vidmins.entity.*;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.*;
 import javax.servlet.RequestDispatcher;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.annotation.*;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -25,6 +28,13 @@ import java.io.IOException;
 )
 
 public class LoadClient extends HttpServlet {
+    private final Logger logger = LogManager.getLogger(this.getClass());
+
+    /**
+     * Initialize logging
+     */
+    public void init(HttpServletRequest request, HttpServletResponse response) {
+    }
 
     /**
      * Handle a GET request
@@ -60,6 +70,15 @@ public class LoadClient extends HttpServlet {
 
             req.getSession().setAttribute("title", "The Video Minutes App");
         } // else { // user is not logged in }
+
+        HttpSession session = req.getSession();
+        Enumeration keys = session.getAttributeNames();
+
+        while (keys.hasMoreElements()) {
+            String key = (String) keys.nextElement();
+            String msg = key + ": " + session.getAttribute(key) + '\n';
+            logger.debug(msg);
+        }
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
         dispatcher.forward(req, resp);
