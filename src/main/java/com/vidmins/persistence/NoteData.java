@@ -5,8 +5,6 @@ import org.apache.logging.log4j.*;
 
 import java.sql.*;
 import java.util.*;
-//import com.mysql.jdbc.*;
-// import java.security.*;
 
 /**
  * Handle notes CRUD
@@ -136,20 +134,37 @@ public class NoteData {
         newNoteCheckData(noteFields);
 
         try {
-            logger.debug("noteFields: ", noteFields.keySet(), noteFields.values());
+            //logger.debug("noteFields: ", noteFields.keySet(), noteFields.values());
             Database database = Database.getInstance();
-            String sqli = "INSERT INTO note (label, text, tag, start, end, videoId, userId) VALUES " +
-                    "(?, ?, ?, ?, ?, ?, ?)";
+            String sqlNote = "INSERT INTO note (label, text, start, end, videoId, userId) VALUES " +
+                    "(?, ?, ?, ?, ?, ?)";
             // TODO: preprocess request parameters to pass in plain Strings, ![]s
-            PreparedStatement statement = database.getConnection().prepareStatement(sqli);
+
+            logger.debug("before getConnection().prepareStatement()");
+            // throws NullPointerException
+            PreparedStatement statement = database.getConnection().prepareStatement(sqlNote);
+            logger.debug("after getConnection().prepareStatement()");
+
             statement.setString(1, noteFields.get("label")[0]);
             statement.setString(2, noteFields.get("note_text")[0]);
-            statement.setString(3, noteFields.get("tag")[0]);
-            statement.setInt(4, Integer.parseInt(noteFields.get("timeStampStart")[0]));
-            statement.setInt(5, Integer.parseInt(noteFields.get("timeStampEnd")[0]));
-            statement.setInt(6, Integer.parseInt(noteFields.get("videoId")[0]));
-            statement.setInt(7, Integer.parseInt(noteFields.get("userId")[0]));
+
+            statement.setInt(3, Integer.parseInt(noteFields.get("timeStampStart")[0]));
+            statement.setInt(4, Integer.parseInt(noteFields.get("timeStampEnd")[0]));
+            statement.setInt(5, Integer.parseInt(noteFields.get("videoId")[0]));
+            statement.setInt(6, Integer.parseInt(noteFields.get("userId")[0]));
             insertId = statement.executeUpdate();
+
+            String sqlTags = "INSERT INTO tags " +
+                    "(tag, objectId, objectType) VALUES " +
+                    "(?, ?, 'note')";
+            statement = database.getConnection().prepareStatement(sqlTags);
+            // set tags on tags table
+            for (String tag : noteFields.get("tags")) {
+                statement.setString(1, tag);
+                statement.setInt(2, insertId);
+                statement.executeUpdate();
+            }
+
 
             logger.debug("statement: ", statement);
 
@@ -157,9 +172,9 @@ public class NoteData {
             database.disconnect();
 
         } catch (SQLException sqlException) {
-            System.out.println("In NoteData.notesFromVideoId(): " + sqlException);
+            System.out.println("In NoteData.setNewNoteFromAttributes(): " + sqlException);
         } catch (Exception exception) {
-            System.out.println("In NoteData.notesFromVideoId(): " + exception);
+            System.out.println("In NoteData.setNewNoteFromAttributes(): " + exception);
         }
 
         return insertId;
@@ -168,33 +183,38 @@ public class NoteData {
     public int setNewNote(Note newNote) {
         int insertId = -1;
 
+        // tags go in another table
+        String sqli = "INSERT INTO note (label, text, start, end, videoId, userId) VALUES " +
+                "(?, ?, ?, ?, ?, ?)";
+
         try {
-            logger.debug("note: ", newNote);
+            logger.debug("note: " + newNote.toString());
             Database database = Database.getInstance();
 
-            // tags go in another table
-            String sqli = "INSERT INTO note (label, text, start, end, videoId, userId) VALUES " +
-                    "(?, ?, ?, ?, ?, ?)";
-            // TODO: preprocess request parameters to pass in plain Strings, ![]s
+            logger.debug("Check Database: " + database.toString());
+            logger.debug("Check Database Connection: " + database.getConnection().prepareStatement(sqli));
+            logger.debug("Check Database Connection: " + database.getConnection().toString());
+
             PreparedStatement statement = database.getConnection().prepareStatement(sqli);
+            logger.debug("statement: " + sqli + statement.toString());
+
             statement.setString(1, newNote.getLabel());
             statement.setString(2, newNote.getText());
             statement.setInt(3, newNote.getStart());
             statement.setInt(4, newNote.getEnd());
             statement.setInt(5, newNote.getVideoId());
             statement.setInt(6, newNote.getUserId());
-            
-            insertId = statement.executeUpdate();
 
-            logger.debug("statement: ", statement);
+
+            insertId = statement.executeUpdate();
 
             statement.close();
             database.disconnect();
 
         } catch (SQLException sqlException) {
-            System.out.println("In NoteData.notesFromVideoId(): " + sqlException);
+            System.out.println("In NoteData.setNewNote(): " + sqli + sqlException);
         } catch (Exception exception) {
-            System.out.println("In NoteData.notesFromVideoId(): " + exception);
+            System.out.println("In NoteData.setNewNote(): " + sqli + exception);
         }
 
         return insertId;

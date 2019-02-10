@@ -58,6 +58,8 @@ public class NewNote extends HttpServlet {
                 req.getParameter("userId") != null) {
 
             Note noteFromFormData = new Note();
+            logger.debug("noteFromFormData: " + noteFromFormData.toString());
+            System.out.println("noteFromFormData: " + noteFromFormData.toString());
             noteFromFormData.setLabel(req.getParameter("label"));
             noteFromFormData.setText(req.getParameter("note_text"));
             noteFromFormData.setStart(Integer.parseInt(req.getParameter("timeStampStart")));
@@ -65,12 +67,14 @@ public class NewNote extends HttpServlet {
             noteFromFormData.setVideoId(Integer.parseInt(req.getParameter("videoId")));
             noteFromFormData.setUserId(Integer.parseInt(req.getParameter("userId")));
 
-            logger.debug("noteFromFormData: ", noteFromFormData.toString());
-            //Map<String, String[]> noteFields = new TreeMap<>(req.getParameterMap());
-            //int insertId = noteData.setNewNote(noteFields);
-            int insertId = noteData.setNewNote(noteFromFormData);
+            logger.debug("noteFromFormData: " + noteFromFormData.toString());
+            System.out.println("noteFromFormData: " + noteFromFormData.toString());
+            Map<String, String[]> noteFields = new TreeMap<>(req.getParameterMap());
+            int insertId = noteData.setNewNoteFromAttributes(noteFields);
+            //int insertId = noteData.setNewNote(noteFromFormData);
+            noteFromFormData.setId(insertId);
 
-            req.getSession().setAttribute("noteId", insertId);
+            req.getSession().setAttribute("note", noteFromFormData);
             logger.debug("New Note id: #" + insertId);
         } else {
             // error messages

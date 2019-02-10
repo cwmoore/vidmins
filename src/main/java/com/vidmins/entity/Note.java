@@ -20,6 +20,14 @@ public class Note implements java.io.Serializable {
      * Instantiates a new Note.
      */
     public Note() {
+        this.id = -1;
+        this.label = "";
+        this.text = "";
+        this.start = -1;
+        this.end = -1;
+        this.createDatetime = "2000-01-01 00:00:00.000";
+        this.userId = -1;
+        this.videoId = -1;
     }
 
     /**
