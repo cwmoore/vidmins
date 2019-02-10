@@ -55,7 +55,7 @@ public class NoteData {
         try {
             database.connect();
             connection = database.getConnection();
-            statement = connection.prepareStatement("SELECT * FROM note WHERE videoId=? ORDER BY start ASC, end ASC");
+            statement = connection.prepareStatement("SELECT * FROM note WHERE videoId=? ORDER BY createDateTime DESC, start ASC, end ASC");
             statement.setInt(1, videoId);
             ResultSet results = statement.executeQuery();
 
@@ -136,23 +136,33 @@ public class NoteData {
         try {
             //logger.debug("noteFields: ", noteFields.keySet(), noteFields.values());
             Database database = Database.getInstance();
+            database.connect();
             String sqlNote = "INSERT INTO note (label, text, start, end, videoId, userId) VALUES " +
                     "(?, ?, ?, ?, ?, ?)";
             // TODO: preprocess request parameters to pass in plain Strings, ![]s
 
-            logger.debug("before getConnection().prepareStatement()");
+            logger.debug("before getConnection()");
             // throws NullPointerException
-            PreparedStatement statement = database.getConnection().prepareStatement(sqlNote);
-            logger.debug("after getConnection().prepareStatement()");
+            Connection connection = database.getConnection();
+            logger.debug("before connection.prepareStatement()");
+            PreparedStatement statement = connection.prepareStatement(sqlNote);
+            logger.debug("after connection.prepareStatement()");
 
-            statement.setString(1, noteFields.get("label")[0]);
+            String label = noteFields.get("label")[0];
+            logger.debug("label: " + label);
+            statement.setString(1, label);
             statement.setString(2, noteFields.get("note_text")[0]);
-
             statement.setInt(3, Integer.parseInt(noteFields.get("timeStampStart")[0]));
             statement.setInt(4, Integer.parseInt(noteFields.get("timeStampEnd")[0]));
             statement.setInt(5, Integer.parseInt(noteFields.get("videoId")[0]));
             statement.setInt(6, Integer.parseInt(noteFields.get("userId")[0]));
-            insertId = statement.executeUpdate();
+            logger.debug(statement.toString());
+
+            if (1 == statement.executeUpdate()) {
+                // insert seems to have worked
+            } else {
+                // insert failed
+            }
 
             String sqlTags = "INSERT INTO tags " +
                     "(tag, objectId, objectType) VALUES " +

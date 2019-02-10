@@ -70,12 +70,11 @@ public class NewNote extends HttpServlet {
             logger.debug("noteFromFormData: " + noteFromFormData.toString());
             System.out.println("noteFromFormData: " + noteFromFormData.toString());
             Map<String, String[]> noteFields = new TreeMap<>(req.getParameterMap());
-            int insertId = noteData.setNewNoteFromAttributes(noteFields);
+
+            noteData.setNewNoteFromAttributes(noteFields);
             //int insertId = noteData.setNewNote(noteFromFormData);
-            noteFromFormData.setId(insertId);
 
             req.getSession().setAttribute("note", noteFromFormData);
-            logger.debug("New Note id: #" + insertId);
         } else {
             // error messages
             logger.debug("New Note failed");
