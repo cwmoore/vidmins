@@ -50,11 +50,10 @@ public class NewNote extends HttpServlet {
 
         logger.debug(req.getParameterMap());
 
-        if (req.getParameter("noteId") != null &&
-                req.getParameter("label") != null &&
+        if (req.getParameter("label") != null &&
                 req.getParameter("note_text") != null &&
-                req.getParameter("time_stamp_start") != null &&
-                req.getParameter("time_stamp_end") != null &&
+                req.getParameter("timeStampStart") != null &&
+                req.getParameter("timeStampEnd") != null &&
                 req.getParameter("videoId") != null &&
                 req.getParameter("userId") != null) {
 

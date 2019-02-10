@@ -1,6 +1,7 @@
 package com.vidmins.persistence;
 
 import com.vidmins.entity.*;
+import org.apache.logging.log4j.*;
 
 import java.sql.*;
 import java.util.*;
@@ -13,7 +14,11 @@ import java.util.*;
  * @author cwmoore
  */
 public class NoteData {
+    private Logger logger;
 
+    public NoteData() {
+        logger = LogManager.getLogger(this.getClass());
+        logger.info("NodeData logger");}
 
     /**
      * Create a user from search result
@@ -141,6 +146,8 @@ public class NoteData {
             statement.setInt(6, Integer.parseInt(noteFields.get("videoId")[0]));
             statement.setInt(7, Integer.parseInt(noteFields.get("userId")[0]));
             insertId = statement.executeUpdate();
+
+            logger.debug(statement);
 
             statement.close();
             database.disconnect();

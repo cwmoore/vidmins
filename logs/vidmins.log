@@ -1,0 +1,23 @@
+[INFO ] 2019-02-09 21:29:49.662 [http-nio-8080-exec-1] NewNote - Starting NewNote servlet
+[DEBUG] 2019-02-09 21:29:49.671 [http-nio-8080-exec-1] NewNote - {label=[Ljava.lang.String;@69965240, note_text=[Ljava.lang.String;@43ce4107, tag=[Ljava.lang.String;@50870f64, timeStampStart=[Ljava.lang.String;@56ec7d0e, timeStampEnd=[Ljava.lang.String;@d3321c1}
+[DEBUG] 2019-02-09 21:29:49.672 [http-nio-8080-exec-1] NewNote - New Note failed
+[DEBUG] 2019-02-09 21:30:00.801 [http-nio-8080-exec-4] NewNote - {label=[Ljava.lang.String;@673ce203, note_text=[Ljava.lang.String;@35c6326d, tag=[Ljava.lang.String;@793f147f, timeStampStart=[Ljava.lang.String;@4a366bdc, timeStampEnd=[Ljava.lang.String;@4a1aa463}
+[DEBUG] 2019-02-09 21:30:00.802 [http-nio-8080-exec-4] NewNote - New Note failed
+[INFO ] 2019-02-09 21:32:44.574 [http-nio-8080-exec-5] NewNote - Starting NewNote servlet
+[DEBUG] 2019-02-09 21:32:44.582 [http-nio-8080-exec-5] NewNote - {label=[Ljava.lang.String;@480135d2, note_text=[Ljava.lang.String;@76281219, tag=[Ljava.lang.String;@11f444fc, add-tag=[Ljava.lang.String;@13888b93, timeStampStart=[Ljava.lang.String;@52e68395, timeStampEnd=[Ljava.lang.String;@6468fb0a, userId=[Ljava.lang.String;@578890df, videoId=[Ljava.lang.String;@b4dae}
+[DEBUG] 2019-02-09 21:32:44.583 [http-nio-8080-exec-5] NewNote - New Note failed
+[DEBUG] 2019-02-09 21:33:02.019 [http-nio-8080-exec-6] NewNote - {label=[Ljava.lang.String;@322c41e1, note_text=[Ljava.lang.String;@7ae2eb9e, tag=[Ljava.lang.String;@3543083, timeStampStart=[Ljava.lang.String;@270c448, timeStampEnd=[Ljava.lang.String;@5203beae, userId=[Ljava.lang.String;@3fd0016b, videoId=[Ljava.lang.String;@1d22ee3a}
+[DEBUG] 2019-02-09 21:33:02.021 [http-nio-8080-exec-6] NewNote - New Note failed
+[INFO ] 2019-02-09 21:45:31.474 [http-nio-8080-exec-3] NewNote - Starting NewNote servlet
+[DEBUG] 2019-02-09 21:45:31.481 [http-nio-8080-exec-3] NewNote - {label=[Ljava.lang.String;@126b727b, note_text=[Ljava.lang.String;@452d9a74, tag=[Ljava.lang.String;@65a9180b, timeStampStart=[Ljava.lang.String;@7e33328d, timeStampEnd=[Ljava.lang.String;@37027f9a, userId=[Ljava.lang.String;@1e55bd34, videoId=[Ljava.lang.String;@339187b5}
+[DEBUG] 2019-02-09 21:45:31.482 [http-nio-8080-exec-3] NewNote - New Note failed
+[INFO ] 2019-02-09 21:48:05.259 [http-nio-8080-exec-17] NewNote - Starting NewNote servlet
+[DEBUG] 2019-02-09 21:48:05.265 [http-nio-8080-exec-17] NewNote - {label=[Ljava.lang.String;@40d0ee65, note_text=[Ljava.lang.String;@5a94e73a, tag=[Ljava.lang.String;@599b7756, timeStampStart=[Ljava.lang.String;@7aed16f4, timeStampEnd=[Ljava.lang.String;@3d096c0a, userId=[Ljava.lang.String;@4059e1a6, videoId=[Ljava.lang.String;@427a0f3c}
+[DEBUG] 2019-02-09 21:48:05.266 [http-nio-8080-exec-17] NewNote - New Note succeeded: #-1
+[INFO ] 2019-02-09 23:36:01.096 [http-nio-8080-exec-24] NewNote - Starting NewNote servlet
+[INFO ] 2019-02-09 23:36:01.122 [http-nio-8080-exec-24] NoteData - NodeData logger
+[DEBUG] 2019-02-09 23:36:01.122 [http-nio-8080-exec-24] NewNote - {label=[Ljava.lang.String;@187771de, note_text=[Ljava.lang.String;@6605a4dc, tag=[Ljava.lang.String;@d4dc3e6, timeStampStart=[Ljava.lang.String;@1f28a199, timeStampEnd=[Ljava.lang.String;@3c72da23, userId=[Ljava.lang.String;@779aaa35, videoId=[Ljava.lang.String;@142b05d3}
+[DEBUG] 2019-02-09 23:36:01.123 [http-nio-8080-exec-24] NewNote - New Note succeeded: #-1
+[INFO ] 2019-02-09 23:36:07.823 [http-nio-8080-exec-22] NoteData - NodeData logger
+[DEBUG] 2019-02-09 23:36:07.825 [http-nio-8080-exec-22] NewNote - {label=[Ljava.lang.String;@589441bc, note_text=[Ljava.lang.String;@1426cd2, tag=[Ljava.lang.String;@208468b4, timeStampStart=[Ljava.lang.String;@5097e431, timeStampEnd=[Ljava.lang.String;@2a74d63e, userId=[Ljava.lang.String;@38420b5e, videoId=[Ljava.lang.String;@3b80052a}
+[DEBUG] 2019-02-09 23:36:07.825 [http-nio-8080-exec-22] NewNote - New Note succeeded: #-1

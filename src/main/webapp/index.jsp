@@ -87,6 +87,9 @@
                         <input type="hidden" name="timeStampEnd" />
                         <label>End:</label> <span id="time_stamp_end"></span><br />
 
+                        <input type="hidden" name="userId" value="${userId}" />
+                        <input type="hidden" name="videoId" value="${videoId}" />
+
                         <br />
                         <input type="submit" class="btn btn-primary" value="Store Annotation" />
                     </form>
