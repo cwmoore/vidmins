@@ -80,6 +80,7 @@ public class NewNote extends HttpServlet {
             logger.debug("New Note failed");
         }
 
-        resp.sendRedirect("/loadClient");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/loadClient");
+        dispatcher.forward(req, resp);
     }
 }
