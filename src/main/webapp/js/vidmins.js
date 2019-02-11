@@ -1,4 +1,4 @@
-function Note() {
+const Note = () => {
     this.videoId = null; // YouTube video ID
     this.label = null; // the label appears on the video timeline
     this.text = null; // free text or other data that can be represented as text
@@ -7,7 +7,7 @@ function Note() {
     this.end = 0; // the timestamp in milliseconds of the end time of the segment
 
     // read the form data into this Note
-    this.readForm = function() {
+    this.readForm = () => {
         this.videoId = videoId;
         this.label = document.note_input_form.label.value;
         this.text = document.note_input_form.note_text.value;
@@ -17,13 +17,13 @@ function Note() {
     }
 
     // add a tag
-    this.addTag = function() {
+    this.addTag = () => {
         this.tags.add(document.note_input_form.tag.value);
         document.note_input_form.tag.value = "";
     }
 
     // update the tags list in the DOM
-    this.updateTagHtml = function() {
+    this.updateTagHtml = () => {
         let tagsHtml = "";
         let tagIterator = this.tags.values();
 
@@ -40,12 +40,12 @@ function Note() {
     }
 
     // save this note
-    this.store = function() {
+    this.store = () => {
 
     }
 }
 
-/*function makeUrlParts() {
+/*const makeUrlParts = () => {
     // after: https://stackoverflow.com/a/48990315
     String urlid="";
     String url="http://www.youtube.com/watch?v=0zM4nApSvMg#t=0m10s";
@@ -78,18 +78,18 @@ function Note() {
 
 */
 
-function replaceActiveFeature(activeFeature, newFeature) {
+const replaceActiveFeature = (activeFeature, newFeature) => {
 
 }
 
-function showPanel(feature) {
+const showPanel = (feature) => {
     hidePanels();
     deselectButtons();
     document.getElementById(feature + "_button").classList.add("active");
     document.getElementById(feature + "_input").style.display = "block";
 }
 
-function hidePanels() {
+const hidePanels = () => {
     let feature;
     const features = ["help", "note", "link", "comment", "ask"];
 
@@ -98,11 +98,11 @@ function hidePanels() {
     }
 }
 
-function hidePanel(feature) {
+const hidePanel = (feature) => {
     document.getElementById(feature + "_input").style.display = "none";
 }
 
-function deselectButtons() {
+const deselectButtons = () => {
     let feature;
     const features = ["help", "note", "link", "comment", "ask"];
 
@@ -111,7 +111,7 @@ function deselectButtons() {
     }
 }
 
-function deselectButton(feature) {
+const deselectButton = (feature) => {
     const button = document.getElementById(feature + "_button");
 
     if (button.classList.contains("active")) {
@@ -119,7 +119,7 @@ function deselectButton(feature) {
     }
 }
 
-function processInput() {
+const processInput = () => {
     // get form data
     // assign a unique identifier
     // insert data into file in timestamp order
@@ -127,14 +127,14 @@ function processInput() {
     // return error or other messages
 }
 
-function getTimeParts(totalSeconds) {
+const getTimeParts = (totalSeconds) => {
     let elSeconds = Math.floor(totalSeconds % 60);
     let elMinutes = Math.floor(totalSeconds / 60);
     let elHours = -1
     return {seconds: elSeconds, minutes: elMinutes, hours: elHours};
 }
 
-function showTime() {
+const showTime = () => {
     let msg = "";
 
     msg += "getCurrentTime: " + player.getCurrentTime();
@@ -144,31 +144,31 @@ function showTime() {
     alert(msg);
 }
 
-function makeNote() {
+const makeNote = () => {
     showPanel("note");
     setStartTime(player.getCurrentTime());
     setEndTime(player.getCurrentTime());
     player.stopVideo();
 }
-function setStartTime(timeStamp) {
+const setStartTime = (timeStamp) => {
     let timeLink = makeUrl(timeStamp);
 
     document.querySelector("#time_stamp_start").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
     document.querySelector("#note_input_form").timeStampStart = timeStamp;
 }
-function setEndTime(timeStamp) {
+const setEndTime = (timeStamp) => {
     let timeLink = makeUrl(timeStamp);
 
     document.querySelector("#time_stamp_end").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
     document.querySelector("#note_input_form").timeStampEnd = timeStamp;
 }
-function addTag() {}
+const addTag = () => {}
 
-function makeLink() {
+const makeLink = () => {
     document.querySelector("#videoLink").value = makeUrl(player.getCurrentTime());
     document.querySelector("#link_time_stamp_prompt").innerText = player.getCurrentTime();
 }
-function makeUrl(time) {
+const makeUrl = (time) => {
     // const time_parts = getTimeParts(time);
     // let timeString = "&t=";
     // if (time_parts.hours > 0) {
@@ -184,43 +184,43 @@ function makeUrl(time) {
     return "https://www.youtube.com/watch?v=" + youTubeId + timeString + "s";
 }
 
-function makeSurveyQuestion() {
+const makeSurveyQuestion = () => {
     showPanel("survey");
     setPromptTime(player.getCurrentTime());
     player.stopVideo();
 }
-function setPromptTime(timeStamp) {
+const setPromptTime = (timeStamp) => {
     let timeLink = makeUrl(timeStamp);
 
     document.getElementById("time_stamp_prompt").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
     document.note_input_form.timeStampEnd = timeStamp;
 }
 
-function makeComment() {
+const makeComment = () => {
     showPanel("comment");
     setCommentTime(player.getCurrentTime());
     player.stopVideo();
 }
-function setCommentTime(timeStamp) {
+const setCommentTime = (timeStamp) => {
     let timeLink = makeUrl(timeStamp);
 
     document.getElementById("time_stamp_comment").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
     document.note_input_form.timeStampEnd = timeStamp;
 }
 
-function makeAskQuestion() {
+const makeAskQuestion = () => {
     showPanel("ask");
     setRelatedTime(player.getCurrentTime());
     player.stopVideo();
 }
-function setRelatedTime(timeStamp) {
+const setRelatedTime = (timeStamp) => {
     let timeLink = makeUrl(timeStamp);
 
     document.getElementById("time_stamp_ask").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
     document.note_input_form.timeStampEnd = timeStamp;
 }
 
-function updateVideoWidth() {
+const updateVideoWidth = () => {
     // use as much space as possible but no more
 }
 
