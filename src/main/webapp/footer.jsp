@@ -1,4 +1,8 @@
-    <div id="footer"></div>
+    <div class="container-fluid">
+        <div id="footer" class="row-fullwidth">
+            <h1>Vidmins.com - All Rights Reserved</h1>
+        </div>
+    </div>
     <script src="js/vidmins.js"></script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

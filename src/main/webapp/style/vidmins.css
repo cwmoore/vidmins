@@ -17,7 +17,7 @@ label .fixed {
 }
 */
 
-#help_input {
+#help_input, #link_input, #comment_input, #survey_input, #feedback_input, #ask_input {
     display: none;
 }
 
@@ -25,27 +25,7 @@ label .fixed {
     display: block;
 }
 
-#link_input {
-    display: none;
-}
-
-#comment_input {
-    display: none;
-}
-
-#survey_input {
-    display: none;
-}
-
-#feedback_input {
-    display: none;
-}
-
-#ask_input {
-    display: none;
-}
-
-#notes textarea {
+#watcher textarea {
     height: 5em;
     width: 90%;
 }

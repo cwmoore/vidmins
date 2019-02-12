@@ -9,7 +9,7 @@
         <button id="comment_button" name="feedback" class="btn btn-info" onclick="makeComment();">Comment</button>
         <button id="ask_button" name="ask-question" class="btn btn-info" onclick="makeAskQuestion();">Ask</button>
     </div>
-    <div id="notes">
+    <div id="watcher">
         <!-- TODO: use bootstrap navigation -->
 
         <div id="note_input" class="aquapanel">
@@ -28,10 +28,10 @@
                 <span id="tags"></span>
 
                 <input type="hidden" name="timeStampStart" value="0" />
-                <label>Start:</label> <span id="time_stamp_start"></span><br />
+                <label>Start:</label> <span id="time_stamp_start">0</span><br />
 
                 <input type="hidden" name="timeStampEnd" value="0" />
-                <label>End:</label> <span id="time_stamp_end"></span><br />
+                <label>End:</label> <span id="time_stamp_end">0</span><br />
 
                 <input type="hidden" name="userId" value="${sessionScope.user.id}" />
                 <input type="hidden" name="videoId" value="${sessionScope.currentVideo.id}" />

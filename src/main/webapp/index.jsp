@@ -15,8 +15,6 @@
             <c:import url="player.jsp" />
             <c:import url="video.jsp" />
         </div>
-
-
-        <c:import url="user.jsp" />
+    </div>
 </div>
 <%@ include file="footer.jsp" %>
