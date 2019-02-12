@@ -131,6 +131,7 @@ public class NoteData {
     public int setNewNoteFromAttributes(Map<String, String[]> noteFields) {
         int insertId = -1;
 
+        ResultSet resultSet; // for insert ID
         newNoteCheckData(noteFields);
 
         try {
@@ -145,7 +146,7 @@ public class NoteData {
             // throws NullPointerException
             Connection connection = database.getConnection();
             logger.debug("before connection.prepareStatement()");
-            PreparedStatement statement = connection.prepareStatement(sqlNote);
+            PreparedStatement statement = connection.prepareStatement(sqlNote, Statement.RETURN_GENERATED_KEYS);
             logger.debug("after connection.prepareStatement()");
 
             String label = noteFields.get("label")[0];
@@ -160,8 +161,15 @@ public class NoteData {
 
             if (1 == statement.executeUpdate()) {
                 // insert seems to have worked
+                // after: http://www.mysqltutorial.org/mysql-jdbc-insert/
+                resultSet = statement.getGeneratedKeys();
+                if (resultSet.next()) {
+                    insertId = resultSet.getInt(1);
+                }
+                logger.debug("setNoteFromAttributes(): Insert note succeeded: ", insertId);
             } else {
-                // insert failed
+                // insert failed, no rows affected
+                logger.debug("setNoteFromAttributes(): Insert note failed: ", statement);
             }
 
             String sqlTags = "INSERT INTO tags " +
@@ -190,23 +198,25 @@ public class NoteData {
         return insertId;
     }
 
-    public int setNewNote(Note newNote) {
+    public Note setNewNote(Note newNote) {
         int insertId = -1;
 
         // tags go in another table
         String sqli = "INSERT INTO note (label, text, start, end, videoId, userId) VALUES " +
                 "(?, ?, ?, ?, ?, ?)";
+        ResultSet resultSet;
 
         try {
             logger.debug("note: " + newNote.toString());
             Database database = Database.getInstance();
+            database.connect();
 
-            logger.debug("Check Database: " + database.toString());
-            logger.debug("Check Database Connection: " + database.getConnection().prepareStatement(sqli));
-            logger.debug("Check Database Connection: " + database.getConnection().toString());
+            //logger.debug("Check Database: " + database.toString());
+            //logger.debug("Check Database Connection: " + database.getConnection().toString());
 
-            PreparedStatement statement = database.getConnection().prepareStatement(sqli);
-            logger.debug("statement: " + sqli + statement.toString());
+            logger.debug("Check Note: " + newNote);
+            PreparedStatement statement = database.getConnection().prepareStatement(sqli, Statement.RETURN_GENERATED_KEYS);
+            logger.debug("Empty statement: " + sqli + statement.toString());
 
             statement.setString(1, newNote.getLabel());
             statement.setString(2, newNote.getText());
@@ -215,8 +225,20 @@ public class NoteData {
             statement.setInt(5, newNote.getVideoId());
             statement.setInt(6, newNote.getUserId());
 
+            logger.debug("Complete statement: " + sqli + statement.toString());
 
-            insertId = statement.executeUpdate();
+            if (1 == statement.executeUpdate()) {
+                // insert seems to have worked
+                // after: http://www.mysqltutorial.org/mysql-jdbc-insert/
+                resultSet = statement.getGeneratedKeys();
+                if (resultSet.next()) {
+                    newNote.setId(resultSet.getInt(1));
+                }
+                logger.debug("setNewNote(): Insert note succeeded: ", insertId);
+            } else {
+                // insert failed, no rows affected
+                logger.debug("setNewNote(): Insert note failed: ", statement);
+            }
 
             statement.close();
             database.disconnect();
@@ -227,7 +249,8 @@ public class NoteData {
             System.out.println("In NoteData.setNewNote(): " + sqli + exception);
         }
 
-        return insertId;
+
+        return newNote;
     }
 
     public void newNoteCheckData(Map<String, String[]> noteFields) {

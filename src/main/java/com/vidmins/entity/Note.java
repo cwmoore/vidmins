@@ -43,6 +43,7 @@ public class Note implements java.io.Serializable {
      * @param videoId        the video id
      */
     public Note(int id, String label, String text, int start, int end, String createDatetime, int userId, int videoId) {
+        this();
         this.id = id;
         this.label = label;
         this.text = text;
@@ -64,6 +65,7 @@ public class Note implements java.io.Serializable {
      * @param videoId        the video id
      */
     public Note(String label, String text, int start, int end, int userId, int videoId) {
+        this();
         this.label = label;
         this.text = text;
         this.start = start;

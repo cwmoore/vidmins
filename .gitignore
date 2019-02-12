@@ -49,4 +49,5 @@ crashlytics-build.properties
 fabric.properties
 
 # New Stuff
-.logs/vidmins.log
+logs/vidmins.log
+logs/work.log
