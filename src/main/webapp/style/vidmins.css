@@ -1,3 +1,8 @@
+.table-striped>tbody>tr:nth-child(odd)>td,
+.table-striped>tbody>tr:nth-child(odd)>th {
+    background-color: #CCEEFA;
+}
+
 body {
     background-color: #FDFFFF;
 }
@@ -6,10 +11,11 @@ body {
     border: solid 2px #00DDEE;
     border-radius: 5px;
     background-color: #FAFEFF;
-    margin: 5px;
-    padding: 25px;
+    margin: 0.75em;
+    padding: 1.25em;
     box-shadow: 5px 5px 10px #CCEEFA;
 }
+
 /*
 label .fixed {
     display: inline-block;
@@ -35,10 +41,10 @@ label .fixed {
 }
 
 .player-frame {
-    width: 804px;
-    border: solid black 1px;
+    width: 808px;
+/*    border: solid 1px black;
     border-radius: 5px;
-    margin: 0;
+    margin: 0;*/
     padding: 2px;
 }
 

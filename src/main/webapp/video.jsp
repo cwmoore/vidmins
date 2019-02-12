@@ -1,6 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:if test="${videos != null}">
+    <div class="aquapanel">
         <h2>Videos: </h2>
         <table id="video_table" class="table table-striped">
             <tr>
@@ -22,4 +23,5 @@
                 </tr>
             </c:forEach>
         </table>
+    </div>
 </c:if>

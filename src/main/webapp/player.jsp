@@ -6,7 +6,7 @@
 <c:if test="${ currentVideo != null }">
     <!-- begin code from YouTube Dev -->
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-    <div class="player-frame">
+    <div class="player-frame aquapanel">
         <div id="player"></div>
         <div class="video-title">
             <h4><a href="https://www.youtube.com/watch?v=${currentVideo.youTubeId}">${currentVideo.title}<%--<br />https://www.youtube.com/watch?v=${currentVideo.youTubeId}--%></a></h4>

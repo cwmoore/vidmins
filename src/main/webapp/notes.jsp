@@ -1,7 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:if test="${notes != null}">
-    <div class="row">
+    <div class="aquapanel">
         <h2>Notes: </h2>
         <table id="note_table" class="table table-compact table-striped">
             <tr>
