@@ -55,7 +55,7 @@ public class NewNote extends HttpServlet {
         if (req.getParameter("label") != null &&
                 req.getParameter("note_text") != null &&
                 req.getParameter("timeStampStart") != null &&
-                req.getParameter("timeStampEnd") != null &&
+                /* req.getParameter("timeStampEnd") != null && */
                 req.getParameter("userId") != null &&
                 req.getParameter("videoId") != null) {
 
@@ -66,7 +66,7 @@ public class NewNote extends HttpServlet {
             Note noteFromFormData = new Note(req.getParameter("label")
                     , req.getParameter("note_text")
                     , Integer.parseInt(req.getParameter("timeStampStart"))
-                    , Integer.parseInt(req.getParameter("timeStampEnd"))
+                   /*  , Integer.parseInt(req.getParameter("timeStampEnd"))*/
                     , Integer.parseInt(req.getParameter("userId"))
                     , Integer.parseInt(req.getParameter("videoId"))
             );
@@ -104,9 +104,9 @@ public class NewNote extends HttpServlet {
             for (String param : requestParams) {
                 url += param + "&";
             }
+            // remove trailing ampersand
+            url = url.substring(0, url.length() - 1);
         }
-        // remove trailing ampersand
-        url = url.substring(0, url.length() - 1);
         logger.debug("URL to redirect from NewNote: " + url);
 
 //        RequestDispatcher dispatcher = req.getRequestDispatcher("/loadClient");

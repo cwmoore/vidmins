@@ -183,7 +183,7 @@ const resizePlayer = (newWidth, newHeight) => {
 const makeNote = () => {
     showPanel("note");
     setStartTime(Math.floor(player.getCurrentTime()));
-    setEndTime(Math.floor(player.getCurrentTime()));
+    //setEndTime(Math.floor(player.getCurrentTime()));
     player.pauseVideo();
 }
 

@@ -8,7 +8,7 @@
                 <th>Label</th>
                 <th>Text</th>
                 <th>Start</th>
-                <th>End</th>
+                <%--th>End</th --%>
                 <th>Created</th>
                 <th>videoId</th>
             </tr>
@@ -17,7 +17,7 @@
                     <td>${note.label}</td>
                     <td>${note.text}</td>
                     <td>${note.start}</td>
-                    <td>${note.end}</td>
+                    <%--td>${note.end}</td--%>
                     <td>${note.createDatetime}</td>
                     <td>${note.videoId}</td>
                 </tr>

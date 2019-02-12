@@ -138,8 +138,8 @@ public class NoteData {
             //logger.debug("noteFields: ", noteFields.keySet(), noteFields.values());
             Database database = Database.getInstance();
             database.connect();
-            String sqlNote = "INSERT INTO note (label, text, start, end, userId, videoId) VALUES " +
-                    "(?, ?, ?, ?, ?, ?)";
+            String sqlNote = "INSERT INTO note (label, text, start, userId, videoId) VALUES " +
+                    "(?, ?, ?, ?, ?)";
             // TODO: preprocess request parameters to pass in plain Strings, ![]s
 
             logger.debug("before getConnection()");
@@ -154,9 +154,9 @@ public class NoteData {
             statement.setString(1, label);
             statement.setString(2, noteFields.get("note_text")[0]);
             statement.setInt(3, Integer.parseInt(noteFields.get("timeStampStart")[0]));
-            statement.setInt(4, Integer.parseInt(noteFields.get("timeStampEnd")[0]));
-            statement.setInt(5, Integer.parseInt(noteFields.get("userId")[0]));
-            statement.setInt(6, Integer.parseInt(noteFields.get("videoId")[0]));
+            /* statement.setInt(, Integer.parseInt(noteFields.get("timeStampEnd")[0])); */
+            statement.setInt(4, Integer.parseInt(noteFields.get("userId")[0]));
+            statement.setInt(5, Integer.parseInt(noteFields.get("videoId")[0]));
             logger.debug(statement.toString());
 
             if (1 == statement.executeUpdate()) {
@@ -202,8 +202,8 @@ public class NoteData {
         int insertId = -1;
 
         // tags go in another table
-        String sqli = "INSERT INTO note (label, text, start, end, userId, videoId) VALUES " +
-                "(?, ?, ?, ?, ?, ?)";
+        String sqli = "INSERT INTO note (label, text, start, userId, videoId) VALUES " +
+                "(?, ?, ?, ?, ?)";
         ResultSet resultSet;
 
         try {
@@ -221,7 +221,7 @@ public class NoteData {
             statement.setString(1, newNote.getLabel());
             statement.setString(2, newNote.getText());
             statement.setInt(3, newNote.getStart());
-            statement.setInt(4, newNote.getEnd());
+            /*statement.setInt(4, newNote.getEnd());*/
             statement.setInt(5, newNote.getUserId());
             statement.setInt(6, newNote.getVideoId());
 
