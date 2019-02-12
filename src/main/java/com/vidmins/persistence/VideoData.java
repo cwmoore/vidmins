@@ -14,32 +14,15 @@ import java.util.*;
  * Authenticate a valid user, get videos, notes
  * @author cwmoore
  */
-public class VideoData {
+public class VideoData extends BaseData {
 
-    /**
-     * Create a note from search result
-     *
-     * @param results the database results
-     */
-    private Note createNoteFromResults(ResultSet results) throws SQLException {
-        Note note = new Note();
-        note.setId(results.getInt("id"));
-        note.setLabel(results.getString("label"));
-        note.setText(results.getString("text"));
-        note.setStart(results.getInt("start"));
-        note.setEnd(results.getInt("end"));
-        note.setCreateDatetime(results.getString("createDatetime"));
-        note.setUserId(results.getInt("userId"));
-        note.setVideoId(results.getInt("videoId"));
-        return note;
-    }
 
     /**
      * Create a video from search result
      *
      * @param results the database results
      */
-    private Video createVideoFromResults(ResultSet results) throws SQLException {
+    public Video createVideoFromResults(ResultSet results) throws SQLException {
         Video video = new Video();
         video.setId(Integer.parseInt(results.getString("id")));
         video.setYouTubeId(results.getString("youTubeId"));
@@ -57,6 +40,7 @@ public class VideoData {
      * @return the video notes
      */
     public List<Note> getVideoNotes(int userId, int videoId) {
+        NoteData noteData = new NoteData();
         List<Note> notes = new ArrayList<>();
         Database database = Database.getInstance();
         Connection connection = null;
@@ -71,7 +55,7 @@ public class VideoData {
             ResultSet results = statement.executeQuery();
 
             while (results.next()) {
-                notes.add(createNoteFromResults(results));
+                notes.add(noteData.createNoteFromResults(results));
             }
 
             results.close();
@@ -91,7 +75,7 @@ public class VideoData {
      * @param videoId the video id
      * @return the video notes
      */
-    public Video getVideo(int videoId) {
+    public Video fromId(int videoId) {
         Video video = null;
 
         Database database = Database.getInstance();

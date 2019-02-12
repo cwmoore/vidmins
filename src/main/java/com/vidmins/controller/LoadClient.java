@@ -1,7 +1,9 @@
 package com.vidmins.controller;
 
+import com.vidmins.persistence.NoteData;
 import com.vidmins.persistence.UserData;
 import com.vidmins.entity.*;
+import com.vidmins.persistence.VideoData;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -46,7 +48,31 @@ public class LoadClient extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String requestParams = "?";
-        UserData userData = new UserData();
+
+
+        UserData userData;
+        if (req.getSession().getAttribute("userData") == null){
+            userData = new UserData();
+            req.getSession().setAttribute("userData", userData);
+        } else {
+            userData = (UserData) req.getSession().getAttribute("userData");
+        }
+
+        VideoData videoData;
+        if (req.getSession().getAttribute("videoData") == null){
+            videoData = new VideoData();
+            req.getSession().setAttribute("videoData", videoData);
+        } else {
+            videoData = (VideoData) req.getSession().getAttribute("videoData");
+        }
+
+        NoteData noteData;
+        if (req.getSession().getAttribute("noteData") == null){
+            noteData = new NoteData();
+            req.getSession().setAttribute("noteData", noteData);
+        } else {
+            noteData = (NoteData) req.getSession().getAttribute("noteData");
+        }
 
         if (req.getSession().getAttribute("user") != null) {
             User user = (User) req.getSession().getAttribute("user");
@@ -58,10 +84,10 @@ public class LoadClient extends HttpServlet {
                 if (req.getParameter("videoId").matches("\\d+")) {
 
                     req.getSession().setAttribute("currentVideo",
-                            userData.getVideo(Integer.parseInt(req.getParameter("videoId"))));
+                            videoData.fromId(Integer.parseInt(req.getParameter("videoId"))));
 
                     req.getSession().setAttribute("notes",
-                            userData.getVideoNotes(user.getId(), Integer.parseInt(req.getParameter("videoId"))));
+                            videoData.getVideoNotes(user.getId(), Integer.parseInt(req.getParameter("videoId"))));
                 }
             }
 

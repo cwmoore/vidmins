@@ -11,12 +11,11 @@ import java.util.*;
  *
  * @author cwmoore
  */
-public class NoteData {
+public class NoteData extends BaseData {
     private Logger logger;
 
     public NoteData() {
-        logger = LogManager.getLogger(this.getClass());
-        logger.info("NodeData logger");
+        super();
     }
 
     /**
@@ -26,7 +25,7 @@ public class NoteData {
      * @return the user data object
      * @throws SQLException
      */
-    private Note createNoteFromResults(ResultSet results) throws SQLException {
+    public Note createNoteFromResults(ResultSet results) throws SQLException {
         Note note = new Note();
         note.setId(Integer.parseInt(results.getString("id")));
         note.setLabel(results.getString("label"));
@@ -74,7 +73,7 @@ public class NoteData {
         return notes;
     }
 
-    public Note getNoteFromId(int noteId) {
+    public Note fromId(int noteId) {
         Note note = null;
 
         try {
@@ -202,21 +201,29 @@ public class NoteData {
         int insertId = -1;
 
         // tags go in another table
-        String sqli = "INSERT INTO note (label, text, start, userId, videoId) VALUES " +
-                "(?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO note (label, text, start, userId, videoId) VALUES (?, ?, ?, ?, ?)";
+        Database database = Database.getInstance();
+        Connection connection;
+        PreparedStatement statement;
         ResultSet resultSet;
+
+
+        try {
+            database.connect();
+        } catch (Exception exception) {
+            logger.debug("database.connect(): " + exception.toString());
+        }
+        connection = database.getConnection();
 
         try {
             logger.debug("note: " + newNote.toString());
-            Database database = Database.getInstance();
-            database.connect();
 
             //logger.debug("Check Database: " + database.toString());
             //logger.debug("Check Database Connection: " + database.getConnection().toString());
 
             logger.debug("Check Note: " + newNote);
-            PreparedStatement statement = database.getConnection().prepareStatement(sqli, Statement.RETURN_GENERATED_KEYS);
-            logger.debug("Empty statement: " + sqli + statement.toString());
+            statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            logger.debug("Empty statement: " + sql + "\n" + statement.toString());
 
             statement.setString(1, newNote.getLabel());
             statement.setString(2, newNote.getText());
@@ -225,7 +232,7 @@ public class NoteData {
             statement.setInt(4, newNote.getUserId());
             statement.setInt(5, newNote.getVideoId());
 
-            logger.debug("Complete statement: " + sqli + statement.toString());
+            logger.debug("Complete statement: " + sql + statement.toString());
 
             if (1 == statement.executeUpdate()) {
                 // insert seems to have worked
@@ -244,9 +251,9 @@ public class NoteData {
             database.disconnect();
 
         } catch (SQLException sqlException) {
-            System.out.println("In NoteData.setNewNote(): " + sqli + sqlException);
+            logger.debug("In NoteData.setNewNote(): " + sql +  "\n" + sqlException);
         } catch (Exception exception) {
-            System.out.println("In NoteData.setNewNote(): " + sqli + exception);
+            logger.debug("In NoteData.setNewNote(): " + sql + "\n" + exception);
         }
 
 

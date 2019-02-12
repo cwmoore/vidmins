@@ -71,6 +71,7 @@ public class NewNote extends HttpServlet {
                     , Integer.parseInt(req.getParameter("videoId"))
             );
 
+            logger.debug("noteFromFormData before: " + noteFromFormData.toString());
 //            noteFromFormData.setLabel(req.getParameter("label"));
 //            noteFromFormData.setText(req.getParameter("note_text"));
 //            noteFromFormData.setStart(Integer.parseInt(req.getParameter("timeStampStart")));
@@ -84,7 +85,7 @@ public class NewNote extends HttpServlet {
             noteFromFormData = noteData.setNewNote(noteFromFormData);
 //            int insertId = noteData.setNewNote(noteFromFormData);
 //            noteFromFormData.setId(insertId);
-            logger.debug("noteFromFormData: " + noteFromFormData.toString());
+            logger.debug("noteFromFormData after: " + noteFromFormData.toString());
 
             req.getSession().setAttribute("note", noteFromFormData);
             requestParams.add("videoId=" + req.getParameter("videoId"));
