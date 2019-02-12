@@ -221,9 +221,9 @@ public class NoteData {
             statement.setString(1, newNote.getLabel());
             statement.setString(2, newNote.getText());
             statement.setInt(3, newNote.getStart());
-            /*statement.setInt(4, newNote.getEnd());*/
-            statement.setInt(5, newNote.getUserId());
-            statement.setInt(6, newNote.getVideoId());
+            /*statement.setInt(, newNote.getEnd());*/
+            statement.setInt(4, newNote.getUserId());
+            statement.setInt(5, newNote.getVideoId());
 
             logger.debug("Complete statement: " + sqli + statement.toString());
 
