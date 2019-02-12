@@ -78,6 +78,31 @@ const Note = () => {
 
 */
 
+const init = () => {
+    let store_note_btn = document.querySelector("#store_note_btn");
+    store_note_btn.addEventListener("click", submitForm, false);
+}
+
+const submitForm = () => {
+    let errors = validateForm();
+
+    if (errors.length > 0) {
+        // report errors
+    } else {
+        // submit the form
+    }
+}
+
+const validateForm = () => {
+    let errors = {};
+
+    if (true) {
+        // add error messages
+    }
+
+    return errors;
+}
+
 const replaceActiveFeature = (activeFeature, newFeature) => {
 
 }
@@ -144,17 +169,29 @@ const showTime = () => {
     alert(msg);
 }
 
+
+const updateVideoWidth = () => {
+    // use as much space as possible but no more
+}
+
+const resizePlayer = (newWidth, newHeight) => {
+    player.setSize(newWidth, newHeight);
+}
+
+
+
 const makeNote = () => {
     showPanel("note");
     setStartTime(player.getCurrentTime());
     setEndTime(player.getCurrentTime());
-    player.stopVideo();
+    player.pauseVideo();
 }
 const setStartTime = (timeStamp) => {
     let timeLink = makeUrl(timeStamp);
 
     document.querySelector("#time_stamp_start").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
     document.querySelector("#note_input_form").timeStampStart = timeStamp;
+    document.querySelector("#note_input_form").startTime = timeStamp;
 }
 const setEndTime = (timeStamp) => {
     let timeLink = makeUrl(timeStamp);
@@ -187,7 +224,7 @@ const makeUrl = (time) => {
 const makeSurveyQuestion = () => {
     showPanel("survey");
     setPromptTime(player.getCurrentTime());
-    player.stopVideo();
+    player.pauseVideo();
 }
 const setPromptTime = (timeStamp) => {
     let timeLink = makeUrl(timeStamp);
@@ -199,7 +236,7 @@ const setPromptTime = (timeStamp) => {
 const makeComment = () => {
     showPanel("comment");
     setCommentTime(player.getCurrentTime());
-    player.stopVideo();
+    player.pauseVideo();
 }
 const setCommentTime = (timeStamp) => {
     let timeLink = makeUrl(timeStamp);
@@ -211,7 +248,7 @@ const setCommentTime = (timeStamp) => {
 const makeAskQuestion = () => {
     showPanel("ask");
     setRelatedTime(player.getCurrentTime());
-    player.stopVideo();
+    player.pauseVideo();
 }
 const setRelatedTime = (timeStamp) => {
     let timeLink = makeUrl(timeStamp);
@@ -220,9 +257,6 @@ const setRelatedTime = (timeStamp) => {
     document.note_input_form.timeStampEnd = timeStamp;
 }
 
-const updateVideoWidth = () => {
-    // use as much space as possible but no more
-}
 
 /*
 * from: https://stackoverflow.com/a/34008994

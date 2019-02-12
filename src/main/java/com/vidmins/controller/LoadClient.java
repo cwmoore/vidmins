@@ -45,7 +45,7 @@ public class LoadClient extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        String requestParams = "?";
         UserData userData = new UserData();
 
         if (req.getSession().getAttribute("user") != null) {
@@ -56,9 +56,18 @@ public class LoadClient extends HttpServlet {
 
             if (req.getParameter("videoId") != null) {
                 if (req.getParameter("videoId").matches("\\d+")) {
-                    req.getSession().setAttribute("currentVideo", userData.getVideo(Integer.parseInt(req.getParameter("videoId"))));
+
+                    req.getSession().setAttribute("currentVideo",
+                            userData.getVideo(Integer.parseInt(req.getParameter("videoId"))));
+
                     req.getSession().setAttribute("notes",
                             userData.getVideoNotes(user.getId(), Integer.parseInt(req.getParameter("videoId"))));
+
+                    if (req.getParameter("startTime") != null) {
+                        if (req.getParameter("startTime").matches("\\d+")) {
+                            requestParams += "startTime=" + req.getParameter("startTime");
+                        }
+                    }
                 }
             }
 
@@ -80,7 +89,12 @@ public class LoadClient extends HttpServlet {
             logger.debug(msg);
         }
 
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
+        String url = "/index.jsp";
+        if (requestParams.length() > 1) {
+            url += requestParams;
+        }
+
+        RequestDispatcher dispatcher = req.getRequestDispatcher(url);
         dispatcher.forward(req, resp);
     }
 }
