@@ -35,7 +35,6 @@
 
                 <input type="hidden" name="userId" value="${sessionScope.user.id}" />
                 <input type="hidden" name="videoId" value="${sessionScope.currentVideo.id}" />
-                <input type="hidden" name="startTime" value="" />
 
                 <br />
                 <input id="store_note_btn" type="submit" class="btn btn-primary" value="Store Annotation" />

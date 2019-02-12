@@ -62,12 +62,6 @@ public class LoadClient extends HttpServlet {
 
                     req.getSession().setAttribute("notes",
                             userData.getVideoNotes(user.getId(), Integer.parseInt(req.getParameter("videoId"))));
-
-                    if (req.getParameter("startTime") != null) {
-                        if (req.getParameter("startTime").matches("\\d+")) {
-                            requestParams += "startTime=" + req.getParameter("startTime");
-                        }
-                    }
                 }
             }
 
@@ -94,7 +88,7 @@ public class LoadClient extends HttpServlet {
             url += requestParams;
         }
 
-        RequestDispatcher dispatcher = req.getRequestDispatcher(url);
+        RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher(url);
         dispatcher.forward(req, resp);
     }
 }

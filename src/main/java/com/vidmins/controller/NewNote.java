@@ -46,6 +46,7 @@ public class NewNote extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        List<String> requestParams = new ArrayList<>();
         String url = "/loadClient";
         NoteData noteData = new NoteData();
 
@@ -86,13 +87,27 @@ public class NewNote extends HttpServlet {
             logger.debug("noteFromFormData: " + noteFromFormData.toString());
 
             req.getSession().setAttribute("note", noteFromFormData);
-            url += "?videoId=" + req.getParameter("videoId");
+            requestParams.add("videoId=" + req.getParameter("videoId"));
+
+            if (req.getParameter("timeStampStart").matches("\\d+")) {
+                requestParams.add("startTime=" + req.getParameter("timeStampStart"));
+            }
 
         } else {
             // error messages
             logger.debug("New Note failed");
         }
 
+        // build URL params
+        if (requestParams.size() > 0) {
+            url += "?";
+            for (String param : requestParams) {
+                url += param + "&";
+            }
+        }
+        // remove trailing ampersand
+        url = url.substring(0, url.length() - 1);
+        logger.debug("URL to redirect from NewNote: " + url);
 
 //        RequestDispatcher dispatcher = req.getRequestDispatcher("/loadClient");
 //        dispatcher.forward(req, resp);

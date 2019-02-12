@@ -162,10 +162,10 @@ const getTimeParts = (totalSeconds) => {
 const showTime = () => {
     let msg = "";
 
-    msg += "getCurrentTime: " + player.getCurrentTime();
+    msg += "getCurrentTime: " + Math.floor(player.getCurrentTime());
     msg += "\ngetDuration: " + player.getDuration();
     msg += "\nRemaining: "
-        + (player.getDuration() - player.getCurrentTime());
+        + (player.getDuration() - Math.floor(player.getCurrentTime()));
     alert(msg);
 }
 
@@ -182,28 +182,28 @@ const resizePlayer = (newWidth, newHeight) => {
 
 const makeNote = () => {
     showPanel("note");
-    setStartTime(player.getCurrentTime());
-    setEndTime(player.getCurrentTime());
+    setStartTime(Math.floor(player.getCurrentTime()));
+    setEndTime(Math.floor(player.getCurrentTime()));
     player.pauseVideo();
 }
+
 const setStartTime = (timeStamp) => {
     let timeLink = makeUrl(timeStamp);
 
     document.querySelector("#time_stamp_start").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
-    document.querySelector("#note_input_form").timeStampStart = timeStamp;
-    document.querySelector("#note_input_form").startTime = timeStamp;
+    document.querySelector("#note_input_form").timeStampStart.value = timeStamp;
 }
 const setEndTime = (timeStamp) => {
     let timeLink = makeUrl(timeStamp);
 
     document.querySelector("#time_stamp_end").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
-    document.querySelector("#note_input_form").timeStampEnd = timeStamp;
+    document.querySelector("#note_input_form").timeStampEnd.value = timeStamp;
 }
 const addTag = () => {}
 
 const makeLink = () => {
-    document.querySelector("#videoLink").value = makeUrl(player.getCurrentTime());
-    document.querySelector("#link_time_stamp_prompt").innerText = player.getCurrentTime();
+    document.querySelector("#videoLink").value = makeUrl(Math.floor(player.getCurrentTime()));
+    document.querySelector("#link_time_stamp_prompt").innerText = Math.floor(player.getCurrentTime());
 }
 const makeUrl = (time) => {
     // const time_parts = getTimeParts(time);
@@ -223,38 +223,38 @@ const makeUrl = (time) => {
 
 const makeSurveyQuestion = () => {
     showPanel("survey");
-    setPromptTime(player.getCurrentTime());
+    setPromptTime(Math.floor(player.getCurrentTime()));
     player.pauseVideo();
 }
 const setPromptTime = (timeStamp) => {
     let timeLink = makeUrl(timeStamp);
 
     document.getElementById("time_stamp_prompt").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
-    document.note_input_form.timeStampEnd = timeStamp;
+    document.note_input_form.timeStampEnd.value = timeStamp;
 }
 
 const makeComment = () => {
     showPanel("comment");
-    setCommentTime(player.getCurrentTime());
+    setCommentTime(Math.floor(player.getCurrentTime()));
     player.pauseVideo();
 }
 const setCommentTime = (timeStamp) => {
     let timeLink = makeUrl(timeStamp);
 
     document.getElementById("time_stamp_comment").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
-    document.note_input_form.timeStampEnd = timeStamp;
+    document.note_input_form.timeStampEnd.value = timeStamp;
 }
 
 const makeAskQuestion = () => {
     showPanel("ask");
-    setRelatedTime(player.getCurrentTime());
+    setRelatedTime(Math.floor(player.getCurrentTime()));
     player.pauseVideo();
 }
 const setRelatedTime = (timeStamp) => {
     let timeLink = makeUrl(timeStamp);
 
     document.getElementById("time_stamp_ask").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
-    document.note_input_form.timeStampEnd = timeStamp;
+    document.note_input_form.timeStampEnd.value = timeStamp;
 }
 
 

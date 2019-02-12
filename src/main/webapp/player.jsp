@@ -48,8 +48,11 @@
         function onPlayerReady(event) {
             //event.target.playVideo();
             <c:if test="${param.startTime > 0}">
-                event.target.seekTo(<c:out value="${param.startTime}" />);
+                event.target.seekTo(<c:out value="${param.startTime}" />, true);
+                event.target.pauseVideo();
             </c:if>
+            // ${param.startTime}
+            // ${startTime}
         }
 
         // 5. The API calls this function when the player's state changes.
