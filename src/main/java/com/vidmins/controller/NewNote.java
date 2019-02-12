@@ -46,6 +46,7 @@ public class NewNote extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        String url = "/loadClient";
         NoteData noteData = new NoteData();
 
         logger.debug(req.getParameterMap());
@@ -54,8 +55,8 @@ public class NewNote extends HttpServlet {
                 req.getParameter("note_text") != null &&
                 req.getParameter("timeStampStart") != null &&
                 req.getParameter("timeStampEnd") != null &&
-                req.getParameter("videoId") != null &&
-                req.getParameter("userId") != null) {
+                req.getParameter("userId") != null &&
+                req.getParameter("videoId") != null) {
 
             //Note noteFromFormData = new Note();
 
@@ -65,8 +66,8 @@ public class NewNote extends HttpServlet {
                     , req.getParameter("note_text")
                     , Integer.parseInt(req.getParameter("timeStampStart"))
                     , Integer.parseInt(req.getParameter("timeStampEnd"))
-                    , Integer.parseInt(req.getParameter("videoId"))
                     , Integer.parseInt(req.getParameter("userId"))
+                    , Integer.parseInt(req.getParameter("videoId"))
             );
 
 //            noteFromFormData.setLabel(req.getParameter("label"));
@@ -85,6 +86,8 @@ public class NewNote extends HttpServlet {
             logger.debug("noteFromFormData: " + noteFromFormData.toString());
 
             req.getSession().setAttribute("note", noteFromFormData);
+            url += "?videoId=" + req.getParameter("videoId");
+
         } else {
             // error messages
             logger.debug("New Note failed");
@@ -93,6 +96,6 @@ public class NewNote extends HttpServlet {
 
 //        RequestDispatcher dispatcher = req.getRequestDispatcher("/loadClient");
 //        dispatcher.forward(req, resp);
-        resp.sendRedirect("/loadClient");
+        resp.sendRedirect(url);
     }
 }

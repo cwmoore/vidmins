@@ -58,7 +58,7 @@ public class LoadClient extends HttpServlet {
                 if (req.getParameter("videoId").matches("\\d+")) {
                     req.getSession().setAttribute("currentVideo", userData.getVideo(Integer.parseInt(req.getParameter("videoId"))));
                     req.getSession().setAttribute("notes",
-                            userData.getVideoNotes(Integer.parseInt(req.getParameter("videoId"))));
+                            userData.getVideoNotes(user.getId(), Integer.parseInt(req.getParameter("videoId"))));
                 }
             }
 

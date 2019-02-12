@@ -230,7 +230,7 @@ public class UserData {
      * @param videoId the video id
      * @return the video notes
      */
-    public List<Note> getVideoNotes(int videoId) {
+    public List<Note> getVideoNotes(int userId, int videoId) {
         List<Note> notes = new ArrayList<>();
         Database database = Database.getInstance();
         Connection connection = null;
@@ -239,8 +239,9 @@ public class UserData {
         try {
             database.connect();
             connection = database.getConnection();
-            statement = connection.prepareStatement("SELECT * FROM note WHERE videoId=? ORDER BY start ASC, end ASC");
-            statement.setInt(1, videoId);
+            statement = connection.prepareStatement("SELECT * FROM note WHERE userId=? AND videoId=? ORDER BY createDateTime DESC, start ASC, end ASC");
+            statement.setInt(1, userId);
+            statement.setInt(2, videoId);
             ResultSet results = statement.executeQuery();
 
             while (results.next()) {
