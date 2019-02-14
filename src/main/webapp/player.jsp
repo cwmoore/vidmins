@@ -25,10 +25,16 @@
         //    after the API code downloads.
         var player;
         var youTubeId = '${currentVideo.youTubeId}';
+        var viewWidth = '1120';//this.parentNode.parentNode.clientWidth;
+        var viewHeight = '630';//(viewWidth / 16) * 9;
+        // console.log(this.parentNode);
+        // console.log(this.parentNode.parentNode);
+        // this.parentNode.width = viewWidth + 8; // 2 * width of padding and borders
+
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', {
-                height: '450',
-                width: '800',
+                height: viewHeight,//'450',
+                width: viewWidth,//'800',
                 videoId: youTubeId,
                 events: {
                     'onReady': onPlayerReady,
