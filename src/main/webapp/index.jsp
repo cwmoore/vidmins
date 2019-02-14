@@ -7,11 +7,11 @@
         <c:import url="nav.jsp" />
     </div>
     <div class="row">
-        <div id="watcher" class="col-lg-5">
+        <div id="watcher" class="col-lg-4">
             <c:import url="watcher.jsp" />
             <c:import url="notes.jsp" />
         </div>
-        <div class="col-lg-7">
+        <div class="col-lg-8">
             <c:import url="player.jsp" />
             <c:import url="video.jsp" />
         </div>

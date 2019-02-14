@@ -9,7 +9,7 @@
     <div class="player-frame aquapanel">
         <div id="player"></div>
         <div class="video-title">
-            <h4><a href="https://www.youtube.com/watch?v=${currentVideo.youTubeId}">${currentVideo.title}<%--<br />https://www.youtube.com/watch?v=${currentVideo.youTubeId}--%></a></h4>
+            <h4><a href="https://www.youtube.com/watch?v=${currentVideo.youTubeId}">${currentVideo.title}</a></h4>
         </div>
     </div>
 
