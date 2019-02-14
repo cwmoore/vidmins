@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.Map;
 
 public abstract class BaseData {
-    String tableName;
+    // String tableName;
     Logger logger;
 
     public BaseData() {
