@@ -48,17 +48,23 @@
         </div>
 --%>
 
-        <div id="link_input" class="aquapanel" method="get" action="#" onsubmit="processInput(); return false;">
+        <div id="link_input" class="aquapanel" method="get" action="#">
             <form name="link_input_form">
 
+                <label>Link Text</label><br />
+                <input id="linkText" type="text" name="userLinkText" /><br />
+<%--
                 <label>YouTube Video URL:</label><br />
                 <input id="videoLink" type="url" name="userVideoUrl" /><br />
-
+--%>
                 <input type="hidden" name="timeStampPrompt" />
                 <label>Prompt time:</label> <span id="link_time_stamp_prompt"></span>s<br />
 
+                <label>Your link</label>
+                <div id="finished_link"></div>
+
                 <br />
-                <input type="submit" class="btn btn-primary" value="Link with time" />
+                <button type="button" class="btn btn-primary" onclick="makeLink()">Link with time</button>
             </form>
         </div>
         <%--

@@ -188,37 +188,73 @@ const makeNote = () => {
 }
 
 const setStartTime = (timeStamp) => {
-    let timeLink = makeUrl(timeStamp);
+    let timeLink = makeYouTubeUrl(timeStamp);
 
     document.querySelector("#time_stamp_start").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
     document.querySelector("#note_input_form").timeStampStart.value = timeStamp;
 }
+
 const setEndTime = (timeStamp) => {
-    let timeLink = makeUrl(timeStamp);
+    let timeLink = makeYouTubeUrl(timeStamp);
 
     document.querySelector("#time_stamp_end").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
     document.querySelector("#note_input_form").timeStampEnd.value = timeStamp;
 }
+
 const addTag = () => {}
 
 const makeLink = () => {
-    document.querySelector("#videoLink").value = makeUrl(Math.floor(player.getCurrentTime()));
+    showPanel('link');
+    // document.querySelector("#videoLink").value = makeYouTubeUrl(0);
+
     document.querySelector("#link_time_stamp_prompt").innerText = Math.floor(player.getCurrentTime());
+
+    let url = makeLocalUrl(player.getCurrentTime());
+    let link = '<a href="' + url + '">' + document.querySelector("#linkText").value + '</a>';
+
+    // actual link
+    let linkNode = document.createElement('div');
+    linkNode.innerHTML = link;
+
+    // copyable HTML source for link
+    let linkSourceNode = document.createElement('pre');
+    linkSourceNode.innerText = link;
+
+    document.querySelector('#finished_link').innerHTML = '';
+    document.querySelector('#finished_link').appendChild(linkNode);
+    document.querySelector('#finished_link').appendChild(linkSourceNode);
+
+    url = makeYouTubeUrl(player.getCurrentTime());
+    link = '<a href="' + url + '">' + document.querySelector("#linkText").value + '</a>';
+
+    // actual link
+    linkNode = document.createElement('div');
+    linkNode.innerHTML = link;
+
+    // copyable HTML source for link
+    linkSourceNode = document.createElement('pre');
+    linkSourceNode.innerText = link;
+
+    document.querySelector('#finished_link').appendChild(linkNode);
+    document.querySelector('#finished_link').appendChild(linkSourceNode);
+
+    player.pauseVideo();
 }
-const makeUrl = (time) => {
-    // const time_parts = getTimeParts(time);
-    // let timeString = "&t=";
-    // if (time_parts.hours > 0) {
-    //     timeString += time_parts.hours + "h";
-    // }
-    // if (time_parts.minutes > 0) {
-    //     timeString += time_parts.minutes + "m";
-    // }
-    // if (time_parts.seconds > 0) {
-    //     timeString += time_parts.seconds + "s";
-    // }
-    let timeString = "&t=" + Math.floor(time);
-    return "https://www.youtube.com/watch?v=" + youTubeId + timeString + "s";
+
+const makeYouTubeUrl = (time) => {
+    let timeString = '';
+    if (Math.floor(time) > 0) {
+        timeString = '&t=' + Math.floor(time) + 's';
+    }
+    return "https://www.youtube.com/watch?v=" + youTubeId + timeString;
+}
+
+const makeLocalUrl = (time) => {
+    let timeString = '';
+    if (Math.floor(time) > 0) {
+        timeString = '&t=' + Math.floor(time) + 's';
+    }
+    return "https://vidmins.com/watch?v=" + youTubeId + timeString;
 }
 
 const makeSurveyQuestion = () => {
@@ -227,7 +263,7 @@ const makeSurveyQuestion = () => {
     player.pauseVideo();
 }
 const setPromptTime = (timeStamp) => {
-    let timeLink = makeUrl(timeStamp);
+    let timeLink = makeYouTubeUrl(timeStamp);
 
     document.getElementById("time_stamp_prompt").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
     document.note_input_form.timeStampEnd.value = timeStamp;
@@ -239,10 +275,10 @@ const makeComment = () => {
     player.pauseVideo();
 }
 const setCommentTime = (timeStamp) => {
-    let timeLink = makeUrl(timeStamp);
+    let timeLink = makeYouTubeUrl(timeStamp);
 
     document.getElementById("time_stamp_comment").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
-    document.note_input_form.timeStampEnd.value = timeStamp;
+    document.comment_input_form.timeStampComment.value = timeStamp;
 }
 
 const makeAskQuestion = () => {
@@ -250,11 +286,12 @@ const makeAskQuestion = () => {
     setRelatedTime(Math.floor(player.getCurrentTime()));
     player.pauseVideo();
 }
+
 const setRelatedTime = (timeStamp) => {
-    let timeLink = makeUrl(timeStamp);
+    let timeLink = makeYouTubeUrl(timeStamp);
 
     document.getElementById("time_stamp_ask").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
-    document.note_input_form.timeStampEnd.value = timeStamp;
+    document.link_input_form.timeStampPrompt.value = timeStamp;
 }
 
 
