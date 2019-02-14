@@ -12,7 +12,6 @@ import java.util.*;
  * @author cwmoore
  */
 public class NoteData extends BaseData {
-    private Logger logger;
 
     public NoteData() {
         super();
@@ -207,16 +206,16 @@ public class NoteData extends BaseData {
         PreparedStatement statement;
         ResultSet resultSet;
 
+        logger.debug("note: " + newNote);
 
         try {
             database.connect();
         } catch (Exception exception) {
             logger.debug("database.connect(): " + exception.toString());
         }
-        connection = database.getConnection();
 
         try {
-            logger.debug("note: " + newNote.toString());
+            connection = database.getConnection();
 
             //logger.debug("Check Database: " + database.toString());
             //logger.debug("Check Database Connection: " + database.getConnection().toString());
