@@ -1,5 +1,5 @@
 On invoice Independent project
-Total Time Worked: 14.25 hours
+Total Time Worked: 15.25 hours
 Total Charges:     $0.00
 Charges:
 02-08-2019         1.5 hours       Stuck on assertThrows
@@ -12,5 +12,4 @@ Charges:
 02-12-2019         1 hour          Break out JSPs to import/Work on saving place in video
 02-12-2019         1 hour          Restart video at same time as note submitted
 02-12-2019         1.75 hours      Refactor, extend BaseData, place in session, stuck w/NoteData.setNewNote
-02-14-2019         0.75 hours      Change NoteData to use BaseData logger fixes issue saving new notes
-02-14-2019         0.25 hours      Make video continue playing after storing new note
+02-14-2019         2 hours         Get make link form working
