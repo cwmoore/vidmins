@@ -90,7 +90,6 @@ public class LoadClient extends HttpServlet {
                             videoData.getVideoNotes(user.getId(), Integer.parseInt(req.getParameter("videoId"))));
                 }
             }
-
             //if (req.getSession().getAttribute("currentVideo") != null) {
                 // req.getSession().setAttribute("notes", userData.getVideoNotes(Integer.toString(videos.get(1).getId())));
                 // req.getSession().setAttribute("currentVideo", videos.get(1));

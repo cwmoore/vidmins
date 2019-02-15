@@ -75,12 +75,16 @@ public class NoteData extends BaseData {
     public Note fromId(int noteId) {
         Note note = null;
 
+        Database database;
+        PreparedStatement statement;
+        ResultSet resultSet;
+        String sqli = "SELECT id, label, text, start, end, createDateTime, videoId, userId FROM note WHERE id = ?";
+
         try {
-            Database database = Database.getInstance();
-            String sqli = "SELECT id, label, text, start, end, createDateTime, videoId, userId FROM note WHERE id = ?";
-            PreparedStatement statement = database.getConnection().prepareStatement(sqli);
+            database = Database.getInstance();
+            statement = database.getConnection().prepareStatement(sqli);
             statement.setInt(1, noteId);
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
                 note = createNoteFromResults(resultSet);

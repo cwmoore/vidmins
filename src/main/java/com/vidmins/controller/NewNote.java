@@ -35,6 +35,42 @@ public class NewNote extends HttpServlet {
         logger = LogManager.getLogger(this.getClass());
         logger.info("Starting NewNote servlet");
     }
+
+    /**
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
+        NoteData noteData;
+        if (req.getSession().getAttribute("noteData") == null){
+            noteData = new NoteData();
+            req.getSession().setAttribute("noteData", noteData);
+        } else {
+            noteData = (NoteData) req.getSession().getAttribute("noteData");
+        }
+
+        Note note;
+        if (req.getParameter("editNote") != null) {
+            int noteId = Integer.parseInt(req.getParameter("editNote"));
+            note = noteData.fromId(noteId);
+            req.getSession().setAttribute("note", note);
+        } else {
+            note = null;
+        }
+        
+        logger.debug("note from id: " + req.getParameter("editNote") + "\n" + note);
+
+        String url = "/";
+        RequestDispatcher dispatcher = req.getRequestDispatcher(url);
+        dispatcher.forward(req, resp);
+    }
+
     /**
      * Handle a POST request (new note)
      *
@@ -72,19 +108,9 @@ public class NewNote extends HttpServlet {
             );
 
             logger.debug("noteFromFormData before: " + noteFromFormData.toString());
-//            noteFromFormData.setLabel(req.getParameter("label"));
-//            noteFromFormData.setText(req.getParameter("note_text"));
-//            noteFromFormData.setStart(Integer.parseInt(req.getParameter("timeStampStart")));
-//            noteFromFormData.setEnd(Integer.parseInt(req.getParameter("timeStampEnd")));
-//            noteFromFormData.setVideoId(Integer.parseInt(req.getParameter("videoId")));
-//            noteFromFormData.setUserId(Integer.parseInt(req.getParameter("userId")));
 
-//            Map<String, String[]> noteFields = new TreeMap<>(req.getParameterMap());
-//
-//            noteData.setNewNoteFromAttributes(noteFields);
             noteFromFormData = noteData.setNewNote(noteFromFormData);
-//            int insertId = noteData.setNewNote(noteFromFormData);
-//            noteFromFormData.setId(insertId);
+
             logger.debug("noteFromFormData after: " + noteFromFormData.toString());
 
             req.getSession().setAttribute("note", noteFromFormData);
