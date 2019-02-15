@@ -116,7 +116,7 @@ const showPanel = (feature) => {
 
 const hidePanels = () => {
     let feature;
-    const features = ["help", "note", "link", "comment", "ask"];
+    const features = ["help", "note", "link", "comment", "ask", "player"];
 
     for (feature of features) {
         hidePanel(feature);
@@ -129,7 +129,7 @@ const hidePanel = (feature) => {
 
 const deselectButtons = () => {
     let feature;
-    const features = ["help", "note", "link", "comment", "ask"];
+    const features = ["help", "note", "link", "comment", "ask", "player"];
 
     for (feature of features) {
         deselectButton(feature);
@@ -277,7 +277,7 @@ const makeComment = () => {
 const setCommentTime = (timeStamp) => {
     let timeLink = makeYouTubeUrl(timeStamp);
 
-    document.getElementById("time_stamp_comment").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
+    document.querySelector("#time_stamp_comment").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
     document.comment_input_form.timeStampComment.value = timeStamp;
 }
 
@@ -287,6 +287,11 @@ const makeAskQuestion = () => {
     player.pauseVideo();
 }
 
+const makePlayerCommand = () => {
+    showPanel("player");
+    document.querySelector('#play_pause').focus();
+}
+
 const setRelatedTime = (timeStamp) => {
     let timeLink = makeYouTubeUrl(timeStamp);
 
@@ -294,6 +299,40 @@ const setRelatedTime = (timeStamp) => {
     document.link_input_form.timeStampPrompt.value = timeStamp;
 }
 
+const millisToSeconds = inMillis => inMillis / 1000.0; // force float
+const secondsToMillis = inSeconds => inMillis * 1000.0; // force float
+
+const skipToTime = (player, secondsFromStart) => player.seekTo(secondsFromStart, true);
+
+const scrub = (player, skipSeconds) => skipToTime(player, player.getCurrentTime() + skipSeconds);
+
+// repeat left/right arrowloop symbols: &#8635;&#8634;
+const stepReverse = (player, skipSeconds = 5) => scrub(player, 0 - skipSeconds);
+const stepForward = (player, skipSeconds = 5) => scrub(player, skipSeconds);
+
+// rewind, fast-forward, play and pause symbols found at:
+// https://tutorialzine.com/2014/12/you-dont-need-icons-here-are-100-unicode-symbols-that-you-can-use
+const playSymbol = "&#x25ba;";
+const pauseSymbol = "&#x2225;";
+const rewindSymbol = "&#x21b6;";
+const fastForwardSymbol = "&#x21b7;";
+
+const togglePausePlay = (player) => {
+
+    let btn = document.querySelector('#pause_play');
+
+    if (player.getPlayerState() === 1) { // playing
+
+        player.pauseVideo();
+        btn.innerHTML = playSymbol;
+
+    } else {
+        // if (player.getPlayerState() === 2) { // paused
+
+        player.playVideo();
+        btn.innerHTML = pauseSymbol;
+    }
+}
 
 /*
 * from: https://stackoverflow.com/a/34008994

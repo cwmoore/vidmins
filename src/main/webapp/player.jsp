@@ -7,6 +7,34 @@
     <!-- begin code from YouTube Dev -->
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
     <div class="player-frame aquapanel">
+
+        <form name="player_input_form">
+            <table class="player-table"><tr>
+                <td>
+                    <button type="button" id="skip_back_biggest" name="sbbst" class="player-button button-biggest" onclick="stepReverse(player, 60);">&#x21b6;</button>
+                </td>
+                <td>
+                    <button type="button" id="skip_back_big" name="sbb" class="player-button button-big" onclick="stepReverse(player, 30);">&#x21b6;</button>
+                </td>
+                <td>
+                    <button type="button" id="skip_back" name="sb" class="player-button"  onclick="stepReverse(player);">&#x21b6;</button>
+                </td>
+                <td>
+                    <button type="button" id="pause_play" name="pp" class="player-button"  onclick="togglePausePlay(player);">&#x25ba;</button>
+                </td>
+                <td>
+                    <button type="button" id="skip_ahead" name="sa" class="player-button"  onclick="stepForward(player);">&#x21b7;</button>
+                </td>
+                <td>
+                    <button type="button" id="skip_ahead_big" name="sab" class="player-button button-big" onclick="stepForward(player, 30);">&#x21b7;</button>
+                </td>
+                <td>
+                    <button type="button" id="skip_ahead_biggest" name="sabst" class="player-button button-biggest" onclick="stepForward(player, 60);">&#x21b7;</button>
+                </td>
+
+            </tr></table>
+        </form>
+
         <div id="player"></div>
         <div class="video-title">
             <h4><a href="https://www.youtube.com/watch?v=${currentVideo.youTubeId}">${currentVideo.title}</a></h4>
@@ -25,8 +53,8 @@
         //    after the API code downloads.
         var player;
         var youTubeId = '${currentVideo.youTubeId}';
-        var viewWidth = '1120';//this.parentNode.parentNode.clientWidth;
-        var viewHeight = '630';//(viewWidth / 16) * 9;
+        var viewWidth = '800';//'1120';//this.parentNode.parentNode.clientWidth;
+        var viewHeight = '450';//'630';//(viewWidth / 16) * 9;
         // console.log(this.parentNode);
         // console.log(this.parentNode.parentNode);
         // this.parentNode.width = viewWidth + 8; // 2 * width of padding and borders

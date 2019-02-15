@@ -23,7 +23,7 @@ label .fixed {
 }
 */
 
-#help_input, #link_input, #comment_input, #survey_input, #feedback_input, #ask_input {
+#help_input, #link_input, #comment_input, #survey_input, #feedback_input, #ask_input, #note_input {
     display: none;
 }
 
@@ -50,4 +50,34 @@ label .fixed {
 
 .video-title {
     padding: 10px;
+}
+
+.player-table {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.player-table > tr > td {
+    text-align: center;
+
+}
+
+.player-button {
+    font-size: 1em;
+    font-weight: normal;
+    width: 100px;
+    height: 40px;
+    margin: 5px;
+    padding: 0;
+    padding-bottom: 5px;
+}
+
+.button-big {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.button-biggest {
+    font-size: 2.25em;
+    font-weight: bolder;
 }

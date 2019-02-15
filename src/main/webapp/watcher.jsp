@@ -8,6 +8,7 @@
         <%-- <button id="survey_button" name="survey" class="btn btn-info" onclick="showPanel('survey');makeSurveyQuestion();">Survey</button> --%>
         <button id="comment_button" name="feedback" class="btn btn-info" onclick="makeComment();">Comment</button>
         <button id="ask_button" name="ask-question" class="btn btn-info" onclick="makeAskQuestion();">Ask</button>
+        <%--button-- id="player_button" name="player-command" class="btn btn-info" onclick="makePlayerCommand();">Play</button--%>
     </div>
     <div id="watcher">
         <!-- TODO: use bootstrap navigation -->
@@ -16,16 +17,16 @@
             <form id="note_input_form" accept-charset="utf-8" method="post" action="http://localhost:8080/new-note"<%-- onsubmit="processInput(); return false;" --%>>
 
                 <label>Label:</label><br />
-                <input type="text" name="label" /><br />
+                <input type="text" name="label" <c:if test="${param.editNote > 0}">value="${note.label}"</c:if>/><br />
 
                 <label>Text:</label><br />
-                <textarea name="note_text"></textarea><br />
+                <textarea name="note_text"><c:if test="${param.editNote > 0}">${note.text}</c:if></textarea><br />
 
-                <label>Tags:</label><br />
+                <%--label>Tags:</label><br />
                 <input type="text" name="tag" />
 
                 <button name="add-tag" onclick="addTag()">Add Tag</button><br />
-                <span id="tags"></span>
+                <span id="tags"></span--%>
 
                 <input type="hidden" name="timeStampStart" value="0" />
                 <label>Start:</label> <span id="time_stamp_start">0</span><br />
@@ -33,8 +34,10 @@
                 <%--input type="hidden" name="timeStampEnd" value="0" />
                 <label>End:</label> <span id="time_stamp_end">0</span><br /--%>
 
-                <input type="hidden" name="userId" value="${sessionScope.user.id}" />
-                <input type="hidden" name="videoId" value="${sessionScope.currentVideo.id}" />
+                <input type="hidden" name="userId"
+                       value="<c:choose><c:when test="${param.editNote != null}">${note.userId}</c:when><c:otherwise>${sessionScope.user.id}</c:otherwise></c:choose>" />
+                <input type="hidden" name="videoId"
+                       value="<c:choose><c:when test="${param.editNote != null}">${note.videoId}</c:when><c:otherwise>${sessionScope.currentVideo.id}</c:otherwise></c:choose>" />
 
                 <br />
                 <input id="store_note_btn" type="submit" class="btn btn-primary" value="Store Annotation" />
@@ -109,6 +112,11 @@
                 <input type="submit" class="btn btn-primary" value="Ask" />
             </form>
         </div>
+
+        <%--div id="player_input"  class="aquapanel" method="get" action="#" onsubmit="processInput(); return false;">
+
+        </div--%>
+
         <div id="help_input" class="aquapanel">
             <h3>App use cases:</h3>
             <h4>One might:</h4>

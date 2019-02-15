@@ -10,16 +10,16 @@
                 <th>Start</th>
                 <%--th>End</th --%>
                 <th>Created</th>
-                <th>videoId</th>
+                <%--th>videoId</th--%>
             </tr>
             <c:forEach items="${notes}" var="note">
                 <tr class="">
-                    <td>${note.label}</td>
+                    <td><a href="/new-note?editNote=${note.id}">${note.label}</a></td>
                     <td>${note.text}</td>
                     <td>${note.start}</td>
                     <%--td>${note.end}</td--%>
                     <td>${note.createDatetime}</td>
-                    <td>${note.videoId}</td>
+                    <%-- td>${note.videoId}</td --%>
                 </tr>
             </c:forEach>
         </table>
