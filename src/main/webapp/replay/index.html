@@ -1,0 +1,151 @@
+<!-- This is an attempt at an enhanced control panel for YouTube videos. --><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>replay</title>
+    <link rel="stylesheet" href="replay.css"/>
+</head>
+<body>
+<div class="container-fluid">
+
+    <div class="row-fullwidth">
+        <div>
+    <!-- begin code from YouTube Dev -->
+    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+            <div id="player"></div>
+
+            <script>
+                // 2. This code loads the IFrame Player API code asynchronously.
+                var tag = document.createElement('script');
+
+                tag.src = "https://www.youtube.com/iframe_api";
+                var firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+                // 3. This function creates an <iframe> (and YouTube player)
+                //    after the API code downloads.
+                var player;
+                var youTubeId = 'p2woDjD_rQI';
+                var viewWidth = '1120';//this.parentNode.parentNode.clientWidth;
+                var viewHeight = '630';//(viewWidth / 16) * 9;
+                // console.log(this.parentNode);
+                // console.log(this.parentNode.parentNode);
+                // this.parentNode.width = viewWidth + 8; // 2 * width of padding and borders
+
+                function onYouTubeIframeAPIReady() {
+                    player = new YT.Player('player', {
+                        height: viewHeight,//'450',
+                        width: viewWidth,//'800',
+                        videoId: youTubeId,
+                        events: {
+                            'onReady': onPlayerReady,
+                            'onStateChange': onPlayerStateChange
+                        },
+                        playerVars: {
+                            'autoplay': 0,
+                            'controls': 1,
+                            'autohide': 1,
+                            'wmode': 'opaque',
+                            'origin': 'http://localhost:8080/'
+                        }
+                    });
+                }
+
+                // 4. The API will call this function when the video player is ready.
+                function onPlayerReady(event) {
+                    //event.target.playVideo(); // eg. play when loaded
+                    loadControls();
+                }
+
+                // 5. The API calls this function when the player's state changes.
+                //    The function indicates that when playing a video (state=1),
+                //    the player should play for six seconds and then stop.
+                var done = false;
+                function onPlayerStateChange(event) {
+                    // if (event.data == YT.PlayerState.PLAYING && !done) {
+                    //   setTimeout(stopVideo, 6000);
+                    //   done = true;
+                    // }
+                }
+                function stopVideo() {
+                    player.stopVideo();
+                }
+            </script>
+            <!-- end code from YouTube Dev -->
+
+            <script defer>
+
+                const skipToTime = (player, secondsFromStart) => player.seekTo(secondsFromStart, true);
+
+                const scrub = (player, skipSeconds) => skipToTime(player, player.getCurrentTime() + skipSeconds);
+
+                // repeat left/right arrowloop symbols: &#8635;&#8634;
+                const stepReverse = (player, skipSeconds = 5) => scrub(player, 0 - skipSeconds);
+                const stepForward = (player, skipSeconds = 5) => scrub(player, skipSeconds);
+
+                // rewind, fast-forward, play and pause symbols found at:
+                // https://tutorialzine.com/2014/12/you-dont-need-icons-here-are-100-unicode-symbols-that-you-can-use
+                const playSymbol = "&#x25ba;";
+                const pauseSymbol = "&#x2225;";
+                const rewindSymbol = "&#x21b6;";
+                const fastForwardSymbol = "&#x21b7;";
+
+                const togglePausePlay = () => {
+
+                    let player = document.querySelector('#player');
+                    if (!empty(player)) {
+                        let btn = document.querySelector('#pause_play');
+
+                        if (player.getPlayerState() === 1) { // playing
+
+                            player.pauseVideo();
+                            btn.innerHTML = playSymbol;
+
+                        } else {
+                            // if (player.getPlayerState() === 2) { // paused
+
+                            player.playVideo();
+                            btn.innerHTML = pauseSymbol;
+                        }
+                    } else {
+                        alert('player hasn\'t loaded');
+                    }
+                }
+
+            </script>
+        </div>
+
+        <div class="row-fullwidth">
+            <div class="">
+                <form name="player_input_form">
+                    <table class="player-table aquapanel"><tr>
+                        <td>
+                            <button type="button" id="skip_back_big" name="sbb" class="player-button button-big" onclick="stepReverse(player, 30);">&#x21b6;</button>
+                        </td>
+                        <td>
+                            <button type="button" id="skip_back" name="sb" class="player-button"  onclick="stepReverse(player);">&#x21b6;</button>
+                        </td>
+                        <td>
+                            <button type="button" id="pause_play" name="pp" class="player-button"  onclick="togglePausePlay();">&#x25ba;</button>
+                        </td>
+                        <td>
+                            <button type="button" id="skip_ahead" name="sa" class="player-button"  onclick="stepForward(player);">&#x21b7;</button>
+                        </td>
+                        <td>
+                            <button type="button" id="skip_ahead_big" name="sab" class="player-button button-big" onclick="stepForward(player, 30);">&#x21b7;</button>
+                        </td>
+
+                    </tr></table>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

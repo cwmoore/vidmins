@@ -1,0 +1,19 @@
+
+.player-table tr, th, td {
+    text-align: center;
+
+}
+
+.player-button {
+    font-size: 1em;
+    font-weight: normal;
+    width: 70px;
+    height: 50px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.button-big {
+    font-size: 1.5em;
+    font-weight: bold;
+}
