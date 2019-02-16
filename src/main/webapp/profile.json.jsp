@@ -1,5 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>{
-  user: {<c:if test="${user != null}">
+  user: {
+  <c:if test="${user != null}">
     id: ${user.id}
     ,firstName: "${user.firstName}"
     , lastName: "${user.lastName}"
@@ -10,9 +11,10 @@
     , organization: "${user.organization}"
     , introduction: "${user.introduction}"
     , status: "${user.status}"
-    </c:if>
+  </c:if>
   }
-  , videos: {<c:if test="${videos != null}">
+  , videos: {
+  <c:if test="${videos != null}">
     <c:forEach items="${videos}" var="video">
     {
       id: "${video.id}"
@@ -22,9 +24,10 @@
       , duration: "${video.duration}"
     },
     </c:forEach>
-    </c:if>
+  </c:if>
   }
-  , notes: {<c:if test="${notes != null}">
+  , notes: {
+  <c:if test="${notes != null}">
     <c:forEach items="${notes}" var="note">
     {
       id: "${note.id}"
@@ -37,6 +40,18 @@
       , videoId: "${note.videoId}"
     },
     </c:forEach>
-    </c:if>
-  }
+  </c:if>
+  }<%--
+, tags: {
+  <c:if test="${tags != null}">
+    <c:forEach items="${tags}" var="tag">
+    {
+      id: "${tag.id}"
+      , tag: "${tag.tag}"
+      , objectId: "${tag.objectId}"
+      , objectType: "${tag.objectType}"
+    },
+    </c:forEach>
+  </c:if>
+  }--%>
 }

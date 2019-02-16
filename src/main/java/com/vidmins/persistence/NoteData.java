@@ -13,6 +13,9 @@ import java.util.*;
  */
 public class NoteData extends BaseData {
 
+    /**
+     * Instantiates a new NoteData.
+     */
     public NoteData() {
         super();
     }
@@ -20,9 +23,9 @@ public class NoteData extends BaseData {
     /**
      * Create a user from search result
      *
-     * @param results
+     * @param results the result set
      * @return the user data object
-     * @throws SQLException
+     * @throws SQLException the sql exception
      */
     public Note createNoteFromResults(ResultSet results) throws SQLException {
         Note note = new Note();
@@ -73,6 +76,12 @@ public class NoteData extends BaseData {
         return notes;
     }
 
+    /**
+     * Get note from id.
+     *
+     * @param noteId the note id
+     * @return the note
+     */
     public Note fromId(int noteId) {
         Note note = null;
 
@@ -109,6 +118,12 @@ public class NoteData extends BaseData {
         return note;
     }
 
+    /**
+     * Gets notes from video id.
+     *
+     * @param videoId the video id
+     * @return the notes from video id
+     */
     public List<Note> getNotesFromVideoId(int videoId) {
         List<Note> notes = new ArrayList<>();
 
@@ -136,6 +151,12 @@ public class NoteData extends BaseData {
         return notes;
     }
 
+    /**
+     * Sets new note from attributes.
+     *
+     * @param noteFields the note fields
+     * @return the new note from attributes
+     */
     public int setNewNoteFromAttributes(Map<String, String[]> noteFields) {
         int insertId = -1;
 
@@ -206,6 +227,12 @@ public class NoteData extends BaseData {
         return insertId;
     }
 
+    /**
+     * Sets new note.
+     *
+     * @param newNote the new note
+     * @return the new note
+     */
     public Note setNewNote(Note newNote) {
         int insertId = -1;
 
@@ -270,6 +297,12 @@ public class NoteData extends BaseData {
     }
 
 
+    /**
+     * Update note.
+     *
+     * @param note the note
+     * @return the note
+     */
     public Note updateNote(Note note) {
 
         Database database = Database.getInstance();
@@ -324,6 +357,11 @@ public class NoteData extends BaseData {
         return note;
     }
 
+    /**
+     * New note check data.
+     *
+     * @param noteFields the note fields
+     */
     public void newNoteCheckData(Map<String, String[]> noteFields) {
         for (Map.Entry<String, String[]> entry : noteFields.entrySet()) {
             logger.debug(entry.getKey());

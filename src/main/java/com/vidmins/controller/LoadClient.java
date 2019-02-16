@@ -50,7 +50,7 @@ public class LoadClient extends HttpServlet {
      */
     public void loadHelpers(HttpServletRequest request) {
         logger = LogManager.getLogger(this.getClass());
-        logger.debug("init()");
+        logger.debug("loadHelpers()");
 
         if (userData == null) {
             if (request.getSession().getAttribute("userData") == null) {

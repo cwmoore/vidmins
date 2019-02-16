@@ -17,6 +17,7 @@ import java.io.IOException;
  */
 
 @WebServlet(
+        name = "clientData",
         urlPatterns = {"/clientData"}
 )
 
