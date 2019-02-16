@@ -24,17 +24,17 @@ public class ClientData extends HttpServlet {
 
     /**
      * Handle a GET request
-     * @param req the request object
-     * @param resp the response object
+     * @param request the request object
+     * @param response the response object
      * @throws ServletException indicates a servlet problem
      * @throws IOException indicates an IO problem
      */
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        // if (req.getSession().getAttribute("user").isLoggedIn();
+        // if (request.getSession().getAttribute("user").isLoggedIn();
 
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/profile.json.jsp");
-        dispatcher.forward(req, resp);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/profile.json.jsp");
+        dispatcher.forward(request, response);
     }
 }

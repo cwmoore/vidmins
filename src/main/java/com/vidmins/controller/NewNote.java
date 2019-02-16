@@ -2,6 +2,8 @@ package com.vidmins.controller;
 
 import com.vidmins.entity.Note;
 import com.vidmins.persistence.NoteData;
+import com.vidmins.persistence.UserData;
+import com.vidmins.persistence.VideoData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,6 +22,7 @@ import java.util.*;
  */
 
 @WebServlet(
+        name = "newNote",
         urlPatterns = {"/new-note"}
 )
 
@@ -28,89 +31,96 @@ public class NewNote extends HttpServlet {
     private int previousDigit;
     private Logger logger;
 
+    UserData userData;
+    VideoData videoData;
+    NoteData noteData;
+
     /**
-     * Initialize variables
+     * Initialize session
      */
-    public void init() {
+    @Override
+    public void init() throws ServletException {
+
         logger = LogManager.getLogger(this.getClass());
         logger.info("Starting NewNote servlet");
     }
 
+
     /**
-     *
-     * @param req
-     * @param resp
-     * @throws ServletException
-     * @throws IOException
+     * Initialize database helpers
      */
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+    public void loadHelpers(HttpServletRequest request) {
+        logger = LogManager.getLogger(this.getClass());
+        logger.debug("init()");
 
-        NoteData noteData;
-        if (req.getSession().getAttribute("noteData") == null){
-            noteData = new NoteData();
-            req.getSession().setAttribute("noteData", noteData);
-        } else {
-            noteData = (NoteData) req.getSession().getAttribute("noteData");
+        if (userData == null) {
+            if (request.getSession().getAttribute("userData") == null) {
+                userData = new UserData();
+                request.getSession().setAttribute("userData", userData);
+            } else {
+                userData = (UserData) request.getSession().getAttribute("userData");
+            }
         }
 
-        Note note;
-        if (req.getParameter("editNote") != null) {
-            int noteId = Integer.parseInt(req.getParameter("editNote"));
-            note = noteData.fromId(noteId);
-            req.getSession().setAttribute("note", note);
-        } else {
-            note = null;
+        if (videoData == null) {
+            if (request.getSession().getAttribute("videoData") == null) {
+                videoData = new VideoData();
+                request.getSession().setAttribute("videoData", videoData);
+            } else {
+                videoData = (VideoData) request.getSession().getAttribute("videoData");
+            }
         }
 
-        logger.debug("note from id: " + req.getParameter("editNote") + "\n" + note);
-
-        String url = "/";
-        RequestDispatcher dispatcher = req.getRequestDispatcher(url);
-        dispatcher.forward(req, resp);
+        if (noteData == null) {
+            if (request.getSession().getAttribute("noteData") == null) {
+                noteData = new NoteData();
+                request.getSession().setAttribute("noteData", noteData);
+            } else {
+                noteData = (NoteData) request.getSession().getAttribute("noteData");
+            }
+        }
     }
 
     /**
-     * Handle a POST request (new note)
-     *
-     * @param req
-     * @param resp
-     * @throws ServletException
-     * @throws IOException
+     * Handle a POST request
+     * @param request the request object
+     * @param response the response object
+     * @throws ServletException indicates a servlet problem
+     * @throws IOException indicates an IO problem
      */
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        loadHelpers(request);
 
         List<String> requestParams = new ArrayList<>();
         String url = "/loadClient";
         NoteData noteData = new NoteData();
 
-        logger.debug(req.getParameterMap());
+        logger.debug(request.getParameterMap());
 
-        if (req.getParameter("label") != null &&
-                req.getParameter("note_text") != null &&
-                req.getParameter("timeStampStart") != null &&
-                /* req.getParameter("timeStampEnd") != null && */
-                req.getParameter("userId") != null &&
-                req.getParameter("videoId") != null) {
+        if (request.getParameter("label") != null &&
+                request.getParameter("note_text") != null &&
+                request.getParameter("timeStampStart") != null &&
+                /* request.getParameter("timeStampEnd") != null && */
+                request.getParameter("userId") != null &&
+                request.getParameter("videoId") != null) {
 
             //Note noteFromFormData = new Note();
 
             // logger.debug("noteFromFormData: " + noteFromFormData.toString());
 
-            Note noteFromFormData = new Note(req.getParameter("label")
-                    , req.getParameter("note_text")
-                    , Integer.parseInt(req.getParameter("timeStampStart"))
-                   /*  , Integer.parseInt(req.getParameter("timeStampEnd"))*/
-                    , Integer.parseInt(req.getParameter("userId"))
-                    , Integer.parseInt(req.getParameter("videoId"))
+            Note noteFromFormData = new Note(request.getParameter("label")
+                    , request.getParameter("note_text")
+                    , Integer.parseInt(request.getParameter("timeStampStart"))
+                   /*  , Integer.parseInt(request.getParameter("timeStampEnd"))*/
+                    , Integer.parseInt(request.getParameter("userId"))
+                    , Integer.parseInt(request.getParameter("videoId"))
             );
 
             logger.debug("noteFromFormData before: " + noteFromFormData.toString());
 
-            if (req.getParameter("noteId") != null) {
-                noteFromFormData.setId(Integer.parseInt(req.getParameter("noteId")));
+            if (request.getParameter("noteId") != null) {
+                noteFromFormData.setId(Integer.parseInt(request.getParameter("noteId")));
                 noteFromFormData = noteData.updateNote(noteFromFormData);
             } else {
                 noteFromFormData = noteData.setNewNote(noteFromFormData);
@@ -118,11 +128,11 @@ public class NewNote extends HttpServlet {
 
             logger.debug("noteFromFormData after: " + noteFromFormData.toString());
 
-            req.getSession().setAttribute("note", noteFromFormData);
-            requestParams.add("videoId=" + req.getParameter("videoId"));
+            request.getSession().setAttribute("note", null);
+            requestParams.add("videoId=" + request.getParameter("videoId"));
 
-            if (req.getParameter("timeStampStart").matches("\\d+")) {
-                requestParams.add("startTime=" + req.getParameter("timeStampStart"));
+            if (request.getParameter("timeStampStart").matches("\\d+")) {
+                requestParams.add("startTime=" + request.getParameter("timeStampStart"));
             }
 
         } else {
@@ -141,8 +151,8 @@ public class NewNote extends HttpServlet {
         }
         logger.debug("URL to redirect from NewNote: " + url);
 
-//        RequestDispatcher dispatcher = req.getRequestDispatcher("/loadClient");
-//        dispatcher.forward(req, resp);
-        resp.sendRedirect(url);
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("/loadClient");
+//        dispatcher.forward(request, response);
+        response.sendRedirect(url);
     }
 }
