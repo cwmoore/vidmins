@@ -116,7 +116,7 @@ const showPanel = (feature) => {
 
 const hidePanels = () => {
     let feature;
-    const features = ["help", "note", "link", "comment", "ask", "player"];
+    const features = ["help", "note", "link", "comment", "ask"];
 
     for (feature of features) {
         hidePanel(feature);
@@ -124,12 +124,13 @@ const hidePanels = () => {
 }
 
 const hidePanel = (feature) => {
+    console.log('Hide panel: ' + feature);
     document.getElementById(feature + "_input").style.display = "none";
 }
 
 const deselectButtons = () => {
     let feature;
-    const features = ["help", "note", "link", "comment", "ask", "player"];
+    const features = ["help", "note", "link", "comment", "ask"];
 
     for (feature of features) {
         deselectButton(feature);

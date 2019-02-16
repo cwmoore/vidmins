@@ -63,7 +63,7 @@ public class NewNote extends HttpServlet {
         } else {
             note = null;
         }
-        
+
         logger.debug("note from id: " + req.getParameter("editNote") + "\n" + note);
 
         String url = "/";
@@ -109,7 +109,12 @@ public class NewNote extends HttpServlet {
 
             logger.debug("noteFromFormData before: " + noteFromFormData.toString());
 
-            noteFromFormData = noteData.setNewNote(noteFromFormData);
+            if (req.getParameter("noteId") != null) {
+                noteFromFormData.setId(Integer.parseInt(req.getParameter("noteId")));
+                noteFromFormData = noteData.updateNote(noteFromFormData);
+            } else {
+                noteFromFormData = noteData.setNewNote(noteFromFormData);
+            }
 
             logger.debug("noteFromFormData after: " + noteFromFormData.toString());
 

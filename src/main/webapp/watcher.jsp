@@ -17,10 +17,10 @@
             <form id="note_input_form" accept-charset="utf-8" method="post" action="http://localhost:8080/new-note"<%-- onsubmit="processInput(); return false;" --%>>
 
                 <label>Label:</label><br />
-                <input type="text" name="label" <c:if test="${param.editNote > 0}">value="${note.label}"</c:if>/><br />
+                <input type="text" name="label" <c:if test="${note != null}">value="${note.label}"</c:if>/><br />
 
                 <label>Text:</label><br />
-                <textarea name="note_text"><c:if test="${param.editNote > 0}">${note.text}</c:if></textarea><br />
+                <textarea name="note_text"><c:if test="${note != null}">${note.text}</c:if></textarea><br />
 
                 <%--label>Tags:</label><br />
                 <input type="text" name="tag" />
@@ -34,10 +34,14 @@
                 <%--input type="hidden" name="timeStampEnd" value="0" />
                 <label>End:</label> <span id="time_stamp_end">0</span><br /--%>
 
+                <c:if test="${note != null}">
+                <input type="hidden" name="noteId" value="${note.id}" />
+                </c:if>
+
                 <input type="hidden" name="userId"
-                       value="<c:choose><c:when test="${param.editNote != null}">${note.userId}</c:when><c:otherwise>${sessionScope.user.id}</c:otherwise></c:choose>" />
+                       value="<c:choose><c:when test="${note != null}">${note.userId}</c:when><c:otherwise>${sessionScope.user.id}</c:otherwise></c:choose>" />
                 <input type="hidden" name="videoId"
-                       value="<c:choose><c:when test="${param.editNote != null}">${note.videoId}</c:when><c:otherwise>${sessionScope.currentVideo.id}</c:otherwise></c:choose>" />
+                       value="<c:choose><c:when test="${note != null}">${note.videoId}</c:when><c:otherwise>${sessionScope.currentVideo.id}</c:otherwise></c:choose>" />
 
                 <br />
                 <input id="store_note_btn" type="submit" class="btn btn-primary" value="Store Annotation" />

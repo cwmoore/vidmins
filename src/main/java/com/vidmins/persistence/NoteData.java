@@ -61,8 +61,9 @@ public class NoteData extends BaseData {
                 notes.add(createNoteFromResults(results));
             }
 
-            results.close();
             statement.close();
+            results.close();
+            connection.close();
             database.disconnect();
         } catch (SQLException sqlException) {
             System.out.println("UserData.getVideoNotes():" + sqlException);
@@ -75,14 +76,18 @@ public class NoteData extends BaseData {
     public Note fromId(int noteId) {
         Note note = null;
 
-        Database database;
-        PreparedStatement statement;
-        ResultSet resultSet;
+        Database database = null;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
         String sqli = "SELECT id, label, text, start, end, createDateTime, videoId, userId FROM note WHERE id = ?";
 
         try {
             database = Database.getInstance();
-            statement = database.getConnection().prepareStatement(sqli);
+            database.connect();
+            connection = database.getConnection();
+            statement = connection.prepareStatement(sqli);
             statement.setInt(1, noteId);
             resultSet = statement.executeQuery();
 
@@ -90,8 +95,9 @@ public class NoteData extends BaseData {
                 note = createNoteFromResults(resultSet);
             }
 
-            resultSet.close();
             statement.close();
+            resultSet.close();
+            connection.close();
             database.disconnect();
 
         } catch (SQLException sqlException) {
@@ -261,6 +267,61 @@ public class NoteData extends BaseData {
 
 
         return newNote;
+    }
+
+
+    public Note updateNote(Note note) {
+
+        Database database = Database.getInstance();
+        Connection connection;
+        PreparedStatement statement;
+        ResultSet resultSet;
+
+        String sql = "UPDATE note SET label=?, text=?, start=?, end=?, userId=?, videoId=? WHERE id=?";
+
+        logger.debug("Note to update: " + note);
+
+        try {
+            database.connect();
+        } catch (Exception exception) {
+            logger.debug("database.connect(): " + exception.toString());
+        }
+
+        try {
+            connection = database.getConnection();
+            statement = connection.prepareStatement(sql);
+            logger.debug("Empty statement: " + sql + "\n" + statement.toString());
+
+            statement.setString(1, note.getLabel());
+            statement.setString(2, note.getText());
+            statement.setInt(3, note.getStart());
+            statement.setInt(4, note.getEnd());
+            statement.setInt(5, note.getUserId());
+            statement.setInt(6, note.getVideoId());
+            statement.setInt(7, note.getId());
+
+            logger.debug("Complete statement: " + sql + statement.toString());
+
+            if (1 == statement.executeUpdate()) {
+                // update seems to have worked
+
+            } else {
+                // insert failed, no rows affected
+                logger.debug("setNewNote(): Insert note failed: ", statement);
+            }
+
+            statement.close();
+            database.disconnect();
+
+        } catch (SQLException sqlException) {
+            logger.debug("In NoteData.setNewNote(): " + sql +  "\n" + sqlException);
+        } catch (Exception exception) {
+            logger.debug("In NoteData.setNewNote(): " + sql + "\n" + exception);
+        }
+
+        logger.debug("Updated note: " + note);
+
+        return note;
     }
 
     public void newNoteCheckData(Map<String, String[]> noteFields) {
