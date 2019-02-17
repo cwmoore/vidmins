@@ -81,10 +81,18 @@
         // 4. The API will call this function when the video player is ready.
         function onPlayerReady(event) {
             //event.target.playVideo();
-            <c:if test="${param.startTime > 0}">
+            <c:choose>
+            <c:when test="${param.startTime > 0}">
                 event.target.seekTo(<c:out value="${param.startTime}" />, true);
-                //event.target.playVideo();
-            </c:if>
+            </c:when>
+            <c:when test="${ note != null }">
+                <c:if test="${ note.start > 0 }">
+                    event.target.seekTo(<c:out value="${note.start}" />, false);
+                </c:if>
+            </c:when>
+            <c:otherwise></c:otherwise>
+            </c:choose>
+            //event.target.playVideo();
         }
 
         // 5. The API calls this function when the player's state changes.
