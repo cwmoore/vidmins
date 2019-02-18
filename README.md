@@ -22,6 +22,9 @@ By both creating notes, and having searchable access to cued up lecture topics, 
     * make notes that are useful even if video goes offline
 
 [Project Detail](docs/iproject.md)
+
 [Project Plan](docs/ProjectPlan.md)
+
 [Time Log](docs/time_sheet.tsv)
+
 [Journal](docs/Journal.md)
