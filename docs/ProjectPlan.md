@@ -2,7 +2,7 @@
 
 ### Week 2
 - [x] Create the template for all jsps using bootstrap
-- [ ] Complete database design
+- [x] Complete database design
 
 
 ### Week 3
@@ -12,8 +12,8 @@
 - [x] Add link to list of indie projects in student repo.
 - [x] Complete Problem Statement
 - [x] Determine possible Web Services or APIs to use
-- [ ] List technologies, versions and how they will be used
-- [ ] Weekly journal entry
+- [x] List technologies, versions and how they will be used
+- [x] Weekly journal entry
 - [x] Write project plan
 - [ ] Document application flow in text and pictures - I'll use wireframes that have clickable links for the screen design. Use Balsamiq? 
 - [ ] Triple-check for Checkpoint 1: Problem statement, project plan, screen design and time log pushed to GitHub. 
