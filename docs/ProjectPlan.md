@@ -32,7 +32,12 @@
 - [ ] Create db on AWS
 - [ ] Deploy to AWS for first time
 - [ ] Weekly journal entry
-- [ ] Prepare for Checkpoint 2: Database designed and created, at least one DAO implemented with Hibernate, DAO is unit tested, Log4J is implemented (no System.out.printlns), class design and any other diagrams you plan to use have been created. 
+- [ ] Prepare for Checkpoint 2
+- [ ] Database designed and created
+- [ ] at least one DAO implemented with Hibernate
+- [ ] DAO is unit tested
+- [ ] Log4J is implemented
+- [ ] class design and any other diagrams 
 
 ### Week 7
 
