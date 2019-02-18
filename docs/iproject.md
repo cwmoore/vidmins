@@ -1,5 +1,3 @@
-#### *work in progress...*
-
 # Project
 
 #### Table of Contents
