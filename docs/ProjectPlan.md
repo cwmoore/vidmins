@@ -10,11 +10,11 @@
 - [x] Create project repository on GitHub
 - [x] Create project structure in intellij and push
 - [x] Add link to list of indie projects in student repo.
-- [ ] Complete Problem Statement
+- [x] Complete Problem Statement
 - [x] Determine possible Web Services or APIs to use
 - [ ] List technologies, versions and how they will be used
 - [ ] Weekly journal entry
-- [ ] Write project plan
+- [x] Write project plan
 - [ ] Document application flow in text and pictures - I'll use wireframes that have clickable links for the screen design. Use Balsamiq? 
 - [ ] Triple-check for Checkpoint 1: Problem statement, project plan, screen design and time log pushed to GitHub. 
 
