@@ -82,6 +82,9 @@ ___________
         * a text file of URLs
         * a link to an HTML document containing video links
 
+* *Load transcripts*
+    + The service will attempt to retrieve closed captioning data and generate notes from transcript.
+
 * *Select video*
     + A user can select and load a video from a list.
 
