@@ -14,6 +14,7 @@ import java.io.IOException;
 
 /**
  * Servlet to add video
+ *
  * @author cwmoore
  */
 
@@ -51,7 +52,7 @@ public class NewVideo extends HttpServlet {
         // add the new video to `video` and `user_videos`
         // return to watcher to load new video 
         
-        request.setAttribute('video', addNewVideo(request));
+        request.setAttribute("video", addNewVideo(request));
         
         String url = "/";
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
@@ -66,7 +67,7 @@ public class NewVideo extends HttpServlet {
     private Video addNewVideo(HttpServletRequest request) {
         // user logged in?
 
-        String youTubeId = request.getParameter('v');
+        String youTubeId = request.getParameter("v");
         // get video information via YT Data API
         // title, description, duration, license, owner, channel
 
@@ -83,7 +84,9 @@ public class NewVideo extends HttpServlet {
      * @throws IOException indicates an IO problem
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
         String url = "/";
         response.sendRedirect(url);
     }

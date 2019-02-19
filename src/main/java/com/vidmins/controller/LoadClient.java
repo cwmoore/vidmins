@@ -37,6 +37,8 @@ public class LoadClient extends HttpServlet {
     VideoData videoData;
     NoteData noteData;
 
+    HttpSession session;
+
     /**
      * Initialize session
      */
@@ -52,30 +54,32 @@ public class LoadClient extends HttpServlet {
         logger = LogManager.getLogger(this.getClass());
         logger.debug("loadHelpers()");
 
+        session = request.getSession();
+
         if (userData == null) {
-            if (request.getSession().getAttribute("userData") == null) {
+            if (session.getAttribute("userData") == null) {
                 userData = new UserData();
-                request.getSession().setAttribute("userData", userData);
+                session.setAttribute("userData", userData);
             } else {
-                userData = (UserData) request.getSession().getAttribute("userData");
+                userData = (UserData) session.getAttribute("userData");
             }
         }
 
         if (videoData == null) {
-            if (request.getSession().getAttribute("videoData") == null) {
+            if (session.getAttribute("videoData") == null) {
                 videoData = new VideoData();
-                request.getSession().setAttribute("videoData", videoData);
+                session.setAttribute("videoData", videoData);
             } else {
-                videoData = (VideoData) request.getSession().getAttribute("videoData");
+                videoData = (VideoData) session.getAttribute("videoData");
             }
         }
 
         if (noteData == null) {
-            if (request.getSession().getAttribute("noteData") == null) {
+            if (session.getAttribute("noteData") == null) {
                 noteData = new NoteData();
-                request.getSession().setAttribute("noteData", noteData);
+                session.setAttribute("noteData", noteData);
             } else {
-                noteData = (NoteData) request.getSession().getAttribute("noteData");
+                noteData = (NoteData) session.getAttribute("noteData");
             }
         }
     }
@@ -88,37 +92,38 @@ public class LoadClient extends HttpServlet {
      * @throws IOException indicates an IO problem
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
         loadHelpers(request);
 
         String requestParams = "?";
 
-        if (request.getSession().getAttribute("user") != null) {
-            User user = (User) request.getSession().getAttribute("user");
+        if (session.getAttribute("user") != null) {
+            User user = (User) session.getAttribute("user");
 
             List<Video> videos = userData.getUserVideos(user);
-            request.getSession().setAttribute("videos", videos);
+            session.setAttribute("videos", videos);
 
             if (request.getParameter("videoId") != null) {
                 if (request.getParameter("videoId").matches("\\d+")) {
 
-                    request.getSession().setAttribute("currentVideo",
+                    session.setAttribute("currentVideo",
                             videoData.fromId(Integer.parseInt(request.getParameter("videoId"))));
 
-                    request.getSession().setAttribute("notes",
+                    session.setAttribute("notes",
                             videoData.getVideoNotes(user.getId(), Integer.parseInt(request.getParameter("videoId"))));
                 }
             }
-            //if (request.getSession().getAttribute("currentVideo") != null) {
-                // request.getSession().setAttribute("notes", userData.getVideoNotes(Integer.toString(videos.get(1).getId())));
-                // request.getSession().setAttribute("currentVideo", videos.get(1));
+            //if (session.getAttribute("currentVideo") != null) {
+                // session.setAttribute("notes", userData.getVideoNotes(Integer.toString(videos.get(1).getId())));
+                // session.setAttribute("currentVideo", videos.get(1));
             //}
 
 
-            request.getSession().setAttribute("title", "The Video Minutes App");
+            session.setAttribute("title", "The Video Minutes App");
         } // else { // user is not logged in }
 
-        HttpSession session = request.getSession();
         Enumeration keys = session.getAttributeNames();
 
         while (keys.hasMoreElements()) {

@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
 
@@ -35,6 +36,8 @@ public class NewNote extends HttpServlet {
     VideoData videoData;
     NoteData noteData;
 
+    HttpSession session;
+
     /**
      * Initialize session
      */
@@ -53,30 +56,32 @@ public class NewNote extends HttpServlet {
         logger = LogManager.getLogger(this.getClass());
         logger.debug("init()");
 
+        session = request.getSession();
+
         if (userData == null) {
-            if (request.getSession().getAttribute("userData") == null) {
+            if (session.getAttribute("userData") == null) {
                 userData = new UserData();
-                request.getSession().setAttribute("userData", userData);
+                session.setAttribute("userData", userData);
             } else {
-                userData = (UserData) request.getSession().getAttribute("userData");
+                userData = (UserData) session.getAttribute("userData");
             }
         }
 
         if (videoData == null) {
-            if (request.getSession().getAttribute("videoData") == null) {
+            if (session.getAttribute("videoData") == null) {
                 videoData = new VideoData();
-                request.getSession().setAttribute("videoData", videoData);
+                session.setAttribute("videoData", videoData);
             } else {
-                videoData = (VideoData) request.getSession().getAttribute("videoData");
+                videoData = (VideoData) session.getAttribute("videoData");
             }
         }
 
         if (noteData == null) {
-            if (request.getSession().getAttribute("noteData") == null) {
+            if (session.getAttribute("noteData") == null) {
                 noteData = new NoteData();
-                request.getSession().setAttribute("noteData", noteData);
+                session.setAttribute("noteData", noteData);
             } else {
-                noteData = (NoteData) request.getSession().getAttribute("noteData");
+                noteData = (NoteData) session.getAttribute("noteData");
             }
         }
     }
@@ -128,7 +133,7 @@ public class NewNote extends HttpServlet {
 
             logger.debug("noteFromFormData after: " + noteFromFormData.toString());
 
-            request.getSession().setAttribute("note", null);
+            session.setAttribute("note", null);
             requestParams.add("videoId=" + request.getParameter("videoId"));
 
             if (request.getParameter("timeStampStart").matches("\\d+")) {
