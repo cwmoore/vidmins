@@ -124,8 +124,7 @@ ___________
     + A user can change the playback speed.
     + A user can start or stop a loaded video.
 
-* *Endure link rot*
-    + or maybe not - otes can be saved without timeline info in lieu of extant video
+* *Address link rot*
     + a user can export notes
     + a user can replace a video link id if they can find an identical video elsewhere
 

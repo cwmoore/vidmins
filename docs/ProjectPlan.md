@@ -15,17 +15,20 @@
 - [x] List technologies, versions and how they will be used
 - [x] Weekly journal entry
 - [x] Write project plan
-- [ ] Document application flow in text and pictures - I'll use wireframes that have clickable links for the screen design. Use Balsamiq? 
-- [ ] Triple-check for Checkpoint 1: Problem statement, project plan, screen design and time log pushed to GitHub. 
+- [ ] Document application flow through prototype 
+- [ ] Triple-check for Checkpoint 1:
+- [ ] Problem statement, project plan, screen design and time log pushed to GitHub. 
 
 ### Week 4
 - [ ] Weekly journal entry
 - [ ] Create class uml diagram
+- [ ] Set up Hibernate
 - [ ] Prepare for Week 5 peer design/code review
 
 ### Week 5
 
 - [ ] Weekly journal entry
+- [ ] Convert models to Hibernate
 
 ### Week 6
 
@@ -44,24 +47,20 @@
 - [ ] Weekly journal entry
 - [ ] Set up authentication locally
 - [ ] Set up authentication on AWS
+- [ ] Set up hashed passwords with salt
 - [ ] Review and incorporate any feedback from Checkpoint 2.
 
 ### Week 8
 
 - [ ] Weekly journal entry
-- [ ] Prepare for Checkpoint 3: Deployed to AWS, at least one JSP that displays data from the database is implemented. 
+- [ ] Prepare for Checkpoint 3: Deployed to AWS, at least one JSP that displays data from the database is implemented.
+- [ ] Begin web services/YouTube Data API requests 
 
 ### Week 9
 - [ ] Weekly journal entry
 - [ ] Review and incorporate feedback from Checkpoint 3.
-- [ ] Carefully review code for standards and best practices - use a code quality tool? 
-
-### Week 8
-- [ ] Weekly journal entry
-- [ ] Code review
-
-### Week 9
-- [ ] Weekly journal entry
+- [ ] Carefully review code for standards and best practices - use a code quality tool?
+- [ ] Complete YouTube Data API integration 
 
 ### Week 10
 - [ ] Weekly journal entry
@@ -69,6 +68,7 @@
 
 ### Week 11 - Team project work week
 - [ ] Weekly journal entry
+- [ ] Consider multithreading
 
 ### Week 12 - Team project due
 - [ ] Weekly journal entry
