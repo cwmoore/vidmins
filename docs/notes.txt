@@ -1,0 +1,4 @@
+jsoup
+chartjs
+hibernate validator
+
