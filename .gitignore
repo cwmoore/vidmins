@@ -50,3 +50,4 @@ fabric.properties
 
 # New Stuff
 logs/vidmins.log
+**/database.properties
