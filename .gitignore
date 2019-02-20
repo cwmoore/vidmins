@@ -51,3 +51,4 @@ fabric.properties
 # New Stuff
 logs/vidmins.log
 **/database.properties
+src/main/resources/database.properties
