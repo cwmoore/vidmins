@@ -17,6 +17,7 @@ import java.io.IOException;
  */
 
 @WebServlet(
+        name = "login",
         urlPatterns = {"/login"}
 )
 
@@ -31,7 +32,8 @@ public class Login extends HttpServlet {
      * @throws IOException
      */
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
 
         UserData userData = new UserData();
 

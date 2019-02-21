@@ -21,6 +21,7 @@ public class ReadHtml {
 
     private String videoRegex = "youtube\\.com/watch\\?v=|youtu.be/";
 
+
     /**
      * Instantiates a new Read html.
      *
@@ -32,6 +33,7 @@ public class ReadHtml {
         this.url = url;
         loadFromUrl();
     }
+
 
     /**
      * Find you tube links map.
@@ -56,6 +58,7 @@ public class ReadHtml {
         return youTubeLinks;
     }
 
+
     /**
      * Load the Document object from a URL
      */
@@ -69,6 +72,7 @@ public class ReadHtml {
             logger.error("Jsoup.connect(\"" + url + "\").get() threw exception " + ioException);
         }
     }
+
 
     /**
      * load the Document object from an HTML string
@@ -89,6 +93,7 @@ public class ReadHtml {
         return url;
     }
 
+
     /**
      * Sets url.
      *
@@ -97,6 +102,7 @@ public class ReadHtml {
     public void setUrl(String url) {
         this.url = url;
     }
+
 
     /**
      * Gets doc.
@@ -107,6 +113,7 @@ public class ReadHtml {
         return doc;
     }
 
+
     /**
      * Sets doc.
      *
@@ -116,6 +123,7 @@ public class ReadHtml {
         this.doc = doc;
     }
 
+
     /**
      * Gets video regex.
      *
@@ -124,6 +132,7 @@ public class ReadHtml {
     public String getVideoRegex() {
         return videoRegex;
     }
+
 
     /**
      * Sets video regex.

@@ -53,4 +53,5 @@ TODO implement OAuth2 w/Google
 TODO research JAX-RS
 TODO implement JSoup
 
-
+TODO setup temporary link to return to guest user sessions
+TODO convert a guest user into a real user

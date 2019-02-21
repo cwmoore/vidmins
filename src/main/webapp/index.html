@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YouTube Link to Time</title>
+</head>
+<body>
+
+    <div>
+
+        <form name="generate_link">
+            YouTube link: <input type="text" name="base_url" placeholder="https://youtu.be/abc-123_XYZ or www.youtube.com/watch?v=abc-123_XYZ"/><br />
+            Minutes: <input type="text" name="minutes" placeholder="0"/><br />
+            Seconds: <input type="text" name="seconds" placeholder="0"/><br />
+            <button id="gen_link_btn" type="button" name="user_click">Generate</button>
+        </form>
+
+        <span id="output_link"></span>
+
+    </div>
+
+</body>
+</html>
+
+<script>
+
+
+const checkInputLink = () => {
+
+    let userUrl = document.generate_link.base_url.value;
+
+    let isVideoLink = false;
+    let wwwyt_regex = /[https?:\/\/]?[www.]?youtube\.com\/watch\?v=([^&]+)/g;
+    let ytbe_regex = /.*youtu\.be\/([^&]+)/g;
+    let vidRegex;
+
+    let matches = false;
+
+    console.log(userUrl);
+
+    if (userUrl.match(wwwyt_regex)) {
+        vidRegex = RegExp('^.*watch\?v=([^&]+).*$', 'g');
+
+        matches = vidRegex.exec(userUrl);
+
+        if (matches.length > 0) {
+            console.log(matches[0]);
+        }
+
+        console.log("youtube.com link");
+        isVideoLink = true;
+
+    } else if (userUrl.match(ytbe_regex)) {
+        vidRegex = RegExp('^.*youtu.be\/([^&]+).*$', 'g');
+
+        matches = vidRegex.exec(userUrl);
+
+        if (matches.length > 0) {
+            console.log(matches[0]);
+        }
+
+        console.log("youtu.be link");
+        isVideoLink = true;
+
+    } else {
+        console.log("failed");
+    }
+
+    return matches;
+}
+
+
+
+const makeOutputLink = (rawIdMatches) => {
+
+    console.log('in makeOutputLink');
+
+    let i = 0;
+    for (idQ of rawIdMatches) {
+        console.log(`${i} ${idQ}`);
+        i++;
+    }
+}
+
+
+
+const outputLink = (newLink) => {
+    console.log('console.log');
+    if (checkInputLink()) {
+        document.querySelector('#output_link').innerHTML = newLink;
+    } else {
+        console.log('not a matching URL');
+    }
+}
+
+const userClick = () => {
+    let rawIdString = checkInputLink();
+    let newLink = makeOutputLink(rawIdString);
+    outputLink(newLink);
+}
+
+document.querySelector('#gen_link_btn').addEventListener('click', userClick);
+
+</script>
