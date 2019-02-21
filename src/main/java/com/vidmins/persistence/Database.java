@@ -1,5 +1,6 @@
 package com.vidmins.persistence;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -30,7 +31,10 @@ public class Database {
     private void loadProperties() {
         properties = new Properties();
         try {
-            properties.load (this.getClass().getResourceAsStream("/database.properties"));
+            // after placing auth details outside of git tree
+            properties.load (new FileInputStream("/etc/vidmins/database.properties"));
+            // properties.load (this.getClass().getResourceAsStream("/database.properties"));
+
         } catch (IOException ioe) {
             System.out.println("Database.loadProperties()...Cannot load the properties file");
             ioe.printStackTrace();
