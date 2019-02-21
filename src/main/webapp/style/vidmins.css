@@ -70,7 +70,15 @@ label .fixed {
     margin: 5px;
     padding: 0;
     padding-bottom: 5px;
+    background-color: aquamarine;
+    border: solid aqua 2px;
+    box-shadow: 2px 2px 2px #CCEEFA;
 }
+
+.player-button:active {
+    border: solid blue 2px;
+}
+
 
 .button-big {
     font-size: 1.5em;
