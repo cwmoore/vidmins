@@ -47,22 +47,22 @@ public class UserData extends BaseData {
     /**
      * Authenticate user credentials
      *
-     * @param username the username
+     * @param userName the user name
      * @param password the password
      * @return an authenticated user
      */
-    public User authenticateUser(String username, String password) {
+    public User authenticateUser(String userName, String password) {
         User authenticatedUser = null;
 
-        if (username != "") {
+        if (userName != "") {
             Database database = Database.getInstance();
             Connection connection = null;
 
             try {
                 database.connect();
                 connection = database.getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM user WHERE username=? AND enc_pass=?");
-                statement.setString(1, username);
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM user WHERE userName=? AND enc_pass=?");
+                statement.setString(1, userName);
                 statement.setString(2, password);
                 ResultSet results = statement.executeQuery();
 
@@ -95,7 +95,7 @@ public class UserData extends BaseData {
 //        user.setId(Integer.parseInt(results.getString("id")));
 //        user.setFirstName(results.getString("firstName"));
 //        user.setLastName(results.getString("lastName"));
-//        user.setUserName(results.getString("username"));
+//        user.setUserName(results.getString("userName"));
 //        user.setEmail(results.getString("email"));
 //        user.setPassword(results.getString("enc_pass"));
 //        user.setJoinDate(results.getString("joinDate"));

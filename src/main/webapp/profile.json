@@ -3,7 +3,7 @@
     id: ""
     ,firstName:""
     , lastName: ""
-    , username: ""
+    , userName: ""
     , email: ""
     , joinDate: ""
     , dateOfBirth: ""

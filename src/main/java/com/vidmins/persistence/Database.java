@@ -65,7 +65,7 @@ public class Database {
         }
 
         String url = properties.getProperty("url");
-        connection = DriverManager.getConnection(url, properties.getProperty("username"),  properties.getProperty("password"));
+        connection = DriverManager.getConnection(url, properties.getProperty("user"),  properties.getProperty("pass"));
     }
 
     public void disconnect() {

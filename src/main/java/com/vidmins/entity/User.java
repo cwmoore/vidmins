@@ -54,7 +54,7 @@ public class User implements java.io.Serializable {
         this.setId(Integer.parseInt(results.getString("id")));
         this.setFirstName(results.getString("firstName"));
         this.setLastName(results.getString("lastName"));
-        this.setUserName(results.getString("username"));
+        this.setUserName(results.getString("userName"));
         this.setEmail(results.getString("email"));
         this.setPassword(results.getString("enc_pass"));
         this.setJoinDate(results.getString("joinDate"));

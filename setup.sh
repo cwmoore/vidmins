@@ -22,8 +22,8 @@ read -s PASSWORD
 read -r -d '' PROPERTIES << EndOfDoc
 driver=com.mysql.jdbc.Driver
 url=jdbc:mysql://localhost:3306/vidmins?useSSL=false
-username=$USERNAME
-password=$PASSWORD
+user=$USERNAME
+pass=$PASSWORD
 EndOfDoc
 
 echo "$PROPERTIES" > "$PROPDIR/database.properties"

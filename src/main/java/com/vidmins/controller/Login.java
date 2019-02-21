@@ -35,8 +35,8 @@ public class Login extends HttpServlet {
 
         UserData userData = new UserData();
 
-        if (req.getParameter("username") != null && req.getParameter("password") != null) {
-            User user = userData.authenticateUser(req.getParameter("username"), req.getParameter("password"));
+        if (req.getParameter("userName") != null && req.getParameter("password") != null) {
+            User user = userData.authenticateUser(req.getParameter("userName"), req.getParameter("password"));
             req.getSession().setAttribute("user", user);
         }
 

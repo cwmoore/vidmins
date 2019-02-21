@@ -4,7 +4,7 @@
     id: ${user.id}
     ,firstName: "${user.firstName}"
     , lastName: "${user.lastName}"
-    , username: "${user.userName}"
+    , userName: "${user.userName}"
     , email: "${user.email}"
     , joinDate: "${user.joinDate}"
     , dateOfBirth: "${user.dateOfBirth}"

@@ -1,12 +1,14 @@
 package com.vidmins.controller;
 
+import java.io.IOException;
 import java.util.*;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jsoup.nodes.Document;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import sun.misc.Regexp;
 
 
 /**
@@ -15,6 +17,7 @@ import sun.misc.Regexp;
 public class ReadHtml {
     private String url = null;
     private Document doc = null;
+    private Logger logger;
 
     private String videoRegex = "youtube\\.com/watch\\?v=|youtu.be/";
 
@@ -24,6 +27,8 @@ public class ReadHtml {
      * @param url the url
      */
     public ReadHtml(String url) {
+        logger = LogManager.getLogger(this.getClass());
+
         this.url = url;
         loadFromUrl();
     }
@@ -56,8 +61,13 @@ public class ReadHtml {
      */
     private void loadFromUrl() {
 
-        // get html from URL
-        doc = Jsoup.connect(url).get();
+        try {
+            // get html from URL
+            doc = Jsoup.connect(url).get();
+
+        } catch (IOException ioException) {
+            logger.error("Jsoup.connect(\"" + url + "\").get() threw exception " + ioException);
+        }
     }
 
     /**
