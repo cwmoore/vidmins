@@ -26,7 +26,7 @@
 <script>
 
 
-const checkInputLink = () => {
+const processInputLink = () => {
 
     let userUrl = document.generate_link.base_url.value;
 
@@ -64,17 +64,27 @@ const checkInputLink = () => {
 
 const makeOutputLink = (youTubeId) => {
 
-    return `https://youtu.be/${youTubeId}`;
+    let videoLink = `https://www.youtube.com/watch?v=${youTubeId}`
+
+    let timeParam = makeTimeParam();
+
+    return videoLink + timeParam;
 }
 
 
 
 const outputLink = (newLink) => {
-    document.querySelector('#output_link').innerHTML = newLink;
+    let output_el = document.querySelector('#output_link');
+    let ahref = document.createElement('a');
+    ahref.setAttribute('href', newLink);
+    ahref.innerText = newLink;
+
+    output_el.insertBefore(document.createElement('br'), output_el.firstChild);
+    output_el.insertBefore(ahref, output_el.firstChild);
 }
 
 const userClick = () => {
-    let idOrFalse = checkInputLink();
+    let idOrFalse = processInputLink();
     if (idOrFalse !== false) {
 
         let youTubeId = idOrFalse; // not false
@@ -85,6 +95,24 @@ const userClick = () => {
         console.log("problems recognizing the provided url");
     }
 
+}
+
+const makeTimeParam = () => {
+    let uMinutes = document.generate_link.minutes.value;
+    let uSeconds = document.generate_link.seconds.value;
+    let onlyDigits = /^\d+$/g;
+    let timeParam = '';
+
+    if (uMinutes.match(onlyDigits) && uSeconds.match(onlyDigits)) {
+        let minutes = parseInt(uMinutes);
+        let seconds = parseInt(uSeconds);
+        // this didn't work with shorturls: timeParam = `&t=${minutes}m${seconds}s`;
+        timeParam = '&t=' + ((minutes * 60) + seconds);
+    } else {
+        console.log(`Problem with user strings: ${uMinutes} ${uSeconds}`);
+    }
+
+    return timeParam;
 }
 
 document.querySelector('#gen_link_btn').addEventListener('click', userClick);
