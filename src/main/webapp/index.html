@@ -15,9 +15,10 @@
             <button id="gen_link_btn" type="button" name="user_click">Generate</button>
         </form>
 
-        <span id="output_link"></span>
-
     </div>
+
+
+    <span id="output_link"></span>
 
 </body>
 </html>
@@ -29,74 +30,61 @@ const checkInputLink = () => {
 
     let userUrl = document.generate_link.base_url.value;
 
-    let isVideoLink = false;
-    let wwwyt_regex = /[https?:\/\/]?[www.]?youtube\.com\/watch\?v=([^&]+)/g;
-    let ytbe_regex = /.*youtu\.be\/([^&]+)/g;
-    let vidRegex;
+    // improved from: https://www.regextester.com/94360
+    let yt_regex = /^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/(embed\/)?(watch\?.*v=([^&\s]+))?([^\s]+)?/g;
 
-    let matches = false;
+
+    // let wwwyt_regex = /[https?:\/\/]?[www.]?youtube\.com\/watch\?v=([^&]+)/g;
+    // let ytbe_regex = /.*youtu\.be\/([^&]+)/g;
+
+    let youTubeId = false;
 
     console.log(userUrl);
 
-    if (userUrl.match(wwwyt_regex)) {
-        vidRegex = RegExp('^.*watch\?v=([^&]+).*$', 'g');
-
+    if (userUrl.match(yt_regex)) {
+        let vidRegex = RegExp(yt_regex);
+        console.log("mathed");
         matches = vidRegex.exec(userUrl);
 
-        if (matches.length > 0) {
-            console.log(matches[0]);
+        // number of match groups in yt_regex
+        if (matches.length === 11) {
+            youTubeId = (matches[9] === undefined) ? matches[10] : matches[9];
         }
 
-        console.log("youtube.com link");
-        isVideoLink = true;
-
-    } else if (userUrl.match(ytbe_regex)) {
-        vidRegex = RegExp('^.*youtu.be\/([^&]+).*$', 'g');
-
-        matches = vidRegex.exec(userUrl);
-
-        if (matches.length > 0) {
-            console.log(matches[0]);
-        }
-
-        console.log("youtu.be link");
-        isVideoLink = true;
+        console.log("found youTubeId -> %s", youTubeId);
 
     } else {
-        console.log("failed");
+        console.log("regex match failed for URL: %s", userUrl);
     }
 
-    return matches;
+    return youTubeId;
 }
 
 
 
-const makeOutputLink = (rawIdMatches) => {
+const makeOutputLink = (youTubeId) => {
 
-    console.log('in makeOutputLink');
-
-    let i = 0;
-    for (idQ of rawIdMatches) {
-        console.log(`${i} ${idQ}`);
-        i++;
-    }
+    return `https://youtu.be/${youTubeId}`;
 }
 
 
 
 const outputLink = (newLink) => {
-    console.log('console.log');
-    if (checkInputLink()) {
-        document.querySelector('#output_link').innerHTML = newLink;
-    } else {
-        console.log('not a matching URL');
-    }
+    document.querySelector('#output_link').innerHTML = newLink;
 }
 
 const userClick = () => {
-    let rawIdString = checkInputLink();
-    let newLink = makeOutputLink(rawIdString);
-    outputLink(newLink);
+    let idOrFalse = checkInputLink();
+    if (idOrFalse !== false) {
+
+        let youTubeId = idOrFalse; // not false
+
+        outputLink( makeOutputLink(youTubeId) );
+
+    } else {
+        console.log("problems recognizing the provided url");
+    }
+
 }
 
 document.querySelector('#gen_link_btn').addEventListener('click', userClick);
