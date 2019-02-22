@@ -365,10 +365,13 @@ public class NoteData extends BaseData {
     public void newNoteCheckData(Map<String, String[]> noteFields) {
         for (Map.Entry<String, String[]> entry : noteFields.entrySet()) {
             logger.debug(entry.getKey());
+
             String vals = "";
             for (String val : entry.getValue()) {
+                // TODO makeSafeString(val)
                 vals += val + ", ";
             }
+
             logger.debug(vals + "\n");
         }
     }
