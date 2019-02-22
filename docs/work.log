@@ -24,6 +24,8 @@ TODO import a youtube channel, playlist, or video and begin as a guest user
 TODO import all videos linked from a public page
 
 TODO change the playback order of videos in a directory
+TODO create help doc for fixing DRM issues on ubuntu (https://askubuntu.com/a/214433)
+	$ sudo apt-get install ubuntu-restricted-extras
 
 TODO create minimal directory structure to allow users to sort videos by kind
 TODO create a link to a note (ie. vidmins.com/note?n=Enu7cnq9f)
