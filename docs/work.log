@@ -1,68 +1,86 @@
-        _     _        _           
- /\   /(_) __| | /\/\ (_)_ __  ___ 
- \ \ / / |/ _` |/    \| | '_ \/ __|
-  \ V /| | (_| / /\/\ \ | | | \__ \
-   \_/ |_|\__,_\/    \/_|_| |_|___/
-                                  
-
 create prototype UI
 create database
 create servlets
+create dummy login
 create enhanced playback control
 allow user to edit notes
+estimate todos (0.5)
 
-TODO 1 estimate todos (0.5)
-TODO 2 prioritize todos (0.5)
+--------------------------------------
+         _     _        _
+  /\   /(_) __| | /\/\ (_)_ __  ___
+  \ \ / / |/ _` |/    \| | '_ \/ __|
+   \ V /| | (_| / /\/\ \ | | | \__ \
+    \_/ |_|\__,_\/    \/_|_| |_|___/
 
-TODO build and pass test code for every method (4)
+--------------------------------------
 
-TODO grab duration, other video data, store locally (2)
-TODO get video data when added/viewed? (0.5)
-TODO copy link to clipboard (0.5)
-TODO make available vidmins.com/watch?v=<youTubeId> (0.5)
+TODO group priority: 2 prioritize todos (0.5)
 
+TODO group priority: 3 build and pass test code for every method (4)
+
+TODO group priority: 4
 TODO implement OAuth2 w/Google (2)
 TODO create an account (1)
 TODO verify email (0.5)
 TODO enable 2FA (1)
 TODO find and implement salted-hashed password auth system (1.5)
 
+TODO group priority: 5
 TODO import a youtube channel, playlist, or video and begin as a guest user (1)
 TODO import all videos linked from a public page (1.5)
 TODO create minimal directory structure to allow users to sort videos by kind (1)
 TODO change the playback order of videos in a directory (1.5)
 
-
-TODO create help doc for fixing DRM issues on ubuntu https://askubuntu.com/a/214433 (1)
-	$ sudo apt-get install ubuntu-restricted-extras
-
+TODO group priority: 6
+TODO create a link to a user ie. vidmins.com/user?u=h78hrSr4 (0.5)
 TODO create a link to a note ie. vidmins.com/note?n=Enu7cnq9f (0.5)
 TODO create a link to a video ie. vidmins.com/video?v=nq9f8hDf (0.5)
 TODO create a link to a video ie. vidmins.com/directory?d=yq4GhD4f (0.5)
-TODO create a link to a user ie. vidmins.com/user?u=h78hrSr4 (0.5)
+TODO make available to watch vidmins.com/watch?v=<youTubeId> (0.5)
 
+TODO group priority: 7
+TODO grab duration, other video data, store locally (2)
+TODO get video data when added/viewed (0.5)
+TODO copy link to clipboard (0.5)
+
+TODO group priority: 8
+TODO grab CCs if available (2)
+TODO enable a YT content partner to direct CC track to vidmins (1)
+TODO select meaningful terms and phrases as automatic notes (3)
+
+TODO group priority: 9
 TODO create a survey (1)
 TODO create survey playback - each survey query triggered on playback (1)
 
+TODO group priority: 10
+TODO create help doc for fixing DRM issues on ubuntu https://askubuntu.com/a/214433 (1)
+	$ sudo apt-get install ubuntu-restricted-extras
+
+TODO group priority: 11
 TODO create a comment and route it to the content creator (1)
 TODO message exchange (2)
 
+TODO group priority: 12
 TODO allow new tags to be created (1)
 TODO enable group by tag (0.5)
 TODO create a basic tag set (1)
 
-TODO add a system to categorize and rate videos (1.5)
-TODO do a below threshold-ban calculation (0.5)
-TODO add a report-issue option, dump state to debug (1)
-
-TODO jump to note (0.75)
-TODO grab CCs if available (2)
-TODO select meaningful terms and phrases as automatic notes (3)
-
+TODO group priority: 13
 TODO research JAX-RS (1)
 TODO implement JSoup (1)
 
+TODO group priority: 14
 TODO enable guest user sessions (1)
 TODO store guest session in database (1.5)
 TODO setup temporary link to later return to guest user sessions (0.5)
 TODO convert a guest user into a real user (0.5)
+
+TODO group priority: 15
+TODO enable a user to publish notes (2)
+TODO jump to note (0.75)
+
+TODO group priority: 20
+TODO add a system to categorize and rate videos (1.5)
+TODO do a below threshold-ban calculation (0.5)
+TODO add a report-issue option, dump state to debug (1)
