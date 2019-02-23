@@ -5,6 +5,7 @@ create dummy login
 create enhanced playback control
 allow user to edit notes
 estimate todos (0.5)
+prioritize todos (0.5)
 
 --------------------------------------
          _     _        _
@@ -15,9 +16,9 @@ estimate todos (0.5)
 
 --------------------------------------
 
-TODO group priority: 2 prioritize todos (0.5)
-
-TODO group priority: 3 build and pass test code for every method (4)
+TODO group priority: 3
+TODO convert to use Hibernate/generic DAO (1.5)
+TODO build and pass test code for every method (4)
 
 TODO group priority: 4
 TODO implement OAuth2 w/Google (2)
