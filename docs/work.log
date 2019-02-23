@@ -11,49 +11,58 @@ create servlets
 create enhanced playback control
 allow user to edit notes
 
-TODO build and pass test code for every method
+TODO 1 estimate todos (0.5)
+TODO 2 prioritize todos (0.5)
 
-TODO get duration of videos when added (or viewed?)
-TODO copy link to clipboard
-TODO make available vidmins.com/watch?v=<youTubeId>
+TODO build and pass test code for every method (4)
 
-TODO create an account
-TODO verify email
+TODO grab duration, other video data, store locally (2)
+TODO get video data when added/viewed? (0.5)
+TODO copy link to clipboard (0.5)
+TODO make available vidmins.com/watch?v=<youTubeId> (0.5)
 
-TODO import a youtube channel, playlist, or video and begin as a guest user
-TODO import all videos linked from a public page
+TODO implement OAuth2 w/Google (2)
+TODO create an account (1)
+TODO verify email (0.5)
+TODO enable 2FA (1)
+TODO find and implement salted-hashed password auth system (1.5)
 
-TODO change the playback order of videos in a directory
-TODO create help doc for fixing DRM issues on ubuntu (https://askubuntu.com/a/214433)
+TODO import a youtube channel, playlist, or video and begin as a guest user (1)
+TODO import all videos linked from a public page (1.5)
+TODO create minimal directory structure to allow users to sort videos by kind (1)
+TODO change the playback order of videos in a directory (1.5)
+
+
+TODO create help doc for fixing DRM issues on ubuntu https://askubuntu.com/a/214433 (1)
 	$ sudo apt-get install ubuntu-restricted-extras
 
-TODO create minimal directory structure to allow users to sort videos by kind
-TODO create a link to a note (ie. vidmins.com/note?n=Enu7cnq9f)
-TODO create a link to a video (ie. vidmins.com/video?v=nq9f8hDf)
-TODO create a link to a video (ie. vidmins.com/directory?d=yq4GhD4f)
-TODO create a link to a user (ie. vidmins.com/user?u=h78hrSr4)
+TODO create a link to a note ie. vidmins.com/note?n=Enu7cnq9f (0.5)
+TODO create a link to a video ie. vidmins.com/video?v=nq9f8hDf (0.5)
+TODO create a link to a video ie. vidmins.com/directory?d=yq4GhD4f (0.5)
+TODO create a link to a user ie. vidmins.com/user?u=h78hrSr4 (0.5)
 
-TODO create a survey
-TODO create survey playback - each survey query triggered on playback
+TODO create a survey (1)
+TODO create survey playback - each survey query triggered on playback (1)
 
-TODO create a comment (a route it to the content creator)
-TODO message exchange
+TODO create a comment and route it to the content creator (1)
+TODO message exchange (2)
 
-TODO create a basic tag set
-TODO allow new tags to be created
-TODO enable group by tag
+TODO allow new tags to be created (1)
+TODO enable group by tag (0.5)
+TODO create a basic tag set (1)
 
-TODO add a system to categorize and rate videos/below threshold-ban calculation
-TODO add a report issue state dump
+TODO add a system to categorize and rate videos (1.5)
+TODO do a below threshold-ban calculation (0.5)
+TODO add a report-issue option, dump state to debug (1)
 
-TODO jump to note
-TODO grab CCs if available
-TODO select meaningful terms and phrases as automatic notes
-TODO grab duration, other video data, store locally
+TODO jump to note (0.75)
+TODO grab CCs if available (2)
+TODO select meaningful terms and phrases as automatic notes (3)
 
-TODO implement OAuth2 w/Google
-TODO research JAX-RS
-TODO implement JSoup
+TODO research JAX-RS (1)
+TODO implement JSoup (1)
 
-TODO setup temporary link to return to guest user sessions
-TODO convert a guest user into a real user
+TODO enable guest user sessions (1)
+TODO store guest session in database (1.5)
+TODO setup temporary link to later return to guest user sessions (0.5)
+TODO convert a guest user into a real user (0.5)
