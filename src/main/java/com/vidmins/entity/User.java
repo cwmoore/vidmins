@@ -1,8 +1,12 @@
 package com.vidmins.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -10,18 +14,27 @@ import java.util.*;
  *
  * @author pwaite
  */
+@Entity(name="User")
+@Table(name = "user")
 public class User implements java.io.Serializable {
+
     private String firstName;
     private String lastName;
     private String userName;
     private String email;
+
+    @Column(name = "enc_pass")
     private String password;
-    private String joinDate;
-    private String dateOfBirth;
+    private LocalDateTime joinDate;
+    private LocalDate dateOfBirth;
     private String organization;
     private String introduction;
     private String status;
     private List<Directory> directories;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     private int id;
 
 
@@ -46,7 +59,7 @@ public class User implements java.io.Serializable {
         this.lastName = lastName;
         this.userName = userName;
         this.password = password;
-        this.dateOfBirth = dateOfBirth;
+        this.dateOfBirth = LocalDate.parse(dateOfBirth);
         this.id = id;
     }
 
@@ -57,8 +70,8 @@ public class User implements java.io.Serializable {
         this.setUserName(results.getString("userName"));
         this.setEmail(results.getString("email"));
         this.setPassword(results.getString("enc_pass"));
-        this.setJoinDate(results.getString("joinDate"));
-        this.setDateOfBirth(results.getString("dateOfBirth"));
+        this.setJoinDate(LocalDateTime.parse(results.getString("joinDate"), DateTimeFormatter.BASIC_ISO_DATE));
+        this.setDateOfBirth(LocalDate.parse(results.getString("dateOfBirth")));
     }
 
     /**
@@ -139,7 +152,7 @@ public class User implements java.io.Serializable {
      *
      * @return the join date
      */
-    public String getJoinDate() {
+    public LocalDateTime getJoinDate() {
         return joinDate;
     }
 
@@ -148,7 +161,7 @@ public class User implements java.io.Serializable {
      *
      * @param joinDate the join date
      */
-    public void setJoinDate(String joinDate) {
+    public void setJoinDate(LocalDateTime joinDate) {
         this.joinDate = joinDate;
     }
 
@@ -179,7 +192,7 @@ public class User implements java.io.Serializable {
      *
      * @return the date of birth
      */
-    public String getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
@@ -188,7 +201,7 @@ public class User implements java.io.Serializable {
      *
      * @param dateOfBirth the date of birth
      */
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -198,7 +211,7 @@ public class User implements java.io.Serializable {
      * @return the age
      */
     public int getAge() {
-        return Period.between(LocalDate.parse(dateOfBirth), LocalDate.now()).getYears();
+        return Period.between(dateOfBirth, LocalDate.now()).getYears();
     }
 
     /**

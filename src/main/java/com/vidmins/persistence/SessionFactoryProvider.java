@@ -31,8 +31,10 @@ public class SessionFactoryProvider {
 
         StandardServiceRegistry standardRegistry =
                 new StandardServiceRegistryBuilder().configure().build();
+
         Metadata metaData =
                 new MetadataSources(standardRegistry).getMetadataBuilder().build();
+
         sessionFactory = metaData.getSessionFactoryBuilder().build();
     }
 

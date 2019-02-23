@@ -1,7 +1,12 @@
 package com.vidmins.persistence;
 
 import com.vidmins.entity.*;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.sql.*;
 import java.util.*;
 // import java.security.*;
@@ -15,7 +20,7 @@ import java.util.*;
  * @author cwmoore
  */
 public class UserData extends BaseData {
-
+    SessionFactory sessionFactory = new SessionFactoryProvider.getSessionFactory();
     /**
      * Encrypt a pass phrase with SHA-512
      * Adapted from: https://www.baeldung.com/java-password-hashing
@@ -181,5 +186,15 @@ public class UserData extends BaseData {
 
     public User fromId(int id) {
         return new User();
+    }
+
+    public List<User> getAllUsers() {
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
+        List<User> users = session.createQuery(query).getResultList();
+        session.close();
+        return users;
     }
 }
