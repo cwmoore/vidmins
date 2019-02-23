@@ -15,20 +15,25 @@
     <h1>'Video minutes' - vidmins.com</h1>
     <h2><code class="title-breakdown">v-id-min-s</code></h2>
     <h4>linking tool</h4>
-    <h5><i>Create a link cued-up to a specific point in the playback timeline for almost any video on YouTube</i></h5>
+    <h5><i>Create a link, cued-up to a specific point in the playback timeline, for almost any video on YouTube</i></h5>
 
     <div>
 
-    <form name="generate_link">
-        <br />Cue start time<br />
-        <input class="time-input" type="text" name="minutes" placeholder="0"/>minutes
-        <input class="time-input" type="text" name="seconds" placeholder="0"/>seconds
-        <br />
-        YouTube video URL or ID<br />
-        <input class="url-input" type="text" name="base_url" placeholder="https://youtu.be/abc-123_XYZ"/>
-        <br />
-                    <button id="gen_link_btn" type="button" name="user_click">Generate</button>
-    </form>
+        <form name="generate_link">
+
+            <br />Cue start time<br />
+            <input type="text" class="time-input" name="minutes" placeholder="0"/>minutes
+            <input type="text" class="time-input" name="seconds" placeholder="0"/>seconds
+
+            <br />
+
+            YouTube video URL or ID<br />
+            <input type="text" class="url-input" name="base_url" placeholder="https://youtu.be/abc-123_XYZ"/>
+
+            <br />
+
+            <button id="gen_link_btn" type="button" name="user_click">Generate</button>
+        </form>
 
     </div>
 
@@ -108,10 +113,10 @@ const checkYouTubeAPIForVID = (youTubeId) => {
     // get the title
     // get the duration
 
-    buildApiRequest('GET',
-        '/youtube/v3/videos',
-        {'id': 'Ks-_Mh1QhMc',
-            'part': 'snippet,contentDetails,statistics'});
+    // buildApiRequest('GET',
+    //     '/youtube/v3/videos',
+    //     {'id': 'Ks-_Mh1QhMc',
+    //         'part': 'snippet,contentDetails,statistics'});
     return videoExists;
 }
 
