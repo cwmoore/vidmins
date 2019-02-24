@@ -1,17 +1,31 @@
 package com.vidmins.entity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import com.vidmins.util.LocalDateAttributeConverter;
+import com.vidmins.util.TimestampAttributeConverter;
+import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
 /**
  * A class to represent a video.
  *
  * @author cwmoore
  */
+@Entity
+@Table(name = "video")
 public class Video implements java.io.Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     private int id;
+
     private String youTubeId;
     private String title;
-    private String addDate;
+    private LocalDateTime addDate;
     private int duration;
 
     /**
@@ -23,13 +37,28 @@ public class Video implements java.io.Serializable {
     /**
      * Instantiates a new Video.
      *
+     * @param youTubeId the you tube id
+     * @param title     the title
+     * @param addDate   the add date
+     * @param duration  the duration
+     */
+    public Video(String youTubeId, String title, LocalDateTime addDate, int duration) {
+        this.youTubeId = youTubeId;
+        this.title = title;
+        this.addDate = addDate;
+        this.duration = duration;
+    }
+
+    /**
+     * Instantiates an existing Video.
+     *
      * @param id        the id
      * @param youTubeId the you tube id
      * @param title     the title
      * @param addDate   the add date
      * @param duration  the duration
      */
-    public Video(int id, String youTubeId, String title, String addDate, int duration) {
+    public Video(int id, String youTubeId, String title, LocalDateTime addDate, int duration) {
         this.id = id;
         this.youTubeId = youTubeId;
         this.title = title;
@@ -96,7 +125,7 @@ public class Video implements java.io.Serializable {
      *
      * @return the add date
      */
-    public String getAddDate() {
+    public LocalDateTime getAddDate() {
         return addDate;
     }
 
@@ -105,7 +134,7 @@ public class Video implements java.io.Serializable {
      *
      * @param addDate the add date
      */
-    public void setAddDate(String addDate) {
+    public void setAddDate(LocalDateTime addDate) {
         this.addDate = addDate;
     }
 

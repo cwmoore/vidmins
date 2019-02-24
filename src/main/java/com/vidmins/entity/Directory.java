@@ -1,15 +1,29 @@
 package com.vidmins.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.util.*;
 import java.sql.*;
 
 /**
  * The type Directory.
  */
+@Entity
+@Table(name = "directory")
 public class Directory implements java.io.Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     private int id;
+
+    @ManyToOne
+    @JoinColumn(name = "userId", nullable = false)
+    private User user;
+
     private String name;
     private String description;
+
     private Map<Integer, Video> videos;
 
     /**

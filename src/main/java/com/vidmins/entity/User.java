@@ -1,10 +1,12 @@
 package com.vidmins.entity;
 
+import com.vidmins.util.LocalDateAttributeConverter;
+import com.vidmins.util.TimestampAttributeConverter;
+import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -17,6 +19,10 @@ import java.util.*;
 @Entity(name="User")
 @Table(name = "user")
 public class User implements java.io.Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
+    private int id;
 
     private String firstName;
     private String lastName;
@@ -25,17 +31,24 @@ public class User implements java.io.Serializable {
 
     @Column(name = "enc_pass")
     private String password;
+
+
+    @CreationTimestamp
+    @Convert(converter = TimestampAttributeConverter.class)
+    @EqualsAndHashCode.Exclude
     private LocalDateTime joinDate;
+
+    @CreationTimestamp
+    @Convert(converter = LocalDateAttributeConverter.class)
+    @EqualsAndHashCode.Exclude
     private LocalDate dateOfBirth;
+
     private String organization;
     private String introduction;
     private String status;
-    private List<Directory> directories;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native", strategy = "native")
-    private int id;
+    @OneToMany(mappedBy = "user")
+    private List<Directory> directories;
 
 
     /**
@@ -54,6 +67,24 @@ public class User implements java.io.Serializable {
      * @param dateOfBirth the date of birth
      * @param id          the id
      */
+    public User(String firstName, String lastName, String userName, String password, String dateOfBirth) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = userName;
+        this.password = password;
+        this.dateOfBirth = LocalDate.parse(dateOfBirth);
+    }
+
+    /**
+     * Instantiates an existing User.
+     *
+     * @param firstName   the first name
+     * @param lastName    the last name
+     * @param userName    the user name
+     * @param password    the password
+     * @param dateOfBirth the date of birth
+     * @param id          the id
+     */
     public User(String firstName, String lastName, String userName, String password, String dateOfBirth, int id) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -62,17 +93,17 @@ public class User implements java.io.Serializable {
         this.dateOfBirth = LocalDate.parse(dateOfBirth);
         this.id = id;
     }
-
-    public User(ResultSet results) throws SQLException {
-        this.setId(Integer.parseInt(results.getString("id")));
-        this.setFirstName(results.getString("firstName"));
-        this.setLastName(results.getString("lastName"));
-        this.setUserName(results.getString("userName"));
-        this.setEmail(results.getString("email"));
-        this.setPassword(results.getString("enc_pass"));
-        this.setJoinDate(LocalDateTime.parse(results.getString("joinDate"), DateTimeFormatter.BASIC_ISO_DATE));
-        this.setDateOfBirth(LocalDate.parse(results.getString("dateOfBirth")));
-    }
+//
+//    public User(ResultSet results) throws SQLException {
+//        this.setId(Integer.parseInt(results.getString("id")));
+//        this.setFirstName(results.getString("firstName"));
+//        this.setLastName(results.getString("lastName"));
+//        this.setUserName(results.getString("userName"));
+//        this.setEmail(results.getString("email"));
+//        this.setPassword(results.getString("enc_pass"));
+//        this.setJoinDate(LocalDateTime.parse(results.getString("joinDate"), DateTimeFormatter.BASIC_ISO_DATE));
+//        this.setDateOfBirth(LocalDate.parse(results.getString("dateOfBirth")));
+//    }
 
     /**
      * Gets first name.
@@ -267,24 +298,24 @@ public class User implements java.io.Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
-
-    /**
-     * Gets directories.
-     *
-     * @return the directories
-     */
-    public List<Directory> getDirectories() {
-        return directories;
-    }
-
-    /**
-     * Sets the directories.
-     *
-     * @param directories the directories
-     */
-    public void setDirectories(List<Directory> directories) {
-        this.directories = directories;
-    }
+//
+//    /**
+//     * Gets directories.
+//     *
+//     * @return the directories
+//     */
+//    public List<Directory> getDirectories() {
+//        return directories;
+//    }
+//
+//    /**
+//     * Sets the directories.
+//     *
+//     * @param directories the directories
+//     */
+//    public void setDirectories(List<Directory> directories) {
+//        this.directories = directories;
+//    }
 
     /**
      * Gets id.

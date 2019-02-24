@@ -1,9 +1,7 @@
 package com.vidmins.controller;
 
-import com.vidmins.persistence.NoteData;
-import com.vidmins.persistence.UserData;
 import com.vidmins.entity.*;
-import com.vidmins.persistence.VideoData;
+import com.vidmins.persistence.GenericDao;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -33,9 +31,9 @@ import java.io.IOException;
 public class LoadClient extends HttpServlet {
     private Logger logger;
 
-    UserData userData;
-    VideoData videoData;
-    NoteData noteData;
+    GenericDao<User> userDao;
+    GenericDao<Video> videoDao;
+    GenericDao<Note> noteDao;
 
     HttpSession session;
 
@@ -54,35 +52,34 @@ public class LoadClient extends HttpServlet {
         logger = LogManager.getLogger(this.getClass());
         logger.debug("loadHelpers()");
 
-        session = request.getSession();
-
-        if (userData == null) {
-            if (session.getAttribute("userData") == null) {
-                userData = new UserData();
-                session.setAttribute("userData", userData);
+        if (userDao == null) {
+            if (request.getSession().getAttribute("userDao") == null) {
+                userDao = new GenericDao<>(User.class);
+                request.getSession().setAttribute("userDao", userDao);
             } else {
-                userData = (UserData) session.getAttribute("userData");
+                userDao = (GenericDao<User>) request.getSession().getAttribute("userDao");
             }
         }
 
-        if (videoData == null) {
-            if (session.getAttribute("videoData") == null) {
-                videoData = new VideoData();
-                session.setAttribute("videoData", videoData);
+        if (videoDao == null) {
+            if (request.getSession().getAttribute("videoDao") == null) {
+                videoDao = new GenericDao<>(Video.class);
+                request.getSession().setAttribute("videoDao", videoDao);
             } else {
-                videoData = (VideoData) session.getAttribute("videoData");
+                videoDao = (GenericDao<Video>) request.getSession().getAttribute("videoDao");
             }
         }
 
-        if (noteData == null) {
-            if (session.getAttribute("noteData") == null) {
-                noteData = new NoteData();
-                session.setAttribute("noteData", noteData);
+        if (noteDao == null) {
+            if (request.getSession().getAttribute("noteDao") == null) {
+                noteDao = new GenericDao<>(Note.class);
+                request.getSession().setAttribute("noteDao", noteDao);
             } else {
-                noteData = (NoteData) session.getAttribute("noteData");
+                noteDao = (GenericDao<Note>) request.getSession().getAttribute("noteDao");
             }
         }
     }
+
 
     /**
      * Handle a GET request
@@ -102,17 +99,17 @@ public class LoadClient extends HttpServlet {
         if (session.getAttribute("user") != null) {
             User user = (User) session.getAttribute("user");
 
-            List<Video> videos = userData.getUserVideos(user);
+            List<Video> videos = userDao.getUserVideos(user);
             session.setAttribute("videos", videos);
 
             if (request.getParameter("videoId") != null) {
                 if (request.getParameter("videoId").matches("\\d+")) {
 
                     session.setAttribute("currentVideo",
-                            videoData.fromId(Integer.parseInt(request.getParameter("videoId"))));
+                            videoDao.getById(Integer.parseInt(request.getParameter("videoId"))));
 
                     session.setAttribute("notes",
-                            videoData.getVideoNotes(user.getId(), Integer.parseInt(request.getParameter("videoId"))));
+                            videoDao.getVideoNotes(user.getId(), Integer.parseInt(request.getParameter("videoId"))));
                 }
             }
             //if (session.getAttribute("currentVideo") != null) {

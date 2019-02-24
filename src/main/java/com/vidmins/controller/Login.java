@@ -1,7 +1,8 @@
 package com.vidmins.controller;
 
 import com.vidmins.entity.User;
-import com.vidmins.persistence.UserData;
+import com.vidmins.persistence.GenericDao;
+import com.vidmins.auth.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,10 +36,10 @@ public class Login extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        UserData userData = new UserData();
-
+        GenericDao<User> userDao = new GenericDao<>(User.class);
+        Auth auth = new Auth();
         if (req.getParameter("userName") != null && req.getParameter("password") != null) {
-            User user = userData.authenticateUser(req.getParameter("userName"), req.getParameter("password"));
+            User user = auth.authenticateUser(req.getParameter("userName"), req.getParameter("password"));
             req.getSession().setAttribute("user", user);
         }
 

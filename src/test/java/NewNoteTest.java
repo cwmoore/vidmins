@@ -21,14 +21,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class NoteDataTest {
     Logger logger = LogManager.getLogger(this.getClass());
 
-    NoteData noteData;
+    NoteData noteDao;
 
     /**
      * Create a new InverseCaptcha object before each test is run.
      */
     @BeforeEach
     void setUp() {
-        noteData = new NoteData();
+        noteDao = new NoteData();
 
     }
 
@@ -39,7 +39,7 @@ class NoteDataTest {
     void getNoteFromId() {
         // assumes note exists with id=1
         int id = 1;
-        Note note = noteData.fromId(id);
+        Note note = noteDao.fromId(id);
         logger.debug("noteeee" + note);//.getClass().toString());
 //        assertNotNull(note);
 //        assertEquals(id, note.getId());
