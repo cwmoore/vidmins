@@ -1,5 +1,6 @@
 package com.vidmins.entity;
 
+import com.vidmins.entity.Directory;
 import com.vidmins.util.LocalDateAttributeConverter;
 import com.vidmins.util.TimestampAttributeConverter;
 import lombok.EqualsAndHashCode;
@@ -8,6 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * A class to represent a video.
@@ -31,6 +33,9 @@ public class Video implements java.io.Serializable {
     @ManyToOne
     @JoinColumn(name = "id", nullable = false)
     private Directory directory;
+
+    @OneToMany(mappedBy = "video")
+    private List<Note> notes;
 
     /**
      * Instantiates a new Video.
@@ -158,6 +163,43 @@ public class Video implements java.io.Serializable {
      */
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+
+    /**
+     * Gets directory.
+     *
+     * @return the directory
+     */
+    public int getDirectory() {
+        return directory;
+    }
+
+    /**
+     * Sets directory.
+     *
+     * @param directory the directory
+     */
+    public void setDirectory(int directory) {
+        this.directory = directory;
+    }
+
+    /**
+     * Gets notes.
+     *
+     * @return the notes
+     */
+    public List<Note> getNotes() {
+        return notes;
+    }
+
+    /**
+     * Sets notes.
+     *
+     * @param notes the notes
+     */
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
     }
 
     /**

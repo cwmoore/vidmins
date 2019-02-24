@@ -1,19 +1,35 @@
 package com.vidmins.entity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import com.vidmins.util.TimestampAttributeConverter;
+import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * The type Note.
  */
 public class Note implements java.io.Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     private int id;
+    
     private String label;
     private String text;
+    
     private int start;
     private int end;
-    private String createDatetime;
-    private int userId;
+
+    @CreationTimestamp
+    @Convert(converter = TimestampAttributeConverter.class)
+    @EqualsAndHashCode.Exclude
+    private LocalDateTime createDatetime;
+
+    @ManyToOne
+    @JoinColumn(name = "id", nullable = false)
     private int videoId;
 
     /**
@@ -26,7 +42,6 @@ public class Note implements java.io.Serializable {
         this.start = -1;
         this.end = -1;
         this.createDatetime = "2000-01-01 00:00:00.000";
-        this.userId = -1;
         this.videoId = -1;
     }
 
@@ -39,10 +54,9 @@ public class Note implements java.io.Serializable {
      * @param start          the start
      * @param end            the end
      * @param createDatetime the create datetime
-     * @param userId         the user id
      * @param videoId        the video id
      */
-    public Note(int id, String label, String text, int start, int end, String createDatetime, int userId, int videoId) {
+    public Note(int id, String label, String text, int start, int end, String createDatetime, int videoId) {
         this();
         this.id = id;
         this.label = label;
@@ -50,7 +64,6 @@ public class Note implements java.io.Serializable {
         this.start = start;
         this.end = end;
         this.createDatetime = createDatetime;
-        this.userId = userId;
         this.videoId = videoId;
     }
 
@@ -60,16 +73,14 @@ public class Note implements java.io.Serializable {
      * @param label          the label
      * @param text           the text
      * @param start          the start
-     * @param userId         the user id
      * @param videoId        the video id
      */
-    public Note(String label, String text, int start, int userId, int videoId) {
+    public Note(String label, String text, int start, int videoId) {
         this();
         this.label = label;
         this.text = text;
         this.start = start;
         this.end = end;
-        this.userId = userId;
         this.videoId = videoId;
     }
 
@@ -168,7 +179,7 @@ public class Note implements java.io.Serializable {
      *
      * @return the create datetime
      */
-    public String getCreateDatetime() {
+    public LocalDateTime getCreateDatetime() {
         return createDatetime;
     }
 
@@ -177,26 +188,8 @@ public class Note implements java.io.Serializable {
      *
      * @param createDatetime the create datetime
      */
-    public void setCreateDatetime(String createDatetime) {
+    public void setCreateDatetime(LocalDateTime createDatetime) {
         this.createDatetime = createDatetime;
-    }
-
-    /**
-     * Gets user id.
-     *
-     * @return the user id
-     */
-    public int getUserId() {
-        return userId;
-    }
-
-    /**
-     * Sets user id.
-     *
-     * @param userId the user id
-     */
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     /**
@@ -225,8 +218,7 @@ public class Note implements java.io.Serializable {
                 ", text='" + text + '\'' +
                 ", start=" + start +
                 ", end=" + end +
-                ", createDatetime='" + createDatetime + '\'' +
-                ", userId=" + userId +
+                ", createDatetime='" + createDatetime.toString() + '\'' +
                 ", videoId=" + videoId +
                 '}';
     }

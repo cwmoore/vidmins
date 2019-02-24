@@ -4,9 +4,7 @@ import com.vidmins.entity.Note;
 import com.vidmins.entity.User;
 import com.vidmins.entity.Video;
 import com.vidmins.persistence.GenericDao;
-//import com.vidmins.persistence.NoteData;
-//import com.vidmins.persistence.UserData;
-//import com.vidmins.persistence.VideoData;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

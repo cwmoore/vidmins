@@ -21,6 +21,7 @@ class GenericDaoTest {
     @Test
     void getAllSuccess() {
         List<User> users = dao.getAll();
+
         assertNotNull(users);
         assertEquals(6, users.size());
     }
