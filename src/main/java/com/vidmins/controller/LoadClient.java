@@ -32,6 +32,7 @@ public class LoadClient extends HttpServlet {
     private Logger logger;
 
     GenericDao<User> userDao;
+    GenericDao<Directory> directoryDao;
     GenericDao<Video> videoDao;
     GenericDao<Note> noteDao;
 
@@ -58,6 +59,15 @@ public class LoadClient extends HttpServlet {
                 request.getSession().setAttribute("userDao", userDao);
             } else {
                 userDao = (GenericDao<User>) request.getSession().getAttribute("userDao");
+            }
+        }
+
+        if (directoryDao == null) {
+            if (request.getSession().getAttribute("directoryDao") == null) {
+                directoryDao = new GenericDao<>(Directory.class);
+                request.getSession().setAttribute("directoryDao", directoryDao);
+            } else {
+                directoryDao = (GenericDao<Directory>) request.getSession().getAttribute("directoryDao");
             }
         }
 
@@ -99,17 +109,32 @@ public class LoadClient extends HttpServlet {
         if (session.getAttribute("user") != null) {
             User user = (User) session.getAttribute("user");
 
-            List<Video> videos = userDao.getUserVideos(user);
+
+            // TODO investigate strategies for lazy loading user data
+            // TODO start with a default view
+
+            // get directories list for signed in user
+            List<Directory> directories = directoryDao.findByPropertyEqual("user", user);
+            session.setAttribute("directories", directories);
+
+            // TODO optionally choose starting directory
+
+            // get videos for first directory
+            List<Video> videos = videoDao.findByPropertyEqual("directory", directories.get(0));
             session.setAttribute("videos", videos);
 
+            // TODO optionally choose starting video
             if (request.getParameter("videoId") != null) {
                 if (request.getParameter("videoId").matches("\\d+")) {
 
-                    session.setAttribute("currentVideo",
-                            videoDao.getById(Integer.parseInt(request.getParameter("videoId"))));
+                    int videoId = Integer.parseInt(request.getParameter("videoId"));
 
+                    Video currentVideo = videoDao.getById(videoId);
+                    session.setAttribute("currentVideo", currentVideo);
+
+                    // notes for the first video
                     session.setAttribute("notes",
-                            videoDao.getVideoNotes(user.getId(), Integer.parseInt(request.getParameter("videoId"))));
+                            noteDao.findByPropertyEqual("video", currentVideo));
                 }
             }
             //if (session.getAttribute("currentVideo") != null) {

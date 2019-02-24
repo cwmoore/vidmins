@@ -46,9 +46,9 @@ public class Auth {
         User authenticatedUser = null;
         GenericDao<User> userDao = new GenericDao<>(User.class);
 
-        Map<String, String> propertyMap = new HashMap<>();
-        propertyMap.put("userName", userName);
-        propertyMap.put("password", password);
+        Map<String, Object> propertyMap = new HashMap<>();
+        propertyMap.put("userName", (Object) userName);
+        propertyMap.put("password", (Object) password);
 
         userDao.findByPropertyEqual(propertyMap);
 

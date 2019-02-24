@@ -1,5 +1,6 @@
 package com.vidmins.persistence;
 
+import com.vidmins.persistence.GenericDao;
 import com.vidmins.entity.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,11 +11,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GenericDaoTest {
 
-    GenericDao dao;
+    GenericDao<User> dao;
 
     @BeforeEach
     void setUp() {
-        dao = new GenericDao<User>(User.class);
+        dao = new GenericDao<>(User.class);
     }
 
     @Test
@@ -26,7 +27,7 @@ class GenericDaoTest {
 
     @Test
     void getByIdSuccess() {
-        User user = (User) dao.getById(3); // TODO verify GenericDao returns correct type?
+        User user = dao.getById(3); // TODO verify GenericDao returns correct type?
         assertNotNull(user);
         assertEquals("cwmoore", user.getUserName());
     }

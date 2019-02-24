@@ -28,6 +28,10 @@ public class Video implements java.io.Serializable {
     private LocalDateTime addDate;
     private int duration;
 
+    @ManyToOne
+    @JoinColumn(name = "id", nullable = false)
+    private Directory directory;
+
     /**
      * Instantiates a new Video.
      */

@@ -26,12 +26,11 @@ public class User implements java.io.Serializable {
 
     private String firstName;
     private String lastName;
-    private String userName;
     private String email;
+    private String userName;
 
     @Column(name = "enc_pass")
     private String password;
-
 
     @CreationTimestamp
     @Convert(converter = TimestampAttributeConverter.class)
@@ -49,6 +48,7 @@ public class User implements java.io.Serializable {
 
     @OneToMany(mappedBy = "user")
     private List<Directory> directories;
+
 
 
     /**
@@ -298,24 +298,24 @@ public class User implements java.io.Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
-//
-//    /**
-//     * Gets directories.
-//     *
-//     * @return the directories
-//     */
-//    public List<Directory> getDirectories() {
-//        return directories;
-//    }
-//
-//    /**
-//     * Sets the directories.
-//     *
-//     * @param directories the directories
-//     */
-//    public void setDirectories(List<Directory> directories) {
-//        this.directories = directories;
-//    }
+
+    /**
+     * Gets directories.
+     *
+     * @return the directories
+     */
+    public List<Directory> getDirectories() {
+        return directories;
+    }
+
+    /**
+     * Sets the directories.
+     *
+     * @param directories the directories
+     */
+    public void setDirectories(List<Directory> directories) {
+        this.directories = directories;
+    }
 
     /**
      * Gets id.

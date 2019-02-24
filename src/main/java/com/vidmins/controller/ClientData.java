@@ -1,8 +1,5 @@
 package com.vidmins.controller;
 
-import com.vidmins.persistence.UserData;
-import com.vidmins.entity.*;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

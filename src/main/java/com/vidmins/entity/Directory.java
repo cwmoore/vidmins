@@ -16,15 +16,15 @@ public class Directory implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private int id;
-
-    @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
-    private User user;
-
     private String name;
     private String description;
 
-    private Map<Integer, Video> videos;
+    @ManyToOne
+    @JoinColumn(name = "id", nullable = false)
+    private User user;
+
+    @OneToMany(mappedBy = "directory")
+    private List<Video> videos;
 
     /**
      * Instantiates a new Directory.
@@ -113,20 +113,11 @@ public class Directory implements java.io.Serializable {
     }
 
     /**
-     * Gets video ids.
-     *
-     * @return the video ids
-     */
-    public Set<Integer> getVideoIds() {
-        return videos.keySet();
-    }
-
-    /**
      * Gets videos.
      *
      * @return the videos
      */
-    public Map<Integer, Video> getVideos() {
+    public List<Video> getVideos() {
         return videos;
     }
 
@@ -135,7 +126,7 @@ public class Directory implements java.io.Serializable {
      *
      * @param videos the videos
      */
-    public void setVideos(Map<Integer, Video> videos) {
+    public void setVideos(List<Video> videos) {
         this.videos = videos;
     }
 }
