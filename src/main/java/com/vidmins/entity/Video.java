@@ -31,8 +31,9 @@ public class Video implements java.io.Serializable {
     private LocalDateTime addDate;
     private int duration;
 
+    // adapted from: https://stackoverflow.com/a/29952572/6254147
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "id", nullable = false, insertable = false, updatable = false)
     private Directory directory;
 
     @OneToMany(mappedBy = "video")

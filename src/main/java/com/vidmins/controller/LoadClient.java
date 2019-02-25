@@ -110,6 +110,8 @@ public class LoadClient extends HttpServlet {
             session = request.getSession();
         }
 
+        logger.debug("in loadClient");
+
         if (session.getAttribute("user") != null) {
             User user = (User) session.getAttribute("user");
 
