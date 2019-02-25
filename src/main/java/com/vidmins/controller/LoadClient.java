@@ -121,19 +121,24 @@ public class LoadClient extends HttpServlet {
             // TODO start with a default view
 
             // get directories list for signed in user
-            List<Directory> directories = directoryDao.findByPropertyEqual("user", user);
+            //List<Directory> directories = directoryDao.findByPropertyEqual("user", user);
+
+
+            List<Directory> directories = user.getDirectories();
             session.setAttribute("directories", directories);
 
             // TODO optionally choose starting directory
 
-            logger.debug(user.getDirectories());
+            logger.debug("user.getDirectories(): " + user.getDirectories());
 
             // get videos for first directory
             if (directories.size() > 0) {
                 logger.debug("Found " + directories.size() + " directories");
                 Directory defaultDirectory = directories.get(0);
                 if (defaultDirectory != null) {
-                    List<Video> videos = videoDao.findByPropertyEqual("directory", defaultDirectory);
+                    //List<Video> videos = videoDao.findByPropertyEqual("directory", defaultDirectory);
+                    List<Video> videos = defaultDirectory.getVideos();
+
                     session.setAttribute("videos", videos);
                 }
             }
@@ -147,8 +152,7 @@ public class LoadClient extends HttpServlet {
                     session.setAttribute("currentVideo", currentVideo);
 
                     // notes for the first video
-                    session.setAttribute("notes",
-                            noteDao.findByPropertyEqual("video", currentVideo));
+                    session.setAttribute("notes", currentVideo.getNotes());
                 }
             }
             //if (session.getAttribute("currentVideo") != null) {
