@@ -126,8 +126,13 @@ public class LoadClient extends HttpServlet {
             // TODO optionally choose starting directory
 
             // get videos for first directory
-            List<Video> videos = videoDao.findByPropertyEqual("directory", directories.get(0));
-            session.setAttribute("videos", videos);
+            if (directories.size() > 0) {
+                Directory defaultDirectory = directories.get(0);
+                if (defaultDirectory != null) {
+                    List<Video> videos = videoDao.findByPropertyEqual("directory", defaultDirectory);
+                    session.setAttribute("videos", videos);
+                }
+            }
 
             // TODO optionally choose starting video
             if (request.getParameter("videoId") != null) {
