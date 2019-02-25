@@ -11,7 +11,10 @@ import java.time.LocalDateTime;
 /**
  * The type Note.
  */
+@Entity(name = "Note")
+@Table(name = "note")
 public class Note implements java.io.Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
@@ -30,7 +33,7 @@ public class Note implements java.io.Serializable {
 
     @ManyToOne
     @JoinColumn(name = "id", nullable = false)
-    private int videoId;
+    private Video video;
 
     /**
      * Instantiates a new Note.
@@ -41,8 +44,8 @@ public class Note implements java.io.Serializable {
         this.text = "";
         this.start = -1;
         this.end = -1;
-        this.createDatetime = "2000-01-01 00:00:00.000";
-        this.videoId = -1;
+        this.createDatetime = null;
+        this.video = null;
     }
 
     /**
@@ -54,9 +57,9 @@ public class Note implements java.io.Serializable {
      * @param start          the start
      * @param end            the end
      * @param createDatetime the create datetime
-     * @param videoId        the video id
+     * @param video          the video
      */
-    public Note(int id, String label, String text, int start, int end, String createDatetime, int videoId) {
+    public Note(int id, String label, String text, int start, int end, LocalDateTime createDatetime, Video video) {
         this();
         this.id = id;
         this.label = label;
@@ -64,7 +67,7 @@ public class Note implements java.io.Serializable {
         this.start = start;
         this.end = end;
         this.createDatetime = createDatetime;
-        this.videoId = videoId;
+        this.video = video;
     }
 
     /**
@@ -73,15 +76,14 @@ public class Note implements java.io.Serializable {
      * @param label          the label
      * @param text           the text
      * @param start          the start
-     * @param videoId        the video id
+     * @param video          the video
      */
-    public Note(String label, String text, int start, int videoId) {
+    public Note(String label, String text, int start, Video video) {
         this();
         this.label = label;
         this.text = text;
         this.start = start;
-        this.end = end;
-        this.videoId = videoId;
+        this.video = video;
     }
 
     /**
@@ -193,21 +195,21 @@ public class Note implements java.io.Serializable {
     }
 
     /**
-     * Gets video id.
+     * Gets video.
      *
-     * @return the video id
+     * @return the video
      */
-    public int getVideoId() {
-        return videoId;
+    public Video getVideo() {
+        return video;
     }
 
     /**
-     * Sets video id.
+     * Sets video.
      *
-     * @param videoId the video id
+     * @param video the video
      */
-    public void setVideoId(int videoId) {
-        this.videoId = videoId;
+    public void setVideo(Video video) {
+        this.video = video;
     }
 
     @Override
@@ -219,7 +221,7 @@ public class Note implements java.io.Serializable {
                 ", start=" + start +
                 ", end=" + end +
                 ", createDatetime='" + createDatetime.toString() + '\'' +
-                ", videoId=" + videoId +
+                ", video=" + video.toString() +
                 '}';
     }
 }

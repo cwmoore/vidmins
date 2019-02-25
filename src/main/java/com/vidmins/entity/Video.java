@@ -1,6 +1,7 @@
 package com.vidmins.entity;
 
 import com.vidmins.entity.Directory;
+
 import com.vidmins.util.LocalDateAttributeConverter;
 import com.vidmins.util.TimestampAttributeConverter;
 import lombok.EqualsAndHashCode;
@@ -16,12 +17,12 @@ import java.util.List;
  *
  * @author cwmoore
  */
-@Entity
+@Entity(name = "Video")
 @Table(name = "video")
 public class Video implements java.io.Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "native", strategy = "native")
     private int id;
 
@@ -51,7 +52,7 @@ public class Video implements java.io.Serializable {
      * @param addDate   the add date
      * @param duration  the duration
      */
-    public Video(String youTubeId, String title, LocalDateTime addDate, int duration) {
+    public Video(String youTubeId, String title, LocalDateTime addDate, int duration, Directory directory) {
         this.youTubeId = youTubeId;
         this.title = title;
         this.addDate = addDate;
@@ -67,7 +68,7 @@ public class Video implements java.io.Serializable {
      * @param addDate   the add date
      * @param duration  the duration
      */
-    public Video(int id, String youTubeId, String title, LocalDateTime addDate, int duration) {
+    public Video(int id, String youTubeId, String title, LocalDateTime addDate, int duration, Directory directory) {
         this.id = id;
         this.youTubeId = youTubeId;
         this.title = title;
@@ -171,7 +172,7 @@ public class Video implements java.io.Serializable {
      *
      * @return the directory
      */
-    public int getDirectory() {
+    public Directory getDirectory() {
         return directory;
     }
 
@@ -180,7 +181,7 @@ public class Video implements java.io.Serializable {
      *
      * @param directory the directory
      */
-    public void setDirectory(int directory) {
+    public void setDirectory(Directory directory) {
         this.directory = directory;
     }
 

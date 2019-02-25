@@ -9,11 +9,11 @@ import java.sql.*;
 /**
  * The type Directory.
  */
-@Entity
+@Entity(name = "Directory")
 @Table(name = "directory")
 public class Directory implements java.io.Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "native", strategy = "native")
     private int id;
     private String name;
@@ -39,23 +39,11 @@ public class Directory implements java.io.Serializable {
      * @param name        the name
      * @param description the description
      */
-    public Directory(int id, String name, String description) {
+    public Directory(int id, String name, String description, User user) {
         this.id = id;
         this.name = name;
         this.description = description;
-    }
-
-    /**
-     * Instantiates a new Directory.
-     *
-     * @param results the results
-     */
-    public Directory(ResultSet results)
-            throws SQLException {
-        this.id = results.getInt("id");
-        this.name = results.getString("name");
-        this.description = results.getString("description");
-        // this.videoIds = results.getString("videoIds");
+        this.user = user;
     }
 
     /**

@@ -98,35 +98,29 @@ public class NewNote extends HttpServlet {
 
         List<String> requestParams = new ArrayList<>();
         String url = "/loadClient";
-        GenericDao<Note> noteDao = new GenericDao<>(Note.class);
 
         logger.debug(request.getParameterMap());
 
         if (request.getParameter("label") != null &&
                 request.getParameter("note_text") != null &&
                 request.getParameter("timeStampStart") != null &&
-                /* request.getParameter("timeStampEnd") != null && */
-                request.getParameter("userId") != null &&
                 request.getParameter("videoId") != null) {
-
-            //Note noteFromFormData = new Note();
-
-            // logger.debug("noteFromFormData: " + noteFromFormData.toString());
 
             Note noteFromFormData = new Note(request.getParameter("label")
                     , request.getParameter("note_text")
                     , Integer.parseInt(request.getParameter("timeStampStart"))
-                   /*  , Integer.parseInt(request.getParameter("timeStampEnd"))*/
-                    , Integer.parseInt(request.getParameter("userId"))
-                    , Integer.parseInt(request.getParameter("videoId"))
+                    , videoDao.getById(Integer.parseInt(request.getParameter("videoId")))
             );
 
             logger.debug("noteFromFormData before: " + noteFromFormData.toString());
 
             if (request.getParameter("noteId") != null) {
+                // TODO set this here
                 noteFromFormData.setId(Integer.parseInt(request.getParameter("noteId")));
+                // TODO run this after if(){}
                 noteDao.saveOrUpdate(noteFromFormData);
             } else {
+                // TODO remove unneeded else
                 noteDao.insert(noteFromFormData);
             }
 

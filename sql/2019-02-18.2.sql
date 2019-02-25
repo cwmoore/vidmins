@@ -67,3 +67,8 @@ INSERT INTO video (youTubeId, title)  VALUES
 ('xpVPr3sWMEs', 'Exercise 1 Overview'),
 ('ZbwaWZ9b3Tg', 'Maven Overview'),
 ('zsGs7K8zxj0', 'Week 9 Overview');
+#
+# UPDATE video v, directory d, (SELECT v.id vidId, d.id dirId, uv.userId useId FROM video v, user_videos uv, directory d
+#                               WHERE uv.userId = d.userId
+#                                 AND v.id = uv.videoId) j
+#   SET v.directoryId=j.dirId, d.userId = j.useId WHERE v.id=j.vidId;

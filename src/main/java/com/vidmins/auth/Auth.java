@@ -35,6 +35,10 @@ public class Auth {
         return password;
     }
 
+    public Auth() {
+        super();
+    }
+
     /**
      * Authenticate user credentials
      *
@@ -50,8 +54,9 @@ public class Auth {
         propertyMap.put("userName", (Object) userName);
         propertyMap.put("password", (Object) password);
 
-        userDao.findByPropertyEqual(propertyMap);
+        authenticatedUser = userDao.findByPropertyEqual(propertyMap).get(0);
 
+//        authenticatedUser = userDao.findByPropertyEqual("userName", userName);
         return authenticatedUser;
     }
 

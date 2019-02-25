@@ -23,7 +23,7 @@ class GenericDaoTest {
         List<User> users = dao.getAll();
 
         assertNotNull(users);
-        assertEquals(6, users.size());
+        assertEquals(7, users.size());
     }
 
     @Test

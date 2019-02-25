@@ -20,7 +20,7 @@ import java.util.*;
 @Table(name = "user")
 public class User implements java.io.Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "native", strategy = "native")
     private int id;
 
@@ -65,7 +65,6 @@ public class User implements java.io.Serializable {
      * @param userName    the user name
      * @param password    the password
      * @param dateOfBirth the date of birth
-     * @param id          the id
      */
     public User(String firstName, String lastName, String userName, String password, String dateOfBirth) {
         this.firstName = firstName;
@@ -93,17 +92,6 @@ public class User implements java.io.Serializable {
         this.dateOfBirth = LocalDate.parse(dateOfBirth);
         this.id = id;
     }
-//
-//    public User(ResultSet results) throws SQLException {
-//        this.setId(Integer.parseInt(results.getString("id")));
-//        this.setFirstName(results.getString("firstName"));
-//        this.setLastName(results.getString("lastName"));
-//        this.setUserName(results.getString("userName"));
-//        this.setEmail(results.getString("email"));
-//        this.setPassword(results.getString("enc_pass"));
-//        this.setJoinDate(LocalDateTime.parse(results.getString("joinDate"), DateTimeFormatter.BASIC_ISO_DATE));
-//        this.setDateOfBirth(LocalDate.parse(results.getString("dateOfBirth")));
-//    }
 
     /**
      * Gets first name.

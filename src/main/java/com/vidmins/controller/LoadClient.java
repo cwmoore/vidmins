@@ -106,6 +106,10 @@ public class LoadClient extends HttpServlet {
 
         String requestParams = "?";
 
+        if (session == null) {
+            session = request.getSession();
+        }
+
         if (session.getAttribute("user") != null) {
             User user = (User) session.getAttribute("user");
 
