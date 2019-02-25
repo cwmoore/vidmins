@@ -38,6 +38,7 @@ public class Directory implements java.io.Serializable {
      * @param id          the id
      * @param name        the name
      * @param description the description
+     * @param user        the user
      */
     public Directory(int id, String name, String description, User user) {
         this.id = id;
@@ -116,5 +117,23 @@ public class Directory implements java.io.Serializable {
      */
     public void setVideos(List<Video> videos) {
         this.videos = videos;
+    }
+
+    /**
+     * Sets user.
+     *
+     * @param user the user
+     */
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    /**
+     * Gets user.
+     *
+     * @return the user
+     */
+    public User getUser() {
+        return user;
     }
 }

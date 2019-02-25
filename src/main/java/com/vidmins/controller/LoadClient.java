@@ -114,6 +114,7 @@ public class LoadClient extends HttpServlet {
 
         if (session.getAttribute("user") != null) {
             User user = (User) session.getAttribute("user");
+            logger.debug("User: " + user);
 
 
             // TODO investigate strategies for lazy loading user data
@@ -125,8 +126,11 @@ public class LoadClient extends HttpServlet {
 
             // TODO optionally choose starting directory
 
+            logger.debug(user.getDirectories());
+
             // get videos for first directory
             if (directories.size() > 0) {
+                logger.debug("Found " + directories.size() + " directories");
                 Directory defaultDirectory = directories.get(0);
                 if (defaultDirectory != null) {
                     List<Video> videos = videoDao.findByPropertyEqual("directory", defaultDirectory);
@@ -139,7 +143,6 @@ public class LoadClient extends HttpServlet {
                 if (request.getParameter("videoId").matches("\\d+")) {
 
                     int videoId = Integer.parseInt(request.getParameter("videoId"));
-
                     Video currentVideo = videoDao.getById(videoId);
                     session.setAttribute("currentVideo", currentVideo);
 
