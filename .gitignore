@@ -49,7 +49,7 @@ crashlytics-build.properties
 fabric.properties
 
 # New Stuff
-sql/
+sql/*
 logs/vidmins.log
 **/database.properties
 src/main/resources/database.properties
