@@ -4,6 +4,7 @@ import com.vidmins.entity.User;
 import com.vidmins.persistence.GenericDao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Auth {
@@ -46,7 +47,8 @@ public class Auth {
      * @param password the password
      * @return an authenticated user
      */
-    public User authenticateUser(String userName, String password) {
+    public User authenticateUser(String userName, String password)
+            throws Exception {
         User authenticatedUser = null;
         GenericDao<User> userDao = new GenericDao<>(User.class);
 
@@ -54,7 +56,13 @@ public class Auth {
         propertyMap.put("userName", userName);
         propertyMap.put("password", encryptPassword(password));
 
-        authenticatedUser = userDao.findByPropertyEqual(propertyMap).get(0);
+        List<User> matchingUsers = userDao.findByPropertyEqual(propertyMap);
+
+        if (matchingUsers.size() == 1) {
+            authenticatedUser = matchingUsers.get(0);
+        } else {
+            throw new Exception("Did not find a unique user for those credentials " + matchingUsers);
+        }
 
 
 //        authenticatedUser = userDao.findByPropertyEqual("userName", userName);

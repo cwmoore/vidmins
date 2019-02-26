@@ -125,32 +125,6 @@ INSERT INTO `tag` VALUES (1,'java',3,'video');
 UNLOCK TABLES;
 
 --
--- Table structure for table `temporary_keys`
---
-
-DROP TABLE IF EXISTS `temporary_keys`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `temporary_keys` (
-  `userId` int(11) NOT NULL,
-  `keyChars` varchar(1001) NOT NULL,
-  `timeout` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`userId`,`keyChars`),
-  CONSTRAINT `fk_temporary_keys_1` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `temporary_keys`
---
-
-LOCK TABLES `temporary_keys` WRITE;
-/*!40000 ALTER TABLE `temporary_keys` DISABLE KEYS */;
-INSERT INTO `temporary_keys` VALUES (3,'qwertyuiop','2019-01-29 10:30:55');
-/*!40000 ALTER TABLE `temporary_keys` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `user`
 --
 
@@ -181,33 +155,6 @@ LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` VALUES (3,'cwmoore','password1','2019-01-28 10:30:03','Curtis','Moore','cwmoore@madisoncollege.edu',NULL,NULL,NULL,'1980-01-28'),(4,'cmoore','password2','2019-01-29 16:20:50','Curt','Moore','curtis.mo@gmail.com',NULL,NULL,NULL,'1979-01-01'),(7,'fflintstone','','2019-02-23 19:46:47','Fred','Flintstone',NULL,NULL,NULL,NULL,'2019-02-23'),(8,'dduck','pa55w0rd',NULL,'Donald','Duck','a@b.c',NULL,NULL,NULL,'2010-01-01'),(9,'fflintstone','','2019-02-23 19:55:40','Fred','Flintstone',NULL,NULL,NULL,NULL,'2019-02-23'),(13,'fflintstone','','2019-02-23 20:49:55','Fred','Flintstone',NULL,NULL,NULL,NULL,'2019-02-23'),(14,'fflintstone','','2019-02-23 20:51:44','Fred','Flintstone',NULL,NULL,NULL,NULL,'2019-02-23');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `user_videos`
---
-
-DROP TABLE IF EXISTS `user_videos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user_videos` (
-  `userId` int(11) NOT NULL,
-  `videoId` int(11) NOT NULL,
-  KEY `userId` (`userId`),
-  KEY `videoId` (`videoId`),
-  CONSTRAINT `user_videos_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`id`),
-  CONSTRAINT `user_videos_ibfk_2` FOREIGN KEY (`videoId`) REFERENCES `video` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user_videos`
---
-
-LOCK TABLES `user_videos` WRITE;
-/*!40000 ALTER TABLE `user_videos` DISABLE KEYS */;
-INSERT INTO `user_videos` VALUES (3,2),(3,3),(4,4),(4,5),(4,6),(4,7),(3,8),(3,9),(3,10),(3,11),(3,12),(3,13),(3,14),(3,15),(3,16),(3,17),(3,18),(3,19),(3,20),(3,21),(3,22),(3,23),(3,24),(3,25),(3,26),(3,27),(3,28),(3,29),(3,30),(3,31),(3,32),(3,33),(3,34),(4,2),(4,3),(4,4),(4,5),(4,6),(4,7),(4,8),(4,9),(4,10),(4,11),(4,12),(4,13),(4,14),(4,15),(4,16),(4,17),(4,18),(4,19),(4,20),(4,21),(4,22),(4,23),(4,24),(4,25),(4,26),(4,27),(4,28),(4,29),(4,30),(4,31),(4,32),(4,33),(4,34),(4,35),(4,36),(4,37),(4,38),(4,39),(4,40),(4,41),(4,42),(4,43),(4,44),(4,45),(4,46),(4,47),(4,48),(4,49),(4,50),(4,51),(4,52),(4,53),(4,54),(4,55),(4,56),(4,57),(4,58),(4,59),(4,60),(4,61),(4,62),(4,63),(4,64),(4,65),(4,66),(4,67),(4,68),(4,69),(4,70),(4,71),(4,72),(4,73),(4,74),(4,75),(4,76),(4,77),(4,78),(4,79),(4,80),(4,81),(4,82),(4,84),(4,85),(4,86),(4,87),(4,88),(4,89),(4,90),(4,91),(4,92),(4,93),(4,94),(4,95),(4,96),(4,97),(4,98),(4,99),(4,100),(4,101),(4,102),(4,103),(4,104),(4,105),(4,106),(4,107),(4,108),(4,109),(4,110),(4,111),(4,112),(4,113),(4,114),(4,115),(4,116),(4,117),(4,118),(4,119),(4,120),(4,121),(4,122),(4,123),(4,124),(4,125),(4,126),(4,127),(4,128),(4,129),(4,130),(4,131),(4,132),(4,133),(4,134),(4,135),(4,136),(4,137),(4,138),(4,139),(4,140),(4,141),(4,142),(4,143),(4,144),(4,145),(4,146),(4,147),(4,148),(4,149),(4,150),(4,151);
-/*!40000 ALTER TABLE `user_videos` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -247,4 +194,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-25 17:13:01
+-- Dump completed on 2019-02-26 12:13:14

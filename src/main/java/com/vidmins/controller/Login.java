@@ -39,8 +39,12 @@ public class Login extends HttpServlet {
         GenericDao<User> userDao = new GenericDao<>(User.class);
         Auth auth = new Auth();
         if (req.getParameter("userName") != null && req.getParameter("password") != null) {
-            User user = auth.authenticateUser(req.getParameter("userName"), req.getParameter("password"));
-            req.getSession().setAttribute("user", user);
+            try {
+                User user = auth.authenticateUser(req.getParameter("userName"), req.getParameter("password"));
+                req.getSession().setAttribute("user", user);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         resp.sendRedirect("/loadClient");

@@ -36,8 +36,6 @@ public class LoadClient extends HttpServlet {
     GenericDao<Video> videoDao;
     GenericDao<Note> noteDao;
 
-    HttpSession session;
-
     /**
      * Initialize session
      */
@@ -106,9 +104,7 @@ public class LoadClient extends HttpServlet {
 
         String requestParams = "?";
 
-        if (session == null) {
-            session = request.getSession();
-        }
+        HttpSession session = request.getSession();
 
         logger.debug("in loadClient");
 
