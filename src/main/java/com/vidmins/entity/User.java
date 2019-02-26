@@ -66,12 +66,12 @@ public class User implements java.io.Serializable {
      * @param password    the password
      * @param dateOfBirth the date of birth
      */
-    public User(String firstName, String lastName, String userName, String password, String dateOfBirth) {
+    public User(String firstName, String lastName, String userName, String password, LocalDate dateOfBirth) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
         this.password = password;
-        this.dateOfBirth = LocalDate.parse(dateOfBirth);
+        this.dateOfBirth = dateOfBirth;
     }
 
     /**
@@ -84,12 +84,12 @@ public class User implements java.io.Serializable {
      * @param dateOfBirth the date of birth
      * @param id          the id
      */
-    public User(String firstName, String lastName, String userName, String password, String dateOfBirth, int id) {
+    public User(String firstName, String lastName, String userName, String password, LocalDate dateOfBirth, int id) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
         this.password = password;
-        this.dateOfBirth = LocalDate.parse(dateOfBirth);
+        this.dateOfBirth = dateOfBirth;
         this.id = id;
     }
 

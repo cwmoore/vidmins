@@ -101,7 +101,7 @@ public class NewNote extends HttpServlet {
         if (request.getParameter("label") != null &&
                 request.getParameter("note_text") != null &&
                 request.getParameter("timeStampStart") != null &&
-                request.getParameter("authorId") != null &&
+         //       request.getParameter("authorId") != null &&
                 request.getParameter("videoId") != null) {
 
             Note noteFromFormData = new Note();
@@ -112,7 +112,13 @@ public class NewNote extends HttpServlet {
             noteFromFormData.setLabel(request.getParameter("label"));
             noteFromFormData.setText(request.getParameter("note_text"));
             noteFromFormData.setStart(Integer.parseInt(request.getParameter("timeStampStart")));
-            noteFromFormData.setAuthor(userDao.getById(Integer.parseInt(request.getParameter("authorId"))));
+
+//            if (request.getParameter("authorId") != null) {
+//                noteFromFormData.setAuthor(userDao.getById(Integer.parseInt(request.getParameter("authorId"))));
+//            } else {
+//                noteFromFormData.setAuthor((User) request.getSession().getAttribute("user"));
+//            }
+
             noteFromFormData.setVideo(videoDao.getById(Integer.parseInt(request.getParameter("videoId"))));
 
             logger.debug("noteFromFormData before: " + noteFromFormData.toString());

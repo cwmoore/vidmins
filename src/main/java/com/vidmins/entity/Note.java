@@ -29,10 +29,10 @@ public class Note implements java.io.Serializable {
     @Convert(converter = TimestampAttributeConverter.class)
     @EqualsAndHashCode.Exclude
     private LocalDateTime createDatetime;
-
-    @ManyToOne
-    @JoinColumn(name = "authorId", nullable = false, insertable = false, updatable = false)
-    private User author;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "authorId", nullable = false, insertable = false, updatable = false)
+//    private User author;
 
     // adapted from: https://stackoverflow.com/a/29952572/6254147
     @ManyToOne
@@ -43,13 +43,7 @@ public class Note implements java.io.Serializable {
      * Instantiates a new Note.
      */
     public Note() {
-        this.id = -1;
-        this.label = "";
-        this.text = "";
-        this.start = -1;
-        this.createDatetime = null;
-        this.author = null;
-        this.video = null;
+
     }
 
     /**
@@ -60,17 +54,18 @@ public class Note implements java.io.Serializable {
      * @param text           the text
      * @param start          the start
      * @param createDatetime the create datetime
-     * @param author          the author
      * @param video          the video
      */
-    public Note(int id, String label, String text, int start, LocalDateTime createDatetime, User author, Video video) {
+    public Note(int id, String label, String text, int start, LocalDateTime createDatetime
+            //, User author
+            , Video video) {
         this();
         this.id = id;
         this.label = label;
         this.text = text;
         this.start = start;
         this.createDatetime = createDatetime;
-        this.author = author;
+        //this.author = author;
         this.video = video;
     }
 
@@ -80,15 +75,18 @@ public class Note implements java.io.Serializable {
      * @param label          the label
      * @param text           the text
      * @param start          the start
-     * @param author         the author
+     * @param createDatetime the create datetime
      * @param video          the video
      */
-    public Note(String label, String text, int start, User author, Video video) {
+    public Note(String label, String text, int start, LocalDateTime createDatetime
+            //, User author
+            , Video video) {
         this();
         this.label = label;
         this.text = text;
         this.start = start;
-        this.author = author;
+        this.createDatetime = createDatetime;
+        //this.author = author;
         this.video = video;
     }
 
@@ -200,24 +198,24 @@ public class Note implements java.io.Serializable {
         this.video = video;
     }
 
-
-    /**
-     * Gets author.
-     *
-     * @return the author
-     */
-    public User getAuthor() {
-        return author;
-    }
-
-    /**
-     * Sets author.
-     *
-     * @param author the author
-     */
-    public void setAuthor(User author) {
-        this.author = author;
-    }
+//
+//    /**
+//     * Gets author.
+//     *
+//     * @return the author
+//     */
+//    public User getAuthor() {
+//        return author;
+//    }
+//
+//    /**
+//     * Sets author.
+//     *
+//     * @param author the author
+//     */
+//    public void setAuthor(User author) {
+//        this.author = author;
+//    }
 
     @Override
     public String toString() {
@@ -227,7 +225,7 @@ public class Note implements java.io.Serializable {
                 ", text='" + text + '\'' +
                 ", start=" + start +
                 ", createDatetime='" + createDatetime + '\'' +
-                ", author=" + author +
+              //  ", author=" + author +
                 ", video=" + video +
                 '}';
     }

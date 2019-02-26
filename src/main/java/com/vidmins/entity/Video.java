@@ -58,6 +58,7 @@ public class Video implements java.io.Serializable {
         this.title = title;
         this.addDate = addDate;
         this.duration = duration;
+        this.directory = directory;
     }
 
     /**
@@ -75,6 +76,7 @@ public class Video implements java.io.Serializable {
         this.title = title;
         this.addDate = addDate;
         this.duration = duration;
+        this.directory = directory;
     }
 
     /**
