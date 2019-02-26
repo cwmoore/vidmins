@@ -36,9 +36,6 @@ public class NewNote extends HttpServlet {
     GenericDao<Video> videoDao;
     GenericDao<Note> noteDao;
 
-
-    HttpSession session;
-
     /**
      * Initialize session
      */
@@ -104,29 +101,27 @@ public class NewNote extends HttpServlet {
         if (request.getParameter("label") != null &&
                 request.getParameter("note_text") != null &&
                 request.getParameter("timeStampStart") != null &&
+                request.getParameter("authorId") != null &&
                 request.getParameter("videoId") != null) {
 
-            Note noteFromFormData = new Note(request.getParameter("label")
-                    , request.getParameter("note_text")
-                    , Integer.parseInt(request.getParameter("timeStampStart"))
-                    , videoDao.getById(Integer.parseInt(request.getParameter("videoId")))
-            );
+            Note noteFromFormData = new Note();
+            if (request.getParameter("noteId") != null) {
+                noteFromFormData.setId(Integer.parseInt(request.getParameter("noteId")));
+            }
+
+            noteFromFormData.setLabel(request.getParameter("label"));
+            noteFromFormData.setText(request.getParameter("note_text"));
+            noteFromFormData.setStart(Integer.parseInt(request.getParameter("timeStampStart")));
+            noteFromFormData.setAuthor(userDao.getById(Integer.parseInt(request.getParameter("authorId"))));
+            noteFromFormData.setVideo(videoDao.getById(Integer.parseInt(request.getParameter("videoId"))));
 
             logger.debug("noteFromFormData before: " + noteFromFormData.toString());
 
-            if (request.getParameter("noteId") != null) {
-                // TODO set this here
-                noteFromFormData.setId(Integer.parseInt(request.getParameter("noteId")));
-                // TODO run this after if(){}
-                noteDao.saveOrUpdate(noteFromFormData);
-            } else {
-                // TODO remove unneeded else
-                noteDao.insert(noteFromFormData);
-            }
+            noteDao.saveOrUpdate(noteFromFormData);
 
             logger.debug("noteFromFormData after: " + noteFromFormData.toString());
 
-            session.setAttribute("note", null);
+            request.getSession().setAttribute("note", null);
             requestParams.add("videoId=" + request.getParameter("videoId"));
 
             if (request.getParameter("timeStampStart").matches("\\d+")) {

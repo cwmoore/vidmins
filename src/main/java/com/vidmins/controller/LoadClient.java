@@ -146,12 +146,11 @@ public class LoadClient extends HttpServlet {
                     // notes for the first video
                     session.setAttribute("notes", currentVideo.getNotes());
                 }
-            }
-            //if (session.getAttribute("currentVideo") != null) {
-                // session.setAttribute("notes", userData.getVideoNotes(Integer.toString(videos.get(1).getId())));
-                // session.setAttribute("currentVideo", videos.get(1));
-            //}
 
+                if (session.getAttribute("currentVideo") != null) {
+                    session.setAttribute("notes", noteDao.findByPropertyEqual("video", session.getAttribute("currentVideo")));
+                }
+            }
 
             session.setAttribute("title", "The Video Minutes App");
         } // else { // user is not logged in }
