@@ -23,14 +23,14 @@ class NoteDaoTest {
         List<Note> notes = dao.getAll();
 
         assertNotNull(notes);
-        assertEquals(2, notes.size());
+        assertEquals(60, notes.size());
     }
 
     @Test
     void getByIdSuccess() {
         Note note = dao.getById(1);
         assertNotNull(note);
-        assertEquals("Mark1", note.getLabel());
+        assertEquals("MarkI", note.getLabel());
     }
 
     @Test

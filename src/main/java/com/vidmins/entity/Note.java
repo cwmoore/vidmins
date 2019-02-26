@@ -24,7 +24,6 @@ public class Note implements java.io.Serializable {
     private String text;
     
     private int start;
-    private int end;
 
     @CreationTimestamp
     @Convert(converter = TimestampAttributeConverter.class)
@@ -33,7 +32,7 @@ public class Note implements java.io.Serializable {
 
     // adapted from: https://stackoverflow.com/a/29952572/6254147
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "videoId", nullable = false, insertable = false, updatable = false)
     private Video video;
 
     /**
@@ -44,7 +43,6 @@ public class Note implements java.io.Serializable {
         this.label = "";
         this.text = "";
         this.start = -1;
-        this.end = -1;
         this.createDatetime = null;
         this.video = null;
     }
@@ -56,17 +54,15 @@ public class Note implements java.io.Serializable {
      * @param label          the label
      * @param text           the text
      * @param start          the start
-     * @param end            the end
      * @param createDatetime the create datetime
      * @param video          the video
      */
-    public Note(int id, String label, String text, int start, int end, LocalDateTime createDatetime, Video video) {
+    public Note(int id, String label, String text, int start, LocalDateTime createDatetime, Video video) {
         this();
         this.id = id;
         this.label = label;
         this.text = text;
         this.start = start;
-        this.end = end;
         this.createDatetime = createDatetime;
         this.video = video;
     }
@@ -160,24 +156,6 @@ public class Note implements java.io.Serializable {
     }
 
     /**
-     * Gets end.
-     *
-     * @return the end
-     */
-    public int getEnd() {
-        return end;
-    }
-
-    /**
-     * Sets end.
-     *
-     * @param end the end
-     */
-    public void setEnd(int end) {
-        this.end = end;
-    }
-
-    /**
      * Gets create datetime.
      *
      * @return the create datetime
@@ -220,7 +198,6 @@ public class Note implements java.io.Serializable {
                 ", label='" + label + '\'' +
                 ", text='" + text + '\'' +
                 ", start=" + start +
-                ", end=" + end +
                 ", createDatetime='" + createDatetime.toString() + '\'' +
                 ", video=" + video.toString() +
                 '}';

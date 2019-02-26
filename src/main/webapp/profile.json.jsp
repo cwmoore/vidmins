@@ -34,7 +34,6 @@
       , label: "${note.label}"
       , test: "${note.text}"
       , start: "${note.start}"
-      , end: "${note.end}"
       , createDatetime: "${note.createDatetime}"
       , userId: "${note.userId}"
       , videoId: "${note.videoId}"

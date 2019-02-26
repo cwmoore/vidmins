@@ -116,10 +116,6 @@ public class LoadClient extends HttpServlet {
             // TODO investigate strategies for lazy loading user data
             // TODO start with a default view
 
-            // get directories list for signed in user
-            //List<Directory> directories = directoryDao.findByPropertyEqual("user", user);
-
-
             List<Directory> directories = user.getDirectories();
             session.setAttribute("directories", directories);
 
@@ -132,7 +128,7 @@ public class LoadClient extends HttpServlet {
                 logger.debug("Found " + directories.size() + " directories");
                 Directory defaultDirectory = directories.get(0);
                 if (defaultDirectory != null) {
-                    //List<Video> videos = videoDao.findByPropertyEqual("directory", defaultDirectory);
+
                     List<Video> videos = defaultDirectory.getVideos();
 
                     session.setAttribute("videos", videos);
