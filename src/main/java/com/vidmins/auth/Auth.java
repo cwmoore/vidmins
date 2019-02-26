@@ -51,10 +51,11 @@ public class Auth {
         GenericDao<User> userDao = new GenericDao<>(User.class);
 
         Map<String, Object> propertyMap = new HashMap<>();
-        propertyMap.put("userName", (Object) userName);
-        propertyMap.put("password", (Object) password);
+        propertyMap.put("userName", userName);
+        propertyMap.put("password", encryptPassword(password));
 
         authenticatedUser = userDao.findByPropertyEqual(propertyMap).get(0);
+
 
 //        authenticatedUser = userDao.findByPropertyEqual("userName", userName);
         return authenticatedUser;
