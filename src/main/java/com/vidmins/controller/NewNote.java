@@ -123,7 +123,9 @@ public class NewNote extends HttpServlet {
 
             logger.debug("noteFromFormData before: " + noteFromFormData.toString());
 
-            noteDao.saveOrUpdate(noteFromFormData);
+
+            //noteDao.saveOrUpdate(noteFromFormData);
+            noteDao.insert(noteFromFormData);
 
             logger.debug("noteFromFormData after: " + noteFromFormData.toString());
 
