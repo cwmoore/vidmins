@@ -1,5 +1,6 @@
 package com.vidmins.test.util;
 
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,7 +32,6 @@ public class Database {
 
     // private constructor prevents instantiating this class anywhere else
     private Database() {
-        logger.debug("private new Database");
         loadProperties();
 
     }
@@ -92,7 +92,6 @@ public class Database {
      */
     public void runSQL(String sqlFile) {
 
-        logger.debug("in runSQL");
         Statement stmt = null;
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         InputStream inputStream = classloader.getResourceAsStream(sqlFile);
@@ -107,6 +106,7 @@ public class Database {
                 if (sql == null) {
                     break;
                 }
+                logger.debug(sql);
                 stmt.executeUpdate(sql);
 
             }

@@ -25,18 +25,22 @@ class UserDaoTest {
     void setUp() {
         dao = new GenericDao<>(User.class);
 
+        // doesn't like mysql authentication or work well with command line passwords
         //ProcessBuilder process = new ProcessBuilder("~/IdeaProjects/vidmins/src/test/resources/reset_test_db.sh");
-        CleanTestDB cleanTestDB = new CleanTestDB();
-        cleanTestDB.cleanDB();
-//        com.vidmins.test.util.Database database = com.vidmins.test.util.Database.getInstance();
-//        database.runSQL("reset_db.sql");
+
+        // would have to reenter my databases content into arrays
+//        CleanTestDB cleanTestDB = new CleanTestDB();
+//        cleanTestDB.testDbClean();
+
+        com.vidmins.test.util.Database database = com.vidmins.test.util.Database.getInstance();
+        database.runSQL("reset_db.sql");
     }
 
     /**
      * Verifies gets all orders successfully.
      */
     @Test
-    void getAllOrdersSuccess() {
+    void getAllUsersSuccess() {
         List<User> users = dao.getAll();
         assertEquals(10, users.size());
     }

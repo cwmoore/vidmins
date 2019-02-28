@@ -7,8 +7,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import com.vidmins.persistence.SessionFactoryProvider;
 
-import java.util.ArrayList;
-
 /**
  * A class used to clean the db for the JUnit tests
  *
@@ -25,21 +23,44 @@ public class CleanTestDB {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        String[] tablesToClear = {"user", "directory", "video", "note"};
+        // Create an SQL query to truncate the table. This way the ID's start at one while
+        // removing all of the data in the table.
+        session.createNativeQuery("TRUNCATE {TABLE NAME}").executeUpdate();
+        // Insert some default data to work with for each JUnit test
+        /***********************************************************************/
+        /* REPEAT THIS LINE FOR AS MANY DIFFERENT DEFAULT DATA POINTS YOU WANT */
+        /***********************************************************************/
+        session.createNativeQuery("INSERT INTO {TABLE NAME} VALUES({YOUR VALUES TO INSERT})").executeUpdate();
+
+        transaction.commit();
+        session.close();
+    }
+
+
+
+    /**
+     * Clean the database
+     */
+    public void testDbClean() {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        String[] tablesToClear = {"user"};//, "directory", "video", "note"};
 
         for (String tableName : tablesToClear) {
             // Create an SQL query to truncate the table. This way the ID's start at one while
             // removing all of the data in the table.
             //session.createNativeQuery("TRUNCATE {tableName}").executeUpdate();
-            session.createNativeQuery("DESCRIBE {tableName}").executeUpdate();
+            session.createNativeQuery("INSERT INTO " + tableName + " (firstName, userName) VALUES ('TEST0', 'TESTCleanDBUser')").executeUpdate();
         }
         // Insert some default data to work with for each JUnit test
         /***********************************************************************/
         /* REPEAT THIS LINE FOR AS MANY DIFFERENT DEFAULT DATA POINTS YOU WANT */
         /***********************************************************************/
-        //session.createNativeQuery("INSERT INTO {TABLE NAME} VALUES({YOUR VALUES TO INSERT})").executeUpdate();
+        session.createNativeQuery("INSERT INTO {TABLE NAME} VALUES({YOUR VALUES TO INSERT})").executeUpdate();
 
         transaction.commit();
         session.close();
     }
+
 }
