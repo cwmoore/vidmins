@@ -101,14 +101,29 @@ public class Database {
             connect();
             stmt = connection.createStatement();
 
-            while (true) {
-                String sql = br.readLine();
-                if (sql == null) {
-                    break;
+//            while (true) {
+//                String sql = br.readLine();
+//                if (sql == null) {
+//                    break;
+//                }
+//                logger.debug(sql);
+//                stmt.executeUpdate(sql);
+//
+//            }
+
+            String sql = "";
+            while (br.ready()) {
+                String line = br.readLine();
+                if (line == null) {
+                    continue;
+                }
+                if (line.length() == 0) {
+                    continue;
                 }
                 logger.debug(sql);
-                stmt.executeUpdate(sql);
-
+                //sql += line;
+                stmt.executeUpdate(line);
+                // stmt.executeUpdate(sql);
             }
 
         } catch (SQLException se) {
