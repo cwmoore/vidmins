@@ -7,7 +7,9 @@
     <version>1.0-SNAPSHOT</version>
     <name>vidmins Video Minutes</name>
     <url>http://vidmins.com</url>
-
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 <build>
     <finalName>VidMins</finalName>
     <plugins>

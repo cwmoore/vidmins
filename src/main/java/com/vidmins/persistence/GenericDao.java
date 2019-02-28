@@ -123,6 +123,7 @@ public class GenericDao<T> {
         return session.createQuery(query).getResultList();
     }
 
+
     /**
      * Finds entities by multiple properties.
      * Inspired by https://stackoverflow.com/questions/11138118/really-dynamic-jpa-criteriabuilder
