@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+// TODO: use Hibernate 5 built in converters
 /**
  * Convert from sqlDate to LocalDate. This will be used by Hibernate.
  * Class based on: http://www.thoughts-on-java.org/persist-localdate-localdatetime-jpa/

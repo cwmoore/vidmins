@@ -6,7 +6,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-
+// TODO: attribute source better?
 /**
  * This file provides a SessionFactory for use with DAOs using Hibernate
  *
