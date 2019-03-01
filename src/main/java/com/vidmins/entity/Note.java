@@ -36,7 +36,7 @@ public class Note implements java.io.Serializable {
 
     // adapted from: https://stackoverflow.com/a/29952572/6254147
     @ManyToOne
-    @JoinColumn(name = "videoId", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "videoId", nullable = false)
     private Video video;
 
     /**

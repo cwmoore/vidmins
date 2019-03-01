@@ -1,12 +1,10 @@
 package com.vidmins.persistence;
 
 import com.vidmins.entity.Directory;
-import com.vidmins.test.util.CleanTestDB;
-import org.junit.Before;
+import com.vidmins.entity.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,14 +24,14 @@ class DirectoryDaoTest {
         dao = new GenericDao<>(Directory.class);
 
         // doesn't like mysql authentication or work well with command line passwords
-        //ProcessBuilder process = new ProcessBuilder("~/IdeaProjects/vidmins/src/test/resources/reset_test_db.sh");
+        ProcessBuilder process = new ProcessBuilder("~/IdeaProjects/vidmins/src/test/resources/reset_test_db.sh");
 
         // would have to reenter my databases content into arrays
 //        CleanTestDB cleanTestDB = new CleanTestDB();
 //        cleanTestDB.testDbClean();
 
-        com.vidmins.test.util.Database database = com.vidmins.test.util.Database.getInstance();
-        database.runSQL("reset_db.sql");
+//        com.vidmins.test.util.Database database = com.vidmins.test.util.Database.getInstance();
+//        database.runSQL("reset_db.sql");
     }
 
     /**
@@ -42,7 +40,7 @@ class DirectoryDaoTest {
     @Test
     void getAllDirectoriesSuccess() {
         List<Directory> directories = dao.getAll();
-        assertEquals(2, directories.size());
+        assertEquals(4, directories.size());
     }
 
     /**
@@ -60,32 +58,31 @@ class DirectoryDaoTest {
      */
     @Test
     void getByIdVerifyDirectorySuccess() {
-        Directory directory = dao.getById(3);
+        Directory directory = dao.getById(2);
         assertNotNull(directory);
         assertEquals("new dir", directory.getName());
-        //assertEquals(1, directory.getDirectories().size());
     }
 
-
-    /**
-     * Verify successful delete of order
-     */
-    @Test
-    void deleteSuccess() {
-        int deleteId = 3;
-        Directory directory = dao.getById(deleteId);
-        assertNotNull(directory);
-
-        dao.delete(directory);
-        assertNull(dao.getById(deleteId));
-    }
+//
+//    /**
+//     * Verify successful delete of order
+//     */
+//    @Test
+//    void deleteSuccess() {
+//        int deleteId = 3;
+//        Directory directory = dao.getById(deleteId);
+//        assertNotNull(directory);
+//
+//        dao.delete(directory);
+//        assertNull(dao.getById(deleteId));
+//    }
 
     /**
      * Verify successful update of order
      */
     @Test
     void updateSuccess() {
-        int updateId = 8;
+        int updateId = 1;
         String newDirectoryName = "TestDirectoryModded";
         Directory directoryToUpdate = dao.getById(updateId);
         directoryToUpdate.setName(newDirectoryName);
@@ -99,10 +96,15 @@ class DirectoryDaoTest {
      */
     @Test
     void insertSuccess() {
+        User owner = new User(8, "DirectoryOwner");
+        GenericDao<User> userDao = new GenericDao<>(User.class);
+
+        assertNotNull(userDao.getById(userDao.insert(owner)));
 
         String directoryName = "TestDirectoryInsert";
         Directory newDirectory = new Directory();
         newDirectory.setName(directoryName);
+        newDirectory.setUser(owner);
 
         int insertId = dao.insert(newDirectory);
         assertNotEquals(0, insertId);
@@ -123,7 +125,7 @@ class DirectoryDaoTest {
     void getByPropertyEqualSuccess() {
         // TODO make for Directory
         List<Directory> directories = dao.findByPropertyEqual("name", "default");
-        assertEquals(2, directories.size());
+        assertEquals(3, directories.size());
         assertEquals(1, directories.get(0).getId());
     }
 //

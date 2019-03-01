@@ -1,12 +1,9 @@
 package com.vidmins.persistence;
 
 import com.vidmins.entity.User;
-import com.vidmins.test.util.CleanTestDB;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,16 +21,14 @@ class UserDaoTest {
     @BeforeEach
     void setUp() {
         dao = new GenericDao<>(User.class);
-
-        // doesn't like mysql authentication or work well with command line passwords
-        //ProcessBuilder process = new ProcessBuilder("~/IdeaProjects/vidmins/src/test/resources/reset_test_db.sh");
+        ProcessBuilder process = new ProcessBuilder("~/IdeaProjects/vidmins/src/test/resources/reset_test_db.sh");
 
         // would have to reenter my databases content into arrays
 //        CleanTestDB cleanTestDB = new CleanTestDB();
 //        cleanTestDB.testDbClean();
 
-        com.vidmins.test.util.Database database = com.vidmins.test.util.Database.getInstance();
-        database.runSQL("reset_db.sql");
+//        com.vidmins.test.util.Database database = com.vidmins.test.util.Database.getInstance();
+//        database.runSQL("reset_db.sql");
     }
 
     /**
@@ -42,7 +37,7 @@ class UserDaoTest {
     @Test
     void getAllUsersSuccess() {
         List<User> users = dao.getAll();
-        assertEquals(10, users.size());
+        assertEquals(5, users.size());
     }
 
     /**
@@ -50,9 +45,9 @@ class UserDaoTest {
      */
     @Test
     void getByIdSuccess() {
-        User user = dao.getById(7);
+        User user = dao.getById(6);
         assertNotNull(user);
-        assertEquals("fflintstone", user.getUserName());
+        assertEquals("dtillman", user.getUserName());
     }
 
     /**
@@ -62,7 +57,7 @@ class UserDaoTest {
     void getByIdVerifyUserSuccess() {
         User user = dao.getById(3);
         assertNotNull(user);
-        assertEquals("cwmoore", user.getUserName());
+        assertEquals("bcurry", user.getUserName());
         //assertEquals(1, user.getDirectories().size());
     }
 
@@ -72,10 +67,12 @@ class UserDaoTest {
      */
     @Test
     void deleteSuccess() {
-        int deleteId = 13;
+        int deleteId = 4;
+
+        // make this user
         User user = dao.getById(deleteId);
         assertNotNull(user);
-
+        // disappear
         dao.delete(user);
         assertNull(dao.getById(deleteId));
     }
@@ -85,11 +82,12 @@ class UserDaoTest {
      */
     @Test
     void updateSuccess() {
-        int updateId = 8;
-        String newUserName = "TestUserModded";
+        int updateId = 5;
+        String newUserName = "DKLEIN";
         User userToUpdate = dao.getById(updateId);
         userToUpdate.setUserName(newUserName);
         dao.saveOrUpdate(userToUpdate);
+
         User retrievedUser = dao.getById(updateId);
         assertEquals(newUserName, retrievedUser.getUserName());
     }
@@ -123,8 +121,8 @@ class UserDaoTest {
     void getByPropertyEqualSuccess() {
         // TODO make for User
         List<User> users = dao.findByPropertyEqual("firstName", "Fred");
-        assertEquals(2, users.size());
-        assertEquals(6, users.get(0).getId());
+        assertEquals(1, users.size());
+        assertEquals(2, users.get(0).getId());
     }
 //
 //    /**

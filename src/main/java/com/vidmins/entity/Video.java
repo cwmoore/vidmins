@@ -33,7 +33,7 @@ public class Video implements java.io.Serializable {
 
     // adapted from: https://stackoverflow.com/a/29952572/6254147
     @ManyToOne
-    @JoinColumn(name = "directoryId", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "directoryId", nullable = false)
     private Directory directory;
 
     @OneToMany(mappedBy = "video")
@@ -43,7 +43,17 @@ public class Video implements java.io.Serializable {
      * Instantiates a new Video.
      */
     public Video() {
+        super();
     }
+
+    /**
+     * Instantiates a new Video really easily.
+     */
+    public Video(String title) {
+        this();
+        this.title = title;
+        duration = 0;
+            }
 
     /**
      * Instantiates a new Video.
@@ -52,6 +62,7 @@ public class Video implements java.io.Serializable {
      * @param title     the title
      * @param addDate   the add date
      * @param duration  the duration
+     * @param directory the directory
      */
     public Video(String youTubeId, String title, LocalDateTime addDate, int duration, Directory directory) {
         this.youTubeId = youTubeId;

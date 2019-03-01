@@ -55,6 +55,17 @@ public class User implements java.io.Serializable {
      * Instantiates a new User.
      */
     public User() {
+        super();
+    }
+
+
+    /**
+     * Instantiates a new User really easily.
+     */
+    public User(int id, String userName) {
+        this();
+        this.id = id;
+        this.userName = userName;
     }
 
     /**

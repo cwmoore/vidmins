@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -120,12 +121,18 @@ public class NewNote extends HttpServlet {
 //            }
 
             noteFromFormData.setVideo(videoDao.getById(Integer.parseInt(request.getParameter("videoId"))));
+            //noteFromFormData.setAuthor(userDao.getById(Integer.parseInt((String) request.getSession().getAttribute("userId"))));
+            noteFromFormData.setCreateDatetime(LocalDateTime.now());
 
             logger.debug("noteFromFormData before: " + noteFromFormData.toString());
 
-
-            //noteDao.saveOrUpdate(noteFromFormData);
-            noteDao.insert(noteFromFormData);
+            if (noteFromFormData.getId() > 0) {
+                logger.debug("This is a note to be updated: " + noteFromFormData.getId());
+                noteDao.saveOrUpdate(noteFromFormData);
+            } else {
+                logger.debug("This is a new note");
+                noteDao.insert(noteFromFormData);
+            }
 
             logger.debug("noteFromFormData after: " + noteFromFormData.toString());
 
