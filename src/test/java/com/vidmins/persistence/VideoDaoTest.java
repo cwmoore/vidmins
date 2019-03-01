@@ -1,7 +1,7 @@
 package com.vidmins.persistence;
 
-import com.vidmins.entity.Note;
 import com.vidmins.entity.Video;
+import com.vidmins.entity.Directory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,11 +13,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * The type Note dao test.
+ * The type Video dao test.
  */
-class NoteDaoTest {
+class VideoDaoTest {
 
-    GenericDao<Note> dao;
+    GenericDao<Video> dao;
     Logger logger = LogManager.getLogger(this.getClass());
 
     /**
@@ -25,7 +25,7 @@ class NoteDaoTest {
      */
     @BeforeEach
     void setUp() {
-        dao = new GenericDao<>(Note.class);
+        dao = new GenericDao<>(Video.class);
 //        try {
 //            ProcessBuilder process = new ProcessBuilder("~/IdeaProjects/vidmins/src/test/resources/reset_test_db.sh");
 //            process.start();
@@ -45,9 +45,9 @@ class NoteDaoTest {
      * Verifies gets all orders successfully.
      */
     @Test
-    void getAllNotesSuccess() {
-        List<Note> notes = dao.getAll();
-        assertEquals(4, notes.size());
+    void getAllVideosSuccess() {
+        List<Video> videos = dao.getAll();
+        assertEquals(3, videos.size());
     }
 
     /**
@@ -55,18 +55,18 @@ class NoteDaoTest {
      */
     @Test
     void getByIdSuccess() {
-        Note note = dao.getById(1);
-        assertNotNull(note);
+        Video video = dao.getById(1);
+        assertNotNull(video);
     }
 
     /**
      * Verifies a order is returned correctly based on id search
      */
     @Test
-    void getByIdVerifyNoteSuccess() {
-        Note note = dao.getById(3);
-        assertNotNull(note);
-        assertEquals("noticia", note.getLabel());
+    void getByIdVerifyVideoSuccess() {
+        Video video = dao.getById(2);
+        assertNotNull(video);
+        assertEquals("superhero movie", video.getTitle());
     }
 
 
@@ -77,11 +77,11 @@ class NoteDaoTest {
     void deleteSuccess() {
         int deleteId = 2;
 
-        // make this note
-        Note note = dao.getById(deleteId);
-        assertNotNull(note);
+        // make this video
+        Video video = dao.getById(deleteId);
+        assertNotNull(video);
         // disappear
-        dao.delete(note);
+        dao.delete(video);
         assertNull(dao.getById(deleteId));
     }
 
@@ -91,13 +91,13 @@ class NoteDaoTest {
     @Test
     void updateSuccess() {
         int updateId = 1;
-        String newNoteLabel = "NEW NOTE LABEL";
-        Note noteToUpdate = dao.getById(updateId);
-        noteToUpdate.setLabel(newNoteLabel);
-        dao.saveOrUpdate(noteToUpdate);
+        String newVideoTitle = "NEW VIDEO TITLE";
+        Video videoToUpdate = dao.getById(updateId);
+        videoToUpdate.setTitle(newVideoTitle);
+        dao.saveOrUpdate(videoToUpdate);
 
-        Note retrievedNote = dao.getById(updateId);
-        assertEquals(newNoteLabel, retrievedNote.getLabel());
+        Video retrievedVideo = dao.getById(updateId);
+        assertEquals(newVideoTitle, retrievedVideo.getTitle());
     }
 
     /**
@@ -106,22 +106,22 @@ class NoteDaoTest {
     @Test
     void insertSuccess() {
 
-        String noteLabel = "TestNoteInsert";
-        Note newNote = new Note();
-        newNote.setLabel(noteLabel);
-        GenericDao<Video> videoDao = new GenericDao<>(Video.class);
-        newNote.setVideo(videoDao.getById(3));
+        String videoTitle = "TestVideoInsert";
+        Video newVideo = new Video();
+        newVideo.setTitle(videoTitle);
+        GenericDao<Directory> directoryDao = new GenericDao<>(Directory.class);
+        newVideo.setDirectory(directoryDao.getById(3));
 
-        int insertId = dao.insert(newNote);
+        int insertId = dao.insert(newVideo);
         assertNotEquals(0, insertId);
 
-        Note insertedNote = dao.getById(insertId);
-        assertNotNull(insertedNote);
-        assertEquals(noteLabel, insertedNote.getLabel());
+        Video insertedVideo = dao.getById(insertId);
+        assertNotNull(insertedVideo);
+        assertEquals(videoTitle, insertedVideo.getTitle());
 
         // Could continue comparing all values, but
         // it may make sense to use .equals()
-        // TODO review .equals recommendations http://docs.jboss.org/hibernate/orm/5.2/noteguide/html_single/Hibernate_Note_Guide.html#mapping-model-pojo-equalshashcode
+        // TODO review .equals recommendations http://docs.jboss.org/hibernate/orm/5.2/videoguide/html_single/Hibernate_Video_Guide.html#mapping-model-pojo-equalshashcode
     }
 
     /**
@@ -129,10 +129,10 @@ class NoteDaoTest {
      */
     @Test
     void getByPropertyEqualSuccess() {
-        // TODO make for Note
-        List<Note> notes = dao.findByPropertyEqual("label", "nota");
-        assertEquals(1, notes.size());
-        assertEquals(4, notes.get(0).getId());
+        // TODO make for Video
+        List<Video> videos = dao.findByPropertyEqual("duration", "2400");
+        assertEquals(1, videos.size());
+        assertEquals(3, videos.get(0).getId());
     }
 //
 //    /**
@@ -140,8 +140,8 @@ class NoteDaoTest {
 //     */
 //    @Test
 //    void getByPropertyLikeSuccess() {
-//        List<Note> notes = dao.findByPropertyLike("noteName", "c");
+//        List<Video> videos = dao.findByPropertyLike("videoName", "c");
 
-//        assertEquals(4, notes.size());
+//        assertEquals(4, videos.size());
 //    }
 }
