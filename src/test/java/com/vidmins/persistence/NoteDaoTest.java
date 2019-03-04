@@ -9,7 +9,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -137,14 +139,17 @@ class NoteDaoTest {
         assertEquals(1, notes.size());
         assertEquals(4, notes.get(0).getId());
     }
-//
-//    /**
-//     * Verify successful get by property (like match)
-//     */
-//    @Test
-//    void getByPropertyLikeSuccess() {
-//        List<Note> notes = dao.findByPropertyLike("noteName", "c");
 
-//        assertEquals(4, notes.size());
-//    }
+    /**
+     * Verify successful get by property (like match)
+     */
+    @Test
+    void getByPropertiesEqualSuccess() {
+        Map<String, Object> searchNote = new HashMap<>();
+        searchNote.put("label", "nota");
+
+        List<Note> notes = dao.findByPropertyEqual(searchNote);
+
+        assertEquals(1, notes.size());
+    }
 }

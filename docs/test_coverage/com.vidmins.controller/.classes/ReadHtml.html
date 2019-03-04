@@ -1,0 +1,228 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ReadHtml</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.vidmins.controller</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ReadHtml (com.vidmins.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ReadHtml</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 33)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.vidmins.controller;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.io.IOException;
+<i>4</i>&nbsp;import java.util.*;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import org.apache.logging.log4j.LogManager;
+<i>7</i>&nbsp;import org.apache.logging.log4j.Logger;
+<i>8</i>&nbsp;import org.jsoup.nodes.Document;
+<i>9</i>&nbsp;import org.jsoup.Jsoup;
+<i>10</i>&nbsp;import org.jsoup.nodes.Element;
+<i>11</i>&nbsp;import org.jsoup.select.Elements;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;/**
+<i>15</i>&nbsp; * The type Read html.
+<i>16</i>&nbsp; */
+<i>17</i>&nbsp;public class ReadHtml {
+<b class="nc"><i>18</i>&nbsp;    private String url = null;</b>
+<b class="nc"><i>19</i>&nbsp;    private Document doc = null;</b>
+<i>20</i>&nbsp;    private Logger logger;
+<i>21</i>&nbsp;
+<b class="nc"><i>22</i>&nbsp;    private String videoRegex = &quot;youtube\\.com/watch\\?v=|youtu.be/&quot;;</b>
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    /**
+<i>26</i>&nbsp;     * Instantiates a new Read html.
+<i>27</i>&nbsp;     *
+<i>28</i>&nbsp;     * @param url the url
+<i>29</i>&nbsp;     */
+<b class="nc"><i>30</i>&nbsp;    public ReadHtml(String url) {</b>
+<b class="nc"><i>31</i>&nbsp;        logger = LogManager.getLogger(this.getClass());</b>
+<i>32</i>&nbsp;
+<b class="nc"><i>33</i>&nbsp;        this.url = url;</b>
+<b class="nc"><i>34</i>&nbsp;        loadFromUrl();</b>
+<b class="nc"><i>35</i>&nbsp;    }</b>
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    /**
+<i>39</i>&nbsp;     * Find you tube links map.
+<i>40</i>&nbsp;     *
+<i>41</i>&nbsp;     * @return the map
+<i>42</i>&nbsp;     */
+<i>43</i>&nbsp;    public Map&lt;String, String&gt; findYouTubeLinks() {
+<i>44</i>&nbsp;
+<b class="nc"><i>45</i>&nbsp;        Map&lt;String, String&gt; youTubeLinks = new TreeMap&lt;&gt;();</b>
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;        // find links to youtube.com, youtu.be, etc.
+<b class="nc"><i>48</i>&nbsp;        Elements links = doc.getElementsByTag(&quot;a&quot;);</b>
+<b class="nc"><i>49</i>&nbsp;        for (Element link : links) {</b>
+<b class="nc"><i>50</i>&nbsp;            String linkHref = link.attr(&quot;href&quot;);</b>
+<b class="nc"><i>51</i>&nbsp;            String linkText = link.text();</b>
+<i>52</i>&nbsp;
+<b class="nc"><i>53</i>&nbsp;            if (linkHref.matches(videoRegex)) {</b>
+<b class="nc"><i>54</i>&nbsp;                youTubeLinks.put(linkHref, linkText);</b>
+<i>55</i>&nbsp;            }
+<b class="nc"><i>56</i>&nbsp;        }</b>
+<i>57</i>&nbsp;
+<b class="nc"><i>58</i>&nbsp;        return youTubeLinks;</b>
+<i>59</i>&nbsp;    }
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    /**
+<i>63</i>&nbsp;     * Load the Document object from a URL
+<i>64</i>&nbsp;     */
+<i>65</i>&nbsp;    private void loadFromUrl() {
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;        try {
+<i>68</i>&nbsp;            // get html from URL
+<b class="nc"><i>69</i>&nbsp;            doc = Jsoup.connect(url).get();</b>
+<i>70</i>&nbsp;
+<b class="nc"><i>71</i>&nbsp;        } catch (IOException ioException) {</b>
+<b class="nc"><i>72</i>&nbsp;            logger.error(&quot;Jsoup.connect(\&quot;&quot; + url + &quot;\&quot;).get() threw exception &quot; + ioException);</b>
+<b class="nc"><i>73</i>&nbsp;        }</b>
+<b class="nc"><i>74</i>&nbsp;    }</b>
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;
+<i>77</i>&nbsp;    /**
+<i>78</i>&nbsp;     * load the Document object from an HTML string
+<i>79</i>&nbsp;     * @param html
+<i>80</i>&nbsp;     */
+<i>81</i>&nbsp;    private void loadFromString(String html) {
+<i>82</i>&nbsp;
+<b class="nc"><i>83</i>&nbsp;        doc = Jsoup.parse(html);</b>
+<b class="nc"><i>84</i>&nbsp;    }</b>
+<i>85</i>&nbsp;
+<i>86</i>&nbsp;
+<i>87</i>&nbsp;    /**
+<i>88</i>&nbsp;     * Gets url.
+<i>89</i>&nbsp;     *
+<i>90</i>&nbsp;     * @return the url
+<i>91</i>&nbsp;     */
+<i>92</i>&nbsp;    public String getUrl() {
+<b class="nc"><i>93</i>&nbsp;        return url;</b>
+<i>94</i>&nbsp;    }
+<i>95</i>&nbsp;
+<i>96</i>&nbsp;
+<i>97</i>&nbsp;    /**
+<i>98</i>&nbsp;     * Sets url.
+<i>99</i>&nbsp;     *
+<i>100</i>&nbsp;     * @param url the url
+<i>101</i>&nbsp;     */
+<i>102</i>&nbsp;    public void setUrl(String url) {
+<b class="nc"><i>103</i>&nbsp;        this.url = url;</b>
+<b class="nc"><i>104</i>&nbsp;    }</b>
+<i>105</i>&nbsp;
+<i>106</i>&nbsp;
+<i>107</i>&nbsp;    /**
+<i>108</i>&nbsp;     * Gets doc.
+<i>109</i>&nbsp;     *
+<i>110</i>&nbsp;     * @return the doc
+<i>111</i>&nbsp;     */
+<i>112</i>&nbsp;    public Document getDoc() {
+<b class="nc"><i>113</i>&nbsp;        return doc;</b>
+<i>114</i>&nbsp;    }
+<i>115</i>&nbsp;
+<i>116</i>&nbsp;
+<i>117</i>&nbsp;    /**
+<i>118</i>&nbsp;     * Sets doc.
+<i>119</i>&nbsp;     *
+<i>120</i>&nbsp;     * @param doc the doc
+<i>121</i>&nbsp;     */
+<i>122</i>&nbsp;    public void setDoc(Document doc) {
+<b class="nc"><i>123</i>&nbsp;        this.doc = doc;</b>
+<b class="nc"><i>124</i>&nbsp;    }</b>
+<i>125</i>&nbsp;
+<i>126</i>&nbsp;
+<i>127</i>&nbsp;    /**
+<i>128</i>&nbsp;     * Gets video regex.
+<i>129</i>&nbsp;     *
+<i>130</i>&nbsp;     * @return the video regex
+<i>131</i>&nbsp;     */
+<i>132</i>&nbsp;    public String getVideoRegex() {
+<b class="nc"><i>133</i>&nbsp;        return videoRegex;</b>
+<i>134</i>&nbsp;    }
+<i>135</i>&nbsp;
+<i>136</i>&nbsp;
+<i>137</i>&nbsp;    /**
+<i>138</i>&nbsp;     * Sets video regex.
+<i>139</i>&nbsp;     *
+<i>140</i>&nbsp;     * @param videoRegex the video regex
+<i>141</i>&nbsp;     */
+<i>142</i>&nbsp;    public void setVideoRegex(String videoRegex) {
+<b class="nc"><i>143</i>&nbsp;        this.videoRegex = videoRegex;</b>
+<b class="nc"><i>144</i>&nbsp;    }</b>
+<i>145</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2019-03-04 12:18</div>
+</div>
+</body>
+</html>

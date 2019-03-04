@@ -8,7 +8,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -134,14 +136,17 @@ class VideoDaoTest {
         assertEquals(1, videos.size());
         assertEquals(3, videos.get(0).getId());
     }
-//
-//    /**
-//     * Verify successful get by property (like match)
-//     */
-//    @Test
-//    void getByPropertyLikeSuccess() {
-//        List<Video> videos = dao.findByPropertyLike("videoName", "c");
 
-//        assertEquals(4, videos.size());
-//    }
+    /**
+     * Verify successful get by property (like match)
+     */
+    @Test
+    void getByPropertiesEqualSuccess() {
+        Map<String, Object> searchVideo = new HashMap<>();
+        searchVideo.put("title", "comedy");
+
+        List<Video> videos = dao.findByPropertyEqual(searchVideo);
+
+        assertEquals(1, videos.size());
+    }
 }

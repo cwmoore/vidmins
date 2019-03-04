@@ -8,7 +8,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -136,14 +138,17 @@ class DirectoryDaoTest {
         assertEquals(3, directories.size());
         assertEquals(1, directories.get(0).getId());
     }
-//
-//    /**
-//     * Verify successful get by property (like match)
-//     */
-//    @Test
-//    void getByPropertyLikeSuccess() {
-//        List<Directory> directories = dao.findByPropertyLike("directoryName", "c");
 
-//        assertEquals(4, directories.size());
-//    }
+    /**
+     * Verify successful get by property (like match)
+     */
+    @Test
+    void getByPropertiesEqualSuccess() {
+        Map<String, Object> searchDirectory = new HashMap<>();
+        searchDirectory.put("name", "default");
+
+        List<Directory> directories = dao.findByPropertyEqual(searchDirectory);
+
+        assertEquals(3, directories.size());
+    }
 }
