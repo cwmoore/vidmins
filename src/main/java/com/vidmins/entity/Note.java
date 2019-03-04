@@ -29,12 +29,11 @@ public class Note implements java.io.Serializable {
     @Convert(converter = TimestampAttributeConverter.class)
     @EqualsAndHashCode.Exclude
     private LocalDateTime createDatetime;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "authorId", nullable = false, insertable = false, updatable = false)
-//    private User author;
 
-    // adapted from: https://stackoverflow.com/a/29952572/6254147
+    @ManyToOne
+    @JoinColumn(name = "authorId", nullable = false)
+    private User author;
+
     @ManyToOne
     @JoinColumn(name = "videoId", nullable = false)
     private Video video;
@@ -198,24 +197,24 @@ public class Note implements java.io.Serializable {
         this.video = video;
     }
 
-//
-//    /**
-//     * Gets author.
-//     *
-//     * @return the author
-//     */
-//    public User getAuthor() {
-//        return author;
-//    }
-//
-//    /**
-//     * Sets author.
-//     *
-//     * @param author the author
-//     */
-//    public void setAuthor(User author) {
-//        this.author = author;
-//    }
+
+    /**
+     * Gets author.
+     *
+     * @return the author
+     */
+    public User getAuthor() {
+        return author;
+    }
+
+    /**
+     * Sets author.
+     *
+     * @param author the author
+     */
+    public void setAuthor(User author) {
+        this.author = author;
+    }
 
     @Override
     public String toString() {

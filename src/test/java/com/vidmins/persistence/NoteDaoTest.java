@@ -1,6 +1,7 @@
 package com.vidmins.persistence;
 
 import com.vidmins.entity.Note;
+import com.vidmins.entity.User;
 import com.vidmins.entity.Video;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -111,6 +112,8 @@ class NoteDaoTest {
         newNote.setLabel(noteLabel);
         GenericDao<Video> videoDao = new GenericDao<>(Video.class);
         newNote.setVideo(videoDao.getById(3));
+        GenericDao<User> userDao = new GenericDao<>(User.class);
+        newNote.setAuthor(userDao.getById(3));
 
         int insertId = dao.insert(newNote);
         assertNotEquals(0, insertId);

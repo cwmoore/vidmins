@@ -1,7 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:import url="head.jsp" />
 
-<body<%-- onload="showPanel('help');"--%>>
+<body>
 <div class="container-fluid">
     <div class="row-fullwidth">
         <c:import url="nav.jsp" />
@@ -12,6 +12,7 @@
             <c:import url="notes.jsp" />
         </div>
         <div class="col-lg-8">
+            <c:import url="signup.jsp" />
             <c:import url="player.jsp" />
             <c:import url="video.jsp" />
         </div>

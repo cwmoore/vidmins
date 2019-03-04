@@ -3,9 +3,12 @@ package com.vidmins.auth;
 import com.vidmins.entity.User;
 import com.vidmins.persistence.GenericDao;
 
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 public class Auth {
     /**
@@ -49,24 +52,48 @@ public class Auth {
      */
     public User authenticateUser(String userName, String password)
             throws Exception {
-        User authenticatedUser = null;
+        User accessUser = null;
         GenericDao<User> userDao = new GenericDao<>(User.class);
 
-        Map<String, Object> propertyMap = new HashMap<>();
-        propertyMap.put("userName", userName);
-        propertyMap.put("password", encryptPassword(password));
-
-        List<User> matchingUsers = userDao.findByPropertyEqual(propertyMap);
+        List<User> matchingUsers = userDao.findByPropertyEqual("userName", userName);
 
         if (matchingUsers.size() == 1) {
-            authenticatedUser = matchingUsers.get(0);
+            accessUser = matchingUsers.get(0);
+
+            BCrypt bcrypt = new BCrypt();
+            bcrypt.checkpw(password, accessUser.getPassword());
+
         } else {
             throw new Exception("Did not find a unique user for those credentials " + matchingUsers);
         }
 
-
-//        authenticatedUser = userDao.findByPropertyEqual("userName", userName);
-        return authenticatedUser;
+        return accessUser;
     }
 
+    public boolean setUserHashPass(String userName, String password) throws Exception {
+
+        boolean isSet = false;
+
+        User accessUser = null;
+        GenericDao<User> userDao = new GenericDao<>(User.class);
+
+        List<User> matchingUsers = userDao.findByPropertyEqual("userName", userName);
+
+        if (matchingUsers.size() == 1) {
+            accessUser = matchingUsers.get(0);
+            // TODO and is current user
+
+            BCrypt bcrypt = new BCrypt();
+            String hashPass = bcrypt.hashpw(password, bcrypt.gensalt());
+
+            accessUser.setPassword(hashPass);
+            userDao.saveOrUpdate(accessUser);
+            isSet = true;
+
+        } else {
+            throw new Exception("Did not find a unique user for those credentials " + matchingUsers);
+        }
+
+        return isSet;
+    }
 }

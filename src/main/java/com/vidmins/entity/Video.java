@@ -31,7 +31,6 @@ public class Video implements java.io.Serializable {
     private LocalDateTime addDate;
     private int duration;
 
-    // adapted from: https://stackoverflow.com/a/29952572/6254147
     @ManyToOne
     @JoinColumn(name = "directoryId", nullable = false)
     private Directory directory;

@@ -89,3 +89,12 @@ label .fixed {
     font-size: 2.25em;
     font-weight: bolder;
 }
+
+form.signin {
+    display: inline-block;
+    padding: 1em;
+}
+
+.signin label {
+    width: 6em;
+}

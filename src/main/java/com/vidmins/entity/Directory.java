@@ -18,7 +18,6 @@ public class Directory implements java.io.Serializable {
     private String name;
     private String description;
 
-    // adapted from: https://stackoverflow.com/a/29952572/6254147
     @ManyToOne
     @JoinColumn(name = "userId", nullable = false)
     private User user;

@@ -124,6 +124,8 @@ public class NewNote extends HttpServlet {
             //noteFromFormData.setAuthor(userDao.getById(Integer.parseInt((String) request.getSession().getAttribute("userId"))));
             noteFromFormData.setCreateDatetime(LocalDateTime.now());
 
+            noteFromFormData.setAuthor((User)request.getSession().getAttribute("user"));
+
             logger.debug("noteFromFormData before: " + noteFromFormData.toString());
 
             if (noteFromFormData.getId() > 0) {
