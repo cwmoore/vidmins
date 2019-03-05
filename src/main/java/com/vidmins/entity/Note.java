@@ -56,7 +56,7 @@ public class Note implements java.io.Serializable {
      * @param video          the video
      */
     public Note(int id, String label, String text, int start, LocalDateTime createDatetime
-            //, User author
+            , User author
             , Video video) {
         this();
         this.id = id;
@@ -64,7 +64,7 @@ public class Note implements java.io.Serializable {
         this.text = text;
         this.start = start;
         this.createDatetime = createDatetime;
-        //this.author = author;
+        this.author = author;
         this.video = video;
     }
 
@@ -78,14 +78,14 @@ public class Note implements java.io.Serializable {
      * @param video          the video
      */
     public Note(String label, String text, int start, LocalDateTime createDatetime
-            //, User author
+            , User author
             , Video video) {
         this();
         this.label = label;
         this.text = text;
         this.start = start;
         this.createDatetime = createDatetime;
-        //this.author = author;
+        this.author = author;
         this.video = video;
     }
 

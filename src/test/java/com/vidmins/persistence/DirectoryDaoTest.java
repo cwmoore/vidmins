@@ -45,7 +45,7 @@ class DirectoryDaoTest {
     }
 
     /**
-     * Verifies gets all orders successfully.
+     * Verifies gets all directories successfully.
      */
     @Test
     void getAllDirectoriesSuccess() {
@@ -54,7 +54,7 @@ class DirectoryDaoTest {
     }
 
     /**
-     * Verifies a order is returned correctly based on id search
+     * Verifies a directory is returned correctly based on id search
      */
     @Test
     void getByIdSuccess() {
@@ -64,7 +64,7 @@ class DirectoryDaoTest {
     }
 
     /**
-     * Verifies a order is returned correctly based on id search
+     * Verifies a directory is returned correctly based on id search
      */
     @Test
     void getByIdVerifyDirectorySuccess() {
@@ -75,7 +75,7 @@ class DirectoryDaoTest {
 
 //
 //    /**
-//     * Verify successful delete of order
+//     * Verify successful delete of directory
 //     */
 //    @Test
 //    void deleteSuccess() {
@@ -88,7 +88,7 @@ class DirectoryDaoTest {
 //    }
 
     /**
-     * Verify successful update of order
+     * Verify successful update of directory
      */
     @Test
     void updateSuccess() {

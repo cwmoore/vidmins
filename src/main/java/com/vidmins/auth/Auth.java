@@ -8,9 +8,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 public class Auth {
+
+    Logger logger = LogManager.getLogger(this.getClass());
+
     /**
      * Encrypt a pass phrase with SHA-512
      * Adapted from: https://www.baeldung.com/java-password-hashing
@@ -57,11 +62,16 @@ public class Auth {
 
         List<User> matchingUsers = userDao.findByPropertyEqual("userName", userName);
 
+
         if (matchingUsers.size() == 1) {
+            logger.debug(userName + password + matchingUsers.get(0));
             accessUser = matchingUsers.get(0);
 
-            BCrypt bcrypt = new BCrypt();
-            bcrypt.checkpw(password, accessUser.getPassword());
+//            BCrypt bcrypt = new BCrypt();
+//            bcrypt.checkpw(password, accessUser.getPassword());
+            if (accessUser.getPassword() != password) {
+                accessUser = null;
+            }
 
         } else {
             throw new Exception("Did not find a unique user for those credentials " + matchingUsers);

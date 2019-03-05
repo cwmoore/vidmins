@@ -45,7 +45,7 @@ class UserDaoTest {
     }
 
     /**
-     * Verifies gets all orders successfully.
+     * Verifies gets all users successfully.
      */
     @Test
     void getAllUsersSuccess() {
@@ -54,7 +54,7 @@ class UserDaoTest {
     }
 
     /**
-     * Verifies a order is returned correctly based on id search
+     * Verifies a user is returned correctly based on id search
      */
     @Test
     void getByIdSuccess() {
@@ -64,7 +64,7 @@ class UserDaoTest {
     }
 
     /**
-     * Verifies a order is returned correctly based on id search
+     * Verifies a user is returned correctly based on id search
      */
     @Test
     void getByIdVerifyUserSuccess() {
@@ -76,7 +76,7 @@ class UserDaoTest {
 
 
     /**
-     * Verify successful delete of order
+     * Verify successful delete of user
      */
     @Test
     void deleteSuccess() {
@@ -91,7 +91,7 @@ class UserDaoTest {
     }
 
     /**
-     * Verify successful update of order
+     * Verify successful update of user
      */
     @Test
     void updateSuccess() {

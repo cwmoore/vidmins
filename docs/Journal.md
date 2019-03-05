@@ -27,3 +27,6 @@ Refactored session-stored data access objects to load in method loadHelpers(), t
 might have been easier to wait to use Hibernate.
 
 ### Week 4
+### Week 5
+### Week 6
+### Week 7

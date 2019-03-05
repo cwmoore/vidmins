@@ -44,7 +44,7 @@ class VideoDaoTest {
     }
 
     /**
-     * Verifies gets all orders successfully.
+     * Verifies gets all videos successfully.
      */
     @Test
     void getAllVideosSuccess() {
@@ -53,7 +53,7 @@ class VideoDaoTest {
     }
 
     /**
-     * Verifies a order is returned correctly based on id search
+     * Verifies a video is returned correctly based on id search
      */
     @Test
     void getByIdSuccess() {
@@ -62,7 +62,7 @@ class VideoDaoTest {
     }
 
     /**
-     * Verifies a order is returned correctly based on id search
+     * Verifies a video is returned correctly based on id search
      */
     @Test
     void getByIdVerifyVideoSuccess() {
@@ -73,7 +73,7 @@ class VideoDaoTest {
 
 
     /**
-     * Verify successful delete of order
+     * Verify successful delete of video
      */
     @Test
     void deleteSuccess() {
@@ -88,7 +88,7 @@ class VideoDaoTest {
     }
 
     /**
-     * Verify successful update of order
+     * Verify successful update of video
      */
     @Test
     void updateSuccess() {

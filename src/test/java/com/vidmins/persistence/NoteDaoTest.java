@@ -45,7 +45,7 @@ class NoteDaoTest {
     }
 
     /**
-     * Verifies gets all orders successfully.
+     * Verifies gets all notes successfully.
      */
     @Test
     void getAllNotesSuccess() {
@@ -54,7 +54,7 @@ class NoteDaoTest {
     }
 
     /**
-     * Verifies a order is returned correctly based on id search
+     * Verifies a note is returned correctly based on id search
      */
     @Test
     void getByIdSuccess() {
@@ -63,7 +63,7 @@ class NoteDaoTest {
     }
 
     /**
-     * Verifies a order is returned correctly based on id search
+     * Verifies a note is returned correctly based on id search
      */
     @Test
     void getByIdVerifyNoteSuccess() {
@@ -74,7 +74,7 @@ class NoteDaoTest {
 
 
     /**
-     * Verify successful delete of order
+     * Verify successful delete of note
      */
     @Test
     void deleteSuccess() {
@@ -89,7 +89,7 @@ class NoteDaoTest {
     }
 
     /**
-     * Verify successful update of order
+     * Verify successful update of note
      */
     @Test
     void updateSuccess() {

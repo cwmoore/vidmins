@@ -53,7 +53,7 @@
                         <form class="form-inline my-2 my-lg-0" action="login" method="POST">
                             <input type="text" name="userName" placeholder="userName" class="form-control mr-sm-2" />
                             <input type="password" name="password" placeholder="password" class="form-control mr-sm-2" />
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign in</button>
                         </form>
 
                     </c:when>
