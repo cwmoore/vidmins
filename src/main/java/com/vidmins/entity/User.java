@@ -1,5 +1,6 @@
 package com.vidmins.entity;
 
+import com.vidmins.auth.Auth;
 import com.vidmins.util.LocalDateAttributeConverter;
 import com.vidmins.util.TimestampAttributeConverter;
 import lombok.EqualsAndHashCode;
@@ -19,6 +20,7 @@ import java.util.*;
 @Entity(name="User")
 @Table(name = "user")
 public class User implements java.io.Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "native", strategy = "native")
@@ -30,7 +32,7 @@ public class User implements java.io.Serializable {
     private String userName;
 
     @Column(name = "enc_pass")
-    private String password;
+    private String password; // TODO switch 'password' to 'enc_pass'
 
     @CreationTimestamp
     @Convert(converter = TimestampAttributeConverter.class)
@@ -201,11 +203,7 @@ public class User implements java.io.Serializable {
      * @return the password
      */
     public String getPassword() {
-        if (this.password == "") {
-            return "*";
-        } else {
-            return "*****";
-        }
+        return this.password;
     }
 
     /**
@@ -214,6 +212,8 @@ public class User implements java.io.Serializable {
      * @param password the password
      */
     public void setPassword(String password) {
+//        Auth auth = new Auth();
+//        this.password = auth.encryptPassword(password);
         this.password = password;
     }
 

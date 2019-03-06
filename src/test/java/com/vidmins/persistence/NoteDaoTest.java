@@ -109,13 +109,18 @@ class NoteDaoTest {
     @Test
     void insertSuccess() {
 
-        String noteLabel = "TestNoteInsert";
         Note newNote = new Note();
+
+        String noteLabel = "TestNoteInsert";
         newNote.setLabel(noteLabel);
+
         GenericDao<Video> videoDao = new GenericDao<>(Video.class);
-        newNote.setVideo(videoDao.getById(3));
+        Video video = videoDao.getById(3);
+        newNote.setVideo(video);
+
         GenericDao<User> userDao = new GenericDao<>(User.class);
-        newNote.setAuthor(userDao.getById(3));
+        User author = userDao.getById(3);
+        newNote.setAuthor(author);
 
         int insertId = dao.insert(newNote);
         assertNotEquals(0, insertId);
@@ -123,6 +128,8 @@ class NoteDaoTest {
         Note insertedNote = dao.getById(insertId);
         assertNotNull(insertedNote);
         assertEquals(noteLabel, insertedNote.getLabel());
+        assertEquals(video.getTitle(), insertedNote.getVideo().getTitle());
+        assertEquals(author.getUserName(), insertedNote.getAuthor().getUserName());
 
         // Could continue comparing all values, but
         // it may make sense to use .equals()

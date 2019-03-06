@@ -24,22 +24,9 @@ public class Auth {
      * @return the encrypted password
      */
     public String encryptPassword(String password) {
-//        String encryptedPassword;
-//        SecureRandom random = new SecureRandom();
-//        byte[] salt = new byte[16];
-//        random.nextBytes(salt);
-//
-//        try {
-//            MessageDigest md = MessageDigest.getInstance("SHA-512");
-//            md.update(salt);
-//            String hashedPassword = md.digest(password);
-//
-//            encryptedPassword = new String(salt) + "|" + hashedPassword;
-//
-//        } catch (NoSuchAlgorithmException noAlgException) {
-//            System.out.println("UserData.encryptPassword");
-//            noAlgException.printStackTrace();
-//        }
+
+        BCrypt bcrypt = new BCrypt();
+        String hashPass = bcrypt.hashpw(password, bcrypt.gensalt());
 
         return password;
     }
@@ -64,12 +51,13 @@ public class Auth {
 
 
         if (matchingUsers.size() == 1) {
-            logger.debug(userName + password + matchingUsers.get(0));
+            logger.debug("Using: " + userName + password + ", found: " + matchingUsers.get(0));
             accessUser = matchingUsers.get(0);
 
 //            BCrypt bcrypt = new BCrypt();
 //            bcrypt.checkpw(password, accessUser.getPassword());
             if (accessUser.getPassword() != password) {
+                logger.debug("Not a match: " + userName + password + " isn't " + matchingUsers.get(0));
                 accessUser = null;
             }
 

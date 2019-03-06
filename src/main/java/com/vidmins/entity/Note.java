@@ -30,9 +30,9 @@ public class Note implements java.io.Serializable {
     @EqualsAndHashCode.Exclude
     private LocalDateTime createDatetime;
 
-    @ManyToOne
+    @ManyToOne//(fetch = FetchType.LAZY) // TODO make sure LAZY is not what I want
     @JoinColumn(name = "authorId", nullable = false)
-    private User author;
+    private User author; // TODO consider a better system for tracking creators
 
     @ManyToOne
     @JoinColumn(name = "videoId", nullable = false)
