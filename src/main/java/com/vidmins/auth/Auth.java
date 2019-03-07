@@ -23,7 +23,7 @@ public class Auth {
      * @param password the password
      * @return the encrypted password
      */
-    public String encryptPassword(String password) {
+    public static String encryptPassword(String password) {
 
         BCrypt bcrypt = new BCrypt();
         String hashPass = bcrypt.hashpw(password, bcrypt.gensalt());

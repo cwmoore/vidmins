@@ -3,7 +3,7 @@
 <c:if test="${user == null}">
     <div id="access_form_container" class="aquapanel">
 
-        <form class="signin" name="signup" method="post" action="">
+        <form class="signin" name="signup" method="post" action="/new-user">
 
             <label for="t_first_name">First Name</label>      <input type="text" name="firstName" id="t_first_name"/> <br />
             <label for="t_last_name">Last Name</label>        <input type="text" name="lastName" id="t_last_name"/> <br />
@@ -13,8 +13,9 @@
             <label for="t_email">Email</label>                <input type="email" name="email" id="t_email"/> <br />
             <label for="t_password0">Password</label>         <input type="password" name="password0" id="t_password0"/> <br />
             <label for="t_password1">Password</label>         <input type="password" name="password1" id="t_password1"/> <br />
+            <label for="t_date_of_birth">Date of Birth</label>         <input type="date" name="dateOfBirth" id="t_date_of_birth"/> <br />
 
-            <button type="button">Sign Up</button>
+            <button type="submit">Sign Up</button>
 
         </form>
 
