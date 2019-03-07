@@ -85,3 +85,8 @@ TODO group priority: 20
 TODO add a system to categorize and rate videos (1.5)
 TODO do a below threshold-ban calculation (0.5)
 TODO add a report-issue option, dump state to debug (1)
+
+TODO vote/points system for individual notes/note packs
+
+TODO attempt to recognize extant users and new users and streamline login
+
