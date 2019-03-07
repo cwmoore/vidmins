@@ -28,7 +28,6 @@ import java.util.Map;
         name = "newUser",
         urlPatterns = {"/new-user"}
 )
-
 public class NewUser extends HttpServlet {
     private Logger logger;
 
@@ -41,7 +40,9 @@ public class NewUser extends HttpServlet {
     }
 
     /**
-     * Handle a GET request
+     * Handle a verification link of the form:
+     *      https://vidmins.com/new-user?user=272x42asdf&token=yb478b23c04b
+     *      Match link parameters to stored hashes in vidmins.auth_token
      *
      * @param request the HttpServletRequest
      * @param response the HttpServletResponse
@@ -50,6 +51,7 @@ public class NewUser extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String userHash = request.getParameter("user");
         String verificationToken = request.getParameter("token");
 
@@ -62,18 +64,22 @@ public class NewUser extends HttpServlet {
 
         if (authTokens.size() == 0) {
             // not a match
+            // bad, log as possible hack attempt
         } else if (authTokens.size() == 1) {
             // exactly one match
+            if (authTokens.get(0).getExpiration().compareTo(LocalDateTime.now()) > 0) {
+                // still good, redirect to login
+            } else {
+                // expired, offer to generate new pair and resend email
+            }
         } else {
 
+            // this should not happen in a million years
+            // with good hash function and length
+            // bad, log as possible hack attempt
 
-            // but really, this should not ever happen with good hash function and length
             for (AuthToken authToken : authTokens) {
-                if (authToken.getExpiration().compareTo(LocalDateTime.now()) > 0) {
-                    // mark status ok
-                } else {
-                    // mark status expired
-                }
+                // may want delete or somehow mark as exposed
             }
         }
 
@@ -103,7 +109,11 @@ public class NewUser extends HttpServlet {
         String password0 = request.getParameter("password0");
         String password1 = request.getParameter("password1");
         String dateOfBirth = request.getParameter("dateOfBirth");
-        
+
+        for (Map.Entry<String, String[]> param : request.getParameterMap().entrySet()) {
+            logger.debug(param.getKey() + ":" + String.join(", ", param.getValue()));
+        }
+
         // verify complete and correct
         if (firstName != null
                 && lastName != null
@@ -112,7 +122,7 @@ public class NewUser extends HttpServlet {
                 && password0 != null
                 && password1 != null
         ) {
-            if (password0 != password1) {
+            if (!password0.equals(password1)) {
                 // password mismatch
                 errors.put("password", "Password mismatch.");
             }

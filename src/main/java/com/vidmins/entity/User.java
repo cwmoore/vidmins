@@ -51,6 +51,9 @@ public class User implements java.io.Serializable {
     @OneToMany(mappedBy = "user")
     private List<Directory> directories;
 
+    @OneToMany(mappedBy = "newUser")
+    private List<AuthToken> authTokens;
+
 
 
     /**

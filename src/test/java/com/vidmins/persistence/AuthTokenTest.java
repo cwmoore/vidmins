@@ -1,7 +1,7 @@
 package com.vidmins.persistence;
 
-import com.vidmins.persistence.GenericDao;
 import com.vidmins.entity.AuthToken;
+import com.vidmins.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * The type AuthToken dao test.
  */
-class AuthTokenTest {
+public class AuthTokenTest {
 
     GenericDao<AuthToken> dao;
     Logger logger = LogManager.getLogger(this.getClass());
@@ -48,7 +48,7 @@ class AuthTokenTest {
     @Test
     void getAllAuthTokensSuccess() {
         List<AuthToken> authTokens = dao.getAll();
-        assertEquals(3, authTokens.size());
+        assertEquals(5, authTokens.size());
     }
 
     /**
@@ -67,7 +67,7 @@ class AuthTokenTest {
     void getByIdVerifyAuthTokenSuccess() {
         AuthToken authToken = dao.getById(2);
         assertNotNull(authToken);
-        assertEquals("token", authToken.getVerificationToken());
+        assertEquals("token2", authToken.getVerificationToken());
     }
 
 
@@ -111,6 +111,12 @@ class AuthTokenTest {
         AuthToken newAuthToken = new AuthToken();
         newAuthToken.setVerificationToken(authTokenToken);
 
+        GenericDao<User> userDao = new GenericDao<>(User.class);
+        User newUser = userDao.getById(1);
+
+        newAuthToken.setNewUser(newUser);
+        newAuthToken.setUserHash("23");
+
         int insertId = dao.insert(newAuthToken);
         assertNotEquals(0, insertId);
 
@@ -130,7 +136,7 @@ class AuthTokenTest {
     void getByPropertyEqualSuccess() {
         // TODO make for AuthToken
         List<AuthToken> authTokens = dao.findByPropertyEqual("status", "-1");
-        assertEquals(1, authTokens.size());
+        assertEquals(2, authTokens.size());
         assertEquals(3, authTokens.get(0).getId());
     }
 
@@ -141,7 +147,7 @@ class AuthTokenTest {
     void getByPropertiesEqualSuccess() {
         Map<String, Object> searchAuthToken = new HashMap<>();
         searchAuthToken.put("id", "1");
-        searchAuthToken.put("user_hash", "1");
+        searchAuthToken.put("userHash", "1");
 
         List<AuthToken> authTokens = dao.findByPropertyEqual(searchAuthToken);
 

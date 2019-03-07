@@ -1,6 +1,10 @@
 package com.vidmins.entity;
 
-import com.vidmins.persistence.GenericDao;
+import com.vidmins.persistence.*;
+import com.vidmins.util.TimestampAttributeConverter;
+import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,9 +20,10 @@ import java.util.Map;
 public class AuthToken implements java.io.Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     private int id;
 
-    @Column(name = "user_id")
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User newUser;
@@ -29,6 +34,9 @@ public class AuthToken implements java.io.Serializable {
     @Column(name = "token")
     private String verificationToken;
 
+    @CreationTimestamp
+    @Convert(converter = TimestampAttributeConverter.class)
+    @EqualsAndHashCode.Exclude
     private LocalDateTime expiration;
 
     private int status;
