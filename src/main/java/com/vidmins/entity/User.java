@@ -9,13 +9,13 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
  * A class to represent a user.
  *
  * @author pwaite
+ * @author cwmoore
  */
 @Entity(name="User")
 @Table(name = "user")

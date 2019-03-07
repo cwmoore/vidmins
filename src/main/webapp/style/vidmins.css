@@ -22,6 +22,9 @@ label .fixed {
     width: 5em;
 }
 */
+#access_form_container {
+    display: none;
+}
 
 #help_input, #link_input, #comment_input, #survey_input, #feedback_input, #ask_input, #note_input {
     display: none;

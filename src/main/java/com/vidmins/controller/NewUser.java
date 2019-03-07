@@ -1,12 +1,12 @@
 package com.vidmins.controller;
 
 import com.vidmins.auth.Auth;
+import com.vidmins.entity.AuthToken;
 import com.vidmins.entity.User;
 import com.vidmins.persistence.GenericDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.*;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,6 +38,46 @@ public class NewUser extends HttpServlet {
     public void init() {
         logger = LogManager.getLogger(this.getClass());
         logger.info("Starting servlet");
+    }
+
+    /**
+     * Handle a GET request
+     *
+     * @param request the HttpServletRequest
+     * @param response the HttpServletResponse
+     * @throws ServletException indicates a servlet problem
+     * @throws IOException indicates an IO problem
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userHash = request.getParameter("user");
+        String verificationToken = request.getParameter("token");
+
+        Map<String, Object> userProperties = new HashMap<>();
+        userProperties.put("userHash", userHash);
+        userProperties.put("token", verificationToken);
+
+        GenericDao<AuthToken> authTokenDao = new GenericDao<>(AuthToken.class);
+        List<AuthToken> authTokens = authTokenDao.findByPropertyEqual(userProperties);
+
+        if (authTokens.size() == 0) {
+            // not a match
+        } else if (authTokens.size() == 1) {
+            // exactly one match
+        } else {
+
+
+            // but really, this should not ever happen with good hash function and length
+            for (AuthToken authToken : authTokens) {
+                if (authToken.getExpiration().compareTo(LocalDateTime.now()) > 0) {
+                    // mark status ok
+                } else {
+                    // mark status expired
+                }
+            }
+        }
+
+        Map<String, String> errors = new HashMap<>();
     }
 
     /**
@@ -90,9 +132,17 @@ public class NewUser extends HttpServlet {
             int insertId = userDao.insert(user);
             user = userDao.getById(insertId);
             request.getSession().setAttribute("user", user);
+            // store confirmation token
+            // create and send confirmation email
+
+            // in doGet, receive new user verification, direct to login
+
             // redirect to new user profile
         } else {
             // return to signup and report errors
+            for (Map.Entry<String, String> entry : errors.entrySet()) {
+                logger.debug(entry.getKey() + ":" + entry.getValue());
+            }
         }
 
         // go to start page

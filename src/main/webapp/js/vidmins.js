@@ -79,8 +79,16 @@ const Note = () => {
 */
 
 const init = () => {
-    let store_note_btn = document.querySelector("#store_note_btn");
-    store_note_btn.addEventListener("click", submitForm, false);
+    let storeNoteBtn = document.querySelector("#store_note_btn");
+    storeNoteBtn.addEventListener("click", submitForm, false);
+
+    let signupBtn = document.querySelector("#signup_btn");
+    signupBtn.addEventListener("click", showSignup, false);
+}
+
+const showSignup = () => {
+    let signupForm = document.querySelector('#access_form_container');
+    signupForm.style.display = 'block';
 }
 
 const submitForm = () => {
@@ -335,6 +343,7 @@ const togglePausePlay = (player) => {
     }
 }
 
+window.onload = init;
 /*
 * from: https://stackoverflow.com/a/34008994
 * use a dummy element to intercept keyboard events and dispatch actions

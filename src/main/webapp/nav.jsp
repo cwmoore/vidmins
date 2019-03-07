@@ -54,6 +54,8 @@
                             <input type="text" name="userName" placeholder="userName" class="form-control mr-sm-2" />
                             <input type="password" name="password" placeholder="password" class="form-control mr-sm-2" />
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign in</button>
+                            -|-
+                            <button id="signup_btn" class="btn btn-outline-primary my-2 my-sm-0" type="button">Sign up</button>
                         </form>
 
                     </c:when>
