@@ -1,6 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:if test="${videos != null}">
+<c:choose>
+    <c:when test="${videos != null}">
     <div class="aquapanel">
         <h2>Videos: </h2>
         <table id="video_table" class="table table-striped">
@@ -24,4 +25,12 @@
             </c:forEach>
         </table>
     </div>
-</c:if>
+    </c:when>
+    <c:otherwise>
+        <form id="add_video_form" action="new-video" method="get">
+            <label for="youtube_url">YouTube Video URL</label>
+            <input type="text" id="youtube_url" placeholder="https://youtu.be/R4nd0mCh4r5"/>
+            <button type="button" class="btn btn-primary" id="add_video_button">Add Video</button>
+        </form>
+    </c:otherwise>
+</c:choose>
