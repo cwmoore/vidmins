@@ -8,8 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.vidmins.persistence.SessionFactoryProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 public class Auth {
@@ -28,7 +33,7 @@ public class Auth {
         BCrypt bcrypt = new BCrypt();
         String hashPass = bcrypt.hashpw(password, bcrypt.gensalt());
 
-        return password;
+        return hashPass;
     }
 
     public Auth() {
@@ -54,9 +59,10 @@ public class Auth {
             logger.debug("Using: " + userName + password + ", found: " + matchingUsers.get(0));
             accessUser = matchingUsers.get(0);
 
-//            BCrypt bcrypt = new BCrypt();
-//            bcrypt.checkpw(password, accessUser.getPassword());
-            if (accessUser.getPassword() != password) {
+            BCrypt bcrypt = new BCrypt();
+
+            //if (accessUser.getPassword() != password) {
+            if (bcrypt.checkpw(password, accessUser.getPassword())) {
                 logger.debug("Not a match: " + userName + password + " isn't " + matchingUsers.get(0));
                 accessUser = null;
             }
@@ -72,19 +78,18 @@ public class Auth {
 
         boolean isSet = false;
 
-        User accessUser = null;
+        User accessUser;
         GenericDao<User> userDao = new GenericDao<>(User.class);
 
+        // TODO enforce unique usernames
+        // TODO handle new user name collisions
         List<User> matchingUsers = userDao.findByPropertyEqual("userName", userName);
 
         if (matchingUsers.size() == 1) {
             accessUser = matchingUsers.get(0);
             // TODO and is current user
 
-            BCrypt bcrypt = new BCrypt();
-            String hashPass = bcrypt.hashpw(password, bcrypt.gensalt());
-
-            accessUser.setPassword(hashPass);
+            accessUser.setPassword(this.encryptPassword(password));
             userDao.saveOrUpdate(accessUser);
             isSet = true;
 
@@ -94,4 +99,33 @@ public class Auth {
 
         return isSet;
     }
+
+//  Utility method for converting dev plaintext passwords to secure hashes
+//  Some of these classes are deprecated but they worked fine for one time use
+//    public void hashCurrentPasswords() {
+//        BCrypt bcrypt = new BCrypt();
+//        int id;
+//        String raw_pass;
+//        String selectQuery = "SELECT id, enc_pass FROM user";
+//        String updateQuery = "UPDATE user SET enc_pass=:enc_pass WHERE id=:id";
+//
+//        Session session = SessionFactoryProvider.getSessionFactory().openSession();
+//        Transaction tx = session.beginTransaction();
+//        SQLQuery select = session.createSQLQuery(selectQuery);
+//        List<Object[]> rows = select.list();
+//        for (Object[] row : rows) {
+//            id = Integer.parseInt(row[0].toString());
+//            raw_pass = row[1].toString();
+//
+//            String enc_pass = bcrypt.hashpw(raw_pass, bcrypt.gensalt());
+//
+//            Session sessionUpdate = SessionFactoryProvider.getSessionFactory().openSession();
+//            Transaction txUpdate = sessionUpdate.beginTransaction();
+//            SQLQuery update = sessionUpdate.createSQLQuery(updateQuery);
+//            update.setInteger("id", id);
+//            update.setString("enc_pass", enc_pass);
+//            int result = update.executeUpdate();
+//            sessionUpdate.getTransaction().commit();
+//        }
+//    }
 }
