@@ -50,8 +50,11 @@ public class NewVideo extends HttpServlet {
         // if new video parameter is set
         // if video parameter represents a viewable video
         // add the new video to `video` and `user_videos`
-        // return to watcher to load new video 
-        
+        // return to watcher to load new video
+
+        // TODO deploy https://youtu.be/csT0t8ka8sM?t=292
+        // TODO https://github.com/MadJavaEntSpring2019/home/blob/master/Module2/Week6/AWS/AWSSetupPart6.md
+
         request.setAttribute("video", addNewVideo(request));
         
         String url = "/";
@@ -70,6 +73,12 @@ public class NewVideo extends HttpServlet {
         String youTubeId = request.getParameter("v");
         // get video information via YT Data API
         // title, description, duration, license, owner, channel
+        // build a youtube data api object
+        // set the id
+        // request the data
+        // create a new video object
+        // set the data
+        // save the video
 
         return new Video();
     }
