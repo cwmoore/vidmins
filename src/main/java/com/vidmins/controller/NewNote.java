@@ -95,7 +95,7 @@ public class NewNote extends HttpServlet {
         loadHelpers(request);
 
         List<String> requestParams = new ArrayList<>();
-        String url = "/loadClient";
+        String url = "loadClient";
 
         logger.debug(request.getParameterMap());
 

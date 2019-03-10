@@ -47,6 +47,6 @@ public class Login extends HttpServlet {
             }
         }
 
-        resp.sendRedirect("/loadClient");
+        resp.sendRedirect("loadClient");
     }
 }
