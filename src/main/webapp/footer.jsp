@@ -1,6 +1,6 @@
         <div class="container-fluid">
             <div id="footer" class="row-fullwidth">
-                <h1>Vidmins.com - &copy 2019</h1>
+                <h4>Vidmins.com - &copy 2019</h4>
             </div>
         </div>
         <!-- Optional JavaScript -->
