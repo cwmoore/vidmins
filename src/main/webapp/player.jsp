@@ -73,7 +73,7 @@
                     'controls': 1,
                     'autohide': 1,
                     'wmode': 'opaque',
-                    'origin': 'http://localhost:8080/'
+                    'origin': 'http://3.18.76.195:8080/VidMins'
                 }
             });
         }

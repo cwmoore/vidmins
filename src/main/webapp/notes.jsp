@@ -14,7 +14,7 @@
             </tr>
             <c:forEach items="${notes}" var="note">
                 <tr class="">
-                    <td><a href="/edit-note?noteId=${note.id}">${note.label}</a></td>
+                    <td><a href="edit-note?noteId=${note.id}">${note.label}</a></td>
                     <td>${note.text}</td>
                     <td>${note.start}</td>
                     <%--td>${note.end}</td--%>

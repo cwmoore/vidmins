@@ -53,4 +53,7 @@ fabric.properties
 sql/*
 logs/vidmins.log
 **/database.properties
-src/main/resources/database.properties
+**/hibernate.cfg.xml
+**/log4j2.properties
+src/main/resources/*
+src/test/resources/*

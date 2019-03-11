@@ -36,6 +36,6 @@ public class Logout extends HttpServlet {
         req.getSession().setAttribute("videos", null);
         req.getSession().setAttribute("notes", null);
 
-        resp.sendRedirect("/loadClient");
+        resp.sendRedirect("loadClient");
     }
 }

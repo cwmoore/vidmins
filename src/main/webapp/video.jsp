@@ -17,7 +17,7 @@
                 <tr class="">
                     <%--td>${video.id}</td>
                     <td>${video.youTubeId}</td--%>
-                    <td><a href="http://localhost:8080/loadClient?videoId=${video.id}">${video.title}</a></td>
+                    <td><a href="loadClient?videoId=${video.id}">${video.title}</a></td>
                     <td>${video.duration}</td>
                     <%--td--># Notes</td--%>
                     <td>${video.addDate}</td>

@@ -14,7 +14,7 @@
         <!-- TODO: use bootstrap navigation -->
 
         <div id="note_input" class="aquapanel">
-            <form id="note_input_form" accept-charset="utf-8" method="post" action="http://localhost:8080/new-note"<%-- onsubmit="processInput(); return false;" --%>>
+            <form id="note_input_form" accept-charset="utf-8" method="post" action="new-note"<%-- onsubmit="processInput(); return false;" --%>>
 
                 <label>Label:</label><br />
                 <input type="text" name="label" <c:if test="${note != null}">value="${note.label}"</c:if>/><br />
