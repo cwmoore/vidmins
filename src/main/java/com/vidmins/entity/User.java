@@ -91,6 +91,21 @@ public class User implements java.io.Serializable {
     }
 
     /**
+     * Instantiates a new User.
+     *
+     * @param firstName   the first name
+     * @param lastName    the last name
+     * @param userName    the user name
+     * @param dateOfBirth the date of birth
+     */
+    public User(String firstName, String lastName, String userName, LocalDate dateOfBirth) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = userName;
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    /**
      * Instantiates an existing User.
      *
      * @param firstName   the first name
