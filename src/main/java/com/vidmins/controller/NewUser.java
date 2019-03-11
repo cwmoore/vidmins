@@ -134,35 +134,41 @@ public class NewUser extends HttpServlet {
                 // username is taken already
                 errors.put("username", "Username is taken.");
             }
-        }
 
-        if (errors.size() == 0) {
-            // add new user
-            User user = new User(firstName, lastName, username, LocalDate.parse(dateOfBirth));
-            int insertId = userDao.insert(user);
+            if (errors.size() == 0) {
+                // add new user
+                User user = new User(firstName, lastName, username, LocalDate.parse(dateOfBirth));
+                int insertId = userDao.insert(user);
 
-            if (insertId > 0) {
-                // TODO make SURE usernames are unique
-                try {
-                    new Auth().setUserHashPass(username, password0);
-                } catch (Exception e) {
-                    logger.debug("Problem setting the user's hash pass", e);
+                if (insertId > 0) {
+                    // TODO make SURE usernames are unique
+                    try {
+                        new Auth().setUserHashPass(username, password0);
+                    } catch (Exception e) {
+                        logger.debug("Problem setting the user's hash pass", e);
+                    }
+
+                    user = userDao.getById(insertId);
+                    request.getSession().setAttribute("user", user);
                 }
 
-                user = userDao.getById(insertId);
-                request.getSession().setAttribute("user", user);
-            }
-            // store confirmation token
-            // create and send confirmation email
+                // store confirmation token
+                // create and send confirmation email
+                // in doGet, receive new user verification, direct to login
+                // redirect to new user profile
 
-            // in doGet, receive new user verification, direct to login
-
-            // redirect to new user profile
-        } else {
-            // return to signup and report errors
-            for (Map.Entry<String, String> entry : errors.entrySet()) {
-                logger.debug(entry.getKey() + ":" + entry.getValue());
             }
+        } else { // there are missing fields
+            for (Map.Entry<String, String[]> entry: request.getParameterMap().entrySet()) {
+                if (entry.getValue() == null || entry.getValue().length == 0 || entry.getValue()[0] == null) {
+                    errors.put(entry.getKey(), entry.getKey() + " must be set.");
+                }
+            }
+        }
+
+        // return to signup and report errors
+        for (Map.Entry<String, String> entry : errors.entrySet()) {
+            logger.debug(entry.getKey() + ":" + entry.getValue());
         }
 
         // go to start page
