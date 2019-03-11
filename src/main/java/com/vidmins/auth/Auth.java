@@ -21,21 +21,6 @@ public class Auth {
 
     Logger logger = LogManager.getLogger(this.getClass());
 
-    /**
-     * Encrypt a pass phrase with SHA-512
-     * Adapted from: https://www.baeldung.com/java-password-hashing
-     *
-     * @param password the password
-     * @return the encrypted password
-     */
-    public static String encryptPassword(String password) {
-
-        BCrypt bcrypt = new BCrypt();
-        String hashPass = bcrypt.hashpw(password, bcrypt.gensalt());
-
-        return hashPass;
-    }
-
     public Auth() {
         super();
     }
@@ -56,14 +41,13 @@ public class Auth {
 
 
         if (matchingUsers.size() == 1) {
-            logger.debug("Using: " + userName + password + ", found: " + matchingUsers.get(0));
+            logger.debug("Using: " + userName + ", found: " + matchingUsers.get(0));
             accessUser = matchingUsers.get(0);
 
             BCrypt bcrypt = new BCrypt();
 
-            //if (accessUser.getPassword() != password) {
-            if (bcrypt.checkpw(password, accessUser.getPassword())) {
-                logger.debug("Not a match: " + userName + password + " isn't " + matchingUsers.get(0));
+            if (!bcrypt.checkpw(password, accessUser.getPassword())) {
+                logger.debug("Not a match: " + userName + "'s password isn't " + matchingUsers.get(0));
                 accessUser = null;
             }
 
@@ -89,7 +73,8 @@ public class Auth {
             accessUser = matchingUsers.get(0);
             // TODO and is current user
 
-            accessUser.setPassword(this.encryptPassword(password));
+            BCrypt bcrypt = new BCrypt();
+            accessUser.setPassword(bcrypt.hashpw(password, bcrypt.gensalt()));
             userDao.saveOrUpdate(accessUser);
             isSet = true;
 

@@ -138,10 +138,20 @@ public class NewUser extends HttpServlet {
 
         if (errors.size() == 0) {
             // add new user
-            User user = new User(firstName, lastName, username, Auth.encryptPassword(password0), LocalDate.parse(dateOfBirth));
+            User user = new User(firstName, lastName, username, LocalDate.parse(dateOfBirth));
             int insertId = userDao.insert(user);
-            user = userDao.getById(insertId);
-            request.getSession().setAttribute("user", user);
+
+            if (insertId > 0) {
+                // TODO make SURE usernames are unique
+                try {
+                    new Auth().setUserHashPass(username, password0);
+                } catch (Exception e) {
+                    logger.debug("Problem setting the user's hash pass", e);
+                }
+
+                user = userDao.getById(insertId);
+                request.getSession().setAttribute("user", user);
+            }
             // store confirmation token
             // create and send confirmation email
 
@@ -156,7 +166,7 @@ public class NewUser extends HttpServlet {
         }
 
         // go to start page
-        String url = "/";
+        String url = "loadClient";
         response.sendRedirect(url);
     }
 
