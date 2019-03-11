@@ -27,10 +27,11 @@
     </div>
     </c:when>
     <c:otherwise>
-        <form id="add_video_form" action="new-video" method="get">
+        <%--form id="add_video_form" action="new-video" method="get">
             <label for="youtube_url">YouTube Video URL</label>
             <input type="text" id="youtube_url" placeholder="https://youtu.be/R4nd0mCh4r5"/>
             <button type="button" class="btn btn-primary" id="add_video_button">Add Video</button>
-        </form>
+            TODO figure out when this shows and make it work
+        </form--%>
     </c:otherwise>
 </c:choose>
