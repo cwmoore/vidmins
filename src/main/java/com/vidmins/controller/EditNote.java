@@ -106,7 +106,7 @@ public class EditNote extends HttpServlet {
 
         logger.debug("note from id: " + request.getParameter("noteId") + "\n" + note);
 
-        String url = "/";
+        String url = "/index.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
     }

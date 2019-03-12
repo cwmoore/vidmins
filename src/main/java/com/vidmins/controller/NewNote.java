@@ -114,17 +114,14 @@ public class NewNote extends HttpServlet {
             noteFromFormData.setText(request.getParameter("note_text"));
             noteFromFormData.setStart(Integer.parseInt(request.getParameter("timeStampStart")));
 
-//            if (request.getParameter("authorId") != null) {
-//                noteFromFormData.setAuthor(userDao.getById(Integer.parseInt(request.getParameter("authorId"))));
-//            } else {
-//                noteFromFormData.setAuthor((User) request.getSession().getAttribute("user"));
-//            }
+            if (request.getParameter("authorId") != null) {
+                noteFromFormData.setAuthor(userDao.getById(Integer.parseInt(request.getParameter("authorId"))));
+            } else {
+                noteFromFormData.setAuthor((User) request.getSession().getAttribute("user"));
+            }
 
             noteFromFormData.setVideo(videoDao.getById(Integer.parseInt(request.getParameter("videoId"))));
-            //noteFromFormData.setAuthor(userDao.getById(Integer.parseInt((String) request.getSession().getAttribute("userId"))));
             noteFromFormData.setCreateDatetime(LocalDateTime.now());
-
-            //noteFromFormData.setAuthor((User)request.getSession().getAttribute("user"));
 
             logger.debug("noteFromFormData before: " + noteFromFormData.toString());
 

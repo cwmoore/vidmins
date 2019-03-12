@@ -57,7 +57,7 @@ public class NewVideo extends HttpServlet {
 
         request.setAttribute("video", addNewVideo(request));
         
-        String url = "/";
+        String url = "/index.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
     }
@@ -96,7 +96,7 @@ public class NewVideo extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String url = "/";
+        String url = "/index.jsp";
         response.sendRedirect(url);
     }
 }
