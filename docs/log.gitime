@@ -1,5 +1,5 @@
 On invoice Independent project
-Total Time Worked: 76.5 hours
+Total Time Worked: 78.5 hours
 Total Charges:     $0.00
 Charges:
 02-08-2019         1.5 hours       Stuck on assertThrows
@@ -51,3 +51,5 @@ Charges:
 03-10-2019         2 hours         Remove slashes and break things
 03-11-2019         1 hour          Get VidMins login/out on AWS
 03-11-2019         2 hours         Fix deploy issues
+03-12-2019         0.5 hours       Move help to own file
+03-12-2019         1.5 hours       Do database redesign
