@@ -30,10 +30,6 @@ public class Note implements java.io.Serializable {
     @EqualsAndHashCode.Exclude
     private LocalDateTime createDatetime;
 
-    @ManyToOne//(fetch = FetchType.LAZY) // TODO make sure LAZY is not what I want
-    @JoinColumn(name = "authorId", nullable = false)
-    private User author; // TODO consider a better system for tracking creators
-
     @ManyToOne
     @JoinColumn(name = "videoId", nullable = false)
     private Video video;
@@ -55,16 +51,13 @@ public class Note implements java.io.Serializable {
      * @param createDatetime the create datetime
      * @param video          the video
      */
-    public Note(int id, String label, String text, int start, LocalDateTime createDatetime
-            , User author
-            , Video video) {
+    public Note(int id, String label, String text, int start, LocalDateTime createDatetime, Video video) {
         this();
         this.id = id;
         this.label = label;
         this.text = text;
         this.start = start;
         this.createDatetime = createDatetime;
-        this.author = author;
         this.video = video;
     }
 
@@ -77,15 +70,12 @@ public class Note implements java.io.Serializable {
      * @param createDatetime the create datetime
      * @param video          the video
      */
-    public Note(String label, String text, int start, LocalDateTime createDatetime
-            , User author
-            , Video video) {
+    public Note(String label, String text, int start, LocalDateTime createDatetime, Video video) {
         this();
         this.label = label;
         this.text = text;
         this.start = start;
         this.createDatetime = createDatetime;
-        this.author = author;
         this.video = video;
     }
 
@@ -197,25 +187,6 @@ public class Note implements java.io.Serializable {
         this.video = video;
     }
 
-
-    /**
-     * Gets author.
-     *
-     * @return the author
-     */
-    public User getAuthor() {
-        return author;
-    }
-
-    /**
-     * Sets author.
-     *
-     * @param author the author
-     */
-    public void setAuthor(User author) {
-        this.author = author;
-    }
-
     @Override
     public String toString() {
         return "Note{" +
@@ -224,7 +195,6 @@ public class Note implements java.io.Serializable {
                 ", text='" + text + '\'' +
                 ", start=" + start +
                 ", createDatetime='" + createDatetime + '\'' +
-              //  ", author=" + author +
                 ", video=" + video +
                 '}';
     }
