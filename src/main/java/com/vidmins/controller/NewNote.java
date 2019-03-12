@@ -106,7 +106,6 @@ public class NewNote extends HttpServlet {
         if (request.getParameter("label") != null &&
                 request.getParameter("note_text") != null &&
                 request.getParameter("timeStampStart") != null &&
-         //       request.getParameter("authorId") != null &&
                 request.getParameter("videoId") != null) {
 
             Note noteFromFormData = new Note();
@@ -117,12 +116,6 @@ public class NewNote extends HttpServlet {
             noteFromFormData.setLabel(request.getParameter("label"));
             noteFromFormData.setText(request.getParameter("note_text"));
             noteFromFormData.setStart(Integer.parseInt(request.getParameter("timeStampStart")));
-
-            if (request.getParameter("authorId") != null) {
-                noteFromFormData.setAuthor(userDao.getById(Integer.parseInt(request.getParameter("authorId"))));
-            } else {
-                noteFromFormData.setAuthor((User) request.getSession().getAttribute("user"));
-            }
 
             noteFromFormData.setVideo(videoDao.getById(Integer.parseInt(request.getParameter("videoId"))));
             noteFromFormData.setCreateDatetime(LocalDateTime.now());
@@ -161,9 +154,6 @@ public class NewNote extends HttpServlet {
             url = url.substring(0, url.length() - 1);
         }
         logger.debug("URL to redirect from NewNote: " + url);
-
-//        RequestDispatcher dispatcher = request.getRequestDispatcher("/loadClient");
-//        dispatcher.forward(request, response);
         response.sendRedirect(url);
     }
 }
