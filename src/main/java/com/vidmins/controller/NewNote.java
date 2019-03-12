@@ -84,14 +84,18 @@ public class NewNote extends HttpServlet {
     }
 
     /**
-     * Handle a POST request
+     * Handle a POST request of Note data
+     *
      * @param request the request object
      * @param response the response object
      * @throws ServletException indicates a servlet problem
      * @throws IOException indicates an IO problem
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // make DAOs available
         loadHelpers(request);
 
         List<String> requestParams = new ArrayList<>();
