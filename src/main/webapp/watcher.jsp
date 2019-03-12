@@ -38,8 +38,6 @@
                 <input type="hidden" name="noteId" value="${note.id}" />
                 </c:if>
 
-                <input type="hidden" name="authorId"
-                       value="<c:choose><c:when test="${note != null}">${note.video.directory.user.id}</c:when><c:otherwise>${sessionScope.user.id}</c:otherwise></c:choose>" />
                 <input type="hidden" name="videoId"
                        value="<c:choose><c:when test="${note != null}">${note.video.id}</c:when><c:otherwise>${sessionScope.currentVideo.id}</c:otherwise></c:choose>" />
 

@@ -118,9 +118,6 @@ class NoteDaoTest {
         Video video = videoDao.getById(3);
         newNote.setVideo(video);
 
-        GenericDao<User> userDao = new GenericDao<>(User.class);
-        User author = userDao.getById(3);
-        newNote.setAuthor(author);
 
         int insertId = dao.insert(newNote);
         assertNotEquals(0, insertId);
@@ -129,7 +126,6 @@ class NoteDaoTest {
         assertNotNull(insertedNote);
         assertEquals(noteLabel, insertedNote.getLabel());
         assertEquals(video.getTitle(), insertedNote.getVideo().getTitle());
-        assertEquals(author.getUserName(), insertedNote.getAuthor().getUserName());
 
         // Could continue comparing all values, but
         // it may make sense to use .equals()
