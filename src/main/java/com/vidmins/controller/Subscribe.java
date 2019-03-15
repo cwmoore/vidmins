@@ -1,5 +1,6 @@
 package com.vidmins.controller;
 
+import com.vidmins.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,8 +16,8 @@ import java.io.IOException;
  */
 
 @WebServlet(
-        name = "",
-        urlPatterns = {"/"}
+        name = "subscribe",
+        urlPatterns = {"/subscribe"}
 )
 
 public class Subscribe extends HttpServlet {
@@ -33,31 +34,36 @@ public class Subscribe extends HttpServlet {
     /**
      *  Handle a GET request
      *
-     * @param req the HttpServletRequest
-     * @param resp the HttpServletResponse
+     * @param request the HttpServletRequest
+     * @param response the HttpServletResponse
      * @throws ServletException indicates a servlet problem
      * @throws IOException indicates an IO problem
      */
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String url = "/";
-        RequestDispatcher dispatcher = req.getRequestDispatcher(url);
-        dispatcher.forward(req, resp);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+        dispatcher.forward(request, response);
     }
 
     /**
      * Handle a POST request
      *
-     * @param req the HttpServletRequest
-     * @param resp the HttpServletResponse
+     * @param request the HttpServletRequest
+     * @param response the HttpServletResponse
      * @throws ServletException indicates a servlet problem
      * @throws IOException indicates an IO problem
      */
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        // current user gets access to offered material
+        User user = (User) request.getSession().getAttribute("user");
+
+        
         String url = "/";
-        resp.sendRedirect(url);
+        response.sendRedirect(url);
     }
 }
