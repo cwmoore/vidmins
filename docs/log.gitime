@@ -1,5 +1,5 @@
 On invoice Independent project
-Total Time Worked: 79.5 hours
+Total Time Worked: 82.5 hours
 Total Charges:     $0.00
 Charges:
 02-08-2019         1.5 hours       Stuck on assertThrows
@@ -54,3 +54,5 @@ Charges:
 03-12-2019         0.5 hours       Move help to own file
 03-12-2019         1.5 hours       Do database redesign
 03-14-2019         1 hour          Begin subscription service
+03-16-2019         1 hour          Rework test data for new entities and tables
+03-16-2019         2 hours         Add YouTubeVideo entity, wire up Video, Subscription/Contract
