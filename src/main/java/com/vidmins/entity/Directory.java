@@ -25,6 +25,9 @@ public class Directory implements java.io.Serializable {
     @OneToMany(mappedBy = "directory")
     private List<Video> videos;
 
+    @OneToMany(mappedBy = "directory")
+    private List<Subscription> subscriptions;
+
     /**
      * Instantiates a new Directory.
      */
@@ -134,5 +137,23 @@ public class Directory implements java.io.Serializable {
      */
     public User getUser() {
         return user;
+    }
+
+    /**
+     * Gets subscriptions.
+     *
+     * @return the subscriptions
+     */
+    public List<Subscription> getSubscriptions() {
+        return subscriptions;
+    }
+
+    /**
+     * Sets subscriptions.
+     *
+     * @param subscriptions the subscriptions
+     */
+    public void setSubscriptions(List<Subscription> subscriptions) {
+        this.subscriptions = subscriptions;
     }
 }

@@ -205,4 +205,38 @@ public class Subscription implements java.io.Serializable {
     public void setContract(Contract contract) {
         this.contract = contract;
     }
+
+    @Override
+    public String toString() {
+        return "Subscription{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", start=" + start +
+                ", end=" + end +
+                ", subscriber=" + subscriber +
+                ", directory=" + directory +
+                ", contract=" + contract +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Subscription that = (Subscription) o;
+        return id == that.id &&
+                name.equals(that.name) &&
+                description.equals(that.description) &&
+                start.equals(that.start) &&
+                end.equals(that.end) &&
+                subscriber.equals(that.subscriber) &&
+                directory.equals(that.directory) &&
+                contract.equals(that.contract);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, start, end, subscriber, directory, contract);
+    }
 }

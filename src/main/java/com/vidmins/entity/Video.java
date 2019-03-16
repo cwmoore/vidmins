@@ -26,7 +26,10 @@ public class Video implements java.io.Serializable {
     @GenericGenerator(name = "native", strategy = "native")
     private int id;
 
-    private String youTubeId;
+    @ManyToOne
+    @JoinColumn(name = "youTubeVideoId", nullable = false)
+    private YouTubeVideo youTubeVideo;
+
     private String title;
     private LocalDateTime addDate;
     private int duration;
@@ -57,14 +60,14 @@ public class Video implements java.io.Serializable {
     /**
      * Instantiates a new Video.
      *
-     * @param youTubeId the you tube id
+     * @param youTubeVideo the you tube id
      * @param title     the title
      * @param addDate   the add date
      * @param duration  the duration
      * @param directory the directory
      */
-    public Video(String youTubeId, String title, LocalDateTime addDate, int duration, Directory directory) {
-        this.youTubeId = youTubeId;
+    public Video(YouTubeVideo youTubeVideo, String title, LocalDateTime addDate, int duration, Directory directory) {
+        this.youTubeVideo = youTubeVideo;
         this.title = title;
         this.addDate = addDate;
         this.duration = duration;
@@ -75,14 +78,14 @@ public class Video implements java.io.Serializable {
      * Instantiates an existing Video.
      *
      * @param id        the id
-     * @param youTubeId the you tube id
+     * @param youTubeVideo the you tube id
      * @param title     the title
      * @param addDate   the add date
      * @param duration  the duration
      */
-    public Video(int id, String youTubeId, String title, LocalDateTime addDate, int duration, Directory directory) {
+    public Video(int id, YouTubeVideo youTubeVideo, String title, LocalDateTime addDate, int duration, Directory directory) {
         this.id = id;
-        this.youTubeId = youTubeId;
+        this.youTubeVideo = youTubeVideo;
         this.title = title;
         this.addDate = addDate;
         this.duration = duration;
@@ -112,17 +115,17 @@ public class Video implements java.io.Serializable {
      *
      * @return the you tube id
      */
-    public String getYouTubeId() {
-        return youTubeId;
+    public YouTubeVideo getYouTubeVideo() {
+        return youTubeVideo;
     }
 
     /**
      * Sets you tube id.
      *
-     * @param youTubeId the you tube id
+     * @param youTubeVideo the you tube id
      */
-    public void setYouTubeId(String youTubeId) {
-        this.youTubeId = youTubeId;
+    public void setYouTubeVideo(YouTubeVideo youTubeVideo) {
+        this.youTubeVideo = youTubeVideo;
     }
 
     /**
@@ -225,7 +228,7 @@ public class Video implements java.io.Serializable {
     public java.lang.String toString() {
         return "Video{" +
                 "id=" + id +
-                ", youTubeId='" + youTubeId + '\'' +
+                ", youTubeVideo='" + youTubeVideo + '\'' +
                 ", title='" + title + '\'' +
                 ", addDate='" + addDate + '\'' +
                 ", duration='" + duration + '\'' +

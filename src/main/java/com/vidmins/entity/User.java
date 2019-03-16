@@ -67,9 +67,8 @@ public class User implements java.io.Serializable {
     /**
      * Instantiates a new User really easily.
      */
-    public User(int id, String userName) {
+    public User(String userName) {
         this();
-        this.id = id;
         this.userName = userName;
     }
 
@@ -355,13 +354,41 @@ public class User implements java.io.Serializable {
     @Override
     public String toString() {
         return "User{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", userName='" + userName + '\'' +
                 ", email='" + email + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", joinDate=" + joinDate +
+                ", dateOfBirth=" + dateOfBirth +
+                ", organization='" + organization + '\'' +
+                ", introduction='" + introduction + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id &&
+                firstName.equals(user.firstName) &&
+                lastName.equals(user.lastName) &&
+                email.equals(user.email) &&
+                userName.equals(user.userName) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(joinDate, user.joinDate) &&
+                dateOfBirth.equals(user.dateOfBirth) &&
+                organization.equals(user.organization) &&
+                introduction.equals(user.introduction) &&
+                status.equals(user.status) &&
+                Objects.equals(authTokens, user.authTokens);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, email, userName, password, joinDate, dateOfBirth, organization, introduction, status, authTokens);
+    }
 }

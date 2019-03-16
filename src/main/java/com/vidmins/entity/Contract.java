@@ -3,6 +3,7 @@ package com.vidmins.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * The type Contract.
@@ -10,10 +11,12 @@ import javax.persistence.*;
 @Entity(name = "Contract")
 @Table(name = "contract")
 public class Contract implements java.io.Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "native", strategy = "native")
     private int id;
+
     private String name;
     private String description;
     private double priceForTimePeriod;
@@ -23,9 +26,11 @@ public class Contract implements java.io.Serializable {
     private boolean canEdit;
 
     @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
-    private User offeringParty;
+    @JoinColumn(name = "authorId", nullable = false)
+    private User author;
 
+    @OneToMany(mappedBy = "contract")
+    private List<Subscription> subscriptions;
 
     /**
      * Instantiates a new Contract.
@@ -43,9 +48,10 @@ public class Contract implements java.io.Serializable {
      * @param canShare           the can share
      * @param canCopy            the can copy
      * @param canEdit            the can edit
+     * @param author             the author
      */
     public Contract(String name, String description, double priceForTimePeriod, int timePeriodHours
-            , boolean canShare, boolean canCopy, boolean canEdit) {
+            , boolean canShare, boolean canCopy, boolean canEdit, User author) {
         this();
         this.name = name;
         this.description = description;
@@ -54,6 +60,7 @@ public class Contract implements java.io.Serializable {
         this.canShare = canShare;
         this.canCopy = canCopy;
         this.canEdit = canEdit;
+        this.author = author;
     }
 
     /**
@@ -205,16 +212,34 @@ public class Contract implements java.io.Serializable {
      *
      * @return the offering party
      */
-    public User getOfferingParty() {
-        return offeringParty;
+    public User getAuthor() {
+        return author;
     }
 
     /**
      * Sets offering party.
      *
-     * @param offeringParty the offering party
+     * @param author the offering party
      */
-    public void setOfferingParty(User offeringParty) {
-        this.offeringParty = offeringParty;
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    /**
+     * Gets subscriptions.
+     *
+     * @return the subscriptions
+     */
+    public List<Subscription> getSubscriptions() {
+        return subscriptions;
+    }
+
+    /**
+     * Sets subscriptions.
+     *
+     * @param subscriptions the subscriptions
+     */
+    public void setSubscriptions(List<Subscription> subscriptions) {
+        this.subscriptions = subscriptions;
     }
 }

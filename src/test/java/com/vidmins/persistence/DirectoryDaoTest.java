@@ -95,7 +95,7 @@ class DirectoryDaoTest {
      */
     @Test
     void insertSuccess() {
-        User owner = new User(8, "DirectoryOwner");
+        User owner = new User("DirectoryOwner");
         GenericDao<User> userDao = new GenericDao<>(User.class);
 
         assertNotNull(userDao.getById(userDao.insert(owner)));

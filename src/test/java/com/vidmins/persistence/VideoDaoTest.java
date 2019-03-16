@@ -2,6 +2,7 @@ package com.vidmins.persistence;
 
 import com.vidmins.entity.Video;
 import com.vidmins.entity.Directory;
+import com.vidmins.entity.YouTubeVideo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,7 +58,7 @@ class VideoDaoTest {
      */
     @Test
     void getByIdSuccess() {
-        Video video = dao.getById(1);
+        Video video = dao.getById(2);
         assertNotNull(video);
     }
 
@@ -68,7 +69,7 @@ class VideoDaoTest {
     void getByIdVerifyVideoSuccess() {
         Video video = dao.getById(2);
         assertNotNull(video);
-        assertEquals("superhero movie", video.getTitle());
+        assertEquals("Week1Act5", video.getTitle());
     }
 
 
@@ -92,7 +93,7 @@ class VideoDaoTest {
      */
     @Test
     void updateSuccess() {
-        int updateId = 1;
+        int updateId = 3;
         String newVideoTitle = "NEW VIDEO TITLE";
         Video videoToUpdate = dao.getById(updateId);
         videoToUpdate.setTitle(newVideoTitle);
@@ -114,6 +115,9 @@ class VideoDaoTest {
         GenericDao<Directory> directoryDao = new GenericDao<>(Directory.class);
         newVideo.setDirectory(directoryDao.getById(3));
 
+        GenericDao<YouTubeVideo> ytvDao = new GenericDao<>(YouTubeVideo.class);
+        newVideo.setYouTubeVideo(ytvDao.findByPropertyEqual("youTubeId", "dF0NWtxRXsg").get(0));
+
         int insertId = dao.insert(newVideo);
         assertNotEquals(0, insertId);
 
@@ -132,9 +136,9 @@ class VideoDaoTest {
     @Test
     void getByPropertyEqualSuccess() {
         // TODO make for Video
-        List<Video> videos = dao.findByPropertyEqual("duration", "2400");
+        List<Video> videos = dao.findByPropertyEqual("duration", 2400);
         assertEquals(1, videos.size());
-        assertEquals(3, videos.get(0).getId());
+        assertEquals(2, videos.get(0).getId());
     }
 
     /**
@@ -143,7 +147,7 @@ class VideoDaoTest {
     @Test
     void getByPropertiesEqualSuccess() {
         Map<String, Object> searchVideo = new HashMap<>();
-        searchVideo.put("title", "comedy");
+        searchVideo.put("title", "Welcome");
 
         List<Video> videos = dao.findByPropertyEqual(searchVideo);
 
