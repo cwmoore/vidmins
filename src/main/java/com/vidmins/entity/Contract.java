@@ -16,7 +16,7 @@ public class Contract implements java.io.Serializable {
     private int id;
     private String name;
     private String description;
-    private float priceForTimePeriod;
+    private double priceForTimePeriod;
     private int timePeriodHours;
     private boolean canShare;
     private boolean canCopy;
@@ -44,7 +44,7 @@ public class Contract implements java.io.Serializable {
      * @param canCopy            the can copy
      * @param canEdit            the can edit
      */
-    public Contract(String name, String description, float priceForTimePeriod, int timePeriodHours
+    public Contract(String name, String description, double priceForTimePeriod, int timePeriodHours
             , boolean canShare, boolean canCopy, boolean canEdit) {
         this();
         this.name = name;
@@ -115,7 +115,7 @@ public class Contract implements java.io.Serializable {
      *
      * @return the price for time
      */
-    public float getPriceForTimePeriod() {
+    public double getPriceForTimePeriod() {
         return priceForTimePeriod;
     }
 
@@ -124,7 +124,7 @@ public class Contract implements java.io.Serializable {
      *
      * @param priceForTimePeriod the price for time
      */
-    public void setPriceForTimePeriod(float priceForTimePeriod) {
+    public void setPriceForTimePeriod(double priceForTimePeriod) {
         this.priceForTimePeriod = priceForTimePeriod;
     }
 

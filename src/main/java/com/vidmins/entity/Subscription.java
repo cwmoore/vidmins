@@ -23,7 +23,7 @@ public class Subscription implements java.io.Serializable {
     private LocalDateTime end;
 
     @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
+    @JoinColumn(name = "subscriberId", nullable = false)
     private User subscriber;
 
     @ManyToOne

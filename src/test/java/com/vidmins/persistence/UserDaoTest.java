@@ -80,7 +80,7 @@ class UserDaoTest {
      */
     @Test
     void deleteSuccess() {
-        int deleteId = 4;
+        int deleteId = 5;
 
         // make this user
         User user = dao.getById(deleteId);
