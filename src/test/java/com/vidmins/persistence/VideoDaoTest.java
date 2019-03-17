@@ -136,9 +136,9 @@ class VideoDaoTest {
     @Test
     void getByPropertyEqualSuccess() {
         // TODO make for Video
-        List<Video> videos = dao.findByPropertyEqual("duration", 2400);
+        List<Video> videos = dao.findByPropertyEqual("title", "Welcome");
         assertEquals(1, videos.size());
-        assertEquals(2, videos.get(0).getId());
+        assertEquals(4, videos.get(0).getId());
     }
 
     /**

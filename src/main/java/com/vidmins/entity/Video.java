@@ -1,11 +1,5 @@
 package com.vidmins.entity;
 
-import com.vidmins.entity.Directory;
-
-import com.vidmins.util.LocalDateAttributeConverter;
-import com.vidmins.util.TimestampAttributeConverter;
-import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -32,7 +26,6 @@ public class Video implements java.io.Serializable {
 
     private String title;
     private LocalDateTime addDate;
-    private int duration;
 
     @ManyToOne
     @JoinColumn(name = "directoryId", nullable = false)
@@ -54,8 +47,7 @@ public class Video implements java.io.Serializable {
     public Video(String title) {
         this();
         this.title = title;
-        duration = 0;
-            }
+    }
 
     /**
      * Instantiates a new Video.
@@ -63,14 +55,12 @@ public class Video implements java.io.Serializable {
      * @param youTubeVideo the you tube id
      * @param title     the title
      * @param addDate   the add date
-     * @param duration  the duration
      * @param directory the directory
      */
-    public Video(YouTubeVideo youTubeVideo, String title, LocalDateTime addDate, int duration, Directory directory) {
+    public Video(YouTubeVideo youTubeVideo, String title, LocalDateTime addDate, Directory directory) {
         this.youTubeVideo = youTubeVideo;
         this.title = title;
         this.addDate = addDate;
-        this.duration = duration;
         this.directory = directory;
     }
 
@@ -81,14 +71,12 @@ public class Video implements java.io.Serializable {
      * @param youTubeVideo the you tube id
      * @param title     the title
      * @param addDate   the add date
-     * @param duration  the duration
      */
-    public Video(int id, YouTubeVideo youTubeVideo, String title, LocalDateTime addDate, int duration, Directory directory) {
+    public Video(int id, YouTubeVideo youTubeVideo, String title, LocalDateTime addDate, Directory directory) {
         this.id = id;
         this.youTubeVideo = youTubeVideo;
         this.title = title;
         this.addDate = addDate;
-        this.duration = duration;
         this.directory = directory;
     }
 
@@ -165,25 +153,6 @@ public class Video implements java.io.Serializable {
     }
 
     /**
-     * Gets duration.
-     *
-     * @return the duration
-     */
-    public int getDuration() {
-        return duration;
-    }
-
-    /**
-     * Sets duration.
-     *
-     * @param duration the duration
-     */
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-
-    /**
      * Gets directory.
      *
      * @return the directory
@@ -231,7 +200,6 @@ public class Video implements java.io.Serializable {
                 ", youTubeVideo='" + youTubeVideo + '\'' +
                 ", title='" + title + '\'' +
                 ", addDate='" + addDate + '\'' +
-                ", duration='" + duration + '\'' +
                 '}';
     }
 }
