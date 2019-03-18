@@ -177,7 +177,7 @@ public class LoadClient extends HttpServlet {
         }
 
         // build URL params as needed
-        String url = "index.jsp";
+        String url = "/index.jsp";
         if (requestParams.length() > 1) {
             url += requestParams;
         }
