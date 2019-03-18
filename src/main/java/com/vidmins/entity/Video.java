@@ -25,13 +25,14 @@ public class Video implements java.io.Serializable {
     private YouTubeVideo youTubeVideo;
 
     private String title;
-    private LocalDateTime addDate;
+    private LocalDateTime addDate = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "directoryId", nullable = false)
     private Directory directory;
 
-    @OneToMany(mappedBy = "video")
+    @OneToMany(cascade = CascadeType.ALL,
+            mappedBy = "video")
     private List<Note> notes;
 
     /**

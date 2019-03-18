@@ -15,6 +15,7 @@
             <c:import url="signup.jsp" />
             <c:import url="player.jsp" />
             <c:import url="video.jsp" />
+            <c:import url="directory.jsp" />
         </div>
     </div>
 </div>

@@ -21,9 +21,7 @@
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <c:if test="${user == null}">User</c:if>
-                            <c:if test="${user != null}">${user.firstName}</c:if>
-                        </a>
+                            <c:choose><c:when test="${user != null}">${user.firstName}</c:when><c:otherwise>User</c:otherwise></c:choose></a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
                             <a class="dropdown-item<c:if test="${user == null}"> disabled</c:if>" href="#">Profile</a>

@@ -33,9 +33,9 @@ public class NewNote extends HttpServlet {
     private int previousDigit;
     private Logger logger;
 
-    GenericDao<User> userDao;
-    GenericDao<Video> videoDao;
-    GenericDao<Note> noteDao;
+    private GenericDao<User> userDao;
+    private GenericDao<Video> videoDao;
+    private GenericDao<Note> noteDao;
 
     /**
      * Initialize session

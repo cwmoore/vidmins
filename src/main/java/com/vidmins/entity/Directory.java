@@ -22,10 +22,12 @@ public class Directory implements java.io.Serializable {
     @JoinColumn(name = "userId", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "directory")
+    @OneToMany(cascade = CascadeType.ALL,
+            mappedBy = "directory")
     private List<Video> videos;
 
-    @OneToMany(mappedBy = "directory")
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST},
+            mappedBy = "directory")
     private List<Subscription> subscriptions;
 
     /**

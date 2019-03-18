@@ -31,10 +31,10 @@ import java.io.IOException;
 public class LoadClient extends HttpServlet {
     private Logger logger;
 
-    GenericDao<User> userDao;
-    GenericDao<Directory> directoryDao;
-    GenericDao<Video> videoDao;
-    GenericDao<Note> noteDao;
+    private GenericDao<User> userDao;
+    private GenericDao<Directory> directoryDao;
+    private GenericDao<Video> videoDao;
+    private GenericDao<Note> noteDao;
 
     /**
      * Initialize session
@@ -108,6 +108,7 @@ public class LoadClient extends HttpServlet {
 
         logger.debug("in loadClient");
 
+        // logged in user, gather related objects
         if (session.getAttribute("user") != null) {
             User user = (User) session.getAttribute("user");
             logger.debug("User: " + user);
@@ -120,6 +121,7 @@ public class LoadClient extends HttpServlet {
             session.setAttribute("directories", directories);
 
             // TODO optionally choose starting directory
+            // TODO use last directory and video
 
             logger.debug("user.getDirectories(): " + user.getDirectories());
 
@@ -128,6 +130,8 @@ public class LoadClient extends HttpServlet {
                 logger.debug("Found " + directories.size() + " directories");
                 Directory defaultDirectory = directories.get(0);
                 if (defaultDirectory != null) {
+                    session.setAttribute("directories", directories);
+                    session.setAttribute("defaultDirectory", defaultDirectory);
 
                     List<Video> videos = defaultDirectory.getVideos();
 
@@ -155,14 +159,15 @@ public class LoadClient extends HttpServlet {
             session.setAttribute("title", "The Video Minutes App");
         } // else { // user is not logged in }
 
+        // write out session attributes for debugging
         Enumeration keys = session.getAttributeNames();
-
         while (keys.hasMoreElements()) {
             String key = (String) keys.nextElement();
             String msg = key + ": " + session.getAttribute(key) + '\n';
             logger.debug(msg);
         }
 
+        // build URL params as needed
         String url = "/index.jsp";
         if (requestParams.length() > 1) {
             url += requestParams;
