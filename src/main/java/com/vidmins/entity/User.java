@@ -55,7 +55,6 @@ public class User implements java.io.Serializable {
     private List<AuthToken> authTokens;
 
 
-
     /**
      * Instantiates a new User.
      */
@@ -66,27 +65,12 @@ public class User implements java.io.Serializable {
 
     /**
      * Instantiates a new User really easily.
+     *
+     * @param userName the user name
      */
     public User(String userName) {
         this();
         this.userName = userName;
-    }
-
-    /**
-     * Instantiates a new User.
-     *
-     * @param firstName   the first name
-     * @param lastName    the last name
-     * @param userName    the user name
-     * @param password    the password
-     * @param dateOfBirth the date of birth
-     */
-    public User(String firstName, String lastName, String userName, String password, LocalDate dateOfBirth) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.userName = userName;
-        this.password = password;
-        this.dateOfBirth = dateOfBirth;
     }
 
     /**
@@ -104,23 +88,24 @@ public class User implements java.io.Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
+
     /**
-     * Instantiates an existing User.
+     * Instantiates a new User.
      *
-     * @param firstName   the first name
-     * @param lastName    the last name
-     * @param userName    the user name
-     * @param password    the password
-     * @param dateOfBirth the date of birth
-     * @param id          the id
+     * @param firstName    the first name
+     * @param lastName     the last name
+     * @param userName     the user name
+     * @param organization the organization
+     * @param introduction the introduction
+     * @param dateOfBirth  the date of birth
      */
-    public User(String firstName, String lastName, String userName, String password, LocalDate dateOfBirth, int id) {
+    public User(String firstName, String lastName, String userName, String organization, String introduction, LocalDate dateOfBirth) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
-        this.password = password;
+        this.organization = organization;
+        this.introduction = introduction;
         this.dateOfBirth = dateOfBirth;
-        this.id = id;
     }
 
     /**

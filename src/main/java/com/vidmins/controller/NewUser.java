@@ -137,13 +137,13 @@ public class NewUser extends HttpServlet {
 
             if (errors.size() == 0) {
                 // add new user
-                User user = new User(firstName, lastName, username, LocalDate.parse(dateOfBirth));
+                User user = new User(firstName, lastName, username, organization, introduction, LocalDate.parse(dateOfBirth));
                 int insertId = userDao.insert(user);
 
                 if (insertId > 0) {
                     // TODO make SURE usernames are unique
                     try {
-                        new Auth().setUserHashPass(username, password0);
+                        Auth.setUserHashPass(username, password0);
                     } catch (Exception e) {
                         logger.debug("Problem setting the user's hash pass", e);
                     }

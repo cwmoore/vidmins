@@ -58,7 +58,7 @@ public class Auth {
         return accessUser;
     }
 
-    public boolean setUserHashPass(String userName, String password) throws Exception {
+    public static boolean setUserHashPass(String userName, String password) throws Exception {
 
         boolean isSet = false;
 
