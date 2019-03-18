@@ -153,7 +153,7 @@ public class LoadClient extends HttpServlet {
                 }
 
                 if (session.getAttribute("currentVideo") != null) {
-                    currentVideo = session.getAttribute("currentVideo");
+                    currentVideo = (Video) session.getAttribute("currentVideo");
                 }
             }
 
