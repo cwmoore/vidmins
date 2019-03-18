@@ -125,6 +125,8 @@ public class LoadClient extends HttpServlet {
 
             logger.debug("user.getDirectories(): " + user.getDirectories());
 
+            Video currentVideo = null;
+
             // get videos for first directory
             if (directories.size() > 0) {
                 logger.debug("Found " + directories.size() + " directories");
@@ -136,6 +138,9 @@ public class LoadClient extends HttpServlet {
                     List<Video> videos = defaultDirectory.getVideos();
 
                     session.setAttribute("videos", videos);
+                    // TODO select the best video (instead of just the first)
+                    currentVideo = videos.get(0);
+                    session.setAttribute("currentVideo", currentVideo);
                 }
             }
 
@@ -144,16 +149,19 @@ public class LoadClient extends HttpServlet {
                 if (request.getParameter("videoId").matches("\\d+")) {
 
                     int videoId = Integer.parseInt(request.getParameter("videoId"));
-                    Video currentVideo = videoDao.getById(videoId);
-                    session.setAttribute("currentVideo", currentVideo);
-
-                    // notes for the first video
-                    session.setAttribute("notes", currentVideo.getNotes());
+                    currentVideo = videoDao.getById(videoId);
                 }
 
                 if (session.getAttribute("currentVideo") != null) {
-                    session.setAttribute("notes", noteDao.findByPropertyEqual("video", session.getAttribute("currentVideo")));
+                    currentVideo = session.getAttribute("currentVideo");
                 }
+            }
+
+            if (currentVideo != null) {
+                session.setAttribute("currentVideo", currentVideo);
+
+                // notes for the first video
+                session.setAttribute("notes", currentVideo.getNotes());
             }
 
             session.setAttribute("title", "The Video Minutes App");
