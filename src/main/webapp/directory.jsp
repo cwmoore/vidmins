@@ -2,7 +2,8 @@
 
 <c:choose>
     <c:when test="${directories != null}">
-        <table>
+        <div class="aquapanel">
+        <table id="directory_table" class="table table-striped">
             <tr>
                 <th>Name</th>
                 <th>Description</th>
@@ -14,6 +15,7 @@
             </tr>
         </c:forEach>
         </table>
+        </div>
     </c:when>
     <c:otherwise>Directories will be shown here.</c:otherwise>
 </c:choose>
