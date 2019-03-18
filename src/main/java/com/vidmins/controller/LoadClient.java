@@ -39,6 +39,7 @@ public class LoadClient extends HttpServlet {
     /**
      * Initialize session
      */
+    @Override
     public void init() throws ServletException {
         logger = LogManager.getLogger(this.getClass());
         logger.info("Starting NewNote servlet");
@@ -176,7 +177,7 @@ public class LoadClient extends HttpServlet {
         }
 
         // build URL params as needed
-        String url = "/index.jsp";
+        String url = "index.jsp";
         if (requestParams.length() > 1) {
             url += requestParams;
         }

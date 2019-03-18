@@ -135,6 +135,9 @@ public class NewUser extends HttpServlet {
                 errors.put("username", "Username is taken.");
             }
 
+            // this will become true only if hashed password is set on the user
+            boolean isPassHashSet = false;
+
             if (errors.size() == 0) {
                 // add new user
                 User user = new User(firstName, lastName, username, organization, introduction, LocalDate.parse(dateOfBirth));
@@ -143,13 +146,21 @@ public class NewUser extends HttpServlet {
                 if (insertId > 0) {
                     // TODO make SURE usernames are unique
                     try {
-                        Auth.setUserHashPass(username, password0);
+                        isPassHashSet = Auth.setUserHashPass(username, password0);
                     } catch (Exception e) {
                         logger.debug("Problem setting the user's hash pass", e);
                     }
 
                     user = userDao.getById(insertId);
-                    request.getSession().setAttribute("user", user);
+
+                    if (isPassHashSet) {
+                        request.getSession().setAttribute("user", user);
+                    } else {
+                        userDao.delete(user);
+                        logger.debug("User could not be saved");
+                    }
+                } else {
+                    // TODO handle collisions, repeat attempts, active users trying to login in wrong place...
                 }
 
                 // store confirmation token
@@ -158,7 +169,7 @@ public class NewUser extends HttpServlet {
                 // redirect to new user profile
 
             }
-        } else { // there are missing fields
+        } else { // make error messages for when fields are missing (loop through all request parameters)
             for (Map.Entry<String, String[]> entry: request.getParameterMap().entrySet()) {
                 if (entry.getValue() == null || entry.getValue().length == 0 || entry.getValue()[0] == null) {
                     errors.put(entry.getKey(), entry.getKey() + " must be set.");

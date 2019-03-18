@@ -3,18 +3,9 @@ package com.vidmins.auth;
 import com.vidmins.entity.User;
 import com.vidmins.persistence.GenericDao;
 
-import java.security.SecureRandom;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import com.vidmins.persistence.SessionFactoryProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 public class Auth {
@@ -87,6 +78,18 @@ public class Auth {
 
 //  Utility method for converting dev plaintext passwords to secure hashes
 //  Some of these classes are deprecated but they worked fine for one time use
+
+            // uses these imports
+            //import java.security.SecureRandom;
+            //import java.util.HashMap;
+            //import java.util.Map;
+            //
+            //import com.vidmins.persistence.SessionFactoryProvider;
+            //import org.hibernate.SQLQuery;
+            //import org.hibernate.Session;
+            //import org.hibernate.SessionFactory;
+            //import org.hibernate.Transaction;
+
 //    public void hashCurrentPasswords() {
 //        BCrypt bcrypt = new BCrypt();
 //        int id;
