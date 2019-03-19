@@ -128,6 +128,12 @@ public class LoadClient extends HttpServlet {
 
             Video currentVideo = null;
 
+            // TODO optionally choose starting video
+
+            if (session.getAttribute("currentVideo") != null) {
+                currentVideo = (Video) session.getAttribute("currentVideo");
+            }
+
             // get videos for first directory
             if (directories.size() > 0) {
                 logger.debug("Found " + directories.size() + " directories");
@@ -141,14 +147,7 @@ public class LoadClient extends HttpServlet {
                     session.setAttribute("videos", videos);
                     // TODO select the best video (instead of just the first)
                     currentVideo = videos.get(0);
-                    session.setAttribute("currentVideo", currentVideo);
                 }
-            }
-
-            // TODO optionally choose starting video
-
-            if (session.getAttribute("currentVideo") != null) {
-                currentVideo = (Video) session.getAttribute("currentVideo");
             }
 
             if (request.getParameter("videoId") != null) {
@@ -175,7 +174,7 @@ public class LoadClient extends HttpServlet {
         while (keys.hasMoreElements()) {
             String key = (String) keys.nextElement();
             if (session.getAttribute(key) != null){
-                String msg = key + ": " + session.getAttribute(key) + '\n';
+                String msg = key + ": " + session.getAttribute(key) + "\n";
                 logger.debug(msg);
             } else {
                 logger.debug(key + " is NULL");
