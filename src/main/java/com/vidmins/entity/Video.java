@@ -32,6 +32,7 @@ public class Video implements java.io.Serializable {
     private Directory directory;
 
     @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
             mappedBy = "video")
     private List<Note> notes;
 

@@ -48,7 +48,8 @@ public class User implements java.io.Serializable {
     private String introduction;
     private String status;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",
+            fetch = FetchType.EAGER)
     private List<Directory> directories;
 
     @OneToMany(mappedBy = "newUser")
@@ -60,6 +61,18 @@ public class User implements java.io.Serializable {
      */
     public User() {
         super();
+        id = 0;
+        firstName = "";
+        lastName = "";
+        email = "";
+        userName = "";
+        password = "";
+        joinDate = LocalDateTime.now();
+        dateOfBirth = LocalDate.now();
+        organization = "";
+        introduction = "";
+        status = "";
+        authTokens = null;
     }
 
 

@@ -53,24 +53,16 @@ public class Auth {
 
         boolean isSet = false;
 
-        User accessUser;
         GenericDao<User> userDao = new GenericDao<>(User.class);
-
         List<User> matchingUsers = userDao.findByPropertyEqual("userName", user.getUserName());
 
         if (matchingUsers.size() == 1) {
-            accessUser = matchingUsers.get(0);
-            // TODO and is current user
-            if (accessUser.equals(user)) {
-
-                BCrypt bcrypt = new BCrypt();
-                user.setPassword(bcrypt.hashpw(password, bcrypt.gensalt()));
-                userDao.saveOrUpdate(user);
-                isSet = true;
-            }
-
+            BCrypt bcrypt = new BCrypt();
+            user.setPassword(bcrypt.hashpw(password, bcrypt.gensalt()));
+            userDao.saveOrUpdate(user);
+            isSet = true;
         } else {
-            // TODO handle new user name collisions
+            // TODO handle new username collisions
             throw new Exception("Did not find a unique user for those credentials " + matchingUsers);
         }
 
