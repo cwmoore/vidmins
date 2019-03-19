@@ -146,15 +146,16 @@ public class LoadClient extends HttpServlet {
             }
 
             // TODO optionally choose starting video
+
+            if (session.getAttribute("currentVideo") != null) {
+                currentVideo = (Video) session.getAttribute("currentVideo");
+            }
+
             if (request.getParameter("videoId") != null) {
                 if (request.getParameter("videoId").matches("\\d+")) {
 
                     int videoId = Integer.parseInt(request.getParameter("videoId"));
                     currentVideo = videoDao.getById(videoId);
-                }
-
-                if (session.getAttribute("currentVideo") != null) {
-                    currentVideo = (Video) session.getAttribute("currentVideo");
                 }
             }
 
@@ -163,6 +164,7 @@ public class LoadClient extends HttpServlet {
 
                 // notes for the first video
                 session.setAttribute("notes", currentVideo.getNotes());
+                // TODO undupe the notes attribute of video by changing the properties in the JSP
             }
 
             session.setAttribute("title", "The Video Minutes App");
@@ -172,8 +174,12 @@ public class LoadClient extends HttpServlet {
         Enumeration keys = session.getAttributeNames();
         while (keys.hasMoreElements()) {
             String key = (String) keys.nextElement();
-            String msg = key + ": " + session.getAttribute(key) + '\n';
-            logger.debug(msg);
+            if (session.getAttribute(key) != null){
+                String msg = key + ": " + session.getAttribute(key) + '\n';
+                logger.debug(msg);
+            } else {
+                logger.debug(key + " is NULL");
+            }
         }
 
         // build URL params as needed

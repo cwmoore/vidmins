@@ -144,14 +144,14 @@ public class NewUser extends HttpServlet {
                 int insertId = userDao.insert(user);
 
                 if (insertId > 0) {
+                    user = userDao.getById(insertId);
                     // TODO make SURE usernames are unique
                     try {
-                        isPassHashSet = Auth.setUserHashPass(username, password0);
+                        isPassHashSet = Auth.setUserHashPass(user, password0);
                     } catch (Exception e) {
                         logger.debug("Problem setting the user's hash pass", e);
                     }
 
-                    user = userDao.getById(insertId);
 
                     if (isPassHashSet) {
                         request.getSession().setAttribute("user", user);

@@ -49,27 +49,28 @@ public class Auth {
         return accessUser;
     }
 
-    public static boolean setUserHashPass(String userName, String password) throws Exception {
+    public static boolean setUserHashPass(User user, String password) throws Exception {
 
         boolean isSet = false;
 
         User accessUser;
         GenericDao<User> userDao = new GenericDao<>(User.class);
 
-        // TODO enforce unique usernames
-        // TODO handle new user name collisions
-        List<User> matchingUsers = userDao.findByPropertyEqual("userName", userName);
+        List<User> matchingUsers = userDao.findByPropertyEqual("userName", user.getUserName());
 
         if (matchingUsers.size() == 1) {
             accessUser = matchingUsers.get(0);
             // TODO and is current user
+            if (accessUser.equals(user)) {
 
-            BCrypt bcrypt = new BCrypt();
-            accessUser.setPassword(bcrypt.hashpw(password, bcrypt.gensalt()));
-            userDao.saveOrUpdate(accessUser);
-            isSet = true;
+                BCrypt bcrypt = new BCrypt();
+                user.setPassword(bcrypt.hashpw(password, bcrypt.gensalt()));
+                userDao.saveOrUpdate(user);
+                isSet = true;
+            }
 
         } else {
+            // TODO handle new user name collisions
             throw new Exception("Did not find a unique user for those credentials " + matchingUsers);
         }
 
