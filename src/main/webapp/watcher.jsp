@@ -1,6 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<h1>Video Minutes</h1>
+<h1 id="brand-header"><span>Vid</span>eo <span>Min</span>ute<span>s</span></h1>
+
     <div class="menu">
         <button id="help_button" name="help" class="btn btn-info" onclick="showPanel('help');">?</button>
         <button id="note_button" name="show-time" class="btn btn-info" onclick="makeNote();">Note</button>

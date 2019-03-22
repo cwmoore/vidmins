@@ -16,6 +16,14 @@ body {
     box-shadow: 5px 5px 10px #CCEEFA;
 }
 
+#brand-header {
+    color: #777777;
+}
+
+#brand-header span {
+    color: #3773C9;
+}
+
 /*
 label .fixed {
     display: inline-block;
