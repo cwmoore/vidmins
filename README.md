@@ -25,6 +25,6 @@ By both creating notes, and having searchable access to cued up lecture topics, 
 
 [Project Plan](docs/ProjectPlan.md)
 
-[Time Log](docs/time_sheet.tsv)
+[Time Log](docs/log.gitime)
 
 [Journal](docs/Journal.md)
