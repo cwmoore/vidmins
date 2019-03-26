@@ -25,16 +25,84 @@ public class Role {
 
     private String role;
 
-    @UpdateTimestamp
-    @Convert(converter = TimestampAttributeConverter.class)
-    @EqualsAndHashCode.Exclude private LocalDateTime updateDate;
-
     @CreationTimestamp
     @Convert(converter = TimestampAttributeConverter.class)
-    @EqualsAndHashCode.Exclude private LocalDateTime createDate;
+    @EqualsAndHashCode.Exclude
+    private LocalDateTime dateCreated;
 
     @ManyToOne
-    @JoinColumn(name="userName", referencedColumnName = "userName", nullable = false)    // referenceColumnName if not primary key
+    @JoinColumn(name="userName", referencedColumnName = "userName", nullable = false) // referenceColumnName if not primary key
     private User user;
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * Gets role.
+     *
+     * @return the role
+     */
+    public String getRole() {
+        return role;
+    }
+
+    /**
+     * Sets role.
+     *
+     * @param role the role
+     */
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    /**
+     * Gets user.
+     *
+     * @return the user
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * Sets user.
+     *
+     * @param user the user
+     */
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    /**
+     * Gets date created.
+     *
+     * @return the date created
+     */
+    public LocalDateTime getDateCreated() {
+        return dateCreated;
+    }
+
+    /**
+     * Sets date created.
+     *
+     * @param dateCreated the date created
+     */
+    public void setDateCreated(LocalDateTime dateCreated) {
+        this.dateCreated = dateCreated;
+    }
 }
