@@ -29,16 +29,6 @@ class NoteDaoTest {
     @BeforeEach
     void setUp() {
         dao = new GenericDao<>(Note.class);
-//        try {
-//            ProcessBuilder process = new ProcessBuilder("~/IdeaProjects/vidmins/src/test/resources/reset_test_db.sh");
-//            process.start();
-//            logger.debug("ProcessBuilder started UserDaoTest");
-//        } catch (IOException ioException) {
-//            logger.debug("ProcessBuilder failed to run in UserDaoTest");
-//        }
-        // would have to reenter my databases content into arrays
-//        CleanTestDB cleanTestDB = new CleanTestDB();
-//        cleanTestDB.testDbClean();
 
         com.vidmins.test.util.Database database = com.vidmins.test.util.Database.getInstance();
         database.runSQL("reset_db.sql");
