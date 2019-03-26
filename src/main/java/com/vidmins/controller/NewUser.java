@@ -122,12 +122,16 @@ public class NewUser extends HttpServlet {
                 && password0 != null
                 && password1 != null
         ) {
+            if (password0.length() < 10) {
+                // password too short
+                errors.put("password", "Password is too short, use 10 or more characters for security.");
+            }
             if (!password0.equals(password1)) {
                 // password mismatch
                 errors.put("password", "Password mismatch.");
             }
             if (!isEmail(email)) {
-                // bad address
+                // malformed address
                 errors.put("email", "Invalid email address.");
             }
             if (userDao.findByPropertyEqual("userName", username).size() > 0) {
@@ -150,6 +154,7 @@ public class NewUser extends HttpServlet {
                         isPassHashSet = Auth.setUserHashPass(user, password0);
                     } catch (Exception e) {
                         logger.debug("Problem setting the user's hash pass", e);
+                        //errors.put("", "");
                     }
 
 
@@ -158,6 +163,7 @@ public class NewUser extends HttpServlet {
                     } else {
                         userDao.delete(user);
                         logger.debug("User could not be saved");
+                        // errors.put("", "");
                     }
                 } else {
                     // TODO handle collisions, repeat attempts, active users trying to login in wrong place...
@@ -169,7 +175,8 @@ public class NewUser extends HttpServlet {
                 // redirect to new user profile
 
             }
-        } else { // make error messages for when fields are missing (loop through all request parameters)
+        } else {
+            // loop through all request parameters, make error messages for missing fields
             for (Map.Entry<String, String[]> entry: request.getParameterMap().entrySet()) {
                 if (entry.getValue() == null || entry.getValue().length == 0 || entry.getValue()[0] == null) {
                     errors.put(entry.getKey(), entry.getKey() + " must be set.");
@@ -177,10 +184,17 @@ public class NewUser extends HttpServlet {
             }
         }
 
+        if (errors.size() > 0) {
+            // return error messages to user
+            request.getSession().setAttribute("errors", errors);
+
+        }
+
         // return to signup and report errors
         for (Map.Entry<String, String> entry : errors.entrySet()) {
             logger.debug(entry.getKey() + ":" + entry.getValue());
         }
+
 
         // go to start page
         String url = "loadClient";

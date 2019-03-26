@@ -3,6 +3,10 @@
 <c:if test="${user == null}">
     <div id="access_form_container" class="aquapanel">
 
+        <c:forEach items="${errors}" var="error">
+            <span class="error">${error}</span><br />
+        </c:forEach>
+
         <form id="signup_form" class="signin" name="signup" method="post" action="new-user">
 
             <label for="t_first_name">First Name</label>      <input type="text" name="firstName" id="t_first_name"/> <br />

@@ -27,26 +27,26 @@ public class Login extends HttpServlet {
     /**
      * Handle a POST request (login)
      *
-     * @param req
-     * @param resp
-     * @throws ServletException
-     * @throws IOException
+     * @param request the request object
+     * @param response the response object
+     * @throws ServletException indicates a servlet problem
+     * @throws IOException indicates an IO problem
      */
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         GenericDao<User> userDao = new GenericDao<>(User.class);
         Auth auth = new Auth();
-        if (req.getParameter("userName") != null && req.getParameter("password") != null) {
+        if (request.getParameter("userName") != null && request.getParameter("password") != null) {
             try {
-                User user = auth.authenticateUser(req.getParameter("userName"), req.getParameter("password"));
-                req.getSession().setAttribute("user", user);
+                User user = auth.authenticateUser(request.getParameter("userName"), request.getParameter("password"));
+                request.getSession().setAttribute("user", user);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-        resp.sendRedirect("loadClient");
+        response.sendRedirect("loadClient");
     }
 }

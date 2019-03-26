@@ -167,8 +167,11 @@ public class LoadClient extends HttpServlet {
             }
 
             session.setAttribute("title", "The Video Minutes App");
-        } // else { // user is not logged in }
-
+        } else {
+            // user is not logged in
+            logger.debug("Not logged in.");
+        }
+/*
         // write out session attributes for debugging
         Enumeration keys = session.getAttributeNames();
         while (keys.hasMoreElements()) {
@@ -179,7 +182,7 @@ public class LoadClient extends HttpServlet {
             } else {
                 logger.debug(key + " is NULL");
             }
-        }
+        }*/
 
         // build URL params as needed
         String url = "/index.jsp";

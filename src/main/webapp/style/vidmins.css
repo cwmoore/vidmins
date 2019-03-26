@@ -109,3 +109,7 @@ form.signin {
 .signin label {
     width: 6em;
 }
+
+.error {
+    color: red;
+}

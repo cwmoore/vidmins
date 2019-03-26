@@ -20,8 +20,8 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <c:choose><c:when test="${user != null}">${user.firstName}</c:when><c:otherwise>User</c:otherwise></c:choose></a>
+                        <a class="nav-link dropdown-toggle<c:if test="${user == null}"> disabled</c:if>" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <c:choose><c:when test="${user != null}">${user.firstName}</c:when><c:otherwise>Username</c:otherwise></c:choose></a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
                             <a class="dropdown-item<c:if test="${user == null}"> disabled</c:if>" href="#">Profile</a>
@@ -40,7 +40,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#">About</a>
+                        <a class="nav-link" href="#">About</a>
                     </li>
 
                 </ul>
