@@ -34,6 +34,14 @@ public class User implements java.io.Serializable {
     @Column(name = "enc_pass")
     private String password; // TODO switch 'password' to 'enc_pass'
 
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "user_role",
+            joinColumns = { @JoinColumn(name = "userId") },
+            inverseJoinColumns = { @JoinColumn(name = "roleId")}
+    ) // adapted from: https://www.baeldung.com/hibernate-many-to-many
+    Set<Role> roles = new HashSet<>();
+
     @CreationTimestamp
     @Convert(converter = TimestampAttributeConverter.class)
     @EqualsAndHashCode.Exclude

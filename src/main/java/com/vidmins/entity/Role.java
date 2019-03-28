@@ -8,6 +8,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * The user's Role.
@@ -16,7 +18,8 @@ import java.time.LocalDateTime;
  * @author cwmoore
  */
 @Data
-@Entity
+@Entity(name = "Role")
+@Table(name = "role")
 public class Role {
 
     @Id
@@ -30,9 +33,8 @@ public class Role {
     @EqualsAndHashCode.Exclude
     private LocalDateTime dateCreated;
 
-    @ManyToOne
-    @JoinColumn(name="userName", referencedColumnName = "userName", nullable = false) // referenceColumnName if not primary key
-    private User user;
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users = new HashSet<>();
 
     /**
      * Gets id.
@@ -71,21 +73,21 @@ public class Role {
     }
 
     /**
-     * Gets user.
+     * Gets users.
      *
-     * @return the user
+     * @return the users
      */
-    public User getUser() {
-        return user;
+    public Set<User> getUsers() {
+        return users;
     }
 
     /**
-     * Sets user.
+     * Sets users.
      *
-     * @param user the user
+     * @param users the users
      */
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     /**

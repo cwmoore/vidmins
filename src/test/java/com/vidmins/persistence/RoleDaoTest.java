@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -58,7 +59,7 @@ class RoleDaoTest {
     void getByIdVerifyRoleSuccess() {
         Role role = dao.getById(3);
         assertNotNull(role);
-        assertEquals("jcoyne", role.getUser().getUserName());
+        assertEquals("admin", role.getRole());
     }
 
 
@@ -105,7 +106,7 @@ class RoleDaoTest {
 
         GenericDao<User> userDao = new GenericDao<>(User.class);
         User user = userDao.getById(3);
-        newRole.setUser(user);
+        newRole.setUsers(new Set<User>([user]));
 
         int insertId = dao.insert(newRole);
         assertNotEquals(0, insertId);
@@ -128,7 +129,10 @@ class RoleDaoTest {
         // TODO make for Role
         GenericDao<User> userDao = new GenericDao<>(User.class);
 
-        List<Role> roles = dao.findByPropertyEqual("user", userDao.findByPropertyEqual("username", "jcoyne"));
+        List<User> users = userDao.findByPropertyEqual("userName", "jcoyne");
+        User user = users.get(0);
+
+        List<Role> roles = dao.findByPropertyEqual("user", user);
         assertEquals(2, roles.size());
         assertEquals(2, roles.get(0).getId());
     }
