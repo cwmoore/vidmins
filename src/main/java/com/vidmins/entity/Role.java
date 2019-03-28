@@ -3,12 +3,15 @@ package com.vidmins.entity;
 import com.vidmins.util.TimestampAttributeConverter;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -24,12 +27,13 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GenericGenerator(name = "native", strategy = "native")
     private int id;
 
     private String role;
 
     @ManyToMany(mappedBy = "roles")
-    private Set<User> users = new HashSet<>();
+    private List<User> users = new ArrayList<User>();
 
     /**
      * Gets id.
@@ -72,7 +76,7 @@ public class Role {
      *
      * @return the users
      */
-    public Set<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
@@ -81,7 +85,7 @@ public class Role {
      *
      * @param users the users
      */
-    public void setUsers(Set<User> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 }

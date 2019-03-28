@@ -60,20 +60,6 @@ class RoleDaoTest {
     }
 
 
-    /**
-     * Verify successful delete of role
-     */
-    @Test
-    void deleteSuccess() {
-        int deleteId = 2;
-
-        // make this role
-        Role role = dao.getById(deleteId);
-        assertNotNull(role);
-        // disappear
-        dao.delete(role);
-        assertNull(dao.getById(deleteId));
-    }
 
     /**
      * Verify successful update of role
@@ -103,7 +89,7 @@ class RoleDaoTest {
 
         GenericDao<User> userDao = new GenericDao<>(User.class);
         User user = userDao.getById(3);
-        Set<User> users = new HashSet<>();
+        List<User> users = new ArrayList<>();
         users.add(user);
         newRole.setUsers(users);
 

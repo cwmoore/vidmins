@@ -40,7 +40,7 @@ public class User implements java.io.Serializable {
             joinColumns = { @JoinColumn(name = "userId") },
             inverseJoinColumns = { @JoinColumn(name = "roleId")}
     ) // adapted from: https://www.baeldung.com/hibernate-many-to-many
-    Set<Role> roles = new HashSet<>();
+    private List<Role> roles = new ArrayList<Role>();
 
     @CreationTimestamp
     @Convert(converter = TimestampAttributeConverter.class)
@@ -355,6 +355,42 @@ public class User implements java.io.Serializable {
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+    /**
+     * Gets roles.
+     *
+     * @return the roles
+     */
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    /**
+     * Sets roles.
+     *
+     * @param roles the roles
+     */
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    /**
+     * Gets auth tokens.
+     *
+     * @return the auth tokens
+     */
+    public List<AuthToken> getAuthTokens() {
+        return authTokens;
+    }
+
+    /**
+     * Sets auth tokens.
+     *
+     * @param authTokens the auth tokens
+     */
+    public void setAuthTokens(List<AuthToken> authTokens) {
+        this.authTokens = authTokens;
     }
 
     @Override

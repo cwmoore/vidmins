@@ -1,6 +1,7 @@
 SET FOREIGN_KEY_CHECKS = 0; # https://stackoverflow.com/a/8074510
 truncate user;
 truncate role;
+truncate user_role;
 truncate directory;
 truncate video;
 truncate note;
@@ -19,4 +20,3 @@ INSERT INTO note (id, label, text, start, videoId) VALUES (1,'note one', 'one sh
 INSERT INTO auth_token (id, user_id, user_hash, token, expiration, status) VALUES (1, 1, '1', 'token1', NOW(), 0), (2, 1, '1', 'token2', NOW(), 0), (3, 2, '2', 'token3', NOW(), -1), (4, 2, '2', 'token4', NOW(), 0), (5, 3, '3', 'token5', NOW(), -1);
 INSERT INTO contract (id, name, description, priceForTimePeriod, timePeriodHours, authorId) VALUES (1, 'no contract', 'default contract is no contract', 0, 0, 4), (2, 'free contract', 'free contract is free', 0, 0, 4), (3, '$10 contract', '$10 contract is $10/year', 10, 8766, 4);
 INSERT INTO subscription (id, name, description, start, end, subscriberId, directoryId, contractId) VALUES (1, 'subscription 1', 'subscription description 1', NOW(), NOW(), 3, 2, 2), (2, 'subscription 2', 'subscription description 2', NOW(), NOW(), 2, 1, 3);
-jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry '2-4' for key 'PRIMARY'
