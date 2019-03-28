@@ -28,11 +28,6 @@ public class Role {
 
     private String role;
 
-    @CreationTimestamp
-    @Convert(converter = TimestampAttributeConverter.class)
-    @EqualsAndHashCode.Exclude
-    private LocalDateTime dateCreated;
-
     @ManyToMany(mappedBy = "roles")
     private Set<User> users = new HashSet<>();
 
@@ -88,23 +83,5 @@ public class Role {
      */
     public void setUsers(Set<User> users) {
         this.users = users;
-    }
-
-    /**
-     * Gets date created.
-     *
-     * @return the date created
-     */
-    public LocalDateTime getDateCreated() {
-        return dateCreated;
-    }
-
-    /**
-     * Sets date created.
-     *
-     * @param dateCreated the date created
-     */
-    public void setDateCreated(LocalDateTime dateCreated) {
-        this.dateCreated = dateCreated;
     }
 }

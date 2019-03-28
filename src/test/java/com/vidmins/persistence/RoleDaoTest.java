@@ -9,10 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -106,7 +103,9 @@ class RoleDaoTest {
 
         GenericDao<User> userDao = new GenericDao<>(User.class);
         User user = userDao.getById(3);
-        newRole.setUsers(new Set<User>([user]));
+        Set<User> users = new HashSet<>();
+        users.add(user);
+        newRole.setUsers(users);
 
         int insertId = dao.insert(newRole);
         assertNotEquals(0, insertId);
@@ -114,7 +113,7 @@ class RoleDaoTest {
         Role insertedRole = dao.getById(insertId);
         assertNotNull(insertedRole);
         assertEquals(newRoleRole, insertedRole.getRole());
-        assertEquals(user.getUserName(), insertedRole.getUser().getUserName());
+        assertTrue(insertedRole.getUsers().contains(user));
 
         // Could continue comparing all values, but
         // it may make sense to use .equals()
