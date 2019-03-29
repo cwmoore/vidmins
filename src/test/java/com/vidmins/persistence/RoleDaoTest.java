@@ -89,9 +89,7 @@ class RoleDaoTest {
 
         GenericDao<User> userDao = new GenericDao<>(User.class);
         User user = userDao.getById(3);
-        List<User> users = new ArrayList<>();
-        users.add(user);
-        newRole.setUsers(users);
+        newRole.setUsers(user);
 
         int insertId = dao.insert(newRole);
         assertNotEquals(0, insertId);
@@ -99,7 +97,7 @@ class RoleDaoTest {
         Role insertedRole = dao.getById(insertId);
         assertNotNull(insertedRole);
         assertEquals(newRoleRole, insertedRole.getRole());
-        assertTrue(insertedRole.getUsers().contains(user));
+        assertTrue(insertedRole.getUser().equals(user));
 
         // Could continue comparing all values, but
         // it may make sense to use .equals()

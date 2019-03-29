@@ -32,8 +32,9 @@ public class Role {
 
     private String role;
 
-    @ManyToMany(mappedBy = "roles")
-    private List<User> users = new ArrayList<User>();
+    @ManyToOne
+    @JoinColumn(name = "userName", nullable = false)
+    private User user;
 
     /**
      * Gets id.
@@ -72,20 +73,20 @@ public class Role {
     }
 
     /**
-     * Gets users.
+     * Gets user.
      *
-     * @return the users
+     * @return the user
      */
-    public List<User> getUsers() {
-        return users;
+    public User getUser() {
+        return user;
     }
 
     /**
-     * Sets users.
+     * Sets user.
      *
-     * @param users the users
+     * @param user the user
      */
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setUsers(User user) {
+        this.user = user;
     }
 }
