@@ -39,7 +39,7 @@ public class User implements java.io.Serializable {
     @OneToMany(cascade = CascadeType.ALL,
             mappedBy = "user",
             fetch = FetchType.LAZY)
-    private List<Role> roles = new ArrayList<>();
+    private List<Role> roles;
 
     @CreationTimestamp
     @Convert(converter = TimestampAttributeConverter.class)

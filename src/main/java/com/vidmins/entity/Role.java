@@ -32,7 +32,7 @@ public class Role {
 
     private String role;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userName", referencedColumnName = "userName", nullable = false)
     private User user;
 

@@ -20,14 +20,14 @@ public class Video implements java.io.Serializable {
     @GenericGenerator(name = "native", strategy = "native")
     private int id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "youTubeVideoId", nullable = false)
     private YouTubeVideo youTubeVideo;
 
     private String title;
     private LocalDateTime addDate = LocalDateTime.now();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "directoryId", nullable = false)
     private Directory directory;
 
