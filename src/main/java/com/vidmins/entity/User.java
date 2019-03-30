@@ -29,6 +29,8 @@ public class User implements java.io.Serializable {
     private String firstName;
     private String lastName;
     private String email;
+
+    @Column(name = "userName")
     private String userName;
 
     @Column(name = "enc_pass")
@@ -36,17 +38,14 @@ public class User implements java.io.Serializable {
 
     @OneToMany(cascade = CascadeType.ALL,
             mappedBy = "user",
-            fetch = FetchType.EAGER)
-    private List<Role> roles = new ArrayList<Role>();
+            fetch = FetchType.LAZY)
+    private List<Role> roles = new ArrayList<>();
 
     @CreationTimestamp
     @Convert(converter = TimestampAttributeConverter.class)
     @EqualsAndHashCode.Exclude
     private LocalDateTime joinDate;
 
-    @CreationTimestamp
-    @Convert(converter = LocalDateAttributeConverter.class)
-    @EqualsAndHashCode.Exclude
     private LocalDate dateOfBirth;
 
     private String organization;
@@ -54,10 +53,11 @@ public class User implements java.io.Serializable {
     private String status;
 
     @OneToMany(mappedBy = "user",
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     private List<Directory> directories;
 
-    @OneToMany(mappedBy = "newUser")
+    @OneToMany(mappedBy = "newUser",
+            fetch = FetchType.LAZY)
     private List<AuthToken> authTokens;
 
 

@@ -23,7 +23,7 @@ public class Directory implements java.io.Serializable {
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             mappedBy = "directory")
     private List<Video> videos;
 
