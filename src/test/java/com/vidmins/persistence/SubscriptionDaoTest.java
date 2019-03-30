@@ -109,10 +109,8 @@ class SubscriptionDaoTest {
         GenericDao<User> userDao = new GenericDao<>(User.class);
 
         // get a subscriber
-        User subscriber = new User("dtillman");
-        int subscriberId = userDao.insert(subscriber);
-        subscriber = null;
-        subscriber = userDao.getById(subscriberId);
+        int subscriberId = 6;
+        User subscriber = userDao.getById(subscriberId);
         assertNotNull(subscriber);
 
         // get an author

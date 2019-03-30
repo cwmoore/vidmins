@@ -987,7 +987,7 @@
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="248" parent="227" name="priceForTmePeriod">
+    <column id="248" parent="227" name="priceForTimePeriod">
       <Position>5</Position>
       <DataType>float(6,4 digit)|0s</DataType>
       <NotNull>1</NotNull>
