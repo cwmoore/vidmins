@@ -1,5 +1,5 @@
 On invoice Independent project
-Total Time Worked: 97.5 hours
+Total Time Worked: 103.5 hours
 Total Charges:     $0.00
 Charges:
 02-08-2019         1.5 hours       Stuck on assertThrows
@@ -66,3 +66,4 @@ Charges:
 03-25-2019         2 hours         Improve new user sign up
 03-26-2019         2 hours         Add access restriction 'all' for display.jsp
 03-28-2019         2.25 hours      Quit with IllegalArgumentException: Unable to locate Attribute  with the the given name [user] on this ManagedType [com.vidmins.entity.Role]
+03-30-2019         6 hours         Fix a typo, attempt JPA triage, recognize that previously working tests have automagically broken
