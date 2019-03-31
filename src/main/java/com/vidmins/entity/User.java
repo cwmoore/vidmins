@@ -30,7 +30,7 @@ public class User implements java.io.Serializable {
     private String lastName;
     private String email;
 
-    @Column(name = "userName")
+    @Column(name = "userName", unique = true)
     private String userName;
 
     @Column(name = "enc_pass")

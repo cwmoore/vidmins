@@ -9,10 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * The user's Role.
@@ -86,7 +83,31 @@ public class Role {
      *
      * @param user the user
      */
-    public void setUsers(User user) {
+    public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", role='" + role + '\'' +
+                ", user=" + user +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Role role1 = (Role) o;
+        return id == role1.id &&
+                Objects.equals(role, role1.role) &&
+                Objects.equals(user, role1.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, role, user);
     }
 }
