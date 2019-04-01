@@ -124,6 +124,10 @@ public class LoadClient extends HttpServlet {
             // TODO optionally choose starting directory
             // TODO use last directory and video
 
+            // this throws cannot initialize proxy, no Session errors, TODO why?!
+            // logger.debug("user.getDirectories(): " + directories);
+
+
             Video currentVideo = null;
 
             // TODO optionally choose starting video
