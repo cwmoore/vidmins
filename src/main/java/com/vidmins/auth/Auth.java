@@ -8,12 +8,34 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
+/**
+ * The type Auth.
+ */
 public class Auth {
 
+    /**
+     * The Logger.
+     */
     Logger logger = LogManager.getLogger(this.getClass());
 
+    /**
+     * Instantiates a new Auth.
+     */
     public Auth() {
         super();
+    }
+
+    /**
+     * Change password boolean.
+     *
+     * @param userName    the user name
+     * @param oldPassword the old password
+     * @param newPassword the new password
+     * @return true if successfully changed, false otherwise
+     */
+    public boolean changePassword(String userName, String oldPassword, String newPassword) {
+        // TODO make this work, with an interface
+        return false;
     }
 
     /**
@@ -22,6 +44,7 @@ public class Auth {
      * @param userName the user name
      * @param password the password
      * @return an authenticated user
+     * @throws Exception the exception
      */
     public User authenticateUser(String userName, String password)
             throws Exception {
@@ -49,6 +72,14 @@ public class Auth {
         return accessUser;
     }
 
+    /**
+     * Sets user hash pass.
+     *
+     * @param user     the user
+     * @param password the password
+     * @return the user hash pass
+     * @throws Exception the exception
+     */
     public static boolean setUserHashPass(User user, String password) throws Exception {
 
         boolean isSet = false;
