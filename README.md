@@ -13,7 +13,7 @@ By both creating notes, and having searchable access to cued up lecture topics, 
     * the new note is associated with the video time stamp
 + review notes
     * notes for each video may be viewed on a timeline
-    * clicakble links jump to time stamp in playback
+    * clickable links jump to time stamp in playback
 + share
     * notes may be exported (various file types and cloud hosts)
     * possibly trade points earned by taking good notes for access to other's notes
