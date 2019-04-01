@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A class to represent a video.
@@ -203,5 +204,23 @@ public class Video implements java.io.Serializable {
                 ", title='" + title + '\'' +
                 ", addDate='" + addDate + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Video video = (Video) o;
+        return id == video.id &&
+                Objects.equals(youTubeVideo, video.youTubeVideo) &&
+                Objects.equals(title, video.title) &&
+                Objects.equals(addDate, video.addDate) &&
+                Objects.equals(directory, video.directory) &&
+                Objects.equals(notes, video.notes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, youTubeVideo, title, addDate, directory, notes);
     }
 }
