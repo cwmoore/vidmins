@@ -1,6 +1,8 @@
 package com.vidmins.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -34,8 +36,9 @@ public class Video implements java.io.Serializable {
     private Directory directory;
 
     @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
+            /*fetch = FetchType.EAGER,*/
             mappedBy = "video")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Note> notes = new ArrayList<>();
 
     /**

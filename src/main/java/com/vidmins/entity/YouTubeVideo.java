@@ -5,6 +5,8 @@ package com.vidmins.entity;
 
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -31,6 +33,7 @@ public class YouTubeVideo implements java.io.Serializable {
     private int duration;
 
     @OneToMany(mappedBy = "youTubeVideo")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Video> videos = new ArrayList<>();
 
     /**

@@ -1,6 +1,8 @@
 package com.vidmins.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ public class Contract implements java.io.Serializable {
     private User author;
 
     @OneToMany(mappedBy = "contract")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Subscription> subscriptions = new ArrayList<>();
 
     /**

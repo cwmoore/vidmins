@@ -2,11 +2,11 @@ package com.vidmins.entity;
 
 import com.vidmins.util.TimestampAttributeConverter;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -29,7 +29,8 @@ public class Role {
 
     private String role;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne/*(fetch = FetchType.EAGER)*/
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "userName", referencedColumnName = "userName", nullable = false)
     private User user;
 

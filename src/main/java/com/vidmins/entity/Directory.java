@@ -1,6 +1,8 @@
 package com.vidmins.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.*;
@@ -23,12 +25,14 @@ public class Directory implements java.io.Serializable {
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
+            /*fetch = FetchType.EAGER,*/
             mappedBy = "directory")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Video> videos;
 
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST},
             mappedBy = "directory")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Subscription> subscriptions;
 
     /**

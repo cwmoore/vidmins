@@ -40,8 +40,8 @@ public class User implements java.io.Serializable {
 
     // adapted from: https://stackoverflow.com/questions/4334970/hibernate-cannot-simultaneously-fetch-multiple-bags
     @OneToMany(cascade = CascadeType.ALL,
-            mappedBy = "user",
-            @LazyCollection(LazyCollectionOption.FALSE)/*fetch = FetchType.EAGER*/)
+            mappedBy = "user"/*, fetch = FetchType.EAGER*/)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Role> roles = new ArrayList<>();
 
     @CreationTimestamp
@@ -55,8 +55,8 @@ public class User implements java.io.Serializable {
     private String introduction;
     private String status;
 
-    @OneToMany(mappedBy = "user",
-            @LazyCollection(LazyCollectionOption.FALSE)/*fetch = FetchType.EAGER*/)
+    @OneToMany(mappedBy = "user")/*fetch = FetchType.EAGER)*/
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Directory> directories = new ArrayList<>();
 
 //    @OneToMany(mappedBy = "newUser",
