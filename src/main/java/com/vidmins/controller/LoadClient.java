@@ -152,6 +152,7 @@ public class LoadClient extends HttpServlet {
                 }
             }
 
+            // TODO move url param into a clean URL session object
             if (request.getParameter("videoId") != null) {
                 if (request.getParameter("videoId").matches("\\d+")) {
 
@@ -160,6 +161,7 @@ public class LoadClient extends HttpServlet {
                 }
             }
 
+            // TODO dedup this with line 135
             if (currentVideo != null) {
                 session.setAttribute("currentVideo", currentVideo);
 

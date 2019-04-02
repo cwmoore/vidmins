@@ -1,5 +1,9 @@
 package com.vidmins.entity;
 
+// TODO app needs access to youtube data to retrieve duration, title
+// TODO Video needs to trigger request to YouTubeDataAPI to instantiate req'd YouTubeVideo
+
+
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -36,14 +40,24 @@ public class YouTubeVideo implements java.io.Serializable {
     }
 
     /**
+     * Instantiates a YouTubeVideo from youTubeId.
+     *
+     * @param youTubeId the youTubeId
+     */
+    public YouTubeVideo(String youTubeId) {
+        this();
+        this.youTubeId = youTubeId;
+    }
+
+    /**
      * Instantiates a new YouTubeVideo really easily.
      *
      * @param title the title
      */
-    public YouTubeVideo(String title) {
+    public YouTubeVideo(String title, int duration) {
         this();
         this.title = title;
-        duration = 0;
+        this.duration = duration;
     }
 
     /**
