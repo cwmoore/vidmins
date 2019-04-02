@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,21 +22,21 @@ public class Video implements java.io.Serializable {
     @GenericGenerator(name = "native", strategy = "native")
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "youTubeVideoId", nullable = false)
     private YouTubeVideo youTubeVideo;
 
     private String title;
     private LocalDateTime addDate = LocalDateTime.now();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "directoryId", nullable = false)
     private Directory directory;
 
     @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             mappedBy = "video")
-    private List<Note> notes;
+    private List<Note> notes = new ArrayList<>();
 
     /**
      * Instantiates a new Video.
@@ -102,18 +103,18 @@ public class Video implements java.io.Serializable {
     }
 
     /**
-     * Gets you tube id.
+     * Gets you tube video.
      *
-     * @return the you tube id
+     * @return the you tube video
      */
     public YouTubeVideo getYouTubeVideo() {
         return youTubeVideo;
     }
 
     /**
-     * Sets you tube id.
+     * Sets you tube video.
      *
-     * @param youTubeVideo the you tube id
+     * @param youTubeVideo the you tube video
      */
     public void setYouTubeVideo(YouTubeVideo youTubeVideo) {
         this.youTubeVideo = youTubeVideo;

@@ -6,6 +6,8 @@ import com.vidmins.util.TimestampAttributeConverter;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.*;
@@ -36,10 +38,11 @@ public class User implements java.io.Serializable {
     @Column(name = "enc_pass")
     private String password;
 
+    // adapted from: https://stackoverflow.com/questions/4334970/hibernate-cannot-simultaneously-fetch-multiple-bags
     @OneToMany(cascade = CascadeType.ALL,
-            mappedBy = "user",
-            fetch = FetchType.LAZY)
-    private List<Role> roles;
+            mappedBy = "user"/*, fetch = FetchType.EAGER*/)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Role> roles = new ArrayList<>();
 
     @CreationTimestamp
     @Convert(converter = TimestampAttributeConverter.class)
@@ -52,13 +55,13 @@ public class User implements java.io.Serializable {
     private String introduction;
     private String status;
 
-    @OneToMany(mappedBy = "user",
-            fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user")/*fetch = FetchType.EAGER)*/
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Directory> directories = new ArrayList<>();
 
-    @OneToMany(mappedBy = "newUser",
-            fetch = FetchType.LAZY)
-    private List<AuthToken> authTokens;
+//    @OneToMany(mappedBy = "newUser",
+//            fetch = FetchType.EAGER)
+//    private List<AuthToken> authTokens = new ArrayList<>();
 
 
     /**
@@ -77,7 +80,7 @@ public class User implements java.io.Serializable {
         organization = "";
         introduction = "";
         status = "";
-        authTokens = null;
+        //authTokens = null;
     }
 
 
@@ -372,23 +375,23 @@ public class User implements java.io.Serializable {
         this.roles = roles;
     }
 
-    /**
-     * Gets auth tokens.
-     *
-     * @return the auth tokens
-     */
-    public List<AuthToken> getAuthTokens() {
-        return authTokens;
-    }
-
-    /**
-     * Sets auth tokens.
-     *
-     * @param authTokens the auth tokens
-     */
-    public void setAuthTokens(List<AuthToken> authTokens) {
-        this.authTokens = authTokens;
-    }
+//    /**
+//     * Gets auth tokens.
+//     *
+//     * @return the auth tokens
+//     */
+//    public List<AuthToken> getAuthTokens() {
+//        return authTokens;
+//    }
+//
+//    /**
+//     * Sets auth tokens.
+//     *
+//     * @param authTokens the auth tokens
+//     */
+//    public void setAuthTokens(List<AuthToken> authTokens) {
+//        this.authTokens = authTokens;
+//    }
 
     @Override
     public String toString() {
@@ -422,12 +425,13 @@ public class User implements java.io.Serializable {
                 dateOfBirth.equals(user.dateOfBirth) &&
                 organization.equals(user.organization) &&
                 introduction.equals(user.introduction) &&
-                status.equals(user.status) &&
-                Objects.equals(authTokens, user.authTokens);
+                status.equals(user.status)// &&
+                //Objects.equals(authTokens, user.authTokens)
+        ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email, userName, password, joinDate, dateOfBirth, organization, introduction, status, authTokens);
+        return Objects.hash(id, firstName, lastName, email, userName, password, joinDate, dateOfBirth, organization, introduction, status /*, authTokens*/);
     }
 }

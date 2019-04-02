@@ -3,6 +3,7 @@ package com.vidmins.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,16 +22,16 @@ public class Contract implements java.io.Serializable {
     private String description;
     private double priceForTimePeriod;
     private int timePeriodHours;
-    private boolean canShare;
-    private boolean canCopy;
-    private boolean canEdit;
+    private boolean canShare = false;
+    private boolean canCopy = false;
+    private boolean canEdit = false;
 
     @ManyToOne
     @JoinColumn(name = "authorId", nullable = false)
     private User author;
 
     @OneToMany(mappedBy = "contract")
-    private List<Subscription> subscriptions;
+    private List<Subscription> subscriptions = new ArrayList<>();
 
     /**
      * Instantiates a new Contract.

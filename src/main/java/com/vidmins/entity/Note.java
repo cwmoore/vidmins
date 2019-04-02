@@ -30,7 +30,7 @@ public class Note implements java.io.Serializable {
     @EqualsAndHashCode.Exclude
     private LocalDateTime createDatetime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "videoId", nullable = false)
     private Video video;
 

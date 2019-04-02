@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ public class YouTubeVideo implements java.io.Serializable {
     private int duration;
 
     @OneToMany(mappedBy = "youTubeVideo")
-    private List<Video> videos;
+    private List<Video> videos = new ArrayList<>();
 
     /**
      * Instantiates a new YouTubeVideo.
