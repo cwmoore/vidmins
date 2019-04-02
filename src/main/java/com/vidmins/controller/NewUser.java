@@ -114,6 +114,7 @@ public class NewUser extends HttpServlet {
             logger.debug(param.getKey() + ":" + String.join(", ", param.getValue()));
         }
 
+        // TODO use Hibernate Validator + catch ConstraintViolationException
         // verify complete and correct
         if (firstName != null
                 && lastName != null
