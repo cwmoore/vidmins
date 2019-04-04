@@ -1,4 +1,4 @@
-<Context docBase="adminAuth" path="/adminAuth" reloadable="true">
+<Context docBase="VidMins" path="/VidMins" reloadable="true">
     <Realm className="org.apache.catalina.realm.JDBCRealm"
            driverName="com.mysql.jdbc.Driver"
            connectionURL="jdbc:mysql://localhost:3306/vidmins?user=vidmins&amp;password=vituperate"
