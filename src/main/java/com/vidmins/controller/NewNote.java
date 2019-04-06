@@ -120,7 +120,7 @@ public class NewNote extends HttpServlet {
             noteFromFormData.setVideo(videoDao.getById(Integer.parseInt(request.getParameter("videoId"))));
             noteFromFormData.setCreateDatetime(LocalDateTime.now());
 
-            logger.debug("noteFromFormData before: " + noteFromFormData.toString());
+            //logger.debug("noteFromFormData before: " + noteFromFormData.toString());
 
             if (noteFromFormData.getId() > 0) {
                 logger.debug("This is a note to be updated: " + noteFromFormData.getId());
