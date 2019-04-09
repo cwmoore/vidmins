@@ -4,14 +4,46 @@
     <groupId>com.vidmins</groupId>
     <artifactId>vidmins</artifactId>
     <packaging>war</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <name>vidmins Video Minutes</name>
     <url>http://vidmins.com</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>build-dev</id>
+            <activation>
+                <!-- <activeByDefault>true</activeByDefault> -->
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>/etc/vidmins/dev</directory>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+        <profile>
+            <id>build-prod</id>
+            <activation>
+             <!--   <activeByDefault>false</activeByDefault> -->
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>/etc/vidmins/prod</directory>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+    </profiles>
 <build>
+
     <finalName>VidMins</finalName>
+
+
     <plugins>
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -131,7 +163,6 @@
         <artifactId>jstl</artifactId>
         <version>1.2</version>
     </dependency>
-
 </dependencies>
 
 </project>

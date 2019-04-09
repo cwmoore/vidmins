@@ -4,6 +4,17 @@
          version="3.1">
   <display-name>Video Minutes</display-name>
 
+  <!-- Tell the server to use form-based authentication. -->
+  <login-config>
+    <auth-method>FORM</auth-method>
+    <form-login-config>
+        <form-login-page>/login.jsp</form-login-page>
+        <form-error-page>/loginError.jsp</form-error-page>
+        <!-- <form-login-page>/loadClient</form-login-page>
+        <form-error-page>/loadClient?loginError=not%20found</form-error-page> -->
+    </form-login-config>
+  </login-config>
+
   <!--security-constraint>
     <web-resource-collection>
       <web-resource-name>RequiresAdminRole</web-resource-name>
@@ -17,6 +28,7 @@
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>RequiresNormalUserRole</web-resource-name>
+      <url-pattern>/LoadClient</url-pattern>
       <url-pattern>/directory.jsp</url-pattern>
       <url-pattern>/player.jsp</url-pattern>
       <url-pattern>/subscribe.jsp</url-pattern>

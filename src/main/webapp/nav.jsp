@@ -48,10 +48,16 @@
                 <c:choose>
                     <c:when test="${user == null}">
 
-                        <form class="form-inline my-2 my-lg-0" action="login" method="POST">
-                            <input type="text" name="userName" placeholder="userName" class="form-control mr-sm-2" />
+                        <%--   <form class="form-inline my-2 my-lg-0" action="login" method="POST">
+                             <input type="text" name="userName" placeholder="userName" class="form-control mr-sm-2" />
                             <input type="password" name="password" placeholder="password" class="form-control mr-sm-2" />
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign in</button>
+                            --%>
+                        <form class="form-inline my-2 my-lg-0" action="j_security_check" method="POST">
+                             <input type="text" name="j_username" placeholder="username" class="form-control mr-sm-2" />
+                             <input type="password" name="j_password" placeholder="password" class="form-control mr-sm-2" />
+
+                            <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Log in"/>
+                            <%-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign in</button> --%>
                             -|-
                             <button id="signup_btn" class="btn btn-outline-primary my-2 my-sm-0" type="button">Sign up</button>
                         </form>

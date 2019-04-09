@@ -35,7 +35,13 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+/*
+// TODO reimplement login
+        String username = request.getRemoteUser();
+        request.isUserInRole("admin");
+        request.isUserInRole("normal");
+        request.isUserInRole("guest");
+*/
         GenericDao<User> userDao = new GenericDao<>(User.class);
         Auth auth = new Auth();
         if (request.getParameter("userName") != null && request.getParameter("password") != null) {
