@@ -28,12 +28,7 @@
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>RequiresNormalUserRole</web-resource-name>
-      <url-pattern>/LoadClient</url-pattern>
-      <url-pattern>/directory.jsp</url-pattern>
-      <url-pattern>/player.jsp</url-pattern>
-      <url-pattern>/subscribe.jsp</url-pattern>
-      <url-pattern>/video.jsp</url-pattern>
-      <url-pattern>/watcher.jsp</url-pattern>
+      <url-pattern>/loadClient</url-pattern>
     </web-resource-collection>
 
     <auth-constraint>
@@ -50,5 +45,10 @@
   <security-role>
     <role-name>admin</role-name>
   </security-role>
-
+<!--
+  <error-page>
+    <error-code>400</error-code>
+    <location>/loadClient</location>
+  </error-page>
+-->
 </web-app>

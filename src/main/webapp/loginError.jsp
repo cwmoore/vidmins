@@ -1,2 +1,5 @@
-Login error
-(Send message back to ?)
+<%
+    String url = "/VidMins/";
+    response.setStatus(response.SC_UNAUTHORIZED);
+    response.setHeader("Location", url);
+%>
