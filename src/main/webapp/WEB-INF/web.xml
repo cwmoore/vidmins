@@ -8,12 +8,28 @@
   <login-config>
     <auth-method>FORM</auth-method>
     <form-login-config>
-        <!--form-login-page>/login.jsp</form-login-page-->
-        <form-error-page>/loginError.jsp</form-error-page>
-        <form-login-page>/loadClient</form-login-page>
-        <!--<form-error-page>/loadClient?loginError=not%20found</form-error-page> -->
+      <form-login-page>/</form-login-page>
+      <form-error-page>/loginError.jsp</form-error-page>
     </form-login-config>
   </login-config>
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>RequiresNormalUserRole</web-resource-name>
+      <url-pattern>/loadClient</url-pattern>
+      <url-pattern>/new-note</url-pattern>
+      <url-pattern>/edit-note</url-pattern>
+      <url-pattern>/new-user</url-pattern>
+      <url-pattern>/new-video</url-pattern>
+      <url-pattern>/subscribe</url-pattern>
+    </web-resource-collection>
+
+    <auth-constraint>
+      <role-name>normal</role-name>
+      <role-name>admin</role-name>
+    </auth-constraint>
+
+  </security-constraint>
 
   <!--security-constraint>
     <web-resource-collection>
@@ -24,19 +40,6 @@
       <role-name>admin</role-name>
     </auth-constraint>
   </security-constraint-->
-
-  <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>RequiresNormalUserRole</web-resource-name>
-      <url-pattern>/loadClient</url-pattern>
-    </web-resource-collection>
-
-    <auth-constraint>
-      <role-name>normal</role-name>
-      <role-name>admin</role-name>
-    </auth-constraint>
-
-  </security-constraint>
 
   <security-role>
     <role-name>normal</role-name>
