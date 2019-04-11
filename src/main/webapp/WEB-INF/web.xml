@@ -4,11 +4,16 @@
          version="3.1">
   <display-name>Video Minutes</display-name>
 
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>index.jsp</servlet-name>-->
+        <!--<url-pattern></url-pattern> &lt;!&ndash; Yes, empty string! &ndash;&gt;-->
+    <!--</servlet-mapping>-->
+
   <!-- Tell the server to use form-based authentication. -->
   <login-config>
     <auth-method>FORM</auth-method>
     <form-login-config>
-      <form-login-page>/</form-login-page>
+      <form-login-page>/login.jsp</form-login-page>
       <form-error-page>/loginError.jsp</form-error-page>
     </form-login-config>
   </login-config>
@@ -16,6 +21,7 @@
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>RequiresNormalUserRole</web-resource-name>
+      <!--url-pattern>/redirector.jsp</url-pattern-->
       <url-pattern>/loadClient</url-pattern>
       <url-pattern>/new-note</url-pattern>
       <url-pattern>/edit-note</url-pattern>

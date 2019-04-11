@@ -1,5 +1,5 @@
-<%
-    String url = "/VidMins/loadClient";
-    response.setStatus(response.SC_ACCEPTED);
-    response.setHeader("Location", url);
-%>Login Success
+<form action="j_security_check" method="post">
+    <input type="text" placeholder="username"/>
+    <input type="password" placeholder="password"/>
+    <input type="submit" value="Log in"/>
+</form>

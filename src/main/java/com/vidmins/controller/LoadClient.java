@@ -110,11 +110,11 @@ public class LoadClient extends HttpServlet {
         logger.debug("in loadClient");
 
         // logged in user, gather related objects
-        if (session.getAttribute("user") != null) {
-        //if (request.getRemoteUser() != null) {
-            User user = (User) session.getAttribute("user");
-            //logger.debug(request.getRemoteUser());
-            //User user = userDao.findByPropertyEqual("userName", request.getRemoteUser()).get(0);
+        //if (session.getAttribute("user") != null) {
+        if (request.getRemoteUser() != null) {
+            //User user = (User) session.getAttribute("user");
+            logger.debug(request.getRemoteUser());
+            User user = userDao.findByPropertyEqual("userName", request.getRemoteUser()).get(0);
             logger.debug("User: " + user);
 
 
