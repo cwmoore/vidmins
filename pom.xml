@@ -10,12 +10,42 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
+<!--
+    <distributionManagement>
+        <repository>
+            <uniqueVersion>false</uniqueVersion>
+            <id>VidMins</id>
+            <name>VidMins Repository</name>
+            <url>scp://vidmins.com/artifact</url>
+            <layout>default</layout>
+        </repository>
+        <snapshotRepository>
+            <uniqueVersion>true</uniqueVersion>
+            <id>VidMins</id>
+            <name>Video Minutes</name>
+            <url>sftp://propellers.net/maven</url>
+            <layout>legacy</layout>
+        </snapshotRepository>
+        <site>
+            <id>vidmins.com</id>
+            <name>VidMins Website</name>
+            <url>scp://vidmins.com/artifact</url>
+        </site>
+        <relocation>
+            <groupId>com.vidmins</groupId>
+            <artifactId>vidmins</artifactId>
+            <version>1.0</version>
+            <message>We have moved the Project</message>
+        </relocation>
+        <downloadUrl>http://vidmins.com/artifact</downloadUrl>
+        <status>deployed</status>
+    </distributionManagement>
+    -->
     <profiles>
         <profile>
             <id>build-dev</id>
             <activation>
-                <!-- <activeByDefault>true</activeByDefault> -->
+                 <activeByDefault>true</activeByDefault>
             </activation>
             <build>
                 <resources>
@@ -41,7 +71,7 @@
     </profiles>
 <build>
 
-    <finalName>VidMins</finalName>
+    <finalName>vidmins</finalName>
 
 
     <plugins>
@@ -72,23 +102,23 @@
 
 <dependencies>
     <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-crypto -->
-    <dependency>
-        <groupId>org.springframework.security</groupId>
-        <artifactId>spring-security-crypto</artifactId>
-        <version>3.1.0.RELEASE</version>
-    </dependency>
-    <dependency>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok</artifactId>
-        <version>1.18.6</version>
-        <scope>provided</scope>
-    </dependency>
-    <dependency>
-        <!-- jsoup HTML parser library @ https://jsoup.org/ -->
-        <groupId>org.jsoup</groupId>
-        <artifactId>jsoup</artifactId>
-        <version>1.11.3</version>
-    </dependency>
+    <!--<dependency>-->
+        <!--<groupId>org.springframework.security</groupId>-->
+        <!--<artifactId>spring-security-crypto</artifactId>-->
+        <!--<version>3.1.0.RELEASE</version>-->
+    <!--</dependency>-->
+    <!--<dependency>-->
+        <!--<groupId>org.projectlombok</groupId>-->
+        <!--<artifactId>lombok</artifactId>-->
+        <!--<version>1.18.6</version>-->
+        <!--<scope>provided</scope>-->
+    <!--</dependency>-->
+    <!--<dependency>-->
+        <!--&lt;!&ndash; jsoup HTML parser library @ https://jsoup.org/ &ndash;&gt;-->
+        <!--<groupId>org.jsoup</groupId>-->
+        <!--<artifactId>jsoup</artifactId>-->
+        <!--<version>1.11.3</version>-->
+    <!--</dependency>-->
     <dependency>
         <groupId>org.junit.jupiter</groupId>
         <artifactId>junit-jupiter-engine</artifactId>

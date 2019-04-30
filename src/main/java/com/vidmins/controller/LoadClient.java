@@ -101,8 +101,17 @@ public class LoadClient extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-//        request.login("cmoore", "password"); // this authenticates!
-//        logger.debug(request.getRemoteUser());
+        if (request.authenticate(response)) {
+            logger.debug("authenticated");
+            logger.debug(request.getRemoteUser());
+            logger.debug(request.getUserPrincipal());
+            logger.debug(request.getAuthType());
+        } else {
+            logger.debug("not authenticated");
+            //request.login("cmoore", "password"); // this authenticates!
+            //request.login("dduck", "password"); // this authenticates!
+//        request.login("cmoore", "passwordish"); // this does not (throws ServletException)
+        }
 
         loadHelpers(request);
 
@@ -114,12 +123,13 @@ public class LoadClient extends HttpServlet {
 
         // logged in user, gather related objects
         if (session.getAttribute("user") != null) {
-            logger.debug("user != null");
-        } else if (request.getRemoteUser() != null) {
+            logger.debug("user != null", session.getAttribute("user"));
             //User user = (User) session.getAttribute("user");
+        } else if (request.getRemoteUser() != null) {
             logger.debug(request.getRemoteUser());
             User user = userDao.findByPropertyEqual("userName", request.getRemoteUser()).get(0);
             logger.debug("User: " + user);
+            session.setAttribute("user", user);
 
 
             // TODO investigate strategies for lazy loading user data
