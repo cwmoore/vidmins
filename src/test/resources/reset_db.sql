@@ -9,7 +9,7 @@ truncate contract;
 truncate subscription;
 truncate youTubeVideo;
 SET FOREIGN_KEY_CHECKS = 1;
-INSERT INTO user (id, firstName, lastName, userName, enc_pass, dateOfBirth) VALUES (1, 'Joe','Coyne','jcoyne','supersecret1','1964-04-01'),(2, 'Fred','Hensen','fhensen','supersecret2','1988-05-08'),(3,'Barney','Curry','bcurry','supersecret3','1947-11-11'),(4,'Karen','Mack','kmack','supersecret4','1986-07-08'),(5, 'Dianne','Klein','dklein','supersecret5','1991-09-22'),(6, 'Dawn','Tillman','dtillman','supersecret6','1979-08-30');
+INSERT INTO user (id, firstName, lastName, userName, password, enc_pass, dateOfBirth) VALUES (1, 'Joe','Coyne','jcoyne', 'password', 'supersecret1','1964-04-01'),(2, 'Fred','Hensen','fhensen', 'password','supersecret2','1988-05-08'),(3,'Barney','Curry','bcurry', 'password','supersecret3','1947-11-11'),(4,'Karen','Mack','kmack', 'password','supersecret4','1986-07-08'),(5, 'Dianne','Klein','dklein', 'password','supersecret5','1991-09-22'),(6, 'Dawn','Tillman','dtillman', 'password','supersecret6','1979-08-30');
 INSERT INTO role (id, role, userName) VALUES (1, 'guest', 'jcoyne'), (2, 'local', 'jcoyne'), (3, 'admin', 'fhensen'), (4, 'super', 'dtillman'), (5, 'local', 'bcurry'), (6, 'local', 'kmack'), (7, 'oauth', 'dklein');
 INSERT INTO directory (id, name, userId) VALUES (1,'default', 1),(2,'new dir', 1),(3,'default', 2),(4,'default', 3);
 INSERT INTO youTubeVideo (id, youTubeId, title, duration, metadata) VALUES (1, '4HzWKwExaeo', 'Week 1 Act 5', -1, '-'), (2, 'dF0NWtxRXsg', 'PHPWk1', -1, '-'), (3, '4KGGkytxlZM', 'Welcome video', -1, '-');

@@ -20,9 +20,9 @@
 
   <security-constraint>
     <web-resource-collection>
-      <web-resource-name>RequiresNormalUserRole</web-resource-name>
+      <web-resource-name>RequiresLocalUserRole</web-resource-name>
       <!--url-pattern>/redirector.jsp</url-pattern-->
-      <url-pattern>/loadClient</url-pattern>
+       <!--<url-pattern>/loadClient</url-pattern>-->
       <url-pattern>/new-note</url-pattern>
       <url-pattern>/edit-note</url-pattern>
       <url-pattern>/new-user</url-pattern>
@@ -31,8 +31,9 @@
     </web-resource-collection>
 
     <auth-constraint>
-      <role-name>normal</role-name>
-      <role-name>admin</role-name>
+      <role-name>local</role-name>
+      <!--<role-name>admin</role-name>
+      <role-name>super</role-name>-->
     </auth-constraint>
 
   </security-constraint>
@@ -48,12 +49,18 @@
   </security-constraint-->
 
   <security-role>
-    <role-name>normal</role-name>
+    <role-name>local</role-name>
   </security-role>
-
+<!--
   <security-role>
     <role-name>admin</role-name>
   </security-role>
+
+  <security-role>
+    <role-name>super</role-name>
+  </security-role>
+  -->
+
 <!--
   <error-page>
     <error-code>400</error-code>

@@ -1,7 +1,7 @@
 package com.vidmins.controller;
 
 import com.vidmins.auth.Auth;
-import com.vidmins.entity.AuthToken;
+//import com.vidmins.entity.AuthToken;
 import com.vidmins.entity.User;
 import com.vidmins.persistence.GenericDao;
 import org.apache.logging.log4j.LogManager;
@@ -59,29 +59,29 @@ public class NewUser extends HttpServlet {
         userProperties.put("userHash", userHash);
         userProperties.put("token", verificationToken);
 
-        GenericDao<AuthToken> authTokenDao = new GenericDao<>(AuthToken.class);
-        List<AuthToken> authTokens = authTokenDao.findByPropertyEqual(userProperties);
-
-        if (authTokens.size() == 0) {
-            // not a match
-            // bad, log as possible hack attempt
-        } else if (authTokens.size() == 1) {
-            // exactly one match
-            if (authTokens.get(0).getExpiration().compareTo(LocalDateTime.now()) > 0) {
-                // still good, redirect to login
-            } else {
-                // expired, offer to generate new pair and resend email
-            }
-        } else {
-
-            // this should not happen in a million years
-            // with good hash function and length
-            // bad, log as possible hack attempt
-
-            for (AuthToken authToken : authTokens) {
-                // may want delete or somehow mark as exposed
-            }
-        }
+//        GenericDao<AuthToken> authTokenDao = new GenericDao<>(AuthToken.class);
+//        List<AuthToken> authTokens = authTokenDao.findByPropertyEqual(userProperties);
+//
+//        if (authTokens.size() == 0) {
+//            // not a match
+//            // bad, log as possible hack attempt
+//        } else if (authTokens.size() == 1) {
+//            // exactly one match
+//            if (authTokens.get(0).getExpiration().compareTo(LocalDateTime.now()) > 0) {
+//                // still good, redirect to login
+//            } else {
+//                // expired, offer to generate new pair and resend email
+//            }
+//        } else {
+//
+//            // this should not happen in a million years
+//            // with good hash function and length
+//            // bad, log as possible hack attempt
+//
+//            for (AuthToken authToken : authTokens) {
+//                // may want delete or somehow mark as exposed
+//            }
+//        }
 
         Map<String, String> errors = new HashMap<>();
     }
@@ -145,27 +145,27 @@ public class NewUser extends HttpServlet {
 
             if (errors.size() == 0) {
                 // add new user
-                User user = new User(firstName, lastName, username, organization, introduction, LocalDate.parse(dateOfBirth));
+                User user = new User(firstName, lastName, username, password0, organization, introduction, LocalDate.parse(dateOfBirth));
                 int insertId = userDao.insert(user);
 
                 if (insertId > 0) {
                     user = userDao.getById(insertId);
                     // TODO make SURE usernames are unique
-                    try {
-                        isPassHashSet = Auth.setUserHashPass(user, password0);
-                    } catch (Exception e) {
-                        logger.debug("Problem setting the user's hash pass", e);
-                        //errors.put("", "");
-                    }
+//                    try {
+//                        isPassHashSet = Auth.setUserHashPass(user, password0);
+//                    } catch (Exception e) {
+//                        logger.debug("Problem setting the user's hash pass", e);
+//                        //errors.put("", "");
+//                    }
 
 
-                    if (isPassHashSet) {
+                    //if (isPassHashSet) {
                         request.getSession().setAttribute("user", user);
-                    } else {
-                        userDao.delete(user);
-                        logger.debug("User could not be saved");
-                        // errors.put("", "");
-                    }
+//                    } else {
+//                        userDao.delete(user);
+//                        logger.debug("User could not be saved");
+//                        // errors.put("", "");
+//                    }
                 } else {
                     // TODO handle collisions, repeat attempts, active users trying to login in wrong place...
                 }

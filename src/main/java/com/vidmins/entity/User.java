@@ -3,7 +3,9 @@ package com.vidmins.entity;
 import com.vidmins.auth.Auth;
 import com.vidmins.util.LocalDateAttributeConverter;
 import com.vidmins.util.TimestampAttributeConverter;
-import lombok.EqualsAndHashCode;
+//import lombok.EqualsAndHashCode;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
@@ -36,17 +38,20 @@ public class User implements java.io.Serializable {
     private String userName;
 
     @Column(name = "enc_pass")
+    private String enc_pass;
+
+    @Column(name = "password")
     private String password;
 
     // adapted from: https://stackoverflow.com/questions/4334970/hibernate-cannot-simultaneously-fetch-multiple-bags
     @OneToMany(cascade = CascadeType.ALL,
-            mappedBy = "user"/*, fetch = FetchType.EAGER*/)
+            mappedBy = "user", fetch = FetchType.EAGER)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Role> roles = new ArrayList<>();
 
     @CreationTimestamp
     @Convert(converter = TimestampAttributeConverter.class)
-    @EqualsAndHashCode.Exclude
+    //@EqualsAndHashCode.Exclude
     private LocalDateTime joinDate;
 
     private LocalDate dateOfBirth;
@@ -63,6 +68,8 @@ public class User implements java.io.Serializable {
 //            fetch = FetchType.EAGER)
 //    private List<AuthToken> authTokens = new ArrayList<>();
 
+
+    private static Logger logger;
 
     /**
      * Instantiates a new User.
@@ -81,6 +88,8 @@ public class User implements java.io.Serializable {
         introduction = "";
         status = "";
         //authTokens = null;
+        logger = LogManager.getLogger(this.getClass());
+        logger.info("New User...");
     }
 
 
@@ -124,6 +133,28 @@ public class User implements java.io.Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
+        this.organization = organization;
+        this.introduction = introduction;
+        this.dateOfBirth = dateOfBirth;
+    }
+
+
+    /**
+     * Instantiates a new User.
+     *
+     * @param firstName    the first name
+     * @param lastName     the last name
+     * @param userName     the user name
+     * @param password     the password
+     * @param organization the organization
+     * @param introduction the introduction
+     * @param dateOfBirth  the date of birth
+     */
+    public User(String firstName, String lastName, String userName, String password, String organization, String introduction, LocalDate dateOfBirth) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = userName;
+        this.password = password;
         this.organization = organization;
         this.introduction = introduction;
         this.dateOfBirth = dateOfBirth;

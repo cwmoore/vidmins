@@ -1,5 +1,7 @@
 package com.vidmins.entity;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -35,10 +37,14 @@ public class Directory implements java.io.Serializable {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Subscription> subscriptions;
 
+    private static Logger logger;
+
     /**
      * Instantiates a new Directory.
      */
     public Directory() {
+        logger = LogManager.getLogger(this.getClass());
+        logger.info("New Directory...");
     }
 
     /**

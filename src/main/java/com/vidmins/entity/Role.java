@@ -1,7 +1,9 @@
 package com.vidmins.entity;
 
 import com.vidmins.util.TimestampAttributeConverter;
-import lombok.*;
+//import lombok.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;
@@ -17,7 +19,7 @@ import java.util.*;
  * @author pwaite
  * @author cwmoore
  */
-@Data
+//@Data
 @Entity(name = "Role")
 @Table(name = "role")
 public class Role {
@@ -33,6 +35,13 @@ public class Role {
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "userName", referencedColumnName = "userName", nullable = false)
     private User user;
+
+    private static Logger logger;
+
+    public Role() {
+        logger = LogManager.getLogger(this.getClass());
+        logger.info("new Role");
+    }
 
     /**
      * Gets id.

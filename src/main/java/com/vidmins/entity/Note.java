@@ -1,7 +1,7 @@
 package com.vidmins.entity;
 
 import com.vidmins.util.TimestampAttributeConverter;
-import lombok.EqualsAndHashCode;
+//import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -27,7 +27,7 @@ public class Note implements java.io.Serializable {
 
     @CreationTimestamp
     @Convert(converter = TimestampAttributeConverter.class)
-    @EqualsAndHashCode.Exclude
+    //@EqualsAndHashCode.Exclude
     private LocalDateTime createDatetime;
 
     @ManyToOne(fetch = FetchType.EAGER)

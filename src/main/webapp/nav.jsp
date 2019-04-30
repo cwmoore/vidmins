@@ -46,8 +46,8 @@
                 </ul>
 
                 <c:choose>
-                    <c:when test="${user == null}">
-
+                    <%--<c:when test="${user == null}">--%>
+                    <c:when test="${request.getRemoteUser() == null}">
                         <%--   <form class="form-inline my-2 my-lg-0" action="login" method="POST">
                              <input type="text" name="userName" placeholder="userName" class="form-control mr-sm-2" />
                             <input type="password" name="password" placeholder="password" class="form-control mr-sm-2" />
@@ -62,7 +62,7 @@
                             -|-
                             <button id="signup_btn" class="btn btn-outline-primary my-2 my-sm-0" type="button">Sign up</button>
                         </form-->
-                        <a href="loadClient">Log in</a>
+                        <a href="loadClient">Login</a>
                         <%--<a href="redirector.jsp">Log in</a>--%>
 
                     </c:when>

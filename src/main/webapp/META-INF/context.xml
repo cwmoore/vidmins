@@ -1,9 +1,9 @@
-<Context docBase="VidMins" path="/VidMins" reloadable="true">
+<Context docBase="vidmins" path="/vidmins" reloadable="true">
     <Realm className="org.apache.catalina.realm.JDBCRealm"
            driverName="com.mysql.jdbc.Driver"
-           connectionURL="jdbc:mysql://localhost:3306/vidmins?user=vidmins&amp;password=vituperate"
+           connectionURL="jdbc:mysql://localhost:3306/vidmins?user=tomcat&amp;password=tomcaterwaul"
            userTable="user" userNameCol="userName" userCredCol="password"
-           userRoleTable="role" roleNameCol="role" debug="9">
+           userRoleTable="role" roleNameCol="role">
     </Realm>
     <Valve className="org.apache.catalina.valves.AccessLogValve"
            prefix="localhost_access_log" suffix=".txt"

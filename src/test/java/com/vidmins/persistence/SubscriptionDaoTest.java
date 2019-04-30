@@ -97,7 +97,7 @@ class SubscriptionDaoTest {
 
         User retrievedSubscriber = retrievedSubscription.getSubscriber();
         logger.debug("Subscriber: " + subscriber.toString());
-        logger.debug("Retrieved Subscriber" + retrievedSubscriber.toString());
+        logger.debug("Retrieved Subscriber: " + retrievedSubscriber.toString());
         assertEquals(subscriber.getUserName(), retrievedSubscriber.getUserName());
     }
 

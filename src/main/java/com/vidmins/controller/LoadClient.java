@@ -42,7 +42,7 @@ public class LoadClient extends HttpServlet {
     @Override
     public void init() throws ServletException {
         logger = LogManager.getLogger(this.getClass());
-        logger.info("Starting NewNote servlet");
+        logger.info("Starting LoadClient servlet");
     }
 
     /**
@@ -101,6 +101,9 @@ public class LoadClient extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+//        request.login("cmoore", "password"); // this authenticates!
+//        logger.debug(request.getRemoteUser());
+
         loadHelpers(request);
 
         String requestParams = "?";
@@ -110,8 +113,9 @@ public class LoadClient extends HttpServlet {
         logger.debug("in loadClient");
 
         // logged in user, gather related objects
-        //if (session.getAttribute("user") != null) {
-        if (request.getRemoteUser() != null) {
+        if (session.getAttribute("user") != null) {
+            logger.debug("user != null");
+        } else if (request.getRemoteUser() != null) {
             //User user = (User) session.getAttribute("user");
             logger.debug(request.getRemoteUser());
             User user = userDao.findByPropertyEqual("userName", request.getRemoteUser()).get(0);
