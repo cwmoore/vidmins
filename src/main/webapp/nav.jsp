@@ -47,7 +47,8 @@
 
                 <c:choose>
                     <%--<c:when test="${user == null}">--%>
-                    <c:when test="${request.getRemoteUser() == null}">
+                    <c:when test="${!request.authenticate(response)}">
+                        <c:if test="${errors != null}"><span class="error">${errors}</span></c:if>
                         <form class="form-inline my-2 my-lg-0" action="login" method="POST">
                             <input type="text" name="userName" placeholder="userName" class="form-control mr-sm-2" />
                             <input type="password" name="password" placeholder="password" class="form-control mr-sm-2" />

@@ -20,11 +20,11 @@
 
   <!-- https://www.logicbig.com/tutorials/java-ee-tutorial/java-servlet/programmatic-security.html -->
 
-  <security-constraint>
+  <!--security-constraint>
     <web-resource-collection>
       <web-resource-name>RequiresLocalUserRole</web-resource-name>
-      <!--url-pattern>/redirector.jsp</url-pattern-->
-       <!--<url-pattern>/loadClient</url-pattern>-->
+      <url-pattern>/redirector.jsp</url-pattern>
+       <url-pattern>/loadClient</url-pattern>
       <url-pattern>/new-note</url-pattern>
       <url-pattern>/edit-note</url-pattern>
       <url-pattern>/new-user</url-pattern>
@@ -34,11 +34,11 @@
 
     <auth-constraint>
       <role-name>local</role-name>
-      <!--<role-name>admin</role-name>
-      <role-name>super</role-name>-->
+      <role-name>admin</role-name>
+      <role-name>super</role-name>
     </auth-constraint>
 
-  </security-constraint>
+  </security-constraint-->
 
   <!--security-constraint>
     <web-resource-collection>
@@ -50,9 +50,9 @@
     </auth-constraint>
   </security-constraint-->
 
-  <security-role>
+  <!--security-role>
     <role-name>local</role-name>
-  </security-role>
+  </security-role-->
 <!--
   <security-role>
     <role-name>admin</role-name>

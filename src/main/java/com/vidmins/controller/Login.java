@@ -55,21 +55,34 @@ public class Login extends HttpServlet {
         request.isUserInRole("guest");
 */
         GenericDao<User> userDao = new GenericDao<>(User.class);
-//        Auth auth = new Auth();
+
         if (request.getParameter("userName") != null && request.getParameter("password") != null) {
+
             try {
-                if (!request.authenticate(response)) {
-                    request.login(request.getParameter("userName"), request.getParameter("password"));
-                }
+                logger.debug(request.getParameter("userName") + request.getParameter("password"));
+
+                request.login(request.getParameter("userName"), request.getParameter("password"));
+
                 User user = userDao.findByPropertyEqual("userName", request.getRemoteUser()).get(0);
-                request.getSession().setAttribute("user", user);
+
+                if (user != null) {
+                    request.getSession().setAttribute("user", user);
+                    request.getSession().setAttribute("errors", null);
+                    response.sendRedirect("loadClient");
+                } else {
+                    throw new Exception("could not locate user");
+                }
+
             } catch (ServletException se) {
                 logger.debug(se.toString());
+                request.getSession().setAttribute("errors", "Authentication error, please check username and password and try again.");
+                response.sendRedirect("index.jsp");
             } catch (Exception e) {
                 logger.debug(e.toString());
             }
+        } else if (request.getRemoteUser() != null) {
+            request.getSession().setAttribute("errors", null);
+            response.sendRedirect("loadClient");
         }
-
-        response.sendRedirect("loadClient");
     }
 }
