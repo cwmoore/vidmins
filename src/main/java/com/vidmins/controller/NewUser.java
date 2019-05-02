@@ -4,6 +4,7 @@ import com.vidmins.auth.Auth;
 //import com.vidmins.entity.AuthToken;
 import com.vidmins.entity.User;
 import com.vidmins.persistence.GenericDao;
+import it.cosenonjaviste.tomcat.BCryptoCredentialHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -151,22 +152,25 @@ public class NewUser extends HttpServlet {
                 if (insertId > 0) {
                     user = userDao.getById(insertId);
                     // TODO make SURE usernames are unique
-                    org.apache.catalina.realm.RealmBase.digest(password0, "");
-//                    try {
-//                        isPassHashSet = Auth.setUserHashPass(user, password0);
-//                    } catch (Exception e) {
-//                        logger.debug("Problem setting the user's hash pass", e);
-//                        //errors.put("", "");
-//                    }
+
+                    try {
+
+                        BCryptoCredentialHandler credentialHandler = new BCryptoCredentialHandler();
+                        credentialHandler.mutate(password0);
+                        isPassHashSet = Auth.setUserHashPass(user, password0);
+                    } catch (Exception e) {
+                        logger.debug("Problem setting the user's hash pass", e);
+                        //errors.put("", "");
+                    }
 
 
-                    //if (isPassHashSet) {
+                    if (isPassHashSet) {
                         request.getSession().setAttribute("user", user);
-//                    } else {
-//                        userDao.delete(user);
-//                        logger.debug("User could not be saved");
-//                        // errors.put("", "");
-//                    }
+                    } else {
+                        userDao.delete(user);
+                        logger.debug("User could not be saved");
+                        // errors.put("", "");
+                    }
                 } else {
                     // TODO handle collisions, repeat attempts, active users trying to login in wrong place...
                 }

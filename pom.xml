@@ -145,6 +145,20 @@
         <scope>test</scope>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-catalina -->
+    <dependency>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-catalina</artifactId>
+        <version>8.5.3</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/it.cosenonjaviste/tomcat-bcrypt -->
+    <dependency>
+        <groupId>it.cosenonjaviste</groupId>
+        <artifactId>tomcat-bcrypt</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+
 
     <dependency>
         <groupId>javax</groupId>
