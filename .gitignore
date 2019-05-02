@@ -58,3 +58,4 @@ logs/vidmins.log
 **/log4j2.properties
 src/main/resources/*
 src/test/resources/*
+logs/*
