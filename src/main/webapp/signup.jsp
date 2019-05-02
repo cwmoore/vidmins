@@ -1,6 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:if test="${user == null}">
+<c:if test="${user == null}"> <%-- TODO update logged in test and behavior --%>
     <div id="access_form_container" class="aquapanel">
 
         <c:forEach items="${errors}" var="error">

@@ -54,15 +54,22 @@ public class Login extends HttpServlet {
         request.isUserInRole("normal");
         request.isUserInRole("guest");
 */
+
         GenericDao<User> userDao = new GenericDao<>(User.class);
 
         if (request.getParameter("userName") != null && request.getParameter("password") != null) {
 
             try {
-                logger.debug(request.getParameter("userName") + request.getParameter("password"));
+                //logger.debug(request.getParameter("userName") + request.getParameter("password"));
 
+                logger.debug("before request.authenticate(response)");
+                request.authenticate(response);
+                logger.debug("after request.authenticate(response)");
                 request.login(request.getParameter("userName"), request.getParameter("password"));
 
+                logger.debug("before request.authenticate(response)");
+                request.authenticate(response);
+                logger.debug("after request.authenticate(response)");
                 User user = userDao.findByPropertyEqual("userName", request.getRemoteUser()).get(0);
 
                 if (user != null) {
@@ -84,5 +91,6 @@ public class Login extends HttpServlet {
             request.getSession().setAttribute("errors", null);
             response.sendRedirect("loadClient");
         }
+
     }
 }
