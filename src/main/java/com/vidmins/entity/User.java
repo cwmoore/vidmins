@@ -89,7 +89,7 @@ public class User implements java.io.Serializable {
         status = "";
         //authTokens = null;
         logger = LogManager.getLogger(this.getClass());
-        logger.info("New User...");
+        logger.debug("New User...");
     }
 
 

@@ -23,11 +23,9 @@
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>RequiresLocalUserRole</web-resource-name>
-      <url-pattern>/redirector.jsp</url-pattern>
        <url-pattern>/loadClient</url-pattern>
       <url-pattern>/new-note</url-pattern>
       <url-pattern>/edit-note</url-pattern>
-      <url-pattern>/new-user</url-pattern>
       <url-pattern>/new-video</url-pattern>
       <url-pattern>/subscribe</url-pattern>
     </web-resource-collection>
@@ -53,7 +51,7 @@
   <security-role>
     <role-name>local</role-name>
   </security-role>
-<!--
+
   <security-role>
     <role-name>admin</role-name>
   </security-role>
@@ -61,7 +59,6 @@
   <security-role>
     <role-name>super</role-name>
   </security-role>
-  -->
 
 <!--
   <error-page>

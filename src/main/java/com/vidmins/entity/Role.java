@@ -40,7 +40,7 @@ public class Role {
 
     public Role() {
         logger = LogManager.getLogger(this.getClass());
-        logger.info("new Role");
+        logger.debug("new Role");
     }
 
     /**

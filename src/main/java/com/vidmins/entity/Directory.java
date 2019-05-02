@@ -44,7 +44,7 @@ public class Directory implements java.io.Serializable {
      */
     public Directory() {
         logger = LogManager.getLogger(this.getClass());
-        logger.info("New Directory...");
+        logger.debug("New Directory...");
     }
 
     /**

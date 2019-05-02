@@ -151,6 +151,7 @@ public class NewUser extends HttpServlet {
                 if (insertId > 0) {
                     user = userDao.getById(insertId);
                     // TODO make SURE usernames are unique
+                    org.apache.catalina.realm.RealmBase.digest(password0, "");
 //                    try {
 //                        isPassHashSet = Auth.setUserHashPass(user, password0);
 //                    } catch (Exception e) {
