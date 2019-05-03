@@ -2,10 +2,9 @@ package com.vidmins.controller;
 
 import com.vidmins.auth.Auth;
 //import com.vidmins.entity.AuthToken;
-import com.vidmins.entity.Role;
 import com.vidmins.entity.User;
 import com.vidmins.persistence.GenericDao;
-import it.cosenonjaviste.tomcat.BCryptoCredentialHandler;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -147,7 +146,7 @@ public class NewUser extends HttpServlet {
 
             if (errors.size() == 0) {
                 // add new user
-                User user = new User(firstName, lastName, username, password0, organization, introduction, LocalDate.parse(dateOfBirth));
+                User user = new User(firstName, lastName, username, organization, introduction, LocalDate.parse(dateOfBirth));
                 int insertId = userDao.insert(user);
 
                 if (insertId > 0) {
@@ -156,28 +155,28 @@ public class NewUser extends HttpServlet {
 
                     try {
 
-                        BCryptoCredentialHandler credentialHandler = new BCryptoCredentialHandler();
-                        credentialHandler.mutate(password0);
-                        isPassHashSet = Auth.setUserHashPass(user, password0);
+                        Auth auth = new Auth();
+                        boolean passwordSet = auth.setUserHashPass(user, password0);
 
-                        if (isPassHashSet) {
-                            GenericDao<Role> roleDao = new GenericDao<>(Role.class);
-                            Role role = new Role(user, "local");
-                            roleDao.saveOrUpdate(role);
+                        if (passwordSet) {
+                            try {
+                                request.login(username, password0);
+                                request.getSession().setAttribute("user", user);
+                                logger.debug("Got THIS far");
+                            } catch (Exception e) {
+                                logger.debug("Login erroneous");
+                                e.printStackTrace();
+                                userDao.delete(user);
+                                logger.debug("User could not be saved");
+                            }
                         }
+
                     } catch (Exception e) {
-                        logger.debug("Problem setting the user's hash pass", e);
+                        logger.debug("Problem setting the user's hash pass");
+                        e.printStackTrace();
                         //errors.put("", "");
                     }
 
-
-                    if (isPassHashSet) {
-                        request.getSession().setAttribute("user", user);
-                    } else {
-                        userDao.delete(user);
-                        logger.debug("User could not be saved");
-                        // errors.put("", "");
-                    }
                 } else {
                     // TODO handle collisions, repeat attempts, active users trying to login in wrong place...
                 }

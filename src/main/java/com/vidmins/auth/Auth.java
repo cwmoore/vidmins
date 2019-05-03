@@ -9,7 +9,6 @@ import java.util.List;
 import org.apache.catalina.realm.SecretKeyCredentialHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import it.cosenonjaviste.tomcat.BCryptoCredentialHandler;
 
 /**
  * The type Auth.
@@ -27,64 +26,64 @@ public class Auth {
     public Auth() {
         super();
     }
-
-    /**
-     * Change password boolean.
-     *
-     * @param userName    the user name
-     * @param oldPassword the old password
-     * @param newPassword the new password
-     * @return true if successfully changed, false otherwise
-     */
-    public boolean changePassword(String userName, String oldPassword, String newPassword) throws Exception {
-        if (authenticateUser(userName, oldPassword) != null) {
-            GenericDao<User> userDao = new GenericDao<>(User.class);
-
-            List<User> matchingUsers = userDao.findByPropertyEqual("userName", userName);
-            if (matchingUsers.size() == 1) {
-                User accessUser = matchingUsers.get(0);
-                //BCryptoCredentialHandler credentialHandler = new BCryptoCredentialHandler();
-                SecretKeyCredentialHandler credentialHandler = new SecretKeyCredentialHandler();
-                return setUserHashPass(accessUser, newPassword);
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Authenticate user credentials
-     *
-     * @param userName the user name
-     * @param password the password
-     * @return an authenticated user
-     * @throws Exception the exception
-     */
-    public User authenticateUser(String userName, String password)
-            throws Exception {
-        User accessUser = null;
-        GenericDao<User> userDao = new GenericDao<>(User.class);
-
-        List<User> matchingUsers = userDao.findByPropertyEqual("userName", userName);
-
-
-        if (matchingUsers.size() == 1) {
-            logger.debug("Using: " + userName + ", found: " + matchingUsers.get(0));
-            accessUser = matchingUsers.get(0);
-
-            //BCryptoCredentialHandler credentialHandler = new BCryptoCredentialHandler();
-            SecretKeyCredentialHandler credentialHandler = new SecretKeyCredentialHandler();
-
-            if (!credentialHandler.matches(password, accessUser.getPassword())) {
-                logger.debug("Not a match: " + userName + "'s password isn't " + matchingUsers.get(0));
-                accessUser = null;
-            }
-
-        } else {
-            throw new Exception("Did not find a unique user for those credentials " + matchingUsers);
-        }
-
-        return accessUser;
-    }
+//
+//    /**
+//     * Change password boolean.
+//     *
+//     * @param userName    the user name
+//     * @param oldPassword the old password
+//     * @param newPassword the new password
+//     * @return true if successfully changed, false otherwise
+//     */
+//    public boolean changePassword(String userName, String oldPassword, String newPassword) throws Exception {
+//        if (authenticateUser(userName, oldPassword) != null) {
+//            GenericDao<User> userDao = new GenericDao<>(User.class);
+//
+//            List<User> matchingUsers = userDao.findByPropertyEqual("userName", userName);
+//            if (matchingUsers.size() == 1) {
+//                User accessUser = matchingUsers.get(0);
+//
+//                return setUserHashPass(accessUser, newPassword);
+//            }
+//        }
+//        return false;
+//    }
+//
+//    /**
+//     * Authenticate user credentials
+//     *
+//     * @param userName the user name
+//     * @param password the password
+//     * @return an authenticated user
+//     * @throws Exception the exception
+//     */
+//    public User authenticateUser(String userName, String password)
+//            throws Exception {
+//        User accessUser = null;
+//        GenericDao<User> userDao = new GenericDao<>(User.class);
+//
+//        List<User> matchingUsers = userDao.findByPropertyEqual("userName", userName);
+//
+//
+//        if (matchingUsers.size() == 1) {
+//            logger.debug("Using: " + userName + ", found: " + matchingUsers.get(0));
+//            accessUser = matchingUsers.get(0);
+//
+//            SecretKeyCredentialHandler credentialHandler = new SecretKeyCredentialHandler();
+//
+//            if (!credentialHandler.matches(password, accessUser.getPassword())) {
+//                logger.debug("Not a match: " + userName + "'s password isn't " + accessUser);
+//                accessUser = null;
+//            } else {
+//                logger.debug("Got a match: " + accessUser);
+//            }
+//
+//        } else {
+//            throw new Exception("Did not find a unique user for those credentials " + matchingUsers);
+//        }
+//
+//        return accessUser;
+//    }
 
     /**
      * Sets user hash pass.
@@ -94,7 +93,7 @@ public class Auth {
      * @return the user hash pass
      * @throws Exception the exception
      */
-    public static boolean setUserHashPass(User user, String password) throws Exception {
+    public boolean setUserHashPass(User user, String password) {
 
         boolean isSet = false;
 
@@ -103,17 +102,26 @@ public class Auth {
 
         if (matchingUsers.size() == 1) {
 
-            //BCryptoCredentialHandler credentialHandler = new BCryptoCredentialHandler();
-            SecretKeyCredentialHandler credentialHandler = new SecretKeyCredentialHandler();
+            try {
+                SecretKeyCredentialHandler credentialHandler = new SecretKeyCredentialHandler();
+                String enc_pass = credentialHandler.mutate(password);
 
-            user.setPassword(password);
-            user.setEncryptedPassword(credentialHandler.mutate(password));
+                user.setPassword(enc_pass);
+                userDao.saveOrUpdate(user);
 
-            userDao.saveOrUpdate(user);
-            isSet = true;
+                GenericDao<Role> roleDao = new GenericDao<>(Role.class);
+                Role role = new Role(user, "local");
+                roleDao.saveOrUpdate(role);
+
+                isSet = true;
+
+            } catch (Exception e) {
+                logger.debug("Something wrong with the credential handler ", e);
+            }
+
         } else {
             // TODO handle new username collisions
-            throw new Exception("Did not find a unique user for those credentials " + matchingUsers);
+            logger.debug("A user with that name already exists ", matchingUsers);
         }
 
         return isSet;

@@ -6,12 +6,12 @@ import com.vidmins.util.TimestampAttributeConverter;
 //import lombok.EqualsAndHashCode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.*;
 import java.util.*;
 
@@ -40,12 +40,10 @@ public class User implements java.io.Serializable {
     @Column(name = "enc_pass")
     private String enc_pass;
 
-    @Column(name = "password")
-    private String password;
-
     // adapted from: https://stackoverflow.com/questions/4334970/hibernate-cannot-simultaneously-fetch-multiple-bags
-    @OneToMany(cascade = CascadeType.ALL,
+    @OneToMany(orphanRemoval = true,
             mappedBy = "user", fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Role> roles = new ArrayList<>();
 
@@ -81,7 +79,7 @@ public class User implements java.io.Serializable {
         lastName = "";
         email = "";
         userName = "";
-        password = "";
+        enc_pass = "";
         joinDate = LocalDateTime.now();
         dateOfBirth = LocalDate.now();
         organization = "";
@@ -133,28 +131,6 @@ public class User implements java.io.Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
-        this.organization = organization;
-        this.introduction = introduction;
-        this.dateOfBirth = dateOfBirth;
-    }
-
-
-    /**
-     * Instantiates a new User.
-     *
-     * @param firstName    the first name
-     * @param lastName     the last name
-     * @param userName     the user name
-     * @param password     the password
-     * @param organization the organization
-     * @param introduction the introduction
-     * @param dateOfBirth  the date of birth
-     */
-    public User(String firstName, String lastName, String userName, String password, String organization, String introduction, LocalDate dateOfBirth) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.userName = userName;
-        this.password = password;
         this.organization = organization;
         this.introduction = introduction;
         this.dateOfBirth = dateOfBirth;
@@ -250,6 +226,24 @@ public class User implements java.io.Serializable {
     public void setJoinDate(LocalDateTime joinDate) {
         this.joinDate = joinDate;
     }
+//
+//    /**
+//     * Gets password.
+//     *
+//     * @return the password
+//     */
+//    public String getPassword() {
+//        return this.password;
+//    }
+//
+//    /**
+//     * Sets password.
+//     *
+//     * @param password the password
+//     */
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
 
     /**
      * Gets password.
@@ -257,7 +251,7 @@ public class User implements java.io.Serializable {
      * @return the password
      */
     public String getPassword() {
-        return this.password;
+        return this.enc_pass;
     }
 
     /**
@@ -266,26 +260,26 @@ public class User implements java.io.Serializable {
      * @param password the password
      */
     public void setPassword(String password) {
-        this.password = password;
+        this.enc_pass = password;
     }
 
-    /**
-     * Gets enc_pass.
-     *
-     * @return the enc_pass
-     */
-    public String getEncryptedPassword() {
-        return this.enc_pass;
-    }
-
-    /**
-     * Sets enc_pass.
-     *
-     * @param enc_pass the enc_pass
-     */
-    public void setEncryptedPassword(String enc_pass) {
-        this.enc_pass = enc_pass;
-    }
+//    /**
+//     * Gets enc_pass.
+//     *
+//     * @return the enc_pass
+//     */
+//    public String getEncryptedPassword() {
+//        return this.enc_pass;
+//    }
+//
+//    /**
+//     * Sets enc_pass.
+//     *
+//     * @param enc_pass the enc_pass
+//     */
+//    public void setEncryptedPassword(String enc_pass) {
+//        this.enc_pass = enc_pass;
+//    }
 
     /**
      * Gets date of birth.
@@ -448,7 +442,7 @@ public class User implements java.io.Serializable {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
+                ", enc_pass='" + enc_pass + '\'' +
                 ", joinDate=" + joinDate +
                 ", dateOfBirth=" + dateOfBirth +
                 ", organization='" + organization + '\'' +
@@ -467,7 +461,7 @@ public class User implements java.io.Serializable {
                 lastName.equals(user.lastName) &&
                 email.equals(user.email) &&
                 userName.equals(user.userName) &&
-                Objects.equals(password, user.password) &&
+                Objects.equals(enc_pass, user.enc_pass) &&
                 Objects.equals(joinDate, user.joinDate) &&
                 dateOfBirth.equals(user.dateOfBirth) &&
                 organization.equals(user.organization) &&
@@ -479,6 +473,6 @@ public class User implements java.io.Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email, userName, password, joinDate, dateOfBirth, organization, introduction, status /*, authTokens*/);
+        return Objects.hash(id, firstName, lastName, email, userName, enc_pass, joinDate, dateOfBirth, organization, introduction, status /*, authTokens*/);
     }
 }

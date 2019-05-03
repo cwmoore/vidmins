@@ -31,7 +31,7 @@ public class Role {
 
     private String role;
 
-    @ManyToOne/*(fetch = FetchType.EAGER)*/
+    @ManyToOne
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "userName", referencedColumnName = "userName", nullable = false)
     private User user;
