@@ -266,9 +266,25 @@ public class User implements java.io.Serializable {
      * @param password the password
      */
     public void setPassword(String password) {
-//        Auth auth = new Auth();
-//        this.password = auth.encryptPassword(password);
         this.password = password;
+    }
+
+    /**
+     * Gets enc_pass.
+     *
+     * @return the enc_pass
+     */
+    public String getEncryptedPassword() {
+        return this.enc_pass;
+    }
+
+    /**
+     * Sets enc_pass.
+     *
+     * @param enc_pass the enc_pass
+     */
+    public void setEncryptedPassword(String enc_pass) {
+        this.enc_pass = enc_pass;
     }
 
     /**

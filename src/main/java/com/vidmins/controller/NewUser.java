@@ -2,6 +2,7 @@ package com.vidmins.controller;
 
 import com.vidmins.auth.Auth;
 //import com.vidmins.entity.AuthToken;
+import com.vidmins.entity.Role;
 import com.vidmins.entity.User;
 import com.vidmins.persistence.GenericDao;
 import it.cosenonjaviste.tomcat.BCryptoCredentialHandler;
@@ -124,9 +125,9 @@ public class NewUser extends HttpServlet {
                 && password0 != null
                 && password1 != null
         ) {
-            if (password0.length() < 10) {
+            if (password0.length() < 8) {
                 // password too short
-                errors.put("password", "Password is too short, use 10 or more characters for security.");
+                errors.put("password", "Password is too short, use 8 or more characters.");
             }
             if (!password0.equals(password1)) {
                 // password mismatch
@@ -158,6 +159,12 @@ public class NewUser extends HttpServlet {
                         BCryptoCredentialHandler credentialHandler = new BCryptoCredentialHandler();
                         credentialHandler.mutate(password0);
                         isPassHashSet = Auth.setUserHashPass(user, password0);
+
+                        if (isPassHashSet) {
+                            GenericDao<Role> roleDao = new GenericDao<>(Role.class);
+                            Role role = new Role(user, "local");
+                            roleDao.saveOrUpdate(role);
+                        }
                     } catch (Exception e) {
                         logger.debug("Problem setting the user's hash pass", e);
                         //errors.put("", "");

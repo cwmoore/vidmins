@@ -1,9 +1,12 @@
 package com.vidmins.auth;
 
+import com.vidmins.entity.Role;
 import com.vidmins.entity.User;
 import com.vidmins.persistence.GenericDao;
 
 import java.util.List;
+
+import org.apache.catalina.realm.SecretKeyCredentialHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import it.cosenonjaviste.tomcat.BCryptoCredentialHandler;
@@ -40,7 +43,8 @@ public class Auth {
             List<User> matchingUsers = userDao.findByPropertyEqual("userName", userName);
             if (matchingUsers.size() == 1) {
                 User accessUser = matchingUsers.get(0);
-                BCryptoCredentialHandler credentialHandler = new BCryptoCredentialHandler();
+                //BCryptoCredentialHandler credentialHandler = new BCryptoCredentialHandler();
+                SecretKeyCredentialHandler credentialHandler = new SecretKeyCredentialHandler();
                 return setUserHashPass(accessUser, newPassword);
             }
         }
@@ -67,7 +71,8 @@ public class Auth {
             logger.debug("Using: " + userName + ", found: " + matchingUsers.get(0));
             accessUser = matchingUsers.get(0);
 
-            BCryptoCredentialHandler credentialHandler = new BCryptoCredentialHandler();
+            //BCryptoCredentialHandler credentialHandler = new BCryptoCredentialHandler();
+            SecretKeyCredentialHandler credentialHandler = new SecretKeyCredentialHandler();
 
             if (!credentialHandler.matches(password, accessUser.getPassword())) {
                 logger.debug("Not a match: " + userName + "'s password isn't " + matchingUsers.get(0));
@@ -98,9 +103,12 @@ public class Auth {
 
         if (matchingUsers.size() == 1) {
 
-            BCryptoCredentialHandler credentialHandler = new BCryptoCredentialHandler();
+            //BCryptoCredentialHandler credentialHandler = new BCryptoCredentialHandler();
+            SecretKeyCredentialHandler credentialHandler = new SecretKeyCredentialHandler();
 
-            user.setPassword(credentialHandler.mutate(password));
+            user.setPassword(password);
+            user.setEncryptedPassword(credentialHandler.mutate(password));
+
             userDao.saveOrUpdate(user);
             isSet = true;
         } else {

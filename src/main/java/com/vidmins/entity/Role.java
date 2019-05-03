@@ -43,6 +43,13 @@ public class Role {
         logger.debug("new Role");
     }
 
+    public Role(User user, String role) {
+        this();
+        this.user = user;
+        this.role = role;
+    }
+
+
     /**
      * Gets id.
      *

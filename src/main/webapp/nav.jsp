@@ -47,8 +47,7 @@
 
                 <%-- TODO: update logged in test and behavior --%>
                 <c:choose>
-                    <%--<c:when test="${user == null}">--%>
-                    <c:when test="${!request.authenticate(response)}">
+                    <c:when test="${user == null}">
                         <%-- <c:if test="${errors != null}"><span class="error">${errors}</span></c:if>
                         <form class="form-inline my-2 my-lg-0" action="login" method="POST">
                             <input type="text" name="userName" placeholder="userName" class="form-control mr-sm-2" />
