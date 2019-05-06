@@ -43,8 +43,23 @@ public class Directory implements java.io.Serializable {
      * Instantiates a new Directory.
      */
     public Directory() {
+        super();
         logger = LogManager.getLogger(this.getClass());
         logger.debug("New Directory...");
+    }
+
+    /**
+     * Instantiates a new Directory.
+     *
+     * @param name        the name
+     * @param description the description
+     * @param user        the user
+     */
+    public Directory(String name, String description, User user) {
+        this();
+        this.name = name;
+        this.description = description;
+        this.user = user;
     }
 
     /**
@@ -56,6 +71,7 @@ public class Directory implements java.io.Serializable {
      * @param user        the user
      */
     public Directory(int id, String name, String description, User user) {
+        this();
         this.id = id;
         this.name = name;
         this.description = description;
@@ -132,6 +148,14 @@ public class Directory implements java.io.Serializable {
      */
     public void setVideos(List<Video> videos) {
         this.videos = videos;
+    }
+
+    /**
+     * Add a Video
+     * @param video the Video
+     */
+    public void addVideo(Video video) {
+        this.videos.add(video);
     }
 
     /**

@@ -3,17 +3,19 @@
 <h1 id="brand-header"><span>Vid</span>eo <span>Min</span>ute<span>s</span></h1>
 
     <div class="menu">
+        <%-- these buttons show or hide the corresponding panels below --%>
         <button id="help_button" name="help" class="btn btn-info" onclick="showPanel('help');">?</button>
-        <button id="note_button" name="show-time" class="btn btn-info" onclick="makeNote();">Note</button>
+        <button id="new_directory_button" name="new-directory" class="btn btn-info" onclick="makeNewDirectory();">Directory</button>
+        <button id="new_video_button" name="new-video" class="btn btn-info" onclick="makeNewVideo();">Video</button>
         <button id="link_button" name="make-link" class="btn btn-info" onclick="makeLink();">Link</button>
-        <%-- <button id="survey_button" name="survey" class="btn btn-info" onclick="showPanel('survey');makeSurveyQuestion();">Survey</button> --%>
+        <button id="note_button" name="show-time" class="btn btn-info" onclick="makeNote();">Note</button>
+        <%-- <button id="survey_button" name="survey" class="btn btn-info" onclick="showPanel('survey');makeSurveyQuestion();">Survey</button>
         <button id="comment_button" name="feedback" class="btn btn-info" onclick="makeComment();">Comment</button>
         <button id="ask_button" name="ask-question" class="btn btn-info" onclick="makeAskQuestion();">Ask</button>
-        <%--button-- id="player_button" name="player-command" class="btn btn-info" onclick="makePlayerCommand();">Play</button--%>
+        <button id="player_button" name="player-command" class="btn btn-info" onclick="makePlayerCommand();">Play</button>
+                --%>
     </div>
     <div id="watcher">
-        <!-- TODO: use bootstrap navigation -->
-
         <div id="note_input" class="aquapanel">
             <form id="note_input_form" accept-charset="utf-8" method="post" action="new-note"<%-- onsubmit="processInput(); return false;" --%>>
 
@@ -116,7 +118,28 @@
             </form>
         </div>
 
-        <%--div id="player_input"  class="aquapanel" method="get" action="#" onsubmit="processInput(); return false;">
+
+        <div id="new_directory_input"  class="aquapanel" method="get" action="#" onsubmit="processInput(); return false;">
+            <form name="new_directory_form" action="new-directory" method="post">
+                <label for="directoryNameField">Name</label>
+                <input type="text" name="directoryName" id="directoryNameField" /><br />
+
+                <label for="directoryDescriptionField">Description</label>
+                <textarea name="directoryDescription" id="directoryDescriptionField"></textarea><br />
+
+                <button type="submit" class="btn btn-primary" id="add_directory_button">Create New</button>
+            </form>
+        </div>
+
+        <div id="new_video_input"  class="aquapanel" method="get" action="#" onsubmit="processInput(); return false;">
+            <form id="add_video_form" action="new-video" method="post">
+                <label for="youtube_url">YouTube Video URL</label><br />
+                <input type="text" id="youtube_url" name="youtube_url" placeholder="https://youtu.be/R4nd0mCh4r5"/>
+                <button type="submit" class="btn btn-primary" id="add_video_button">Add Video</button>
+            </form>
+        </div>
+
+    <%--div id="player_input"  class="aquapanel" method="get" action="#" onsubmit="processInput(); return false;">
 
         </div--%>
         <c:import url="help.jsp"/>

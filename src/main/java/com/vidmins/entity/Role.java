@@ -33,7 +33,7 @@ public class Role {
 
     @ManyToOne
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinColumn(name = "userName", referencedColumnName = "userName", nullable = false)
+    @JoinColumn(name = "userName", referencedColumnName = "userName", nullable = false/*, cascade = CascadeType.NONE*/)
     private User user;
 
     private static Logger logger;

@@ -1,3 +1,4 @@
+import org.apache.catalina.Realm;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,6 +23,12 @@ public class MyServlet extends HttpServlet {
 
         resp.setContentType("text/html");
         PrintWriter writer = resp.getWriter();
+//
+//        try {
+//            Realm realm = this.getServletContext().getContainer().getRealm();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         if (shouldAuthenticate(req)) {
             boolean authenticated = req.authenticate(resp);

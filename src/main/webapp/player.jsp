@@ -108,7 +108,4 @@
         </script>
         <!-- end code from YouTube Dev -->
     </c:when>
-    <c:otherwise>
-        <h3><i>Video will load here</i></h3>
-    </c:otherwise>
 </c:choose>

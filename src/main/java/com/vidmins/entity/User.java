@@ -41,9 +41,8 @@ public class User implements java.io.Serializable {
     private String enc_pass;
 
     // adapted from: https://stackoverflow.com/questions/4334970/hibernate-cannot-simultaneously-fetch-multiple-bags
-    @OneToMany(orphanRemoval = true,
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,
             mappedBy = "user", fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Role> roles = new ArrayList<>();
 
@@ -134,6 +133,14 @@ public class User implements java.io.Serializable {
         this.organization = organization;
         this.introduction = introduction;
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public void addRole(Role role) {
+        this.roles.add(role);
+    }
+
+    public void removeRole(Role role) {
+        this.roles.remove(role);
     }
 
     /**
@@ -378,6 +385,14 @@ public class User implements java.io.Serializable {
      */
     public void setDirectories(List<Directory> directories) {
         this.directories = directories;
+    }
+
+    /**
+     * Add a directory.
+     * @param directory
+     */
+    public void addDirectory(Directory directory) {
+        this.directories.add(directory);
     }
 
     /**

@@ -6,9 +6,14 @@ import com.vidmins.persistence.GenericDao;
 
 import java.util.List;
 
+import org.apache.catalina.CredentialHandler;
+import org.apache.catalina.Globals;
+import org.apache.catalina.Realm;
 import org.apache.catalina.realm.SecretKeyCredentialHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import javax.servlet.ServletContext;
 
 /**
  * The type Auth.
@@ -93,27 +98,36 @@ public class Auth {
      * @return the user hash pass
      * @throws Exception the exception
      */
-    public boolean setUserHashPass(User user, String password) {
-
-        boolean isSet = false;
+    public User setUserHashPass(User user, String password) {
 
         GenericDao<User> userDao = new GenericDao<>(User.class);
         List<User> matchingUsers = userDao.findByPropertyEqual("userName", user.getUserName());
 
-        if (matchingUsers.size() == 1) {
+        if (matchingUsers.size() == 0) { // not a duplicated userName
 
             try {
                 SecretKeyCredentialHandler credentialHandler = new SecretKeyCredentialHandler();
+                credentialHandler.setSaltLength(16);
+                credentialHandler.setIterations(100000);
+                credentialHandler.setKeyLength(256);
+                credentialHandler.setAlgorithm("PBKDF2WithHmacSHA512");
+                //SecretKeyCredentialHandler credentialHandler = (SecretKeyCredentialHandler) getCredentialHandler(context);
                 String enc_pass = credentialHandler.mutate(password);
 
+                if (!credentialHandler.matches(password, enc_pass)) {
+                    Exception e = new Exception("Could not match nada");
+                    logger.debug(e);
+                    throw e;
+                }
+
                 user.setPassword(enc_pass);
-                userDao.saveOrUpdate(user);
 
-                GenericDao<Role> roleDao = new GenericDao<>(Role.class);
                 Role role = new Role(user, "local");
-                roleDao.saveOrUpdate(role);
+                user.addRole(role);
 
-                isSet = true;
+                user = userDao.getById(userDao.insert(user));
+
+                return user;
 
             } catch (Exception e) {
                 logger.debug("Something wrong with the credential handler ", e);
@@ -121,10 +135,21 @@ public class Auth {
 
         } else {
             // TODO handle new username collisions
-            logger.debug("A user with that name already exists ", matchingUsers);
+            logger.debug("A user with that name already exists ", matchingUsers.size());
         }
 
-        return isSet;
+        return null;
+    }
+
+    /**
+     * Get the credential handler configured for this instance.
+     *
+     * https://stackoverflow.com/a/41903791
+     * @param context
+     * @return
+     */
+    public static CredentialHandler getCredentialHandler(final ServletContext context) {
+        return (CredentialHandler) context.getAttribute(Globals.CREDENTIAL_HANDLER);
     }
 
 //  Utility method for converting dev plaintext passwords to secure hashes

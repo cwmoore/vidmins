@@ -34,7 +34,15 @@ label .fixed {
     display: none;
 }
 
-#help_input, #link_input, #comment_input, #survey_input, #feedback_input, #ask_input, #note_input {
+#help_input
+, #link_input
+, #comment_input
+, #survey_input
+, #feedback_input
+, #ask_input
+, #new_directory_input
+, #new_video_input
+, #note_input {
     display: none;
 }
 
@@ -45,6 +53,10 @@ label .fixed {
 #watcher textarea {
     height: 5em;
     width: 90%;
+}
+
+#youtube_url {
+    width: 80%;
 }
 
 #videoLink {

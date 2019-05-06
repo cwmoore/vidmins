@@ -108,9 +108,7 @@ public class LoadClient extends HttpServlet {
             logger.debug(request.getAuthType());
         } else {
             logger.debug("not authenticated");
-            //request.login("cmoore", "password"); // this authenticates!
-            //request.login("dduck", "password"); // this authenticates!
-//        request.login("cmoore", "passwordish"); // this does not (throws ServletException)
+            throw new ServletException("NOT AUTHENTICATED");
         }
 
         loadHelpers(request);
@@ -126,49 +124,54 @@ public class LoadClient extends HttpServlet {
             logger.debug("user != null", session.getAttribute("user"));
             //User user = (User) session.getAttribute("user");
         }
-        if (request.getRemoteUser() != null) {
+
+        if (request.getRemoteUser() != null) { // TODO check role too
+
             logger.debug(request.getRemoteUser());
             User user = userDao.findByPropertyEqual("userName", request.getRemoteUser()).get(0);
             logger.debug("User: " + user);
             session.setAttribute("user", user);
 
-
-            // TODO investigate strategies for lazy loading user data
-            // TODO start with a default view
-
             List<Directory> directories = user.getDirectories();
-            session.setAttribute("directories", directories);
-
-            // TODO optionally choose starting directory
-            // TODO use last directory and video
-
-            // this throws cannot initialize proxy, no Session errors, TODO why?!
-            // logger.debug("user.getDirectories(): " + directories);
-
-
             Video currentVideo = null;
+            Directory defaultDirectory;
 
-            // TODO optionally choose starting video
+            if (directories.size() == 0) {
+                defaultDirectory = new Directory(
+                        "First Directory"
+                        , "Directories organize sets of videos."
+                        , user);
+                int dirInsertId = directoryDao.insert(defaultDirectory);
+                user.addDirectory(directoryDao.getById(dirInsertId));
 
+                directories.add(defaultDirectory);
+                // TODO add beginner video for first time user
+
+            } else { // get videos for first directory
+                logger.debug("Found " + directories.size() + " directories");
+
+                defaultDirectory = directories.get(0);
+
+            }
+
+            // change this to use a different video to preload
             if (session.getAttribute("currentVideo") != null) {
                 currentVideo = (Video) session.getAttribute("currentVideo");
             }
 
-            // get videos for first directory
-            if (directories.size() > 0) {
-                logger.debug("Found " + directories.size() + " directories");
-                Directory defaultDirectory = directories.get(0);
-                if (defaultDirectory != null) {
-                    session.setAttribute("directories", directories);
-                    session.setAttribute("defaultDirectory", defaultDirectory);
+            if (defaultDirectory != null) {
 
-                    List<Video> videos = defaultDirectory.getVideos();
+                List<Video> videos = defaultDirectory.getVideos();
 
-                    session.setAttribute("videos", videos);
-                    // TODO select the best video (instead of just the first)
+                session.setAttribute("videos", videos);
+                // TODO select the best video (instead of just the first)
+                if (videos.size() > 0) {
                     currentVideo = videos.get(0);
                 }
+                session.setAttribute("defaultDirectory", defaultDirectory);
             }
+            session.setAttribute("directories", directories);
+
 
             // TODO move url param into a clean URL session object
             if (request.getParameter("videoId") != null) {
@@ -215,5 +218,19 @@ public class LoadClient extends HttpServlet {
 
         RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request, response);
+    }
+
+
+    /**
+     * Handle a POST request
+     * @param request the request object
+     * @param response the response object
+     * @throws ServletException indicates a servlet problem
+     * @throws IOException indicates an IO problem
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+        doGet(request, response);
     }
 }

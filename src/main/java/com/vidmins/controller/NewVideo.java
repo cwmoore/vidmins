@@ -1,6 +1,10 @@
 package com.vidmins.controller;
 
+import com.vidmins.entity.Directory;
 import com.vidmins.entity.Video;
+import com.vidmins.entity.YouTubeVideo;
+import com.vidmins.persistence.GenericDao;
+import com.vidmins.youtube_data_api.YTDataApi;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,6 +15,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 
 /**
  * Servlet to add video
@@ -25,6 +33,8 @@ import java.io.IOException;
 
 public class NewVideo extends HttpServlet {
     private Logger logger;
+    private GenericDao<Video> videoDao;
+    private GenericDao<YouTubeVideo> ytVideoDao;
 
     /**
      * Initialize variables
@@ -32,18 +42,20 @@ public class NewVideo extends HttpServlet {
     public void init() {
         logger = LogManager.getLogger(this.getClass());
         logger.info("Starting servlet");
+        videoDao = new GenericDao<>(Video.class);
+        ytVideoDao = new GenericDao<>(YouTubeVideo.class);
     }
 
     /**
-     *  Handle a GET request
+     * Handle a GET request
      *
-     * @param request the HttpServletRequest
+     * @param request  the HttpServletRequest
      * @param response the HttpServletResponse
      * @throws ServletException indicates a servlet problem
-     * @throws IOException indicates an IO problem
+     * @throws IOException      indicates an IO problem
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         // if user logged in
@@ -56,47 +68,61 @@ public class NewVideo extends HttpServlet {
         // TODO https://github.com/MadJavaEntSpring2019/home/blob/master/Module2/Week6/AWS/AWSSetupPart6.md
 
         request.setAttribute("video", addNewVideo(request));
-        
-        String url = "/index.jsp";
-        RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-        dispatcher.forward(request, response);
+
+//        String url = "/loadClient";
+//        RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+//        dispatcher.forward(request, response);
+
+        String url = "loadClient";
+        response.sendRedirect(url);
+
     }
 
     /**
      * Add the video to the database, linked with the current user.
+     *
      * @param request
      * @return
      */
     private Video addNewVideo(HttpServletRequest request) {
         // user logged in?
+        Video video = null;
 
-        String youTubeId = request.getParameter("v");
-        // get video information via YT Data API
-        // title, description, duration, license, owner, channel
-        // build a youtube data api object
-        // set the id
-        // request the data
-        // create a new video object
-        // set the data
-        // save the video
+        String youTubeUrl = request.getParameter("youtube_url");
 
-        return new Video();
-    }
+        // sanity check provided parameters
+        String title = "test title";
+        LocalDateTime currentLocalDateTime = LocalDateTime.now();
 
-    
-    /**
-     * Handle a POST request
-     *
-     * @param request the HttpServletRequest
-     * @param response the HttpServletResponse
-     * @throws ServletException indicates a servlet problem
-     * @throws IOException indicates an IO problem
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        try {
+            String youTubeId = YTDataApi.extractYouTubeId(youTubeUrl);
 
-        String url = "/index.jsp";
-        response.sendRedirect(url);
+            // check for an existing row with this YouTubeId
+            List ytVideos = ytVideoDao.findByPropertyEqual("youTubeId", youTubeId);
+
+            YouTubeVideo youTubeVideo;
+            if (ytVideos.size() == 0) {
+                youTubeVideo = new YouTubeVideo(youTubeId, title);
+
+                //youTubeVideo.retrieveInfo();
+                // save new video link
+                ytVideoDao.insert(youTubeVideo);
+            } else {
+                // use the existing entry
+                youTubeVideo = (YouTubeVideo) ytVideos.get(0);
+            }
+
+            video = new Video(youTubeVideo
+                    , title
+                    , currentLocalDateTime
+                    , (Directory) request.getSession().getAttribute("defaultDirectory")
+            );
+            videoDao.insert(video);
+
+        } catch (IOException iox) {
+            iox.printStackTrace();
+        }
+
+        return video;
     }
 }

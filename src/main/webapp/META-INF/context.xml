@@ -3,16 +3,18 @@
            driverName="com.mysql.jdbc.Driver"
            connectionURL="jdbc:mysql://localhost:3306/vidmins?user=tomcat&amp;password=tomcaterwaul"
            userTable="user" userNameCol="userName" userCredCol="enc_pass"
-           userRoleTable="role" roleNameCol="role"
-            debug="9">
+           userRoleTable="role" roleNameCol="role">
         <CredentialHandler className="org.apache.catalina.realm.SecretKeyCredentialHandler"
                            algorithm="PBKDF2WithHmacSHA512"
                            iterations="100000"
                            keyLength="256"
                            saltLength="16"
         />
+        <!--
+$CATALINA_HOME/bin/digest.sh -a "PBKDF2WithHmacSHA512" -i 100000 -s 16 -k 256 -h "org.apache.catalina.realm.SecretKeyCredentialHandler" "YOUR_PASSWORD"
+         -->
     </Realm>
-    <Valve className="org.apache.catalina.valves.AccessLogValve"
+    <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
            prefix="localhost_access_log" suffix=".txt"
            pattern="common"/>
 </Context>

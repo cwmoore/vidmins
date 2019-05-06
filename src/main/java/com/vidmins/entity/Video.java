@@ -65,6 +65,7 @@ public class Video implements java.io.Serializable {
      * @param directory the directory
      */
     public Video(YouTubeVideo youTubeVideo, String title, LocalDateTime addDate, Directory directory) {
+        this();
         this.youTubeVideo = youTubeVideo;
         this.title = title;
         this.addDate = addDate;
@@ -80,6 +81,7 @@ public class Video implements java.io.Serializable {
      * @param addDate   the add date
      */
     public Video(int id, YouTubeVideo youTubeVideo, String title, LocalDateTime addDate, Directory directory) {
+        this();
         this.id = id;
         this.youTubeVideo = youTubeVideo;
         this.title = title;

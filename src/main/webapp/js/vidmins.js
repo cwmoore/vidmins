@@ -84,6 +84,9 @@ const init = () => {
 
     let signupBtn = document.querySelector("#signup_btn");
     signupBtn.addEventListener("click", showSignup, false);
+
+    let addVideoBtn = document.querySelector("#add_video_button");
+    signupBtn.addEventListener("click", showSignup, false);
 }
 
 const showSignup = () => {
@@ -122,9 +125,9 @@ const showPanel = (feature) => {
     document.getElementById(feature + "_input").style.display = "block";
 }
 
+const features = ["help", "note", "link", /*"comment", "ask", */"new_directory", "new_video"];
 const hidePanels = () => {
     let feature;
-    const features = ["help", "note", "link", "comment", "ask"];
 
     for (feature of features) {
         hidePanel(feature);
@@ -138,7 +141,6 @@ const hidePanel = (feature) => {
 
 const deselectButtons = () => {
     let feature;
-    const features = ["help", "note", "link", "comment", "ask"];
 
     for (feature of features) {
         deselectButton(feature);
@@ -300,6 +302,14 @@ const makeAskQuestion = () => {
     showPanel("ask");
     setRelatedTime(Math.floor(player.getCurrentTime()));
     player.pauseVideo();
+}
+
+const makeNewDirectory = () => {
+    showPanel("new_directory");
+}
+
+const makeNewVideo = () => {
+    showPanel("new_video");
 }
 
 const makePlayerCommand = () => {

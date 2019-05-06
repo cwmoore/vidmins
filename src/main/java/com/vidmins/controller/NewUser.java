@@ -2,9 +2,11 @@ package com.vidmins.controller;
 
 import com.vidmins.auth.Auth;
 //import com.vidmins.entity.AuthToken;
+import com.vidmins.entity.Role;
 import com.vidmins.entity.User;
 import com.vidmins.persistence.GenericDao;
 
+import org.apache.catalina.realm.SecretKeyCredentialHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -141,50 +143,42 @@ public class NewUser extends HttpServlet {
                 errors.put("username", "Username is taken.");
             }
 
-            // this will become true only if hashed password is set on the user
-            boolean isPassHashSet = false;
-
             if (errors.size() == 0) {
                 // add new user
                 User user = new User(firstName, lastName, username, organization, introduction, LocalDate.parse(dateOfBirth));
-                int insertId = userDao.insert(user);
+                try {
 
-                if (insertId > 0) {
-                    user = userDao.getById(insertId);
-                    // TODO make SURE usernames are unique
+                    Auth auth = new Auth();
 
-                    try {
+                    user = auth.setUserHashPass(user, password0);
 
-                        Auth auth = new Auth();
-                        boolean passwordSet = auth.setUserHashPass(user, password0);
-
-                        if (passwordSet) {
-                            try {
-                                request.login(username, password0);
-                                request.getSession().setAttribute("user", user);
-                                logger.debug("Got THIS far");
-                            } catch (Exception e) {
-                                logger.debug("Login erroneous");
-                                e.printStackTrace();
-                                userDao.delete(user);
-                                logger.debug("User could not be saved");
-                            }
+                    if (user != null) {
+                        try {
+                            //logger.debug(user.getUserName() + " pass: " + password0 + ".");
+                            //request.login(user.getUserName(), password0);
+                            request.getSession().setAttribute("user", user);
+                            logger.debug("Got THIS far");
+                            // but cannot log in with the new credentials
+                        } catch (Exception e) {
+                            logger.debug("Login erroneous");
+                            e.printStackTrace();
+                            userDao.delete(user);
+                            logger.debug("User could not be saved");
                         }
-
-                    } catch (Exception e) {
-                        logger.debug("Problem setting the user's hash pass");
-                        e.printStackTrace();
-                        //errors.put("", "");
+                    } else {
+                        // something went wrong in setUserHashPass
                     }
 
-                } else {
-                    // TODO handle collisions, repeat attempts, active users trying to login in wrong place...
+                } catch (Exception e) {
+                    logger.debug("Problem setting the user's hash pass");
+                    e.printStackTrace();
+                    //errors.put("", "");
                 }
 
-                // store confirmation token
-                // create and send confirmation email
-                // in doGet, receive new user verification, direct to login
-                // redirect to new user profile
+                // TODO store confirmation token
+                // TODO create and send confirmation email
+                // TODO in doGet, receive new user verification, direct to login
+                // TODO redirect to new user profile
 
             }
         } else {
