@@ -4,6 +4,7 @@ import com.vidmins.auth.Auth;
 //import com.vidmins.entity.AuthToken;
 import com.vidmins.entity.Role;
 import com.vidmins.entity.User;
+import com.vidmins.persistence.DaoHelper;
 import com.vidmins.persistence.GenericDao;
 
 import org.apache.catalina.realm.SecretKeyCredentialHandler;
@@ -33,6 +34,7 @@ import java.util.Map;
 )
 public class NewUser extends HttpServlet {
     private Logger logger;
+    private DaoHelper dao;
 
     /**
      * Initialize variables
@@ -40,6 +42,8 @@ public class NewUser extends HttpServlet {
     public void init() {
         logger = LogManager.getLogger(this.getClass());
         logger.info("Starting servlet");
+
+        dao = new DaoHelper();
     }
 
     /**
@@ -54,7 +58,7 @@ public class NewUser extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        dao.loadHelpers(request);
         String userHash = request.getParameter("user");
         String verificationToken = request.getParameter("token");
 
@@ -99,7 +103,8 @@ public class NewUser extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        GenericDao<User> userDao = new GenericDao<>(User.class);
+        dao.loadHelpers(request);
+
         Map<String, String> errors = new HashMap<>();
 
         // extract field data
@@ -138,7 +143,7 @@ public class NewUser extends HttpServlet {
                 // malformed address
                 errors.put("email", "Invalid email address.");
             }
-            if (userDao.findByPropertyEqual("userName", username).size() > 0) {
+            if (dao.user.findByPropertyEqual("userName", username).size() > 0) {
                 // username is taken already
                 errors.put("username", "Username is taken.");
             }
@@ -163,7 +168,7 @@ public class NewUser extends HttpServlet {
                         } catch (Exception e) {
                             logger.debug("Login erroneous");
                             e.printStackTrace();
-                            userDao.delete(user);
+                            dao.user.delete(user);
                             logger.debug("User could not be saved");
                         }
                     } else {

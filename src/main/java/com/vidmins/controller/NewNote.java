@@ -3,6 +3,7 @@ package com.vidmins.controller;
 import com.vidmins.entity.Note;
 import com.vidmins.entity.User;
 import com.vidmins.entity.Video;
+import com.vidmins.persistence.DaoHelper;
 import com.vidmins.persistence.GenericDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,10 +33,7 @@ public class NewNote extends HttpServlet {
 
     private int previousDigit;
     private Logger logger;
-
-    private GenericDao<User> userDao;
-    private GenericDao<Video> videoDao;
-    private GenericDao<Note> noteDao;
+    private DaoHelper dao;
 
     /**
      * Initialize session
@@ -45,42 +43,8 @@ public class NewNote extends HttpServlet {
 
         logger = LogManager.getLogger(this.getClass());
         logger.info("Starting NewNote servlet");
-    }
 
-
-    /**
-     * Initialize database helpers
-     */
-    public void loadHelpers(HttpServletRequest request) {
-        logger = LogManager.getLogger(this.getClass());
-        logger.debug("loadHelpers()");
-
-        if (userDao == null) {
-            if (request.getSession().getAttribute("userDao") == null) {
-                userDao = new GenericDao<>(User.class);
-                request.getSession().setAttribute("userDao", userDao);
-            } else {
-                userDao = (GenericDao<User>) request.getSession().getAttribute("userDao");
-            }
-        }
-
-        if (videoDao == null) {
-            if (request.getSession().getAttribute("videoDao") == null) {
-                videoDao = new GenericDao<>(Video.class);
-                request.getSession().setAttribute("videoDao", videoDao);
-            } else {
-                videoDao = (GenericDao<Video>) request.getSession().getAttribute("videoDao");
-            }
-        }
-
-        if (noteDao == null) {
-            if (request.getSession().getAttribute("noteDao") == null) {
-                noteDao = new GenericDao<>(Note.class);
-                request.getSession().setAttribute("noteDao", noteDao);
-            } else {
-                noteDao = (GenericDao<Note>) request.getSession().getAttribute("noteDao");
-            }
-        }
+        dao = new DaoHelper();
     }
 
     /**
@@ -96,7 +60,7 @@ public class NewNote extends HttpServlet {
             throws ServletException, IOException {
 
         // make DAOs available
-        loadHelpers(request);
+        dao.loadHelpers(request);
 
         List<String> requestParams = new ArrayList<>();
         String url = "loadClient";
@@ -118,17 +82,17 @@ public class NewNote extends HttpServlet {
             noteFromFormData.setText(request.getParameter("note_text"));
             noteFromFormData.setStart(Integer.parseInt(request.getParameter("timeStampStart")));
 
-            noteFromFormData.setVideo(videoDao.getById(Integer.parseInt(request.getParameter("videoId"))));
+            noteFromFormData.setVideo(dao.video.getById(Integer.parseInt(request.getParameter("videoId"))));
             noteFromFormData.setCreateDatetime(LocalDateTime.now());
 
             //logger.debug("noteFromFormData before: " + noteFromFormData.toString());
 
             if (noteFromFormData.getId() > 0) {
                 logger.debug("This is a note to be updated: " + noteFromFormData.getId());
-                noteDao.saveOrUpdate(noteFromFormData);
+                dao.note.saveOrUpdate(noteFromFormData);
             } else {
                 logger.debug("This is a new note");
-                noteDao.insert(noteFromFormData);
+                dao.note.insert(noteFromFormData);
             }
 
             logger.debug("noteFromFormData after: " + noteFromFormData.toString());

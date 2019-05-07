@@ -3,6 +3,7 @@ package com.vidmins.controller;
 import com.vidmins.entity.Directory;
 import com.vidmins.entity.Video;
 import com.vidmins.entity.YouTubeVideo;
+import com.vidmins.persistence.DaoHelper;
 import com.vidmins.persistence.GenericDao;
 import com.vidmins.youtube_data_api.YTDataApi;
 import org.apache.logging.log4j.LogManager;
@@ -33,8 +34,7 @@ import java.util.List;
 
 public class NewVideo extends HttpServlet {
     private Logger logger;
-    private GenericDao<Video> videoDao;
-    private GenericDao<YouTubeVideo> ytVideoDao;
+    private DaoHelper dao;
 
     /**
      * Initialize variables
@@ -42,8 +42,8 @@ public class NewVideo extends HttpServlet {
     public void init() {
         logger = LogManager.getLogger(this.getClass());
         logger.info("Starting servlet");
-        videoDao = new GenericDao<>(Video.class);
-        ytVideoDao = new GenericDao<>(YouTubeVideo.class);
+
+        dao = new DaoHelper();
     }
 
     /**
@@ -101,18 +101,18 @@ public class NewVideo extends HttpServlet {
             logger.debug("Input youTubeId: " + youTubeId);
 
             // check for an existing row with this YouTubeId
-            List ytVideos = ytVideoDao.findByPropertyEqual("youTubeId", youTubeId);
+            List youTubeVideos = dao.youTubeVideo.findByPropertyEqual("youTubeId", youTubeId);
 
             YouTubeVideo youTubeVideo;
-            if (ytVideos.size() == 0) {
+            if (youTubeVideos.size() == 0) {
                 youTubeVideo = new YouTubeVideo(youTubeId, title);
 
                 //youTubeVideo.retrieveInfo();
                 // save new video link
-                ytVideoDao.insert(youTubeVideo);
+                dao.youTubeVideo.insert(youTubeVideo);
             } else {
                 // use the existing entry
-                youTubeVideo = (YouTubeVideo) ytVideos.get(0);
+                youTubeVideo = (YouTubeVideo) youTubeVideos.get(0);
             }
             logger.debug("youTubeVideo: " + youTubeVideo.toString());
 
@@ -122,7 +122,7 @@ public class NewVideo extends HttpServlet {
                     , (Directory) request.getSession().getAttribute("currentDirectory")
             );
             logger.debug("video: " + video.toString());
-            videoDao.insert(video);
+            dao.video.insert(video);
 
         } catch (IOException iox) {
             iox.printStackTrace();

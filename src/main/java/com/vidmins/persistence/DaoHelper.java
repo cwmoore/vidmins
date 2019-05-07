@@ -1,9 +1,6 @@
 package com.vidmins.persistence;
 
-import com.vidmins.entity.Directory;
-import com.vidmins.entity.Note;
-import com.vidmins.entity.User;
-import com.vidmins.entity.Video;
+import com.vidmins.entity.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,6 +13,7 @@ public class DaoHelper {
     public GenericDao<User> user;
     public GenericDao<Directory> directory;
     public GenericDao<Video> video;
+    public GenericDao<YouTubeVideo> youTubeVideo;
     public GenericDao<Note> note;
     
     public DaoHelper() {
@@ -53,6 +51,15 @@ public class DaoHelper {
                 request.getSession().setAttribute("videoDao", video);
             } else {
                 video = (GenericDao<Video>) request.getSession().getAttribute("video");
+            }
+        }
+
+        if (youTubeVideo == null) {
+            if (request.getSession().getAttribute("youTubeVideoDao") == null) {
+                youTubeVideo = new GenericDao<>(YouTubeVideo.class);
+                request.getSession().setAttribute("youTubeVideoDao", youTubeVideo);
+            } else {
+                youTubeVideo = (GenericDao<YouTubeVideo>) request.getSession().getAttribute("youTubeVideo");
             }
         }
 

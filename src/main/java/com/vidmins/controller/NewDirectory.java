@@ -5,6 +5,7 @@ import com.vidmins.auth.Auth;
 import com.vidmins.entity.Directory;
 import com.vidmins.entity.Role;
 import com.vidmins.entity.User;
+import com.vidmins.persistence.DaoHelper;
 import com.vidmins.persistence.GenericDao;
 
 import org.apache.catalina.realm.SecretKeyCredentialHandler;
@@ -34,6 +35,7 @@ import java.util.Map;
 )
 public class NewDirectory extends HttpServlet {
     private Logger logger;
+    private DaoHelper dao;
 
     /**
      * Initialize variables
@@ -41,6 +43,7 @@ public class NewDirectory extends HttpServlet {
     public void init() {
         logger = LogManager.getLogger(this.getClass());
         logger.info("Starting servlet");
+        dao = new DaoHelper();
     }
 
     /**
@@ -53,7 +56,8 @@ public class NewDirectory extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        GenericDao<Directory> directoryDao = new GenericDao<>(Directory.class);
+        dao.loadHelpers(request);
+
         Map<String, String> errors = new HashMap<>();
 
         // extract field data
@@ -66,23 +70,22 @@ public class NewDirectory extends HttpServlet {
 
         // verify complete and correct
         if (directoryName != null) {
-            if (directoryDao.findByPropertyEqual("name", directoryName).size() > 0) {
+            if (dao.directory.findByPropertyEqual("name", directoryName).size() > 0) {
                 // username is taken already
                 errors.put("directoryName", "Directory name is taken.");
             }
 
             if (errors.size() == 0) {
                 // get current user
-                GenericDao<User> userDao = new GenericDao<>(User.class);
-                List<User> users = userDao.findByPropertyEqual("userName", request.getRemoteUser());
+                List<User> users = dao.user.findByPropertyEqual("userName", request.getRemoteUser());
 
                 if (users.size() == 1) {
                     User user = users.get(0);
 
                     // add new directory
                     Directory directory = new Directory(directoryName, directoryDescription, user);
-                    int insertId = directoryDao.insert(directory);
-                    request.getSession().setAttribute("currentDirectory", directoryDao.getById(insertId));
+                    int insertId = dao.directory.insert(directory);
+                    request.getSession().setAttribute("currentDirectory", dao.directory.getById(insertId));
                     logger.debug("Got THIS far");
                 }
             } else {
