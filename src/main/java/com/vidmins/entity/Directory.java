@@ -7,6 +7,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -21,6 +22,7 @@ public class Directory implements java.io.Serializable {
     private int id;
     private String name;
     private String description;
+    private LocalDateTime lastAccessDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId", nullable = false)
@@ -130,6 +132,22 @@ public class Directory implements java.io.Serializable {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    /**
+     * Get last access date.
+     * @return the last access date
+     */
+    public LocalDateTime getLastAccessDate() {
+        return lastAccessDate;
+    }
+
+    /**
+     * Set last access date.
+     * @param lastAccessDate the last access date
+     */
+    public void setLastAccessDate(LocalDateTime lastAccessDate) {
+        this.lastAccessDate = lastAccessDate;
     }
 
     /**

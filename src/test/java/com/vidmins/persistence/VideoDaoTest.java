@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,13 +99,16 @@ class VideoDaoTest {
     @Test
     void insertSuccess() {
 
+        GenericDao<Directory> directoryDao = new GenericDao<>(Directory.class);
+        GenericDao<YouTubeVideo> ytvDao = new GenericDao<>(YouTubeVideo.class);
+
         String videoTitle = "TestVideoInsert";
         Video newVideo = new Video();
         newVideo.setTitle(videoTitle);
-        GenericDao<Directory> directoryDao = new GenericDao<>(Directory.class);
+        newVideo.setAddDate(LocalDateTime.now());
+
         newVideo.setDirectory(directoryDao.getById(3));
 
-        GenericDao<YouTubeVideo> ytvDao = new GenericDao<>(YouTubeVideo.class);
         newVideo.setYouTubeVideo(ytvDao.findByPropertyEqual("youTubeId", "dF0NWtxRXsg").get(0));
 
         int insertId = dao.insert(newVideo);

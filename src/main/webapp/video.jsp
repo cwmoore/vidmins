@@ -3,8 +3,8 @@
 <c:choose>
     <c:when test="${videos != null}">
     <div class="aquapanel">
-        <h2>${defaultDirectory.name}</h2>
-        <p>${defaultDirectory.description}</p>
+        <h2>${currentDirectory.name}</h2>
+        <p>${currentDirectory.description}</p>
 
         <h3>Videos: </h3>
         <table id="video_table" class="table table-striped">

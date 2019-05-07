@@ -97,6 +97,8 @@ public class NewVideo extends HttpServlet {
         try {
             YTDataApi ytDataApi = new YTDataApi();
             String youTubeId = ytDataApi.extractYouTubeId(youTubeUrl);
+            logger.debug("Input youTubeUrl: " + youTubeUrl);
+            logger.debug("Input youTubeId: " + youTubeId);
 
             // check for an existing row with this YouTubeId
             List ytVideos = ytVideoDao.findByPropertyEqual("youTubeId", youTubeId);
@@ -112,12 +114,14 @@ public class NewVideo extends HttpServlet {
                 // use the existing entry
                 youTubeVideo = (YouTubeVideo) ytVideos.get(0);
             }
+            logger.debug("youTubeVideo: " + youTubeVideo.toString());
 
             video = new Video(youTubeVideo
                     , title
                     , currentLocalDateTime
-                    , (Directory) request.getSession().getAttribute("defaultDirectory")
+                    , (Directory) request.getSession().getAttribute("currentDirectory")
             );
+            logger.debug("video: " + video.toString());
             videoDao.insert(video);
 
         } catch (IOException iox) {

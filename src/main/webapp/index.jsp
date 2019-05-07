@@ -10,12 +10,12 @@
         <div id="watcher" class="col-lg-4">
             <c:import url="watcher.jsp" />
             <c:import url="notes.jsp" />
+            <c:import url="directory.jsp" />
         </div>
         <div class="col-lg-8">
             <c:import url="signup.jsp" />
             <c:import url="player.jsp" />
             <c:import url="video.jsp" />
-            <c:import url="directory.jsp" />
         </div>
     </div>
 </div>

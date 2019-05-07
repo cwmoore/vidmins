@@ -38,6 +38,7 @@ public class YouTubeVideo implements java.io.Serializable {
     private int duration;
 
     private String metadata;
+    private LocalDateTime updateDate;
 
     @OneToMany(mappedBy = "youTubeVideo")
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -202,6 +203,22 @@ public class YouTubeVideo implements java.io.Serializable {
      */
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    /**
+     * Get the update date.
+     * @return the update date
+     */
+    public LocalDateTime getUpdateDate() {
+        return updateDate;
+    }
+
+    /**
+     * set the update date.
+     * @param updateDate the update date
+     */
+    public void setUpdateDate(LocalDateTime updateDate) {
+        this.updateDate = updateDate;
     }
 
     /**

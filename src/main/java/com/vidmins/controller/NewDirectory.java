@@ -82,7 +82,7 @@ public class NewDirectory extends HttpServlet {
                     // add new directory
                     Directory directory = new Directory(directoryName, directoryDescription, user);
                     int insertId = directoryDao.insert(directory);
-                    request.getSession().setAttribute("defaultDirectory", directoryDao.getById(insertId));
+                    request.getSession().setAttribute("currentDirectory", directoryDao.getById(insertId));
                     logger.debug("Got THIS far");
                 }
             } else {

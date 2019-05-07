@@ -157,6 +157,7 @@ public class NewUser extends HttpServlet {
                             //logger.debug(user.getUserName() + " pass: " + password0 + ".");
                             //request.login(user.getUserName(), password0);
                             request.getSession().setAttribute("user", user);
+                            // TODO should be setting a default directory/video/note here
                             logger.debug("Got THIS far");
                             // but cannot log in with the new credentials
                         } catch (Exception e) {

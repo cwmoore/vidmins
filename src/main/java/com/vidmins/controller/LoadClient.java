@@ -1,6 +1,7 @@
 package com.vidmins.controller;
 
 import com.vidmins.entity.*;
+import com.vidmins.persistence.DaoHelper;
 import com.vidmins.persistence.GenericDao;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -30,11 +31,7 @@ import java.io.IOException;
 
 public class LoadClient extends HttpServlet {
     private Logger logger;
-
-    private GenericDao<User> userDao;
-    private GenericDao<Directory> directoryDao;
-    private GenericDao<Video> videoDao;
-    private GenericDao<Note> noteDao;
+    private DaoHelper dao;
 
     /**
      * Initialize session
@@ -43,50 +40,7 @@ public class LoadClient extends HttpServlet {
     public void init() throws ServletException {
         logger = LogManager.getLogger(this.getClass());
         logger.info("Starting LoadClient servlet");
-    }
-
-    /**
-     * Initialize database helpers
-     */
-    public void loadHelpers(HttpServletRequest request) {
-        logger = LogManager.getLogger(this.getClass());
-        logger.debug("loadHelpers()");
-
-        if (userDao == null) {
-            if (request.getSession().getAttribute("userDao") == null) {
-                userDao = new GenericDao<>(User.class);
-                request.getSession().setAttribute("userDao", userDao);
-            } else {
-                userDao = (GenericDao<User>) request.getSession().getAttribute("userDao");
-            }
-        }
-
-        if (directoryDao == null) {
-            if (request.getSession().getAttribute("directoryDao") == null) {
-                directoryDao = new GenericDao<>(Directory.class);
-                request.getSession().setAttribute("directoryDao", directoryDao);
-            } else {
-                directoryDao = (GenericDao<Directory>) request.getSession().getAttribute("directoryDao");
-            }
-        }
-
-        if (videoDao == null) {
-            if (request.getSession().getAttribute("videoDao") == null) {
-                videoDao = new GenericDao<>(Video.class);
-                request.getSession().setAttribute("videoDao", videoDao);
-            } else {
-                videoDao = (GenericDao<Video>) request.getSession().getAttribute("videoDao");
-            }
-        }
-
-        if (noteDao == null) {
-            if (request.getSession().getAttribute("noteDao") == null) {
-                noteDao = new GenericDao<>(Note.class);
-                request.getSession().setAttribute("noteDao", noteDao);
-            } else {
-                noteDao = (GenericDao<Note>) request.getSession().getAttribute("noteDao");
-            }
-        }
+        dao = new DaoHelper();
     }
 
 
@@ -105,7 +59,7 @@ public class LoadClient extends HttpServlet {
         logger.debug(request.getUserPrincipal());
         logger.debug(request.getAuthType());
 
-        loadHelpers(request);
+        dao.loadHelpers(request);
 
         String requestParams = "?";
 
@@ -119,60 +73,81 @@ public class LoadClient extends HttpServlet {
             //User user = (User) session.getAttribute("user");
         }
 
-        if (request.getRemoteUser() != null) { // TODO check role too
+        String userName = request.getRemoteUser();
+        //org.apache.catalina.authenticator.Principle principle = request.getUserPrincipal();
+        //logger.debug("principle: " + principle);
+        if (userName != null) { // TODO check role too
 
-            logger.debug(request.getRemoteUser());
-            User user = userDao.findByPropertyEqual("userName", request.getRemoteUser()).get(0);
+            logger.debug(userName);
+            List<User> users = dao.user.findByPropertyEqual("userName", userName);
+            User user = users.get(0);
+
             logger.debug("User: " + user);
             session.setAttribute("user", user);
 
-            List<Directory> directories = user.getDirectories();
             Video currentVideo = null;
-            Directory defaultDirectory;
 
-            if (directories.size() == 0) {
-                defaultDirectory = new Directory(
-                        "First Directory"
-                        , "Directories organize sets of videos."
-                        , user);
-                int dirInsertId = directoryDao.insert(defaultDirectory);
-                user.addDirectory(directoryDao.getById(dirInsertId));
+            Directory currentDirectory = (Directory) session.getAttribute("currentDirectory");
 
-                directories.add(defaultDirectory);
-                // TODO add beginner video for first time user
+            List<Directory> directories = user.getDirectories();
+            session.setAttribute("directories", directories);
 
-            } else { // get videos for first directory
-                logger.debug("Found " + directories.size() + " directories");
+            if (currentDirectory == null) {
+                if (directories.size() == 0) { // first time use
+                    Directory defaultDirectory = new Directory(
+                            "First Directory"
+                            , "Directories organize sets of videos."
+                            , user);
 
-                defaultDirectory = directories.get(0);
+                    int dirInsertId = dao.directory.insert(defaultDirectory);
+                    user.addDirectory(dao.directory.getById(dirInsertId));
 
+                    directories.add(defaultDirectory);
+                    // TODO add beginner video for first time user
+
+                } else { // get default directory
+                    logger.debug("Found " + directories.size() + " directories");
+
+                    currentDirectory = directories.get(0);
+                }
             }
+
+            String inputDefaultId = request.getParameter("cd");
+            try {
+                int defaultId = Integer.parseInt(inputDefaultId);
+
+                if (defaultId > 0) {
+                    currentDirectory = dao.directory.getById(defaultId);
+                    session.setAttribute("currentDirectory", currentDirectory);
+                }
+            } catch (NumberFormatException nfe) {
+                logger.debug(nfe.toString());
+            }
+
 
             // change this to use a different video to preload
             if (session.getAttribute("currentVideo") != null) {
                 currentVideo = (Video) session.getAttribute("currentVideo");
             }
 
-            if (defaultDirectory != null) {
+            if (currentDirectory != null) {
 
-                List<Video> videos = defaultDirectory.getVideos();
-
+                List<Video> videos = currentDirectory.getVideos();
                 session.setAttribute("videos", videos);
+
                 // TODO select the best video (instead of just the first)
                 if (videos.size() > 0) {
                     currentVideo = videos.get(0);
                 }
-                session.setAttribute("defaultDirectory", defaultDirectory);
+                session.setAttribute("currentDirectory", currentDirectory);
             }
-            session.setAttribute("directories", directories);
-
 
             // TODO move url param into a clean URL session object
             if (request.getParameter("videoId") != null) {
                 if (request.getParameter("videoId").matches("\\d+")) {
 
                     int videoId = Integer.parseInt(request.getParameter("videoId"));
-                    currentVideo = videoDao.getById(videoId);
+                    currentVideo = dao.video.getById(videoId);
                 }
             }
 

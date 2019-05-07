@@ -13,6 +13,8 @@ import org.apache.catalina.realm.SecretKeyCredentialHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletContext;
 
 /**
@@ -33,7 +35,7 @@ public class Auth {
     }
 //
 //    /**
-//     * Change password boolean.
+//     * Change password boolean. TODO make this option
 //     *
 //     * @param userName    the user name
 //     * @param oldPassword the old password
@@ -62,7 +64,7 @@ public class Auth {
 //     * @return an authenticated user
 //     * @throws Exception the exception
 //     */
-//    public User authenticateUser(String userName, String password)
+//    public User authenticateUser(String userName, String password) // TODO backburner this
 //            throws Exception {
 //        User accessUser = null;
 //        GenericDao<User> userDao = new GenericDao<>(User.class);
@@ -106,6 +108,16 @@ public class Auth {
         if (matchingUsers.size() == 0) { // not a duplicated userName
 
             try {
+//                InitialContext context = new InitialContext();
+//                Context xmlNode = (Context) context.lookup("java:comp/env");
+//                String credentialHandlerTag = (String) xmlNode.lookup("SecretKeyCredentialHandler");
+//                logger.debug("credentialHandlerTag" + credentialHandlerTag);
+//                        "<CredentialHandler className=\"org.apache.catalina.realm.SecretKeyCredentialHandler\"\n" +
+//                        "                           algorithm=\"PBKDF2WithHmacSHA512\"\n" +
+//                        "                           iterations=\"100000\"\n" +
+//                        "                           keyLength=\"256\"\n" +
+//                        "                           saltLength=\"16\"");
+
                 SecretKeyCredentialHandler credentialHandler = new SecretKeyCredentialHandler();
                 credentialHandler.setSaltLength(16);
                 credentialHandler.setIterations(100000);
@@ -141,56 +153,4 @@ public class Auth {
 
         return null;
     }
-//
-//    /**
-//     * Get the credential handler configured for this instance.
-//     *
-//     * https://stackoverflow.com/a/41903791
-//     * @param context
-//     * @return
-//     */
-//    public static CredentialHandler getCredentialHandler(final ServletContext context) {
-//        return (CredentialHandler) context.getAttribute(Globals.CREDENTIAL_HANDLER);
-//    }
-
-//  Utility method for converting dev plaintext passwords to secure hashes
-//  Some of these classes are deprecated but they worked fine for one time use
-
-            // uses these imports
-            //import java.security.SecureRandom;
-            //import java.util.HashMap;
-            //import java.util.Map;
-            //
-            //import com.vidmins.persistence.SessionFactoryProvider;
-            //import org.hibernate.SQLQuery;
-            //import org.hibernate.Session;
-            //import org.hibernate.SessionFactory;
-            //import org.hibernate.Transaction;
-
-//    public void hashCurrentPasswords() {
-//        BCrypt bcrypt = new BCrypt();
-//        int id;
-//        String raw_pass;
-//        String selectQuery = "SELECT id, enc_pass FROM user";
-//        String updateQuery = "UPDATE user SET enc_pass=:enc_pass WHERE id=:id";
-//
-//        Session session = SessionFactoryProvider.getSessionFactory().openSession();
-//        Transaction tx = session.beginTransaction();
-//        SQLQuery select = session.createSQLQuery(selectQuery);
-//        List<Object[]> rows = select.list();
-//        for (Object[] row : rows) {
-//            id = Integer.parseInt(row[0].toString());
-//            raw_pass = row[1].toString();
-//
-//            String enc_pass = bcrypt.hashpw(raw_pass, bcrypt.gensalt());
-//
-//            Session sessionUpdate = SessionFactoryProvider.getSessionFactory().openSession();
-//            Transaction txUpdate = sessionUpdate.beginTransaction();
-//            SQLQuery update = sessionUpdate.createSQLQuery(updateQuery);
-//            update.setInteger("id", id);
-//            update.setString("enc_pass", enc_pass);
-//            int result = update.executeUpdate();
-//            sessionUpdate.getTransaction().commit();
-//        }
-//    }
 }

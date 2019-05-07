@@ -29,7 +29,8 @@ public class Video implements java.io.Serializable {
     private YouTubeVideo youTubeVideo;
 
     private String title;
-    private LocalDateTime addDate = LocalDateTime.now();
+    private LocalDateTime addDate;
+    private LocalDateTime lastViewedDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "directoryId", nullable = false)
@@ -159,6 +160,24 @@ public class Video implements java.io.Serializable {
      */
     public void setAddDate(LocalDateTime addDate) {
         this.addDate = addDate;
+    }
+
+    /**
+     * Gets last viewed date.
+     *
+     * @return the last viewed date
+     */
+    public LocalDateTime getLastViewedDate() {
+        return lastViewedDate;
+    }
+
+    /**
+     * Sets last viewed date.
+     *
+     * @param lastViewedDate the last viewed date
+     */
+    public void setLastViewedDate(LocalDateTime lastViewedDate) {
+        this.lastViewedDate = lastViewedDate;
     }
 
     /**

@@ -9,7 +9,11 @@
             </tr>
         <c:forEach items="${directories}" var="directory">
             <tr>
-                <td><c:out value="${directory.name}"/></td>
+                <td>
+                    <a href="loadClient?cd=<c:out value="${directory.id}"/>">
+                        <c:out value="${directory.name}"/>
+                    </a>
+                </td>
                 <td><c:out value="${directory.description}"/></td>
             </tr>
         </c:forEach>

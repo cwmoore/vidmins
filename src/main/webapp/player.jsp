@@ -51,8 +51,9 @@
             //    after the API code downloads.
             var player;
             var youTubeId = '${currentVideo.youTubeVideo.youTubeId}';
-            var viewWidth = '800';//'1120';//this.parentNode.parentNode.clientWidth;
-            var viewHeight = '450';//'630';//(viewWidth / 16) * 9;
+
+            var viewWidth = '960';
+            var viewHeight = (viewWidth / 16) * 9;//'450';//'630';//(viewWidth / 16) * 9;
             // console.log(this.parentNode);
             // console.log(this.parentNode.parentNode);
             // this.parentNode.width = viewWidth + 8; // 2 * width of padding and borders

@@ -50,6 +50,7 @@ public class User implements java.io.Serializable {
     @Convert(converter = TimestampAttributeConverter.class)
     //@EqualsAndHashCode.Exclude
     private LocalDateTime joinDate;
+    private LocalDateTime lastLoginDate;
 
     private LocalDate dateOfBirth;
 
@@ -221,6 +222,24 @@ public class User implements java.io.Serializable {
      *
      * @return the join date
      */
+    public LocalDateTime getLastLoginDate() {
+        return lastLoginDate;
+    }
+
+    /**
+     * Sets last login date.
+     *
+     * @param lastLoginDate the last login date
+     */
+    public void setLastLoginDate(LocalDateTime lastLoginDate) {
+        this.lastLoginDate = lastLoginDate;
+    }
+
+    /**
+     * Gets join date
+     *
+     * @return the join date
+     */
     public LocalDateTime getJoinDate() {
         return joinDate;
     }
@@ -233,24 +252,6 @@ public class User implements java.io.Serializable {
     public void setJoinDate(LocalDateTime joinDate) {
         this.joinDate = joinDate;
     }
-//
-//    /**
-//     * Gets password.
-//     *
-//     * @return the password
-//     */
-//    public String getPassword() {
-//        return this.password;
-//    }
-//
-//    /**
-//     * Sets password.
-//     *
-//     * @param password the password
-//     */
-//    public void setPassword(String password) {
-//        this.password = password;
-//    }
 
     /**
      * Gets password.
@@ -269,24 +270,6 @@ public class User implements java.io.Serializable {
     public void setPassword(String password) {
         this.enc_pass = password;
     }
-
-//    /**
-//     * Gets enc_pass.
-//     *
-//     * @return the enc_pass
-//     */
-//    public String getEncryptedPassword() {
-//        return this.enc_pass;
-//    }
-//
-//    /**
-//     * Sets enc_pass.
-//     *
-//     * @param enc_pass the enc_pass
-//     */
-//    public void setEncryptedPassword(String enc_pass) {
-//        this.enc_pass = enc_pass;
-//    }
 
     /**
      * Gets date of birth.
