@@ -78,6 +78,8 @@ const Note = () => {
 
 */
 
+const features = ["help", "note", "link", /*"comment", "ask", */"new_directory", "new_video"];
+
 const init = () => {
     let storeNoteBtn = document.querySelector("#store_note_btn");
     storeNoteBtn.addEventListener("click", submitForm, false);
@@ -85,8 +87,11 @@ const init = () => {
     let signupBtn = document.querySelector("#signup_btn");
     signupBtn.addEventListener("click", showSignup, false);
 
+    let addDirectoryBtn = document.querySelector("#add_directory_button");
+    signupBtn.addEventListener("click", submitForm, false);
+
     let addVideoBtn = document.querySelector("#add_video_button");
-    signupBtn.addEventListener("click", showSignup, false);
+    signupBtn.addEventListener("click", submitForm, false);
 }
 
 const showSignup = () => {
@@ -125,7 +130,6 @@ const showPanel = (feature) => {
     document.getElementById(feature + "_input").style.display = "block";
 }
 
-const features = ["help", "note", "link", /*"comment", "ask", */"new_directory", "new_video"];
 const hidePanels = () => {
     let feature;
 

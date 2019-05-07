@@ -95,7 +95,8 @@ public class NewVideo extends HttpServlet {
         LocalDateTime currentLocalDateTime = LocalDateTime.now();
 
         try {
-            String youTubeId = YTDataApi.extractYouTubeId(youTubeUrl);
+            YTDataApi ytDataApi = new YTDataApi();
+            String youTubeId = ytDataApi.extractYouTubeId(youTubeUrl);
 
             // check for an existing row with this YouTubeId
             List ytVideos = ytVideoDao.findByPropertyEqual("youTubeId", youTubeId);

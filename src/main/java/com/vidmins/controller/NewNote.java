@@ -106,7 +106,8 @@ public class NewNote extends HttpServlet {
         if (request.getParameter("label") != null &&
                 request.getParameter("note_text") != null &&
                 request.getParameter("timeStampStart") != null &&
-                request.getParameter("videoId") != null) {
+                request.getParameter("videoId") != null)
+        {
 
             Note noteFromFormData = new Note();
             if (request.getParameter("noteId") != null) {

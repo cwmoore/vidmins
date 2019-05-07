@@ -101,15 +101,9 @@ public class LoadClient extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        if (request.authenticate(response)) {
-            logger.debug("authenticated");
-            logger.debug(request.getRemoteUser());
-            logger.debug(request.getUserPrincipal());
-            logger.debug(request.getAuthType());
-        } else {
-            logger.debug("not authenticated");
-            throw new ServletException("NOT AUTHENTICATED");
-        }
+        logger.debug(request.getRemoteUser());
+        logger.debug(request.getUserPrincipal());
+        logger.debug(request.getAuthType());
 
         loadHelpers(request);
 

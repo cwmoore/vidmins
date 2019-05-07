@@ -31,7 +31,7 @@ public class MyServlet extends HttpServlet {
 //        }
 
         if (shouldAuthenticate(req)) {
-            boolean authenticated = req.authenticate(resp);
+            boolean authenticated = true;//req.authenticate(resp);
             if (authenticated) {
                 if (req.getUserPrincipal() != null) {
                     writer.println("user authenticated " + req.getUserPrincipal().getName());

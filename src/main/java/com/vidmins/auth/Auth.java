@@ -112,6 +112,7 @@ public class Auth {
                 credentialHandler.setKeyLength(256);
                 credentialHandler.setAlgorithm("PBKDF2WithHmacSHA512");
                 //SecretKeyCredentialHandler credentialHandler = (SecretKeyCredentialHandler) getCredentialHandler(context);
+
                 String enc_pass = credentialHandler.mutate(password);
 
                 if (!credentialHandler.matches(password, enc_pass)) {
@@ -140,17 +141,17 @@ public class Auth {
 
         return null;
     }
-
-    /**
-     * Get the credential handler configured for this instance.
-     *
-     * https://stackoverflow.com/a/41903791
-     * @param context
-     * @return
-     */
-    public static CredentialHandler getCredentialHandler(final ServletContext context) {
-        return (CredentialHandler) context.getAttribute(Globals.CREDENTIAL_HANDLER);
-    }
+//
+//    /**
+//     * Get the credential handler configured for this instance.
+//     *
+//     * https://stackoverflow.com/a/41903791
+//     * @param context
+//     * @return
+//     */
+//    public static CredentialHandler getCredentialHandler(final ServletContext context) {
+//        return (CredentialHandler) context.getAttribute(Globals.CREDENTIAL_HANDLER);
+//    }
 
 //  Utility method for converting dev plaintext passwords to secure hashes
 //  Some of these classes are deprecated but they worked fine for one time use

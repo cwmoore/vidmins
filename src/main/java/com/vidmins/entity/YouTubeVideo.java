@@ -108,8 +108,10 @@ public class YouTubeVideo implements java.io.Serializable {
      */
     public void retrieveData() {
         YTDataApi ytDataApi = new YTDataApi();
+
         // get video information via YT Data API
-        String videoData = ytDataApi.findVideoData(this.youTubeId);
+        YouTubeVideo ytVideo = ytDataApi.findVideoData(this.youTubeId);
+
         // title, description, duration, license, owner, channel
         // build a youtube data api object
     }
