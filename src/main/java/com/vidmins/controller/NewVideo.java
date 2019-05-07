@@ -66,15 +66,19 @@ public class NewVideo extends HttpServlet {
 
         // TODO deploy https://youtu.be/csT0t8ka8sM?t=292
         // TODO https://github.com/MadJavaEntSpring2019/home/blob/master/Module2/Week6/AWS/AWSSetupPart6.md
+        dao.loadHelpers(request);
 
-        request.setAttribute("video", addNewVideo(request));
+        Video newVideo = addNewVideo(request);
 
-//        String url = "/loadClient";
-//        RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-//        dispatcher.forward(request, response);
+        request.getSession().setAttribute("currentVideo", newVideo);
+        request.getSession().setAttribute("currentDirectory", newVideo.getDirectory());
 
-        String url = "loadClient";
-        response.sendRedirect(url);
+        String url = "/loadClient";
+        RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+        dispatcher.forward(request, response);
+
+//        String url = "loadClient";
+//        response.sendRedirect(url);
 
     }
 

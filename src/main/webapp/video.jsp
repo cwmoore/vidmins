@@ -15,6 +15,7 @@
                 <th>Duration</th>
                 <%--th># Notes</th--%>
                 <th>Add Date</th>
+                <th>Controls</th>
             </tr>
             <c:forEach items="${videos}" var="video">
                 <tr class="">
@@ -24,6 +25,10 @@
                     <td>${video.youTubeVideo.duration}</td>
                     <%--td--># Notes</td--%>
                     <td>${video.addDate}</td>
+                    <td>
+                        <a href="delete-video?id=${video.id}">Delete</a>
+                        <a href="move-video?id=${video.id}">Move</a>
+                    </td>
                 </tr>
             </c:forEach>
         </table>

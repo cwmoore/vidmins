@@ -85,9 +85,9 @@ public class LoadClient extends HttpServlet {
             logger.debug("User: " + user);
             session.setAttribute("user", user);
 
-            Video currentVideo = null;
-
             Directory currentDirectory = (Directory) session.getAttribute("currentDirectory");
+            Video currentVideo = (Video) session.getAttribute("currentVideo");
+            Note currentNote = (Note) session.getAttribute("currentNote");
 
             List<Directory> directories = user.getDirectories();
             session.setAttribute("directories", directories);
@@ -157,7 +157,10 @@ public class LoadClient extends HttpServlet {
 
                 // notes for the first video
                 session.setAttribute("notes", currentVideo.getNotes());
-                // TODO undupe the notes attribute of video by changing the properties in the JSP
+
+                if (currentVideo.getNotes().size() > 0) {
+                    session.setAttribute("currentNote", currentVideo.getNotes().get(0));
+                }
             }
 
             session.setAttribute("title", "The Video Minutes App");

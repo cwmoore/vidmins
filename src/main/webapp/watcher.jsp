@@ -18,7 +18,7 @@
     <div id="watcher">
         <div id="new_directory_input" class="aquapanel">
             <form name="new_directory_form" action="new-directory" method="post">
-                <label for="directoryNameField">Name</label>
+                <label for="directoryNameField">Name</label><br />
                 <input type="text" name="directoryName" id="directoryNameField" /><br />
 
                 <label for="directoryDescriptionField">Description</label>
@@ -31,13 +31,13 @@
         <div id="new_video_input" class="aquapanel">
             <form id="add_video_form" action="new-video" method="post">
                 <label for="youtube_url">YouTube Video URL</label><br />
-                <input type="text" id="youtube_url" name="youtube_url" placeholder="https://youtu.be/R4nd0mCh4r5"/>
+                <input type="text" id="youtube_url" name="youtube_url" placeholder="https://youtu.be/R4nd0mCh4r5"/><br />
                 <button type="submit" class="btn btn-primary" id="add_video_button">Add Video</button>
             </form>
         </div>
 
         <div id="note_input" class="aquapanel">
-            <form id="note_input_form" accept-charset="utf-8" method="post" action="new-note" onsubmit="processInput(); return false;">
+            <form id="note_input_form" accept-charset="utf-8" method="post" action="new-note">
 
                 <label>Label:</label><br />
                 <input type="text" name="label" <c:if test="${note != null}">value="${note.label}"</c:if>/><br />

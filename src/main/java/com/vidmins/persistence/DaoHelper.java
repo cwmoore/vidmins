@@ -32,7 +32,7 @@ public class DaoHelper {
                 user = new GenericDao<>(User.class);
                 request.getSession().setAttribute("userDao", user);
             } else {
-                user = (GenericDao<User>) request.getSession().getAttribute("user");
+                user = (GenericDao<User>) request.getSession().getAttribute("userDao");
             }
         }
 
@@ -41,7 +41,7 @@ public class DaoHelper {
                 directory = new GenericDao<>(Directory.class);
                 request.getSession().setAttribute("directoryDao", directory);
             } else {
-                directory = (GenericDao<Directory>) request.getSession().getAttribute("directory");
+                directory = (GenericDao<Directory>) request.getSession().getAttribute("directoryDao");
             }
         }
 
@@ -50,7 +50,7 @@ public class DaoHelper {
                 video = new GenericDao<>(Video.class);
                 request.getSession().setAttribute("videoDao", video);
             } else {
-                video = (GenericDao<Video>) request.getSession().getAttribute("video");
+                video = (GenericDao<Video>) request.getSession().getAttribute("videoDao");
             }
         }
 
@@ -59,7 +59,7 @@ public class DaoHelper {
                 youTubeVideo = new GenericDao<>(YouTubeVideo.class);
                 request.getSession().setAttribute("youTubeVideoDao", youTubeVideo);
             } else {
-                youTubeVideo = (GenericDao<YouTubeVideo>) request.getSession().getAttribute("youTubeVideo");
+                youTubeVideo = (GenericDao<YouTubeVideo>) request.getSession().getAttribute("youTubeVideoDao");
             }
         }
 
@@ -68,7 +68,7 @@ public class DaoHelper {
                 note = new GenericDao<>(Note.class);
                 request.getSession().setAttribute("noteDao", note);
             } else {
-                note = (GenericDao<Note>) request.getSession().getAttribute("note");
+                note = (GenericDao<Note>) request.getSession().getAttribute("noteDao");
             }
         }
     }

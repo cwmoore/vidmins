@@ -24,13 +24,12 @@ import java.util.*;
  */
 
 @WebServlet(
-        name = "editNote",
-        urlPatterns = {"/edit-note"}
+        name = "deleteVideo",
+        urlPatterns = {"/delete-video"}
 )
 
-public class EditNote extends HttpServlet {
+public class DeleteVideo extends HttpServlet {
 
-    private int previousDigit;
     private Logger logger;
     private DaoHelper dao;
 
@@ -59,18 +58,18 @@ public class EditNote extends HttpServlet {
 
         dao.loadHelpers(request);
 
-        Note note;
-        if (request.getParameter("noteId") != null) {
-            int noteId = Integer.parseInt(request.getParameter("noteId"));
-            note = dao.note.getById(noteId);
-            request.getSession().setAttribute("note", note);
+        Video video;
+        if (request.getParameter("id") != null) {
+            int videoId = Integer.parseInt(request.getParameter("id"));
+            video = dao.video.getById(videoId);
+            dao.video.delete(video);
         } else {
-            note = null;
+            video = null;
         }
 
-        logger.debug("note from id: " + request.getParameter("noteId") + "\n" + note);
+        logger.debug("delete video by id: " + request.getParameter("id") + "\n" + video);
 
-        String url = "/index.jsp";
+        String url = "loadClient";
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
     }

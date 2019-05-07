@@ -2,6 +2,7 @@ package com.vidmins.auth;
 
 import com.vidmins.entity.Role;
 import com.vidmins.entity.User;
+import com.vidmins.persistence.DaoHelper;
 import com.vidmins.persistence.GenericDao;
 
 import java.util.List;
