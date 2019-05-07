@@ -27,7 +27,7 @@
                     <td>${video.addDate}</td>
                     <td>
                         <a href="delete-video?id=${video.id}">Delete</a>
-                        <a href="move-video?id=${video.id}">Move</a>
+                       <%-- <a href="move-video?id=${video.id}">Move</a> --%>
                     </td>
                 </tr>
             </c:forEach>

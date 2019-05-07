@@ -6,6 +6,7 @@
             <tr>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Controls</th>
             </tr>
         <c:forEach items="${directories}" var="directory">
             <tr>
@@ -15,6 +16,10 @@
                     </a>
                 </td>
                 <td><c:out value="${directory.description}"/></td>
+                <td>
+                    <a href="delete-directory?id=${directory.id}">Delete</a>
+                        <%-- <a href="move-directory?id=${directory.id}">Move</a> --%>
+                </td>
             </tr>
         </c:forEach>
         </table>

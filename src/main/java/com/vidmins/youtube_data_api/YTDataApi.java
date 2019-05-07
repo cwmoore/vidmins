@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 //import com.google.api.services.youtube.*;
 
@@ -31,23 +32,28 @@ public class YTDataApi {
      */
     public String extractYouTubeId(String youTubeUrl) throws IOException {
         String youTubeId = null;
-        URL url = new URL(youTubeUrl);
+        try {
+            URL url = new URL(youTubeUrl);
 
-        logger.debug("getPath", url.getPath());
+            logger.debug("getPath", url.getPath());
 
 
-        if (url.getHost().equals("youtu.be")) {
-            youTubeId = url.getPath();
-            if (youTubeId.substring(0, 1).equals("/")) {
-                youTubeId = youTubeId.substring(1);
-            }
-        } else {
-            String[] params = url.getQuery().split("&");
-            for (String paramPair : params) {
-                if (paramPair.substring(0, 2).equals("v=")) {
-                    youTubeId = paramPair.substring(2);
+            if (url.getHost().equals("youtu.be")) {
+                youTubeId = url.getPath();
+                if (youTubeId.substring(0, 1).equals("/")) {
+                    youTubeId = youTubeId.substring(1);
+                }
+            } else if (url.getHost().contains("youtube")) {
+                String[] params = url.getQuery().split("&");
+                for (String paramPair : params) {
+                    if (paramPair.substring(0, 2).equals("v=")) {
+                        youTubeId = paramPair.substring(2);
+                    }
                 }
             }
+        } catch (MalformedURLException mue) {
+            youTubeId = youTubeUrl;
+            logger.debug(mue.toString() + " From: " + youTubeId);
         }
 
         if (youTubeId != null) {

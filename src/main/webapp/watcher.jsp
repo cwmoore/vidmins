@@ -58,15 +58,18 @@
                 <label>End:</label> <span id="time_stamp_end">0</span><br /--%>
 
                 <c:if test="${note != null}">
-                <input type="hidden" name="noteId" value="${note.id}" />
+                <input type="hidden" id="hidden_note_id" name="noteId" value="${note.id}" />
                 </c:if>
 
                 <input type="hidden" name="videoId"
                        value="<c:choose><c:when test="${note != null}">${note.video.id}</c:when><c:otherwise>${sessionScope.currentVideo.id}</c:otherwise></c:choose>" />
 
                 <br />
-                <input id="store_note_btn" type="submit" class="btn btn-primary" value="Store Annotation" />
+                <input id="store_note_btn" type="submit" class="btn btn-primary" value="Store" />
+
+                <button id="delete_note_btn" type="button" class="btn btn-danger" onclick="window.location.href = 'delete-note?id=${note.id}';">Delete</button>
             </form>
+
         </div>
         <%-- <div id="notes">
             <ul class="notes"></ul>

@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Store a note.
+ * Edit a note.
  * @author cwmoore
  */
 

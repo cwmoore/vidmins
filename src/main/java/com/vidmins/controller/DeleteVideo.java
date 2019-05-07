@@ -1,5 +1,6 @@
 package com.vidmins.controller;
 
+import com.vidmins.entity.Directory;
 import com.vidmins.entity.Note;
 import com.vidmins.entity.User;
 import com.vidmins.entity.Video;
@@ -19,7 +20,7 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Store a note.
+ * Delete a video.
  * @author cwmoore
  */
 
@@ -40,7 +41,7 @@ public class DeleteVideo extends HttpServlet {
     public void init() throws ServletException {
 
         logger = LogManager.getLogger(this.getClass());
-        logger.info("Starting EditNote servlet");
+        logger.info("Starting DeleteVideo servlet");
         dao = new DaoHelper();
     }
 
@@ -58,20 +59,29 @@ public class DeleteVideo extends HttpServlet {
 
         dao.loadHelpers(request);
 
+        String url = "loadClient";
         Video video;
         if (request.getParameter("id") != null) {
-            int videoId = Integer.parseInt(request.getParameter("id"));
-            video = dao.video.getById(videoId);
-            dao.video.delete(video);
+            try {
+                int videoId = Integer.parseInt(request.getParameter("id"));
+                video = dao.video.getById(videoId);
+                Directory currentDirectory = video.getDirectory();
+                url = "loadClient?cd=" + currentDirectory.getId();
+
+                dao.video.delete(video);
+                request.getSession().setAttribute("currentDirectory", currentDirectory);
+
+                logger.debug("delete video by id: " + request.getParameter("id") + "\n" + video);
+            } catch (NumberFormatException nfe) {
+                logger.debug(nfe.toString());
+            }
         } else {
             video = null;
         }
 
-        logger.debug("delete video by id: " + request.getParameter("id") + "\n" + video);
-
-        String url = "loadClient";
-        RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-        dispatcher.forward(request, response);
+        response.sendRedirect(url);
+//        RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+//        dispatcher.forward(request, response);
     }
 
     /**

@@ -41,7 +41,7 @@ public class NewVideo extends HttpServlet {
      */
     public void init() {
         logger = LogManager.getLogger(this.getClass());
-        logger.info("Starting servlet");
+        logger.info("Starting NewVideo servlet");
 
         dao = new DaoHelper();
     }
@@ -73,12 +73,12 @@ public class NewVideo extends HttpServlet {
         request.getSession().setAttribute("currentVideo", newVideo);
         request.getSession().setAttribute("currentDirectory", newVideo.getDirectory());
 
-        String url = "/loadClient";
-        RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-        dispatcher.forward(request, response);
+//        String url = "/loadClient";
+//        RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+//        dispatcher.forward(request, response);
 
-//        String url = "loadClient";
-//        response.sendRedirect(url);
+        String url = "loadClient?cd=" + newVideo.getDirectory().getId();
+        response.sendRedirect(url);
 
     }
 

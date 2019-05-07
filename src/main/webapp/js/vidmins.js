@@ -92,6 +92,8 @@ const init = () => {
     //
     // let addVideoBtn = document.querySelector("#add_video_button");
     // signupBtn.addEventListener("click", submitForm, false);
+    let deleteBtn = document.querySelector('#delete_note_btn');
+    deleteBtn.addEventListener('click', deleteNote);
 }
 
 const showSignup = () => {
