@@ -5,6 +5,7 @@ import com.vidmins.entity.Note;
 import com.vidmins.entity.User;
 import com.vidmins.entity.Video;
 import com.vidmins.persistence.DaoHelper;
+import com.vidmins.util.SessionHelper;
 import com.vidmins.persistence.GenericDao;
 
 import org.apache.logging.log4j.LogManager;
@@ -33,6 +34,7 @@ public class DeleteNote extends HttpServlet {
 
     private Logger logger;
     private DaoHelper dao;
+    private SessionHelper sessionHelper;
 
     /**
      * Initialize session
@@ -43,6 +45,7 @@ public class DeleteNote extends HttpServlet {
         logger = LogManager.getLogger(this.getClass());
         logger.info("Starting DeleteNote servlet");
         dao = new DaoHelper();
+        sessionHelper = new SessionHelper();
     }
 
 
@@ -70,8 +73,9 @@ public class DeleteNote extends HttpServlet {
                 dao.note.delete(note);
 
                 logger.debug("delete note by id: " + request.getParameter("id") + "\n" + note);
-                request.getSession().setAttribute("currentVideo", currentVideo);
-                request.getSession().setAttribute("notes", currentVideo.getNotes());
+
+                sessionHelper.resetAll(request);
+
             } catch (NumberFormatException nfe) {
                 logger.debug(nfe.toString());
             }

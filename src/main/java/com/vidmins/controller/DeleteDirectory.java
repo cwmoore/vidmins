@@ -4,6 +4,7 @@ import com.vidmins.entity.Directory;
 import com.vidmins.entity.Note;
 import com.vidmins.entity.User;
 import com.vidmins.entity.Video;
+import com.vidmins.util.SessionHelper;
 import com.vidmins.persistence.DaoHelper;
 import com.vidmins.persistence.GenericDao;
 
@@ -16,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
 
@@ -33,6 +35,7 @@ public class DeleteDirectory extends HttpServlet {
 
     private Logger logger;
     private DaoHelper dao;
+    private SessionHelper sessionHelper;
 
     /**
      * Initialize session
@@ -43,6 +46,7 @@ public class DeleteDirectory extends HttpServlet {
         logger = LogManager.getLogger(this.getClass());
         logger.info("Starting DeleteDirectory servlet");
         dao = new DaoHelper();
+        sessionHelper = new SessionHelper();
     }
 
 
@@ -69,6 +73,8 @@ public class DeleteDirectory extends HttpServlet {
                 dao.directory.delete(directory);
 
                 logger.debug("delete directory by id: " + request.getParameter("id") + "\n" + directory);
+                sessionHelper.resetAll(request);
+
             } catch (NumberFormatException nfe) {
                 logger.debug(nfe.toString());
             }

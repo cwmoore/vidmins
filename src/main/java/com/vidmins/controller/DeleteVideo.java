@@ -7,6 +7,7 @@ import com.vidmins.entity.Video;
 import com.vidmins.persistence.DaoHelper;
 import com.vidmins.persistence.GenericDao;
 
+import com.vidmins.util.SessionHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,6 +34,7 @@ public class DeleteVideo extends HttpServlet {
 
     private Logger logger;
     private DaoHelper dao;
+    private SessionHelper sessionHelper;
 
     /**
      * Initialize session
@@ -43,6 +45,7 @@ public class DeleteVideo extends HttpServlet {
         logger = LogManager.getLogger(this.getClass());
         logger.info("Starting DeleteVideo servlet");
         dao = new DaoHelper();
+        sessionHelper = new SessionHelper();
     }
 
 
@@ -69,9 +72,9 @@ public class DeleteVideo extends HttpServlet {
                 url = "loadClient?cd=" + currentDirectory.getId();
 
                 dao.video.delete(video);
-                request.getSession().setAttribute("currentDirectory", currentDirectory);
-
                 logger.debug("delete video by id: " + request.getParameter("id") + "\n" + video);
+
+                sessionHelper.resetAll();
             } catch (NumberFormatException nfe) {
                 logger.debug(nfe.toString());
             }
