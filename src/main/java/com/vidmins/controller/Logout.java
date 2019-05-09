@@ -31,12 +31,7 @@ public class Logout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        req.getSession().setAttribute("user", null);
-        req.getSession().setAttribute("currentVideo", null);
-        req.getSession().setAttribute("videos", null);
-        req.getSession().setAttribute("directories", null);
-        req.getSession().setAttribute("currentDirectory", null);
-        req.getSession().setAttribute("notes", null);
+        req.getSession().invalidate();
         req.logout();
 
         resp.sendRedirect("logout.jsp");

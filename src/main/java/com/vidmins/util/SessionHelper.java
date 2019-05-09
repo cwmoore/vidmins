@@ -24,8 +24,8 @@ public class SessionHelper {
         };
 
         for (String attribute : attributes) {
-            logger.debug("Setting " + attribute + " to null.");
-            session.setAttribute(attribute, null);
+            logger.debug("Removing session attribute '" + attribute + "'");
+            session.removeAttribute(attribute);
         }
     }
 }
