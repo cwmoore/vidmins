@@ -1,12 +1,7 @@
 package com.vidmins.controller;
 
 import com.vidmins.entity.Directory;
-import com.vidmins.entity.Note;
-import com.vidmins.entity.User;
-import com.vidmins.entity.Video;
 import com.vidmins.persistence.DaoHelper;
-import com.vidmins.util.SessionHelper;
-import com.vidmins.persistence.GenericDao;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,23 +13,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
 
 /**
- * Delete a note.
+ * Edit a directory.
  * @author cwmoore
  */
 
 @WebServlet(
-        name = "deleteNote",
-        urlPatterns = {"/delete-note"}
+        name = "editDirectory",
+        urlPatterns = {"/edit-directory"}
 )
 
-public class DeleteNote extends HttpServlet {
+public class EditDirectory extends HttpServlet {
 
     private Logger logger;
     private DaoHelper dao;
-    private SessionHelper sessionHelper;
 
     /**
      * Initialize session
@@ -43,9 +36,8 @@ public class DeleteNote extends HttpServlet {
     public void init() throws ServletException {
 
         logger = LogManager.getLogger(this.getClass());
-        logger.info("Starting DeleteNote servlet");
+        logger.info("Starting EditDirectory servlet");
         dao = new DaoHelper();
-        sessionHelper = new SessionHelper();
     }
 
 
@@ -62,29 +54,20 @@ public class DeleteNote extends HttpServlet {
 
         dao.loadHelpers(request);
 
-        String url = "loadClient";
-        Note note;
-        if (request.getParameter("noteId") != null) {
-            try {
-                int noteId = Integer.parseInt(request.getParameter("noteId"));
-                note = dao.note.getById(noteId);
-
-                dao.note.delete(note);
-
-                logger.debug("delete note by id: " + request.getParameter("noteId") + "\n" + note);
-
-                sessionHelper.resetAll(request);
-
-            } catch (NumberFormatException nfe) {
-                logger.debug(nfe.toString());
-            }
+        Directory directory;
+        if (request.getParameter("directoryId") != null) {
+            int directoryId = Integer.parseInt(request.getParameter("directoryId"));
+            directory = dao.directory.getById(directoryId);
+            request.getSession().setAttribute("currentDirectory", directory);
         } else {
-            note = null;
+            directory = null;
         }
 
-        response.sendRedirect(url);
-//        RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-//        dispatcher.forward(request, response);
+        logger.debug("directory from id: " + request.getParameter("directoryId") + "\n" + directory);
+
+        String url = "/index.jsp";
+        RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+        dispatcher.forward(request, response);
     }
 
     /**

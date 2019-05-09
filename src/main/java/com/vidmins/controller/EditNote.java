@@ -1,10 +1,7 @@
 package com.vidmins.controller;
 
 import com.vidmins.entity.Note;
-import com.vidmins.entity.User;
-import com.vidmins.entity.Video;
 import com.vidmins.persistence.DaoHelper;
-import com.vidmins.persistence.GenericDao;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
 
 /**
  * Edit a note.
@@ -30,7 +26,6 @@ import java.util.*;
 
 public class EditNote extends HttpServlet {
 
-    private int previousDigit;
     private Logger logger;
     private DaoHelper dao;
 
@@ -63,7 +58,7 @@ public class EditNote extends HttpServlet {
         if (request.getParameter("noteId") != null) {
             int noteId = Integer.parseInt(request.getParameter("noteId"));
             note = dao.note.getById(noteId);
-            request.getSession().setAttribute("note", note);
+            request.getSession().setAttribute("currentNote", note);
         } else {
             note = null;
         }

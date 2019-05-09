@@ -17,10 +17,13 @@ public class SessionHelper {
         String[] attributes = {
                 "currentDirectory"
                 , "directory"
+                , "directories"
                 , "currentVideo"
                 , "video"
+                , "videos"
                 , "currentNote"
                 , "note"
+                , "notes"
         };
 
         for (String attribute : attributes) {

@@ -5,8 +5,8 @@
     <div class="menu">
         <%-- these buttons show or hide the corresponding panels below --%>
         <button id="help_button" name="help" class="btn btn-info" onclick="showPanel('help');">?</button>
-        <button id="new_directory_button" name="new-directory" class="btn btn-info" onclick="makeNewDirectory();">Directory</button>
-        <button id="new_video_button" name="new-video" class="btn btn-info" onclick="makeNewVideo();">Video</button>
+        <button id="directory_button" name="new-directory" class="btn btn-info" onclick="makeNewDirectory();">Directory</button>
+        <button id="video_button" name="new-video" class="btn btn-info" onclick="makeNewVideo();">Video</button>
         <button id="link_button" name="make-link" class="btn btn-info" onclick="makeLink();">Link</button>
         <button id="note_button" name="show-time" class="btn btn-info" onclick="makeNote();">Note</button>
         <%-- <button id="survey_button" name="survey" class="btn btn-info" onclick="showPanel('survey');makeSurveyQuestion();">Survey</button>
@@ -15,35 +15,51 @@
         <button id="player_button" name="player-command" class="btn btn-info" onclick="makePlayerCommand();">Play</button>
                 --%>
     </div>
+
+
+
     <div id="watcher">
-        <div id="new_directory_input" class="aquapanel">
-            <form name="new_directory_form" action="new-directory" method="post">
+
+
+
+        <div id="directory_input" class="aquapanel">
+            <form name="directory_form" action="new-directory" method="post">
                 <label for="directoryNameField">Name</label><br />
-                <input type="text" name="directoryName" id="directoryNameField" /><br />
+                <input type="text" name="directoryName" id="directoryNameField"<c:if test="${currentDirectory != null}"> value="<c:out value="${currentDirectory.name}"/>"</c:if> /><br />
 
                 <label for="directoryDescriptionField">Description</label>
-                <textarea name="directoryDescription" id="directoryDescriptionField"></textarea><br />
+                <textarea name="directoryDescription" id="directoryDescriptionField"><c:if test="${currentDirectory != null}"><c:out value="${currentDirectory.description}"/></c:if></textarea><br />
 
                 <button type="submit" class="btn btn-primary" id="add_directory_button">Create New</button>
+
+                <button id="delete_directory_btn" type="button" class="btn btn-danger" onclick="window.location.href = 'delete-directory?directoryId=${currentDirectory.id}';">Delete</button>
             </form>
         </div>
 
-        <div id="new_video_input" class="aquapanel">
+
+
+
+        <div id="video_input" class="aquapanel">
             <form id="add_video_form" action="new-video" method="post">
                 <label for="youtube_url">YouTube Video URL</label><br />
-                <input type="text" id="youtube_url" name="youtube_url" placeholder="https://youtu.be/R4nd0mCh4r5"/><br />
+                <input type="text" id="youtube_url" name="youtube_url" placeholder="https://youtu.be/R4nd0mCh4r5"<c:if test="${currentVideo != null}"> value="<c:out value="${currentVideo.youTubeVideo.youTubeUrl}"/>"</c:if>/><br />
                 <button type="submit" class="btn btn-primary" id="add_video_button">Add Video</button>
+
+                <button id="delete_video_btn" type="button" class="btn btn-danger" onclick="window.location.href = 'delete-video?videoId=${currentVideo.id}';">Delete</button>
             </form>
         </div>
+
+
+
 
         <div id="note_input" class="aquapanel">
             <form id="note_input_form" accept-charset="utf-8" method="post" action="new-note">
 
                 <label>Label:</label><br />
-                <input type="text" name="label" <c:if test="${note != null}">value="${note.label}"</c:if>/><br />
+                <input type="text" name="label"<c:if test="${currentNote != null}"> value="${currentNote.label}"</c:if>/><br />
 
                 <label>Text:</label><br />
-                <textarea name="note_text"><c:if test="${note != null}">${note.text}</c:if></textarea><br />
+                <textarea name="note_text"><c:if test="${currentNote != null}"><c:out value="${currentNote.text}"/></c:if></textarea><br />
 
                 <%--label>Tags:</label><br />
                 <input type="text" name="tag" />
@@ -57,27 +73,23 @@
                 <%--input type="hidden" name="timeStampEnd" value="0" />
                 <label>End:</label> <span id="time_stamp_end">0</span><br /--%>
 
-                <c:if test="${note != null}">
-                <input type="hidden" id="hidden_note_id" name="noteId" value="${note.id}" />
+                <c:if test="${currentNote != null}">
+                <input type="hidden" id="hidden_note_id" name="noteId" value="${currentNote.id}" />
                 </c:if>
 
                 <input type="hidden" name="videoId"
-                       value="<c:choose><c:when test="${note != null}">${note.video.id}</c:when><c:otherwise>${sessionScope.currentVideo.id}</c:otherwise></c:choose>" />
+                       value="<c:choose><c:when test="${currentNote != null}">${currentNote.video.id}</c:when><c:otherwise>${sessionScope.currentVideo.id}</c:otherwise></c:choose>" />
 
                 <br />
                 <input id="store_note_btn" type="submit" class="btn btn-primary" value="Store" />
 
-                <button id="delete_note_btn" type="button" class="btn btn-danger" onclick="window.location.href = 'delete-note?id=${note.id}';">Delete</button>
+                <button id="delete_note_btn" type="button" class="btn btn-danger" onclick="window.location.href = 'delete-note?noteId=${currentNote.id}';">Delete</button>
             </form>
 
         </div>
-        <%-- <div id="notes">
-            <ul class="notes"></ul>
-        </div>
-        <div id="videos">
-            <ul class="videos"></ul>
-        </div>
---%>
+
+
+
 
         <div id="link_input" class="aquapanel">
             <form name="link_input_form" method="get" action="#">
@@ -112,7 +124,7 @@
                                 <input type="submit" value="Update Survey" />
                             </form>
                         </div>
-        --%>
+
         <div id="comment_input"  class="aquapanel" method="get" action="#" onsubmit="processInput(); return false;">
             <form name="comment_input_form">
 
@@ -127,6 +139,7 @@
             </form>
         </div>
 
+
         <div id="ask_input"  class="aquapanel" method="get" action="#" onsubmit="processInput(); return false;">
             <form name="question_input_form">
 
@@ -140,10 +153,10 @@
                 <input type="submit" class="btn btn-primary" value="Ask" />
             </form>
         </div>
+--%>
 
     <%--div id="player_input"  class="aquapanel" method="get" action="#" onsubmit="processInput(); return false;">
 
         </div--%>
         <c:import url="help.jsp"/>
-
     </div>

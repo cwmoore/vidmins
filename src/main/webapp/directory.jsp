@@ -11,14 +11,13 @@
         <c:forEach items="${directories}" var="directory">
             <tr>
                 <td>
-                    <a href="loadClient?cd=<c:out value="${directory.id}"/>">
+                    <a href="loadClient?directoryId=<c:out value="${directory.id}"/>">
                         <c:out value="${directory.name}"/>
                     </a>
                 </td>
                 <td><c:out value="${directory.description}"/></td>
                 <td>
-                    <a href="delete-directory?id=${directory.id}">Delete</a>
-                        <%-- <a href="move-directory?id=${directory.id}">Move</a> --%>
+                    <a href="edit-directory?directoryId=${directory.id}">Edit</a>
                 </td>
             </tr>
         </c:forEach>

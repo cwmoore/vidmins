@@ -40,8 +40,8 @@ label .fixed {
 , #survey_input
 , #feedback_input
 , #ask_input
-, #new_directory_input
-, #new_video_input
+, #directory_input
+, #video_input
 , #note_input {
     display: none;
 }

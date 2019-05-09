@@ -160,7 +160,7 @@ public class LoadClient extends HttpServlet {
         }
 
 
-        String inputDefaultId = request.getParameter("cd");
+        String inputDefaultId = request.getParameter("directoryId");
 
         try {
             int defaultId = Integer.parseInt(inputDefaultId);

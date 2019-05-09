@@ -77,7 +77,7 @@ public class NewVideo extends HttpServlet {
 //        RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 //        dispatcher.forward(request, response);
 
-        String url = "loadClient?cd=" + newVideo.getDirectory().getId();
+        String url = "loadClient?directoryId=" + newVideo.getDirectory().getId();
         response.sendRedirect(url);
 
     }
@@ -109,7 +109,7 @@ public class NewVideo extends HttpServlet {
 
             YouTubeVideo youTubeVideo;
             if (youTubeVideos.size() == 0) {
-                youTubeVideo = new YouTubeVideo(youTubeId, title);
+                youTubeVideo = new YouTubeVideo(youTubeId, youTubeUrl, title);
 
                 //youTubeVideo.retrieveInfo();
                 // save new video link

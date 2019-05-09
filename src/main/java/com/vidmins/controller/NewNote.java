@@ -97,7 +97,6 @@ public class NewNote extends HttpServlet {
 
             logger.debug("noteFromFormData after: " + noteFromFormData.toString());
 
-            request.getSession().setAttribute("note", null);
             request.getSession().setAttribute("currentNote", noteFromFormData);
             request.getSession().setAttribute("currentVideo", noteFromFormData.getVideo());
             request.getSession().setAttribute("currentDirectory", noteFromFormData.getVideo().getDirectory());

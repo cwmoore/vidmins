@@ -33,6 +33,7 @@ public class YouTubeVideo implements java.io.Serializable {
     private int id;
 
     private String youTubeId;
+    private String youTubeUrl;
 
     private String title;
     private int duration;
@@ -84,9 +85,10 @@ public class YouTubeVideo implements java.io.Serializable {
      * @param youTubeId the you tube id
      * @param title     the title
      */
-    public YouTubeVideo(String youTubeId, String title) {
+    public YouTubeVideo(String youTubeId, String youTubeUrl, String title) {
         this();
         this.youTubeId = youTubeId;
+        this.youTubeUrl = youTubeUrl;
         this.title = title;
     }
 
@@ -151,6 +153,24 @@ public class YouTubeVideo implements java.io.Serializable {
      */
     public void setYouTubeId(String youTubeId) {
         this.youTubeId = youTubeId;
+    }
+
+    /**
+     * Sets youTubeUrl.
+     *
+     * @param youTubeUrl the youTubeUrl
+     */
+    public void setYouTubeUrl(String youTubeUrl) {
+        this.youTubeUrl = youTubeUrl;
+    }
+
+    /**
+     * Gets youTubeUrl.
+     *
+     * @return the youTubeUrl
+     */
+    public String getYouTubeUrl() {
+        return youTubeUrl;
     }
 
     /**

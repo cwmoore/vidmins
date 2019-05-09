@@ -64,17 +64,17 @@ public class DeleteVideo extends HttpServlet {
 
         String url = "loadClient";
         Video video;
-        if (request.getParameter("id") != null) {
+        if (request.getParameter("videoId") != null) {
             try {
-                int videoId = Integer.parseInt(request.getParameter("id"));
+                int videoId = Integer.parseInt(request.getParameter("videoId"));
                 video = dao.video.getById(videoId);
                 Directory currentDirectory = video.getDirectory();
-                url = "loadClient?cd=" + currentDirectory.getId();
+                url = "loadClient?videoId=" + currentDirectory.getId();
 
                 dao.video.delete(video);
-                logger.debug("delete video by id: " + request.getParameter("id") + "\n" + video);
+                logger.debug("delete video by id: " + request.getParameter("videoId") + "\n" + video);
 
-                sessionHelper.resetAll();
+                sessionHelper.resetAll(request);
             } catch (NumberFormatException nfe) {
                 logger.debug(nfe.toString());
             }

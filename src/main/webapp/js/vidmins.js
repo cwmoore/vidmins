@@ -78,9 +78,10 @@ const Note = () => {
 
 */
 
-const features = ["help", "note", "link", /*"comment", "ask", */"new_directory", "new_video"];
+const features = ["help", "note", "link", /*"comment", "ask", */"directory", "video"];
 
 const init = () => {
+
     // let storeNoteBtn = document.querySelector("#store_note_btn");
     // storeNoteBtn.addEventListener("click", submitForm, false);
 
@@ -94,6 +95,12 @@ const init = () => {
     // signupBtn.addEventListener("click", submitForm, false);
     let deleteBtn = document.querySelector('#delete_note_btn');
     deleteBtn.addEventListener('click', deleteNote);
+
+    if (window.location.pathname.includes('edit-')) {
+        let urlParts = window.location.pathname.split('?');
+        let jspTitle = urlParts.filter((part)=>part.includes('edit-'));
+        alert(jspTitle);
+    }
 }
 
 const showSignup = () => {
@@ -312,11 +319,11 @@ const makeAskQuestion = () => {
 }
 
 const makeNewDirectory = () => {
-    showPanel("new_directory");
+    showPanel("directory");
 }
 
 const makeNewVideo = () => {
-    showPanel("new_video");
+    showPanel("video");
 }
 
 const makePlayerCommand = () => {
