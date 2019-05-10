@@ -206,7 +206,7 @@ const setNoteTime = () => {
 
 
 const startNewNote = () => {
-    makeNote();
+    showNote(true);
     document.note_input_form.label.value = '';
     document.note_input_form.note_text.value = '';
     document.note_input_form.noteId.value = '';

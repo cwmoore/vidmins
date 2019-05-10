@@ -55,16 +55,13 @@ public class EditVideo extends HttpServlet {
         dao.loadHelpers(request);
 
         Video video = null;
-        if (request.getParameter("videoId") != null) {
-            try {
-                int videoId = Integer.parseInt(request.getParameter("videoId"));
-                video = dao.video.getById(videoId);
-                request.getSession().setAttribute("editVideo", video);
-            } catch (NumberFormatException nfe) {
-                logger.debug("videoId is not a number", nfe);
-            }
-        } else {
-            request.getSession().removeAttribute("editVideo");
+        try {
+            int videoId = Integer.parseInt(request.getParameter("videoId"));
+            video = dao.video.getById(videoId);
+
+            request.getSession().setAttribute("editVideo", video);
+        } catch (NumberFormatException nfe) {
+            logger.debug("videoId is not a number", nfe);
         }
 
         logger.debug("video from id: " + request.getParameter("videoId") + "\n" + video);

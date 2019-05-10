@@ -83,7 +83,14 @@ public class NewNote extends HttpServlet {
 
             noteFromFormData.setLabel(request.getParameter("label"));
             noteFromFormData.setText(request.getParameter("note_text"));
-            noteFromFormData.setStart(Integer.parseInt(request.getParameter("timeStampStart")));
+
+            int startTime = 0;
+            try {
+                startTime = Integer.parseInt(request.getParameter("timeStampStart"));
+            } catch (NumberFormatException nfe) {
+                logger.debug("timeStampStart unset", nfe);
+            }
+            noteFromFormData.setStart(startTime);
 
             try {
                 int videoId = Integer.parseInt(request.getParameter("videoId"));

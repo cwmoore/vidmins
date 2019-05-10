@@ -65,7 +65,7 @@ public class DeleteDirectory extends HttpServlet {
 
         String url = "loadClient";
         Directory directory;
-        if (request.getParameter("id") != null) {
+        if (request.getParameter("directoryId") != null) {
             try {
                 int directoryId = Integer.parseInt(request.getParameter("directoryId"));
                 directory = dao.directory.getById(directoryId);

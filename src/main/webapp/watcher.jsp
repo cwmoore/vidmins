@@ -60,6 +60,9 @@
                     <c:otherwise>new</c:otherwise>
                 </c:choose>-video" method="post">
 
+                <label for="">Your title</label>
+                <input name="title"<c:if test="${sessionScope.editVideo.title != null}"><c:out value="${sessionScope.editVideo.title}"/></c:if> placeholder="Your title for this video"/>
+
                 <label for="youtube_url">YouTube Video URL</label><br />
                 <input type="text" id="youtube_url" name="youtube_url" placeholder="https://youtu.be/R4nd0mCh4r5"<c:if test="${sessionScope.editVideo.youTubeVideo.youTubeUrl != null}"> value="<c:out value="${sessionScope.editVideo.youTubeVideo.youTubeUrl}"/>"</c:if>/><br />
                 <button type="submit" class="btn btn-primary" id="add_video_button"><c:choose>
@@ -97,7 +100,7 @@
                 <input type="hidden" name="timeStampStart" value="<c:if test="${sessionScope.editNote.start != null}"><c:out value="${sessionScope.editNote.start}"/></c:if>" />
                 <label>Start:</label> <span id="time_stamp_start"><c:if test="${sessionScope.editNote.start != null}"><c:out value="${sessionScope.editNote.start}"/></c:if></span><br />
 
-                <button id="reset_note_time" onclick="resetTime();">Set Player Time</button>
+                <button id="reset_note_time" onclick="resetTime(); return false;">Set Player Time</button>
 
                 <%--input type="hidden" name="timeStampEnd" value="0" />
                 <label>End:</label> <span id="time_stamp_end">0</span><br /--%>

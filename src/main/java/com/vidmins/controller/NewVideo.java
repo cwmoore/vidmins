@@ -95,7 +95,7 @@ public class NewVideo extends HttpServlet {
         String youTubeUrl = request.getParameter("youtube_url");
 
         // sanity check provided parameters
-        String title = "test title";
+        String title = request.getParameter("title");
         LocalDateTime currentLocalDateTime = LocalDateTime.now();
 
         try {

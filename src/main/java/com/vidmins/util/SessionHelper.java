@@ -29,6 +29,8 @@ public class SessionHelper {
         // TODO see if simplifying the sessionScope obviates this class,
         // TODO ie. use user.directories(n).videos(n).notes(n) ???
 
+        // TODO again, reconsider the wisdom of unsetting everything without re-setting some values
+
         for (String attribute : attributes) {
             logger.debug("Removing session attribute '" + attribute + "'");
             session.removeAttribute(attribute);

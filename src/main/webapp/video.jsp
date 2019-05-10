@@ -10,8 +10,9 @@
         <table id="video_table" class="table table-striped">
             <tr>
                 <%--th>ID</th--%>
-                <th>YouTubeId</th>
                 <th>Title</th>
+                <th>YouTubeId</th>
+                <th>YouTube Title</th>
                 <th>Duration</th>
                 <%--th># Notes</th--%>
                 <th>Add Date</th>
@@ -20,8 +21,9 @@
             <c:forEach items="${videos}" var="video">
                 <tr class="">
                     <%--td>${video.id}</td--%>
-                    <td>${video.youTubeVideo.youTubeId}</td>
                     <td><a href="loadClient?videoId=${video.id}">${video.title}</a></td>
+                    <td>${video.youTubeVideo.youTubeId}</td>
+                    <td>${video.youTubeVideo.title}</td>
                     <td>${video.youTubeVideo.duration}</td>
                     <%--td--># Notes</td--%>
                     <td>${video.addDate}</td>
