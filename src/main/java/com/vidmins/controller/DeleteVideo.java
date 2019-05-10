@@ -73,7 +73,6 @@ public class DeleteVideo extends HttpServlet {
                 dao.video.delete(video);
                 logger.debug("delete video by id: " + request.getParameter("videoId") + "\n" + video);
 
-                sessionHelper.resetAll(request);
                 request.getSession().setAttribute("currentDirectory", currentDirectory);
 
             } catch (NumberFormatException nfe) {

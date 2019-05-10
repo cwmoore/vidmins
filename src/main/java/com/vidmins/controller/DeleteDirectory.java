@@ -67,13 +67,12 @@ public class DeleteDirectory extends HttpServlet {
         Directory directory;
         if (request.getParameter("id") != null) {
             try {
-                int directoryId = Integer.parseInt(request.getParameter("id"));
+                int directoryId = Integer.parseInt(request.getParameter("directoryId"));
                 directory = dao.directory.getById(directoryId);
 
                 dao.directory.delete(directory);
 
-                logger.debug("delete directory by id: " + request.getParameter("id") + "\n" + directory);
-                sessionHelper.resetAll(request);
+                logger.debug("delete directory by id: " + request.getParameter("directoryId") + "\n" + directory);
 
             } catch (NumberFormatException nfe) {
                 logger.debug(nfe.toString());
@@ -81,6 +80,8 @@ public class DeleteDirectory extends HttpServlet {
         } else {
             directory = null;
         }
+
+        sessionHelper.resetAll(request);
 
         response.sendRedirect(url);
 //        RequestDispatcher dispatcher = request.getRequestDispatcher(url);

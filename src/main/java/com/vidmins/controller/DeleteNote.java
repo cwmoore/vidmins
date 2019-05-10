@@ -73,14 +73,14 @@ public class DeleteNote extends HttpServlet {
 
                 logger.debug("delete note by id: " + request.getParameter("noteId") + "\n" + note);
 
-                sessionHelper.resetAll(request);
-
             } catch (NumberFormatException nfe) {
                 logger.debug(nfe.toString());
             }
         } else {
             note = null;
         }
+
+        sessionHelper.resetAll(request);
 
         response.sendRedirect(url);
 //        RequestDispatcher dispatcher = request.getRequestDispatcher(url);

@@ -149,4 +149,22 @@ class NoteDaoTest {
 
         assertEquals(1, notes.size());
     }
+
+    /**
+     * Verify successful get by property equal with 'order by'
+     */
+    /*
+    @Test
+    void getByPropertyEqualOrderBySuccess() {
+        // TODO make for Note
+        GenericDao<Video> videoDao = new GenericDao<>(Video.getClass());
+        Video testVideo = videoDao.getAll().get(0);
+        List<Note> notes = dao.findByPropertyEqualOrderBy("video", testVideo, "startTime", true);
+        for (Note note : notes) {
+            logger.debug(note.toString());
+        }
+        assertEquals(5, notes.size());
+    }
+    // TODO GIVE UP https://stackoverflow.com/questions/11771198/generic-search-criteria-type
+    */
 }

@@ -89,7 +89,10 @@ const hidePanel = (feature) => {
         }
     }
 
-    document.getElementById(feature + "_input").style.display = "none";
+    let inputDiv = document.getElementById(feature + "_input");
+    if (inputDiv) {
+        inputDiv.style.display = "none";
+    }
 }
 
 const hidePanels = () => {
@@ -141,17 +144,20 @@ const showCurrentEntity = () => {
         let noteId, videoId, directoryId;
 
         if (noteId = params.get("noteId")) {
+
             entity = 'note';
-            entityId = noteId;
-            // makeNote()
+            entityId = parseInt(noteId.trim());
+
         } else if (videoId = params.get("videoId")) {
+
             entity = 'video';
-            entityId = videoId;
-            // makeNewVideo()
+            entityId = parseInt(videoId.trim());
+
         } else if (directoryId = params.get("directoryId")) {
+
             entity = 'directory';
-            entityId = directoryId;
-            // makeNewDirectory()
+            entityId = parseInt(directoryId.trim());
+
         } else {
             console.error(`Couldn't find any entity ${params}`);
         }
@@ -179,8 +185,14 @@ const setEndTime = (timeStamp) => {
     document.note_input_form.timeStampEnd.value = timeStamp;
 }
 
-const makeNote = () => {
+const showNote = (setTime=false) => {
     showPanel("note");
+    if (setTime) {
+        setNoteTime();
+    }
+}
+
+const setNoteTime = () => {
     if (player.getCurrentTime() >= 0) {
         setStartTime(Math.floor(player.getCurrentTime()));
     } else {
@@ -374,11 +386,11 @@ const makeAskQuestion = () => {
     player.pauseVideo();
 }
 
-const makeNewDirectory = () => {
+const showDirectory = () => {
     showPanel("directory");
 }
 
-const makeNewVideo = () => {
+const showVideo = () => {
     showPanel("video");
 }
 

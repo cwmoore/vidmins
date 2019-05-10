@@ -62,6 +62,18 @@ public class Video implements java.io.Serializable {
      *
      * @param youTubeVideo the you tube id
      * @param title     the title
+     */
+    public Video(YouTubeVideo youTubeVideo, String title) {
+        this();
+        this.youTubeVideo = youTubeVideo;
+        this.title = title;
+    }
+
+    /**
+     * Instantiates a new Video.
+     *
+     * @param youTubeVideo the you tube id
+     * @param title     the title
      * @param addDate   the add date
      * @param directory the directory
      */

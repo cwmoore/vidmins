@@ -26,6 +26,9 @@ public class SessionHelper {
                 , "notes"
         };
 
+        // TODO see if simplifying the sessionScope obviates this class,
+        // TODO ie. use user.directories(n).videos(n).notes(n) ???
+
         for (String attribute : attributes) {
             logger.debug("Removing session attribute '" + attribute + "'");
             session.removeAttribute(attribute);

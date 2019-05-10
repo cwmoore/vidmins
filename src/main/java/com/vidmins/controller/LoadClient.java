@@ -152,6 +152,8 @@ public class LoadClient extends HttpServlet {
             createDefaultDirectory(user);
         }
         List<Directory> directories = user.getDirectories();
+
+        // TODO access this with 'user.directories' instead
         session.setAttribute("directories", directories);
 
         if (currentDirectory == null) {
@@ -182,10 +184,12 @@ public class LoadClient extends HttpServlet {
         if (currentDirectory != null) {
 
             List<Video> videos = currentDirectory.getVideos();
+
+            // TODO don't use 'videos' use 'currentDirectory.videos'
             session.setAttribute("videos", videos);
 
-            // TODO select the best video (instead of just the first)
             if (videos.size() > 0) {
+                // TODO select the best video (instead of just the first)
                 currentVideo = videos.get(0);
             }
             session.setAttribute("currentDirectory", currentDirectory);
@@ -206,25 +210,42 @@ public class LoadClient extends HttpServlet {
             session.setAttribute("currentDirectory", currentVideo.getDirectory());
 
             // notes for the first video
+            // TODO can use object dot notation with 'currentVideo.notes' instead
             session.setAttribute("notes", currentVideo.getNotes());
 
-            if (currentVideo.getNotes().size() > 0) {
-                session.setAttribute("currentNote", currentVideo.getNotes().get(0));
+            if (session.getAttribute("currentNote") == null) {
+                if (currentVideo.getNotes().size() > 0) {
+                    session.setAttribute("currentNote", currentVideo.getNotes().get(0));
+                }
             }
         }
 
         session.setAttribute("title", "The Video Minutes App");
     }
 
+    /**
+     * Creates a default directory for a new user account
+     * @param user the user
+     */
     public void createDefaultDirectory(User user) {
+
         Directory defaultDirectory = new Directory(
                 "First Directory"
                 , "Directories organize sets of videos."
-                , user);
+                , user
+        );
 
-        int dirInsertId = dao.directory.insert(defaultDirectory);
-        user.addDirectory(dao.directory.getById(dirInsertId));
-        dao.user.saveOrUpdate(user);
         // TODO add beginner video for first time user);
+        Video newUserVideo = new Video(dao.youTubeVideo.getById(1), "To Begin");
+        defaultDirectory.addVideo(newUserVideo);
+
+        // create the directory
+        int dirInsertId = dao.directory.insert(defaultDirectory);
+
+        // add the new directory to the user object
+        user.addDirectory(dao.directory.getById(dirInsertId));
+
+        // save
+        dao.user.saveOrUpdate(user);
     }
 }

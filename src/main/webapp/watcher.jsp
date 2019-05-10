@@ -5,9 +5,9 @@
     <div class="menu">
         <%-- these buttons show or hide the corresponding panels below --%>
         <button id="help_button" name="help" class="btn btn-info" onclick="showPanel('help');">?</button>
-        <button id="directory_button" name="new-directory" class="btn btn-info" onclick="makeNewDirectory();">Directory</button>
-        <button id="video_button" name="new-video" class="btn btn-info" onclick="makeNewVideo();">Video</button>
-        <button id="note_button" name="show-time" class="btn btn-info" onclick="makeNote();">Note</button>
+        <button id="directory_button" name="new-directory" class="btn btn-info" onclick="showDirectory();">Directory</button>
+        <button id="video_button" name="new-video" class="btn btn-info" onclick="showVideo();">Video</button>
+        <button id="note_button" name="show-time" class="btn btn-info" onclick="showNote();">Note</button>
         <%-- <button id="survey_button" name="survey" class="btn btn-info" onclick="showPanel('survey');makeSurveyQuestion();">Survey</button>
         <button id="comment_button" name="feedback" class="btn btn-info" onclick="makeComment();">Comment</button>
         <button id="ask_button" name="ask-question" class="btn btn-info" onclick="makeAskQuestion();">Ask</button>
@@ -24,7 +24,7 @@
         <div id="directory_input" class="aquapanel">
 
             <form name="directory_form" action="<c:choose>
-                    <c:when test="${currentDirectory != null}">edit</c:when>
+                    <c:when test="${sessionScope.editDirectory != null}">edit</c:when>
                     <c:otherwise>new</c:otherwise>
                 </c:choose>-directory" method="post">
 
@@ -32,21 +32,21 @@
                 <input
                         name="directoryName"
                         id="directoryNameField"
-                        <c:if test="${currentDirectory.name != null}">value="<c:out value="${currentDirectory.name}"/>"</c:if>
+                        <c:if test="${sessionScope.editDirectory.name != null}">value="<c:out value="${sessionScope.editDirectory.name}"/>"</c:if>
                 />
 
                 <br />
 
                 <label for="directoryDescriptionField">Description</label>
-                <textarea name="directoryDescription" id="directoryDescriptionField"><c:if test="${currentDirectory.description != null}"><c:out value="${currentDirectory.description}"/></c:if></textarea><br />
+                <textarea name="directoryDescription" id="directoryDescriptionField"><c:if test="${sessionScope.editDirectory.description != null}"><c:out value="${sessionScope.editDirectory.description}"/></c:if></textarea><br />
 
                 <button type="submit" class="btn btn-primary" id="add_directory_button"><c:choose>
-                    <c:when test="${currentDirectory != null}">Create</c:when>
-                    <c:otherwise>Save</c:otherwise></c:choose> Directory
+                    <c:when test="${sessionScope.editDirectory != null}">Save</c:when>
+                    <c:otherwise>Create</c:otherwise></c:choose> Directory
                 </button>
 
                 <%-- TODO show 'delete' if existing directory, 'discard' if new --%>
-                <button id="delete_directory_btn" type="button" class="btn btn-danger" onclick="window.location.href = 'delete-directory?directoryId=${currentDirectory.id}';">Delete</button>
+                <button id="delete_directory_btn" type="button" class="btn btn-danger" onclick="window.location.href = 'delete-directory?directoryId=${sessionScope.editDirectory.id}';">Delete</button>
             </form>
         </div>
 
@@ -94,8 +94,10 @@
                 <button name="add-tag" onclick="addTag()">Add Tag</button><br />
                 <span id="tags"></span--%>
 
-                <input type="hidden" name="timeStampStart" value="0" />
-                <label>Start:</label> <span id="time_stamp_start">0</span><br />
+                <input type="hidden" name="timeStampStart" value="<c:if test="${sessionScope.editNote.start != null}"><c:out value="${sessionScope.editNote.start}"/></c:if>" />
+                <label>Start:</label> <span id="time_stamp_start"><c:if test="${sessionScope.editNote.start != null}"><c:out value="${sessionScope.editNote.start}"/></c:if></span><br />
+
+                <button id="reset_note_time" onclick="resetTime();">Set Player Time</button>
 
                 <%--input type="hidden" name="timeStampEnd" value="0" />
                 <label>End:</label> <span id="time_stamp_end">0</span><br /--%>

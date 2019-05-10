@@ -11,8 +11,10 @@ import javax.persistence.criteria.Root;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 
 /**
  * A generic DAO somewhat inspired by http://rodrigouchoa.wordpress.com
@@ -123,6 +125,33 @@ public class GenericDao<T> {
         return session.createQuery(query).getResultList();
     }
 
+
+    /**
+     * Finds entities by one of its properties, sorts by Criteria
+
+     * @param propertyName the property name.
+     * @param value the value by which to find.
+     * @return
+     */
+
+    /*
+    public List<T> findByPropertyEqualOrderBy(String propertyName, Object value, String sortColumn, boolean isAsc) {
+        Session session = getSession();
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<T> query = builder.createQuery(type);
+        Root<T> root = query.from(type);
+        query.select(root).where(builder.equal(root.get(propertyName),value));
+        if (isAsc) {
+            query.orderBy(builder.asc(root.));
+        } else {
+            query.orderBy(builder.desc(root.<sortColumn>));
+        }
+
+        return session.createQuery(query).getResultList();
+    }
+    // TODO GIVE UP https://stackoverflow.com/questions/11771198/generic-search-criteria-type
+    */
 
     /**
      * Finds entities by multiple properties.
