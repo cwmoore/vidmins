@@ -69,12 +69,13 @@ public class DeleteVideo extends HttpServlet {
                 int videoId = Integer.parseInt(request.getParameter("videoId"));
                 video = dao.video.getById(videoId);
                 Directory currentDirectory = video.getDirectory();
-                url = "loadClient?videoId=" + currentDirectory.getId();
 
                 dao.video.delete(video);
                 logger.debug("delete video by id: " + request.getParameter("videoId") + "\n" + video);
 
                 sessionHelper.resetAll(request);
+                request.getSession().setAttribute("currentDirectory", currentDirectory);
+
             } catch (NumberFormatException nfe) {
                 logger.debug(nfe.toString());
             }

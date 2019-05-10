@@ -24,9 +24,19 @@
     <web-resource-collection>
       <web-resource-name>RequiresLocalUserRole</web-resource-name>
        <url-pattern>/loadClient</url-pattern>
+
       <url-pattern>/new-note</url-pattern>
       <url-pattern>/edit-note</url-pattern>
+      <url-pattern>/delete-note</url-pattern>
+
       <url-pattern>/new-video</url-pattern>
+      <url-pattern>/edit-video</url-pattern>
+      <url-pattern>/delete-video</url-pattern>
+
+      <url-pattern>/new-directory</url-pattern>
+      <url-pattern>/edit-directory</url-pattern>
+      <url-pattern>/delete-directory</url-pattern>
+
       <url-pattern>/subscribe</url-pattern>
     </web-resource-collection>
 

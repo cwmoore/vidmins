@@ -54,13 +54,15 @@ public class EditDirectory extends HttpServlet {
 
         dao.loadHelpers(request);
 
-        Directory directory;
+        Directory directory = null;
+
         if (request.getParameter("directoryId") != null) {
             int directoryId = Integer.parseInt(request.getParameter("directoryId"));
+
             directory = dao.directory.getById(directoryId);
             request.getSession().setAttribute("currentDirectory", directory);
         } else {
-            directory = null;
+            request.getSession().removeAttribute("currentDirectory");
         }
 
         logger.debug("directory from id: " + request.getParameter("directoryId") + "\n" + directory);

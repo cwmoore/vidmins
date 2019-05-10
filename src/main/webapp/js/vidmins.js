@@ -72,13 +72,136 @@ const Note = () => {
 }
 
 // start new topic as it begins or mark at end and jump back
-// signup token
 // stored notes search/jump to another video
-// study packages (pre-annoted video material)
+// study packages (pre-annotated video material)
 
 */
 
-const features = ["help", "note", "link", /*"comment", "ask", */"directory", "video"];
+const features = ["help", "note", /*"link", "comment", "ask", */"directory", "video"];
+
+const hidePanel = (feature) => {
+    console.log('Hide panel: ' + feature);
+
+    let btn = document.getElementById(feature + "_button");
+    if (btn) {
+        if (btn.classList.contains("active")) {
+            btn.classList.remove("active");
+        }
+    }
+
+    document.getElementById(feature + "_input").style.display = "none";
+}
+
+const hidePanels = () => {
+    let feature;
+
+    for (feature of features) {
+        hidePanel(feature);
+    }
+}
+
+const deselectButton = (feature) => {
+    const button = document.getElementById(feature + "_button");
+
+    if (button.classList.contains("active")) {
+        button.classList.remove("active");
+    }
+}
+
+const deselectButtons = () => {
+    let feature;
+
+    for (feature of features) {
+        deselectButton(feature);
+    }
+}
+
+const showPanel = (feature) => {
+    hidePanels();
+    deselectButtons();
+    document.getElementById(feature + "_button").classList.add("active");
+    document.getElementById(feature + "_input").style.display = "block";
+}
+
+
+const showSignup = () => {
+    let signupForm = document.querySelector('#access_form_container');
+    signupForm.style.display = 'block';
+}
+
+const showCurrentEntity = () => {
+    let path = window.location.pathname;
+    console.log(`url/path=${path}`);
+
+    if (path.includes('edit-')) {
+
+        let params = new URLSearchParams(window.location.search.substring(1)); // substring(1) removes leading '?'
+
+        let entity, entityId;
+        let noteId, videoId, directoryId;
+
+        if (noteId = params.get("noteId")) {
+            entity = 'note';
+            entityId = noteId;
+            // makeNote()
+        } else if (videoId = params.get("videoId")) {
+            entity = 'video';
+            entityId = videoId;
+            // makeNewVideo()
+        } else if (directoryId = params.get("directoryId")) {
+            entity = 'directory';
+            entityId = directoryId;
+            // makeNewDirectory()
+        } else {
+            console.error(`Couldn't find any entity ${params}`);
+        }
+
+        if (entity) {
+            showPanel(entity);
+        }
+
+        console.log(`entity ${entity}, id=${entityId}`);
+    }
+}
+
+
+const setStartTime = (timeStamp) => {
+    let timeLink = makeYouTubeUrl(timeStamp);
+
+    document.querySelector("#time_stamp_start").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
+    document.note_input_form.timeStampStart.value = timeStamp;
+}
+
+const setEndTime = (timeStamp) => {
+    let timeLink = makeYouTubeUrl(timeStamp);
+
+    document.querySelector("#time_stamp_end").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
+    document.note_input_form.timeStampEnd.value = timeStamp;
+}
+
+const makeNote = () => {
+    showPanel("note");
+    if (player.getCurrentTime() >= 0) {
+        setStartTime(Math.floor(player.getCurrentTime()));
+    } else {
+        setStartTime(0);
+    }
+    // TODO end of time range
+    // setEndTime(Math.floor(player.getCurrentTime()));
+
+    player.pauseVideo();
+}
+
+
+const startNewNote = () => {
+    makeNote();
+    document.note_input_form.label.value = '';
+    document.note_input_form.note_text.value = '';
+    document.note_input_form.noteId.value = '';
+    //document.note_input_form.videoId ??? // stays whatever it was TODO ensure currentX are consistent (note->video->directory ==)
+}
+
+
 
 const init = () => {
 
@@ -86,26 +209,23 @@ const init = () => {
     // storeNoteBtn.addEventListener("click", submitForm, false);
 
     let signupBtn = document.querySelector("#signup_btn");
-    signupBtn.addEventListener("click", showSignup, false);
-    //
+    if (signupBtn) {
+        signupBtn.addEventListener("click", showSignup, false);
+    } //hide signup form
+
     // let addDirectoryBtn = document.querySelector("#add_directory_button");
     // signupBtn.addEventListener("click", submitForm, false);
     //
     // let addVideoBtn = document.querySelector("#add_video_button");
     // signupBtn.addEventListener("click", submitForm, false);
-    let deleteBtn = document.querySelector('#delete_note_btn');
-    deleteBtn.addEventListener('click', deleteNote);
 
-    if (window.location.pathname.includes('edit-')) {
-        let urlParts = window.location.pathname.split('?');
-        let jspTitle = urlParts.filter((part)=>part.includes('edit-'));
-        alert(jspTitle);
+    let startNewNoteBtn = document.querySelector('#start_new_note_btn');
+    if (startNewNoteBtn) {
+        startNewNoteBtn.addEventListener('click', startNewNote, false);
     }
-}
 
-const showSignup = () => {
-    let signupForm = document.querySelector('#access_form_container');
-    signupForm.style.display = 'block';
+    hidePanels();
+    showCurrentEntity();
 }
 
 /*
@@ -133,41 +253,6 @@ const replaceActiveFeature = (activeFeature, newFeature) => {
 
 }
 */
-const showPanel = (feature) => {
-    hidePanels();
-    deselectButtons();
-    document.getElementById(feature + "_button").classList.add("active");
-    document.getElementById(feature + "_input").style.display = "block";
-}
-
-const hidePanels = () => {
-    let feature;
-
-    for (feature of features) {
-        hidePanel(feature);
-    }
-}
-
-const hidePanel = (feature) => {
-    console.log('Hide panel: ' + feature);
-    document.getElementById(feature + "_input").style.display = "none";
-}
-
-const deselectButtons = () => {
-    let feature;
-
-    for (feature of features) {
-        deselectButton(feature);
-    }
-}
-
-const deselectButton = (feature) => {
-    const button = document.getElementById(feature + "_button");
-
-    if (button.classList.contains("active")) {
-        button.classList.remove("active");
-    }
-}
 
 const processInput = () => {
     // get form data
@@ -187,49 +272,20 @@ const getTimeParts = (totalSeconds) => {
 const showTime = () => {
     let msg = "";
 
-    msg += "getCurrentTime: " + Math.floor(player.getCurrentTime());
-    msg += "\ngetDuration: " + player.getDuration();
-    msg += "\nRemaining: "
+    msg += "getCurrentTime\t" + Math.floor(player.getCurrentTime());
+    msg += "\ngetDuration\t" + player.getDuration();
+    msg += "\nRemaining\t"
         + (player.getDuration() - Math.floor(player.getCurrentTime()));
-    alert(msg);
+    console.table(msg);
 }
 
 
 const updateVideoWidth = () => {
-    // use as much space as possible but no more
+    // TODO use as much space as possible but no more
 }
 
 const resizePlayer = (newWidth, newHeight) => {
     player.setSize(newWidth, newHeight);
-}
-
-
-
-const makeNote = () => {
-    showPanel("note");
-    if (player.getCurrentTime() >= 0) {
-        setStartTime(Math.floor(player.getCurrentTime()));
-    } else {
-        setStartTime(0);
-    }
-    // TODO end of time range
-    // setEndTime(Math.floor(player.getCurrentTime()));
-
-    player.pauseVideo();
-}
-
-const setStartTime = (timeStamp) => {
-    let timeLink = makeYouTubeUrl(timeStamp);
-
-    document.querySelector("#time_stamp_start").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
-    document.querySelector("#note_input_form").timeStampStart.value = timeStamp;
-}
-
-const setEndTime = (timeStamp) => {
-    let timeLink = makeYouTubeUrl(timeStamp);
-
-    document.querySelector("#time_stamp_end").innerHTML = '<a href="' + timeLink + '">' + timeStamp + '</a>';
-    document.querySelector("#note_input_form").timeStampEnd.value = timeStamp;
 }
 
 const addTag = () => {}

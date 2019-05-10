@@ -54,13 +54,13 @@ public class EditNote extends HttpServlet {
 
         dao.loadHelpers(request);
 
-        Note note;
+        Note note = null;
         if (request.getParameter("noteId") != null) {
             int noteId = Integer.parseInt(request.getParameter("noteId"));
             note = dao.note.getById(noteId);
-            request.getSession().setAttribute("currentNote", note);
+            request.getSession().setAttribute("editNote", note);
         } else {
-            note = null;
+            request.getSession().removeAttribute("editNote");
         }
 
         logger.debug("note from id: " + request.getParameter("noteId") + "\n" + note);

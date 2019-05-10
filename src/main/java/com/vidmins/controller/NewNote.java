@@ -49,6 +49,7 @@ public class NewNote extends HttpServlet {
 
     /**
      * Handle a POST request of Note data
+     * (edit existing note if ID present, else store new note)
      *
      * @param request the request object
      * @param response the response object
@@ -63,7 +64,6 @@ public class NewNote extends HttpServlet {
         dao.loadHelpers(request);
 
         List<String> requestParams = new ArrayList<>();
-        String url = "loadClient";
 
         logger.debug(request.getParameterMap());
 
@@ -74,25 +74,38 @@ public class NewNote extends HttpServlet {
         {
 
             Note noteFromFormData = new Note();
-            if (request.getParameter("noteId") != null) {
-                noteFromFormData.setId(Integer.parseInt(request.getParameter("noteId")));
+            try {
+                int noteIdInt = Integer.parseInt(request.getParameter("noteId"));
+                noteFromFormData.setId(noteIdInt);
+            } catch (NumberFormatException nfe) {
+                logger.debug("Note ID not an int", nfe);
             }
 
             noteFromFormData.setLabel(request.getParameter("label"));
             noteFromFormData.setText(request.getParameter("note_text"));
             noteFromFormData.setStart(Integer.parseInt(request.getParameter("timeStampStart")));
 
-            noteFromFormData.setVideo(dao.video.getById(Integer.parseInt(request.getParameter("videoId"))));
+            try {
+                int videoId = Integer.parseInt(request.getParameter("videoId"));
+                noteFromFormData.setVideo(dao.video.getById(videoId));
+            } catch (NumberFormatException nfe) {
+                logger.debug("Could not process videoId", nfe);
+            } catch (Exception e) {
+                logger.debug("Could not locate video", e);
+            }
             noteFromFormData.setCreateDatetime(LocalDateTime.now());
 
-            //logger.debug("noteFromFormData before: " + noteFromFormData.toString());
+            logger.debug("noteFromFormData before: " + noteFromFormData.toString());
 
             if (noteFromFormData.getId() > 0) {
                 logger.debug("This is a note to be updated: " + noteFromFormData.getId());
                 dao.note.saveOrUpdate(noteFromFormData);
+                noteFromFormData = dao.note.getById(noteFromFormData.getId());
             } else {
                 logger.debug("This is a new note");
-                dao.note.insert(noteFromFormData);
+                int insertId = dao.note.insert(noteFromFormData);
+
+                noteFromFormData = dao.note.getById(insertId);
             }
 
             logger.debug("noteFromFormData after: " + noteFromFormData.toString());
@@ -100,7 +113,7 @@ public class NewNote extends HttpServlet {
             request.getSession().setAttribute("currentNote", noteFromFormData);
             request.getSession().setAttribute("currentVideo", noteFromFormData.getVideo());
             request.getSession().setAttribute("currentDirectory", noteFromFormData.getVideo().getDirectory());
-            requestParams.add("videoId=" + request.getParameter("videoId"));
+            //requestParams.add("videoId=" + request.getParameter("videoId"));
 
             if (request.getParameter("timeStampStart").matches("\\d+")) {
                 requestParams.add("startTime=" + request.getParameter("timeStampStart"));
@@ -111,6 +124,13 @@ public class NewNote extends HttpServlet {
             logger.debug("New Note failed");
         }
 
+        String url = buildUrlParams("loadClient", requestParams);
+        logger.debug("URL to redirect from NewNote: " + url);
+        response.sendRedirect(url);
+    }
+
+    private String buildUrlParams(String url, List<String> requestParams) {
+
         // build URL params
         if (requestParams.size() > 0) {
             url += "?";
@@ -120,7 +140,6 @@ public class NewNote extends HttpServlet {
             // remove trailing ampersand
             url = url.substring(0, url.length() - 1);
         }
-        logger.debug("URL to redirect from NewNote: " + url);
-        response.sendRedirect(url);
+        return url;
     }
 }
