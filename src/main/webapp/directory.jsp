@@ -2,6 +2,7 @@
 
 <c:if test="${directories != null}">
     <div class="aquapanel">
+        <h3>Directories</h3>
         <table id="directory_table" class="table table-striped">
             <tr>
                 <th>Name</th>

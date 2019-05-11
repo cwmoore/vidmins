@@ -101,6 +101,13 @@
 </build>
 
 <dependencies>
+    <!-- thanks to big G -->
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-youtube</artifactId>
+            <version>v3-rev211-1.25.0</version>
+        </dependency>
+
     <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-crypto -->
     <!--<dependency>-->
         <!--<groupId>org.springframework.security</groupId>-->

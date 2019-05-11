@@ -2,7 +2,8 @@
 
 <c:if test="${notes != null}">
     <div class="aquapanel">
-        <h2>Notes: </h2><%-- TODO add video title for 'this set of notes' --%>
+        <h3>Notes</h3>
+        <i>${notes[0].video.title}</i>
         <table id="note_table" class="table table-compact table-striped">
             <tr>
                 <th>Label</th>
