@@ -31,6 +31,7 @@ public class InputErrors implements Iterable<InputError> {
         errors.remove(errors.indexOf(error));
     }
 
+    @Override
     public Iterator<InputError> iterator() {
         return errors.iterator();
     }

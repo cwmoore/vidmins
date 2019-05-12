@@ -101,7 +101,7 @@ public class Auth {
      * @return the user hash pass
      * @throws Exception the exception
      */
-    public User setUserHashPass(User user, String password) {
+    public User setUserHashPass(User user, String password) throws Exception {
 
         GenericDao<User> userDao = new GenericDao<>(User.class);
         List<User> matchingUsers = userDao.findByPropertyEqual("userName", user.getUserName());

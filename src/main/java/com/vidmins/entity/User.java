@@ -372,7 +372,7 @@ public class User implements java.io.Serializable {
 
     /**
      * Add a directory.
-     * @param directory
+     * @param directory a directory
      */
     public void addDirectory(Directory directory) {
         this.directories.add(directory);

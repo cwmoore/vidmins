@@ -85,8 +85,8 @@ public class NewVideo extends HttpServlet {
     /**
      * Add the video to the database, linked with the current user.
      *
-     * @param request
-     * @return
+     * @param request the HttpServletRequest
+     * @return the new Video
      */
     private Video addNewVideo(HttpServletRequest request) {
         // user logged in?

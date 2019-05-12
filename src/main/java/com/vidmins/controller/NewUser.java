@@ -61,10 +61,10 @@ public class NewUser extends HttpServlet {
         dao.loadHelpers(request);
         String userHash = request.getParameter("user");
         String verificationToken = request.getParameter("token");
-
-        Map<String, Object> userProperties = new HashMap<>();
-        userProperties.put("userHash", userHash);
-        userProperties.put("token", verificationToken);
+//
+//        Map<String, Object> userProperties = new HashMap<>();
+//        userProperties.put("userHash", userHash);
+//        userProperties.put("token", verificationToken);
 
 //        GenericDao<AuthToken> authTokenDao = new GenericDao<>(AuthToken.class);
 //        List<AuthToken> authTokens = authTokenDao.findByPropertyEqual(userProperties);
@@ -172,7 +172,7 @@ public class NewUser extends HttpServlet {
                             logger.debug("User could not be saved");
                         }
                     } else {
-                        // something went wrong in setUserHashPass
+                        logger.debug("something went wrong in setUserHashPass");
                     }
 
                 } catch (Exception e) {

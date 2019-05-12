@@ -162,13 +162,19 @@
 
     <dependency>
         <groupId>com.google.oauth-client</groupId>
-        <artifactId>google-oauth-client</artifactId>
+        <artifactId>google-oauth-client-jetty</artifactId>
         <version>1.28.0</version>
+        <exclusions><!-- https://stackoverflow.com/a/50735780 -->
+            <exclusion>
+                <artifactId>org.mortbay.jetty</artifactId>
+                <groupId>servlet-api</groupId>
+            </exclusion>
+        </exclusions>
     </dependency>
-
+<!--
     <dependency>
         <groupId>com.google.oauth-client</groupId>
-        <artifactId>google-oauth-client-jetty</artifactId>
+        <artifactId>google-oauth-client</artifactId>
         <version>1.28.0</version>
     </dependency>
 
@@ -177,14 +183,20 @@
         <artifactId>google-api-client</artifactId>
         <version>1.28.0</version>
     </dependency>
-
+-->
     <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-catalina -->
     <dependency>
         <groupId>org.apache.tomcat</groupId>
         <artifactId>tomcat-catalina</artifactId>
         <version>8.5.3</version>
     </dependency>
-
+<!--
+    <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>servlet-api</artifactId>
+        <version>2.5</version>
+    </dependency>
+-->
     <dependency>
         <groupId>javax</groupId>
         <artifactId>javaee-web-api</artifactId>

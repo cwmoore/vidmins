@@ -210,7 +210,7 @@ public class YouTubeVideo implements java.io.Serializable {
 
     /**
      * Sets metadata
-     * @param metadata
+     * @param metadata structured JSON data
      */
     public void setMetadata(String metadata) {
         this.metadata = metadata;

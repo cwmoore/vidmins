@@ -126,14 +126,14 @@ public class GenericDao<T> {
     }
 
 
-    /**
-     * Finds entities by one of its properties, sorts by Criteria
-
-     * @param propertyName the property name.
-     * @param value the value by which to find.
-     * @return
-     */
-
+//    /**
+//     * Finds entities by one of its properties, sorts by Criteria
+//
+//     * @param propertyName the property name.
+//     * @param value the value by which to find.
+//     * @return
+//     */
+// TODO implement sorting of search results
     /*
     public List<T> findByPropertyEqualOrderBy(String propertyName, Object value, String sortColumn, boolean isAsc) {
         Session session = getSession();
