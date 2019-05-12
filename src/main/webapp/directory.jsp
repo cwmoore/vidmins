@@ -12,9 +12,17 @@
         <c:forEach items="${directories}" var="directory">
             <tr>
                 <td>
-                    <a href="loadClient?directoryId=<c:out value="${directory.id}"/>">
-                        <c:out value="${directory.name}"/>
-                    </a>
+                    <c:choose>
+                        <c:when test="${directory.id == currentDirectory.id}">
+                            <c:out value="${directory.name}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="loadClient?directoryId=<c:out value="${directory.id}"/>">
+                                <c:out value="${directory.name}"/>
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
+
                 </td>
                 <td><c:out value="${directory.description}"/></td>
                 <td>

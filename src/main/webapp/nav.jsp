@@ -63,7 +63,9 @@
                             -|- --%>
                             <button id="signup_btn" class="btn btn-outline-primary my-2 my-sm-0" type="button">Sign up</button>
                         <%-- </form> --%>
-                        <a href="loadClient">Login</a>
+                        &nbsp; | &nbsp;
+                        <button id="login_btn" class="btn btn-outline-info my-2 my-sm-0" type="button">Log in</button>
+
 
                     </c:when>
                     <c:otherwise>

@@ -159,18 +159,39 @@
         <artifactId>google-api-services-youtube</artifactId>
         <version>v3-rev211-1.25.0</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-servlet -->
+    <!-- had to replace outdated mort.jetty to unclobber HttpServletRequest, etc-->
+    <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-servlet</artifactId>
+        <version>9.4.12.v20180830</version>
+    </dependency>
 
+    <dependency>
+        <groupId>com.google.oauth-client</groupId>
+        <artifactId>google-oauth-client-servlet</artifactId>
+        <version>1.23.0</version>
+    </dependency>
+
+    <dependency>
+        <groupId>com.google.oauth-client</groupId>
+        <artifactId>google-oauth-client-java6</artifactId>
+        <version>1.23.0</version>
+    </dependency>
+
+    <!-- https://stackoverflow.com/a/50735780 -->
     <dependency>
         <groupId>com.google.oauth-client</groupId>
         <artifactId>google-oauth-client-jetty</artifactId>
         <version>1.28.0</version>
-        <exclusions><!-- https://stackoverflow.com/a/50735780 -->
+        <exclusions>
             <exclusion>
                 <artifactId>org.mortbay.jetty</artifactId>
                 <groupId>servlet-api</groupId>
             </exclusion>
         </exclusions>
     </dependency>
+
 <!--
     <dependency>
         <groupId>com.google.oauth-client</groupId>

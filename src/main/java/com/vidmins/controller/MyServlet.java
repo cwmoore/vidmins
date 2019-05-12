@@ -29,9 +29,13 @@ public class MyServlet extends HttpServlet {
 
         resp.setContentType("text/html");
         PrintWriter writer = resp.getWriter();
+//
+//        Quickstart quickStart = new Quickstart();
+//        YouTube youTube = quickStart.getYouTubeService();
+//        logger.debug(youTube.toString());
 
-        Quickstart quickStart = new Quickstart();
-        YouTube youTube = quickStart.getYouTubeService();
+
+
 //
 //        try {
 //            Realm realm = this.getServletContext().getContainer().getRealm();

@@ -213,17 +213,25 @@ const startNewNote = () => {
     //document.note_input_form.videoId ??? // stays whatever it was TODO ensure currentX are consistent (note->video->directory ==)
 }
 
-
+const logInUser = (e) => {
+    let redirectUrl = 'loadClient';
+    window.location.href = redirectUrl;
+}
 
 const init = () => {
 
     // let storeNoteBtn = document.querySelector("#store_note_btn");
     // storeNoteBtn.addEventListener("click", submitForm, false);
 
+    let loginBtn = document.querySelector("#login_btn");
+    if (loginBtn) {
+        loginBtn.addEventListener("click", logInUser, false);
+    } // go to main page
+
     let signupBtn = document.querySelector("#signup_btn");
     if (signupBtn) {
         signupBtn.addEventListener("click", showSignup, false);
-    } //hide signup form
+    } // hide signup form
 
     // let addDirectoryBtn = document.querySelector("#add_directory_button");
     // signupBtn.addEventListener("click", submitForm, false);

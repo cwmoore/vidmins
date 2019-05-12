@@ -16,11 +16,14 @@ import com.google.api.services.youtube.YouTubeScopes;
 import com.google.api.services.youtube.model.*;
 import com.google.api.services.youtube.YouTube;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class Quickstart {
@@ -68,7 +71,8 @@ public class Quickstart {
     public static Credential authorize() throws IOException {
         // Load client secrets.
         InputStream in =
-            Quickstart.class.getResourceAsStream("/client_secret.json");
+                Quickstart.class.getResourceAsStream("/client_secrets.json");
+
         GoogleClientSecrets clientSecrets =
             GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
