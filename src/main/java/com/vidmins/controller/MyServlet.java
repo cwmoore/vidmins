@@ -1,3 +1,9 @@
+package com.vidmins.controller;
+
+import com.google.api.services.youtube.YouTube;
+import com.vidmins.youtube_data_api.*;
+import com.vidmins.youtube_data_api.data.*;
+
 import org.apache.catalina.Realm;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,23 +29,28 @@ public class MyServlet extends HttpServlet {
 
         resp.setContentType("text/html");
         PrintWriter writer = resp.getWriter();
+
+        Quickstart quickStart = new Quickstart();
+        YouTube youTube = quickStart.getYouTubeService();
 //
 //        try {
 //            Realm realm = this.getServletContext().getContainer().getRealm();
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
+//
+//        if (shouldAuthenticate(req)) {
+//            boolean authenticated = true;//req.authenticate(resp);
+//            if (authenticated) {
+//                if (req.getUserPrincipal() != null) {
+//                    writer.println("user authenticated " + req.getUserPrincipal().getName());
+//                }
+//            } else {
+//                return;
+//            }
+//        }
 
-        if (shouldAuthenticate(req)) {
-            boolean authenticated = true;//req.authenticate(resp);
-            if (authenticated) {
-                if (req.getUserPrincipal() != null) {
-                    writer.println("user authenticated " + req.getUserPrincipal().getName());
-                }
-            } else {
-                return;
-            }
-        }
+
 
         writer.println("<p>some data</p>");
     }

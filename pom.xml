@@ -101,12 +101,6 @@
 </build>
 
 <dependencies>
-    <!-- thanks to big G -->
-        <dependency>
-            <groupId>com.google.apis</groupId>
-            <artifactId>google-api-services-youtube</artifactId>
-            <version>v3-rev211-1.25.0</version>
-        </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-crypto -->
     <!--<dependency>-->
@@ -159,11 +153,11 @@
         <version>2.9.8</version>
     </dependency>
 
-    <!--
+    <!-- thanks to big G -->
     <dependency>
         <groupId>com.google.apis</groupId>
         <artifactId>google-api-services-youtube</artifactId>
-        <version>v3-rev211-1.18.0-rc</version>
+        <version>v3-rev211-1.25.0</version>
     </dependency>
 
     <dependency>
@@ -183,7 +177,7 @@
         <artifactId>google-api-client</artifactId>
         <version>1.28.0</version>
     </dependency>
-    -->
+
     <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-catalina -->
     <dependency>
         <groupId>org.apache.tomcat</groupId>
