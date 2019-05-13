@@ -37,12 +37,14 @@ public class YTDataApi {
         } else {
             Search search = new Search();
             youTubeVideo = search.doSearch(youTubeId);
-            try {
-                int insertId = youTubeVideoDao.insert(youTubeVideo);
-                youTubeVideo = youTubeVideoDao.getById(insertId);
-            } catch (Exception e) {
-                logger.debug("Inserting youTubeVideo", e);
-                youTubeVideo = null;
+            if (youTubeVideo != null) {
+                try {
+                    int insertId = youTubeVideoDao.insert(youTubeVideo);
+                    youTubeVideo = youTubeVideoDao.getById(insertId);
+                } catch (Exception e) {
+                    logger.debug("Inserting youTubeVideo", e);
+                    youTubeVideo = null;
+                }
             }
         }
 

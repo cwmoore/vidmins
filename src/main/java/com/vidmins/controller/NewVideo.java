@@ -72,8 +72,14 @@ public class NewVideo extends HttpServlet {
 
         Video newVideo = addNewVideo(request);
 
-        request.getSession().setAttribute("currentVideo", newVideo);
-        request.getSession().setAttribute("currentDirectory", newVideo.getDirectory());
+        if (newVideo != null) {
+            request.getSession().setAttribute("currentVideo", newVideo);
+            request.getSession().setAttribute("currentDirectory", newVideo.getDirectory());
+        } else {
+            logger.debug("New Video was null");
+        }
+
+
 
 //        String url = "/loadClient";
 //        RequestDispatcher dispatcher = request.getRequestDispatcher(url);

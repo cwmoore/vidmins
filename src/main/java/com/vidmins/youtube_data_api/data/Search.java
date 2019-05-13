@@ -86,9 +86,6 @@ public class Search {
                 }
             }).setApplicationName("youtube-cmdline-search-sample").build();
 
-            String queryTerm = youTubeId;
-
-
             // short circuit API search if local entry found
             GenericDao<YouTubeVideo> youTubeVideoDao = new GenericDao<>(YouTubeVideo.class);
             List<YouTubeVideo> youTubeVideos = youTubeVideoDao.findByPropertyEqual("youTubeId", youTubeId);
@@ -98,7 +95,7 @@ public class Search {
             }
 
             // Define the API request for retrieving search results.
-            YouTube.Search.List search = youtube.search().list("id");
+            YouTube.Search.List search = youtube.search().list("id,snippet");
 
             // Set your developer key from the {{ Google Cloud Console }} for
             // non-authenticated requests. See:
@@ -107,7 +104,7 @@ public class Search {
             System.out.println("youtube.apikey: " + apiKey);
             search.setKey(apiKey);
 
-            search.setQ(queryTerm);
+            search.setQ(youTubeId);
 
             // Restrict the search results to only include videos. See:
             // https://developers.google.com/youtube/v3/docs/search/list#type
@@ -126,10 +123,13 @@ public class Search {
             SearchListResponse searchResponse = search.execute();
             List<SearchResult> searchResultList = searchResponse.getItems();
             if (searchResultList != null) {
-                prettyPrint(searchResultList.iterator(), queryTerm);
+                //prettyPrint(searchResultList.iterator(), youTubeId);
                 if (searchResultList.iterator().hasNext()) {
                     YouTubeVideo youTubeVideo = getResultVideo(searchResultList.iterator().next());
+                    System.out.println("Found youtubevideo: " + youTubeVideo.toString());
                     return youTubeVideo;
+                } else {
+                    System.out.println("Could not find youtubevideo: iterator empty");
                 }
             }
         } catch (GoogleJsonResponseException e) {
