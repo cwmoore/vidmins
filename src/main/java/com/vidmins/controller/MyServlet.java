@@ -36,7 +36,14 @@ public class MyServlet extends HttpServlet {
         String youTubeId = req.getParameter("v");
         YTDataApi ytDataApi = new YTDataApi();
         YouTubeVideo youTubeVideo = ytDataApi.findVideoData(youTubeId);
-        logger.debug("Found video: " + youTubeVideo.toString());
+
+        if (youTubeVideo != null) {
+            logger.debug("Found video: " + youTubeVideo.toString());
+            writer.println("Found video: " + youTubeVideo.toString());
+        } else {
+            logger.debug("Could not find video: " + youTubeId);
+            writer.println("Could not find video: " + youTubeId);
+        }
 
         //        Search search = new Search();
 //        //search.doSearch("3qK82JvRY5s");

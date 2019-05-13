@@ -1,7 +1,7 @@
 <Context docBase="vidmins" path="/vidmins" reloadable="true">
     <Realm className="org.apache.catalina.realm.JDBCRealm"
            driverName="com.mysql.jdbc.Driver"
-           connectionURL="jdbc:mysql://localhost:3306/vidmins?user=vidmins&amp;password=vituperativelyvindicated"
+           connectionURL="jdbc:mysql://localhost:3306/vidmins?user=tomcat&amp;password=tomcaterwaul"
            userTable="user" userNameCol="userName" userCredCol="enc_pass"
            userRoleTable="role" roleNameCol="role">
         <CredentialHandler className="org.apache.catalina.realm.SecretKeyCredentialHandler"
