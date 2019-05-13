@@ -178,7 +178,7 @@ public class LoadClient extends HttpServlet {
                 session.setAttribute("currentDirectory", currentDirectory);
             }
         } catch (NumberFormatException nfe) {
-            logger.debug(nfe.toString());
+            logger.debug("defaultDirectory id...", nfe);
         }
 
 

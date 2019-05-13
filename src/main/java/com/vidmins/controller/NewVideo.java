@@ -139,7 +139,8 @@ public class NewVideo extends HttpServlet {
                     , currentDirectory
             );
             logger.debug("video: " + video.toString());
-            dao.video.insert(video);
+            int insertId = dao.video.insert(video);
+            video = dao.video.getById(insertId);
 
         } catch (IOException iox) {
             logger.debug(iox);
