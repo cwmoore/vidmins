@@ -71,10 +71,12 @@ public class NewVideo extends HttpServlet {
         dao.loadHelpers(request);
 
         Video newVideo = addNewVideo(request);
+        String url = "loadClient";
 
         if (newVideo != null) {
             request.getSession().setAttribute("currentVideo", newVideo);
             request.getSession().setAttribute("currentDirectory", newVideo.getDirectory());
+            url += "?directoryId=" + newVideo.getDirectory().getId();
         } else {
             logger.debug("New Video was null");
         }
@@ -85,7 +87,6 @@ public class NewVideo extends HttpServlet {
 //        RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 //        dispatcher.forward(request, response);
 
-        String url = "loadClient?directoryId=" + newVideo.getDirectory().getId();
         response.sendRedirect(url);
 
     }
