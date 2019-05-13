@@ -58,7 +58,7 @@
                 <input id="new_video_title" name="title"<c:if test="${sessionScope.editVideo.title != null}"><c:out value="${sessionScope.editVideo.title}"/></c:if> placeholder="Your title for this video"/><br />
 
                 <label for="youtube_url">YouTube Video URL</label><br />
-                <input type="text" id="youtube_url" name="youtube_url" placeholder="https://youtu.be/R4nd0mCh4r5"<c:if test="${sessionScope.editVideo.youTubeVideo.youTubeUrl != null}"> value="<c:out value="${sessionScope.editVideo.youTubeVideo.youTubeUrl}"/>"</c:if>/><br />
+                <input type="text" id="youtube_url" name="youtube_url" placeholder="https://youtu.be/R4nd0mCh4r5"<c:if test="${sessionScope.editVideo.youTubeVideo.youTubeId != null}"> value="<c:out value="${sessionScope.editVideo.youTubeVideo.youTubeId}"/>"</c:if>/><br />
                 <button type="submit" class="btn btn-primary" id="add_video_button"><c:choose>
                         <c:when test="${sessionScope.editVideo != null}">Create</c:when>
                         <c:otherwise>Save</c:otherwise>

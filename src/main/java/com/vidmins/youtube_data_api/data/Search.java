@@ -126,8 +126,10 @@ public class Search {
             List<SearchResult> searchResultList = searchResponse.getItems();
             if (searchResultList != null) {
                 //prettyPrint(searchResultList.iterator(), queryTerm);
-                YouTubeVideo youTubeVideo = saveResultVideo(searchResultList.iterator().next());
-                return youTubeVideo;
+                if (searchResultList.iterator().hasNext()) {
+                    YouTubeVideo youTubeVideo = saveResultVideo(searchResultList.iterator().next());
+                    return youTubeVideo;
+                }
             }
         } catch (GoogleJsonResponseException e) {
             System.err.println("There was a service error: " + e.getDetails().getCode() + " : "

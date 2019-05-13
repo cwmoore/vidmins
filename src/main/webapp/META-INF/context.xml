@@ -3,7 +3,7 @@
            driverName="com.mysql.jdbc.Driver"
            connectionURL="jdbc:mysql://localhost:3306/vidmins?user=vidmins&amp;password=vituperativelyvindicated"
            userTable="user" userNameCol="userName" userCredCol="enc_pass"
-           userRoleTable="role" roleNameCol="role" debug="99">
+           userRoleTable="role" roleNameCol="role">
         <CredentialHandler className="org.apache.catalina.realm.SecretKeyCredentialHandler"
                            algorithm="PBKDF2WithHmacSHA512"
                            iterations="100000"

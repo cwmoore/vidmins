@@ -1,6 +1,7 @@
 package com.vidmins.controller;
 
 import com.vidmins.entity.Directory;
+import com.vidmins.entity.User;
 import com.vidmins.entity.Video;
 import com.vidmins.entity.YouTubeVideo;
 import com.vidmins.persistence.DaoHelper;
@@ -106,19 +107,37 @@ public class NewVideo extends HttpServlet {
             logger.debug("Input youTubeId: " + youTubeId);
 
             YouTubeVideo youTubeVideo = ytDataApi.findVideoData(youTubeId);
-            logger.debug("youTubeVideo: " + youTubeVideo.toString());
+            if (youTubeVideo == null) {
+                logger.debug("youtube id did not return a video");
+                throw new Exception("Problem locating video " + youTubeId);
+            } else {
+                logger.debug("youTubeVideo: " + youTubeVideo.toString());
+            }
+
+            Directory currentDirectory = (Directory) request.getSession().getAttribute("currentDirectory");
+            if (currentDirectory == null) {
+                User user = (User) request.getSession().getAttribute("user");
+                List<Directory> directories = user.getDirectories();
+                if (directories.size() > 0) {
+                    currentDirectory = directories.get(0);
+                } else {
+                    currentDirectory = new Directory("Default Directory", "Directory to add videos to.", user);
+                }
+            }
 
             video = new Video(
                     youTubeVideo
                     , title
                     , currentLocalDateTime
-                    , (Directory) request.getSession().getAttribute("currentDirectory")
+                    , currentDirectory
             );
             logger.debug("video: " + video.toString());
             dao.video.insert(video);
 
         } catch (IOException iox) {
-            iox.printStackTrace();
+            logger.debug(iox);
+        } catch (Exception e) {
+            logger.debug(e);
         }
 
         return video;
