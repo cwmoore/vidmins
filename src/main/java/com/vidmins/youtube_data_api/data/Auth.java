@@ -1,4 +1,4 @@
-package com.vidmins.youtube_data_api;
+package com.vidmins.youtube_data_api.data;
 //package com.google.api.services.samples.youtube.cmdline;
 
 import com.google.api.client.auth.oauth2.Credential;

@@ -29,10 +29,11 @@ public class MyServlet extends HttpServlet {
 
         resp.setContentType("text/html");
         PrintWriter writer = resp.getWriter();
-//
-//        Quickstart quickStart = new Quickstart();
-//        YouTube youTube = quickStart.getYouTubeService();
-//        logger.debug(youTube.toString());
+
+        // TODO tomcat crashes when this fails
+        Quickstart quickStart = new Quickstart();
+        YouTube youTube = quickStart.getYouTubeService();
+        logger.debug(youTube.toString());
 
 
 

@@ -18,7 +18,7 @@ package com.vidmins.youtube_data_api.data;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
-import com.vidmins.youtube_data_api.Auth;
+import com.vidmins.youtube_data_api.data.Auth;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.ResourceId;
 import com.google.api.services.youtube.model.SearchListResponse;
