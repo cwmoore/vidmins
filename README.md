@@ -28,3 +28,5 @@ By both creating notes, and having searchable access to cued up lecture topics, 
 [Time Log](docs/log.gitime)
 
 [Journal](docs/Journal.md)
+
+[Video](https://youtu.be/7IzFpJnpPf8)
