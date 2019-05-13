@@ -125,6 +125,12 @@ public class LoadClient extends HttpServlet {
     }
 
 
+    /**
+     * Load data for a user's session
+     *
+     * @param request the HttpServletRequest
+     * @throws Exception an Exception
+     */
     public void loadUserData(HttpServletRequest request)
             throws Exception {
         dao.loadHelpers(request);
