@@ -35,7 +35,7 @@
 
             <div id="player"></div>
             <div class="video-title">
-                <h4><a href="https://www.youtube.com/watch?v=${currentVideo.youTubeVideo.youTubeId}">${currentVideo.title}</a></h4>
+                <h4>${currentVideo.title}<a href="https://www.youtube.com/watch?v=${currentVideo.youTubeVideo.youTubeId}">${currentVideo.youTubeVideo.title}</a></h4>
             </div>
         </div>
 

@@ -1,12 +1,15 @@
 package com.vidmins.youtube_data_api;
 
 import com.vidmins.entity.YouTubeVideo;
+import com.vidmins.persistence.GenericDao;
+import com.vidmins.youtube_data_api.data.Search;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 //import com.google.api.services.youtube.*;
 
 public class YTDataApi {
@@ -23,8 +26,27 @@ public class YTDataApi {
     }
 
     public YouTubeVideo findVideoData(String youTubeId) {
-        YouTubeVideo ytVideo = new YouTubeVideo(youTubeId);
-        return ytVideo;
+
+        GenericDao<YouTubeVideo> youTubeVideoDao = new GenericDao<>(YouTubeVideo.class);
+
+        List<YouTubeVideo> youTubeVideoList = youTubeVideoDao.findByPropertyEqual("youTubeId", youTubeId);
+
+        YouTubeVideo youTubeVideo;
+        if (youTubeVideoList.size() > 0) {
+            youTubeVideo = youTubeVideoList.get(0);
+        } else {
+            Search search = new Search();
+            youTubeVideo = search.doSearch(youTubeId);
+            try {
+                int insertId = youTubeVideoDao.insert(youTubeVideo);
+                youTubeVideo = youTubeVideoDao.getById(insertId);
+            } catch (Exception e) {
+                logger.debug("Inserting youTubeVideo", e);
+                youTubeVideo = null;
+            }
+        }
+
+        return youTubeVideo;
     }
 
     /**

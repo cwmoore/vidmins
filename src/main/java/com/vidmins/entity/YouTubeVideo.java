@@ -97,6 +97,18 @@ public class YouTubeVideo implements java.io.Serializable {
      *
      * @param youTubeId the you tube id
      * @param title     the title
+     */
+    public YouTubeVideo(String youTubeId, String title) {
+        this();
+        this.youTubeId = youTubeId;
+        this.title = title;
+    }
+
+    /**
+     * Instantiates a new YouTubeVideo.
+     *
+     * @param youTubeId the you tube id
+     * @param title     the title
      * @param duration  the duration
      */
     public YouTubeVideo(String youTubeId, String title, int duration) {
@@ -106,18 +118,18 @@ public class YouTubeVideo implements java.io.Serializable {
         this.duration = duration;
     }
 
-    /**
-     * Retrieves and sets or updates video info from YouTube Data API
-     */
-    public void retrieveData() {
-        YTDataApi ytDataApi = new YTDataApi();
-
-        // get video information via YT Data API
-        YouTubeVideo ytVideo = ytDataApi.findVideoData(this.youTubeId);
-
-        // title, description, duration, license, owner, channel
-        // build a youtube data api object
-    }
+//    /**
+//     * Retrieves and sets or updates video info from YouTube Data API
+//     */
+//    public void retrieveData() {
+//        YTDataApi ytDataApi = new YTDataApi();
+//
+//        // get video information via YT Data API
+//        YouTubeVideo ytVideo = ytDataApi.findVideoData(this.youTubeId);
+//
+//        // title, description, duration, license, owner, channel
+//        // build a youtube data api object
+//    }
 
     /**
      * Gets id.

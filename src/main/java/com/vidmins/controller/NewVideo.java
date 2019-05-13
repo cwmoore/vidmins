@@ -6,6 +6,7 @@ import com.vidmins.entity.YouTubeVideo;
 import com.vidmins.persistence.DaoHelper;
 import com.vidmins.persistence.GenericDao;
 import com.vidmins.youtube_data_api.YTDataApi;
+import com.vidmins.youtube_data_api.data.Search;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -104,23 +105,11 @@ public class NewVideo extends HttpServlet {
             logger.debug("Input youTubeUrl: " + youTubeUrl);
             logger.debug("Input youTubeId: " + youTubeId);
 
-            // check for an existing row with this YouTubeId
-            List youTubeVideos = dao.youTubeVideo.findByPropertyEqual("youTubeId", youTubeId);
-
-            YouTubeVideo youTubeVideo;
-            if (youTubeVideos.size() == 0) {
-                youTubeVideo = new YouTubeVideo(youTubeId, youTubeUrl, title);
-
-                //youTubeVideo.retrieveInfo();
-                // save new video link
-                dao.youTubeVideo.insert(youTubeVideo);
-            } else {
-                // use the existing entry
-                youTubeVideo = (YouTubeVideo) youTubeVideos.get(0);
-            }
+            YouTubeVideo youTubeVideo = ytDataApi.findVideoData(youTubeId);
             logger.debug("youTubeVideo: " + youTubeVideo.toString());
 
-            video = new Video(youTubeVideo
+            video = new Video(
+                    youTubeVideo
                     , title
                     , currentLocalDateTime
                     , (Directory) request.getSession().getAttribute("currentDirectory")

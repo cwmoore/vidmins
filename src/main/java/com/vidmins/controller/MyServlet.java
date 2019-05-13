@@ -1,6 +1,8 @@
 package com.vidmins.controller;
 
 import com.google.api.services.youtube.YouTube;
+import com.vidmins.entity.YouTubeVideo;
+import com.vidmins.persistence.GenericDao;
 import com.vidmins.youtube_data_api.*;
 import com.vidmins.youtube_data_api.data.*;
 
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 @WebServlet(name = "myServlet", urlPatterns = {"/my-servlet"})
 public class MyServlet extends HttpServlet {
@@ -30,10 +33,34 @@ public class MyServlet extends HttpServlet {
         resp.setContentType("text/html");
         PrintWriter writer = resp.getWriter();
 
-        // TODO tomcat crashes when this fails
-        Quickstart quickStart = new Quickstart();
-        YouTube youTube = quickStart.getYouTubeService();
-        logger.debug(youTube.toString());
+        String youTubeId = req.getParameter("v");
+        YTDataApi ytDataApi = new YTDataApi();
+        YouTubeVideo youTubeVideo = ytDataApi.findVideoData(youTubeId);
+        logger.debug("Found video: " + youTubeVideo.toString());
+
+        //        Search search = new Search();
+//        //search.doSearch("3qK82JvRY5s");
+//
+//        GenericDao<YouTubeVideo> youTubeVideoDao = new GenericDao<>(YouTubeVideo.class);
+//
+//        YouTubeVideo youTubeVideo;
+//        List<YouTubeVideo> youTubeVideoList = youTubeVideoDao.findByPropertyEqual("youTubeId", youTubeId);
+//        if (youTubeVideoList.size() > 0) {
+//            youTubeVideo = youTubeVideoList.get(0);
+//        } else {
+//            youTubeVideo = search.doSearch(youTubeId);
+//            try {
+//                youTubeVideoDao.insert(youTubeVideo);
+//            } catch (Exception e) {
+//                logger.debug("Inserting youTubeVideo", e);
+//            }
+//        }
+
+
+//
+//        Quickstart quickStart = new Quickstart();
+//        YouTube youTube = quickStart.getYouTubeService();
+//        logger.debug(youTube.toString());
 
 
 

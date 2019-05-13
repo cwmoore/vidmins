@@ -23,10 +23,7 @@
 
         <div id="directory_input" class="aquapanel">
 
-            <form name="directory_form" action="<c:choose>
-                    <c:when test="${sessionScope.editDirectory != null}">edit</c:when>
-                    <c:otherwise>new</c:otherwise>
-                </c:choose>-directory" method="post">
+            <form name="directory_form" action="<c:choose><c:when test="${sessionScope.editDirectory != null}">edit</c:when><c:otherwise>new</c:otherwise></c:choose>-directory" method="post">
 
                 <label for="directoryNameField">Name</label><br />
                 <input
@@ -55,13 +52,10 @@
 
         <div id="video_input" class="aquapanel">
 
-            <form name="video_form" action="<c:choose>
-                    <c:when test="${sessionScope.editVideo != null}">edit</c:when>
-                    <c:otherwise>new</c:otherwise>
-                </c:choose>-video" method="post">
+            <form name="video_form" action="<c:choose><c:when test="${sessionScope.editVideo != null}">edit</c:when><c:otherwise>new</c:otherwise></c:choose>-video" method="post">
 
-                <label for="">Your title</label>
-                <input name="title"<c:if test="${sessionScope.editVideo.title != null}"><c:out value="${sessionScope.editVideo.title}"/></c:if> placeholder="Your title for this video"/>
+                <label for="new_video_title">Your title (optional)</label>
+                <input id="new_video_title" name="title"<c:if test="${sessionScope.editVideo.title != null}"><c:out value="${sessionScope.editVideo.title}"/></c:if> placeholder="Your title for this video"/><br />
 
                 <label for="youtube_url">YouTube Video URL</label><br />
                 <input type="text" id="youtube_url" name="youtube_url" placeholder="https://youtu.be/R4nd0mCh4r5"<c:if test="${sessionScope.editVideo.youTubeVideo.youTubeUrl != null}"> value="<c:out value="${sessionScope.editVideo.youTubeVideo.youTubeUrl}"/>"</c:if>/><br />
@@ -100,7 +94,7 @@
                 <input type="hidden" name="timeStampStart" value="<c:if test="${sessionScope.editNote.start != null}"><c:out value="${sessionScope.editNote.start}"/></c:if>" />
                 <label>Start:</label> <span id="time_stamp_start"><c:if test="${sessionScope.editNote.start != null}"><c:out value="${sessionScope.editNote.start}"/></c:if></span><br />
 
-                <button id="reset_note_time" onclick="resetTime(); return false;">Set Player Time</button>
+                <button id="reset_note_time" type="button" onclick="resetTime();">Set Time</button>
 
                 <%--input type="hidden" name="timeStampEnd" value="0" />
                 <label>End:</label> <span id="time_stamp_end">0</span><br /--%>
