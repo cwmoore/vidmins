@@ -27,6 +27,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Table(name = "youTubeVideo")
 public class YouTubeVideo implements java.io.Serializable {
 
+    // TODO consider keeping a copy of the video with: https://ytdl-org.github.io/youtube-dl/index.html
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "native", strategy = "native")
