@@ -128,7 +128,7 @@ public class NewVideo extends HttpServlet {
                 if (directories.size() > 0) {
                     currentDirectory = directories.get(0);
                 } else {
-                    currentDirectory = new Directory("Default Directory", "Directory to add videos to.", user);
+                    currentDirectory = createDefaultDirectory(user);
                 }
             }
 
@@ -149,5 +149,34 @@ public class NewVideo extends HttpServlet {
         }
 
         return video;
+    }
+
+    /**
+     * Creates a default directory for a new user account
+     * @param user the user
+     * @return the new directory
+     */
+    public Directory createDefaultDirectory(User user) {
+
+        Directory defaultDirectory = new Directory(
+                "First Directory"
+                , "Directories organize sets of videos."
+                , user
+        );
+
+        // TODO add beginner video for first time user);
+        Video newUserVideo = new Video(dao.youTubeVideo.getById(1), "To Begin");
+        defaultDirectory.addVideo(newUserVideo);
+
+        // create the directory
+        int dirInsertId = dao.directory.insert(defaultDirectory);
+
+        // add the new directory to the user object
+        user.addDirectory(dao.directory.getById(dirInsertId));
+
+        // save
+        dao.user.saveOrUpdate(user);
+
+        return user.getDirectories().get(0);
     }
 }

@@ -87,12 +87,12 @@ public class Search {
             }).setApplicationName("youtube-cmdline-search-sample").build();
 
             // short circuit API search if local entry found
-            GenericDao<YouTubeVideo> youTubeVideoDao = new GenericDao<>(YouTubeVideo.class);
-            List<YouTubeVideo> youTubeVideos = youTubeVideoDao.findByPropertyEqual("youTubeId", youTubeId);
-            if (youTubeVideos.size() > 0) {
-                YouTubeVideo youTubeVideo = youTubeVideos.get(0);
-                return youTubeVideo;
-            }
+//            GenericDao<YouTubeVideo> youTubeVideoDao = new GenericDao<>(YouTubeVideo.class);
+//            List<YouTubeVideo> youTubeVideos = youTubeVideoDao.findByPropertyEqual("youTubeId", youTubeId);
+//            if (youTubeVideos.size() > 0) {
+//                YouTubeVideo youTubeVideo = youTubeVideos.get(0);
+//                return youTubeVideo;
+//            }
 
             // Define the API request for retrieving search results.
             YouTube.Search.List search = youtube.search().list("id,snippet");

@@ -133,6 +133,7 @@ public class LoadClient extends HttpServlet {
      */
     public void loadUserData(HttpServletRequest request)
             throws Exception {
+
         dao.loadHelpers(request);
         String userName = request.getRemoteUser();
         session = request.getSession();
@@ -148,45 +149,69 @@ public class LoadClient extends HttpServlet {
         }
 
         logger.debug("User: " + user);
+
         session.setAttribute("user", user);
 
+
+
+
+
+
+
+        // previously set current objects
         Directory currentDirectory = (Directory) session.getAttribute("currentDirectory");
         Video currentVideo = (Video) session.getAttribute("currentVideo");
         Note currentNote = (Note) session.getAttribute("currentNote");
 
-        if (user.getDirectories().size() == 0) { // first time use
-            createDefaultDirectory(user);
-        }
-        List<Directory> directories = user.getDirectories();
 
-        // TODO access this with 'user.directories' instead
-        session.setAttribute("directories", directories);
 
-        if (currentDirectory == null) {
+
+
+
+        // first time user's first directory
+        if (user.getDirectories().size() == 0) {
+            currentDirectory = createDefaultDirectory(user);
+        } else {
+            // set the current directory to be the user's first one
+            List<Directory> directories = user.getDirectories();
+
+            session.setAttribute("directories", directories);
+
             logger.debug("Found " + directories.size() + " directories");
-            currentDirectory = directories.get(0);
-        }
-
-
-        String inputDefaultId = request.getParameter("directoryId");
-
-        try {
-            int defaultId = Integer.parseInt(inputDefaultId);
-
-            if (defaultId > 0) {
-                currentDirectory = dao.directory.getById(defaultId);
-                session.setAttribute("currentDirectory", currentDirectory);
+            if (currentDirectory == null) {
+                currentDirectory = directories.get(0);
             }
-        } catch (NumberFormatException nfe) {
-            logger.debug("defaultDirectory id...", nfe);
         }
 
 
-        // change this to use a different video to preload
-        if (session.getAttribute("currentVideo") != null) {
-            currentVideo = (Video) session.getAttribute("currentVideo");
+
+
+
+
+
+
+
+        // set current directory from directoryId parameter
+        if (request.getParameter("directoryId") != null) {
+            String inputDefaultId = request.getParameter("directoryId");
+
+            try {
+                int defaultId = Integer.parseInt(inputDefaultId);
+
+                if (defaultId > 0) {
+                    currentDirectory = dao.directory.getById(defaultId);
+                }
+            } catch (NumberFormatException nfe) {
+                logger.debug("defaultDirectory id...", nfe);
+            }
         }
 
+
+
+
+
+
+        // load videos from chosen directory
         if (currentDirectory != null) {
 
             List<Video> videos = currentDirectory.getVideos();
@@ -201,30 +226,33 @@ public class LoadClient extends HttpServlet {
             session.setAttribute("currentDirectory", currentDirectory);
         }
 
-        // TODO move url param into a clean URL session object
+
+
+
+
+
+
+        // load current video from videoId parameter
         if (request.getParameter("videoId") != null) {
             if (request.getParameter("videoId").matches("\\d+")) {
 
                 int videoId = Integer.parseInt(request.getParameter("videoId"));
                 currentVideo = dao.video.getById(videoId);
-            }
-        }
 
-        // TODO dedup this with line 135
-        if (currentVideo != null) {
-            session.setAttribute("currentVideo", currentVideo);
-            session.setAttribute("currentDirectory", currentVideo.getDirectory());
+                session.setAttribute("currentVideo", currentVideo);
+                session.setAttribute("currentDirectory", currentVideo.getDirectory());
 
-            // notes for the first video
-            // TODO can use object dot notation with 'currentVideo.notes' instead
-            session.setAttribute("notes", currentVideo.getNotes());
+                // notes for the current video
+                session.setAttribute("notes", currentVideo.getNotes());
 
-            if (session.getAttribute("currentNote") == null) {
-                if (currentVideo.getNotes().size() > 0) {
-                    session.setAttribute("currentNote", currentVideo.getNotes().get(0));
+                if (session.getAttribute("currentNote") == null) {
+                    if (currentVideo.getNotes().size() > 0) {
+                        session.setAttribute("currentNote", currentVideo.getNotes().get(0));
+                    }
                 }
             }
         }
+
 
         session.setAttribute("title", "The Video Minutes App");
     }
@@ -232,8 +260,9 @@ public class LoadClient extends HttpServlet {
     /**
      * Creates a default directory for a new user account
      * @param user the user
+     * @return the new directory
      */
-    public void createDefaultDirectory(User user) {
+    public Directory createDefaultDirectory(User user) {
 
         Directory defaultDirectory = new Directory(
                 "First Directory"
@@ -253,5 +282,7 @@ public class LoadClient extends HttpServlet {
 
         // save
         dao.user.saveOrUpdate(user);
+
+        return user.getDirectories().get(0);
     }
 }

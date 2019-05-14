@@ -209,7 +209,8 @@ public class NewUser extends HttpServlet {
 
 
         // go to start page
-        String url = "loadClient";
+        //String url = "loadClient";
+        String url = "index.jsp";
         response.sendRedirect(url);
     }
 
