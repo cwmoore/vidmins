@@ -153,7 +153,11 @@ public class LoadClient extends HttpServlet {
         session.setAttribute("user", user);
 
 
-
+// TODO proper logic
+// get current note if possible request.getParameter("noteId")
+// if current note, set currentVideo = note.getVideo()
+        // else if current video: currentVideo = currentVideo
+// if current video set currentDirectory = currentVideo.getDirectory()
 
 
 
@@ -172,7 +176,7 @@ public class LoadClient extends HttpServlet {
         if (user.getDirectories().size() == 0) {
             currentDirectory = createDefaultDirectory(user);
         } else {
-            // set the current directory to be the user's first one
+            // set the current directory to the user's first
             List<Directory> directories = user.getDirectories();
 
             session.setAttribute("directories", directories);
