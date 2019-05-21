@@ -28,6 +28,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class YouTubeVideo implements java.io.Serializable {
 
     // TODO consider keeping a copy of the video with: https://ytdl-org.github.io/youtube-dl/index.html
+    // TODO access more info about actual movies with https://github.com/mayankchd/movie
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
