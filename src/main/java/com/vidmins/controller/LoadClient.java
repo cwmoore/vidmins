@@ -153,7 +153,7 @@ public class LoadClient extends HttpServlet {
         session.setAttribute("user", user);
 
 
-// TODO proper logic
+// TODO proper logic use a method like requireContext()
 // get current note if possible request.getParameter("noteId")
 // if current note, set currentVideo = note.getVideo()
         // else if current video: currentVideo = currentVideo
