@@ -50,7 +50,7 @@ public class User implements java.io.Serializable {
     @Convert(converter = TimestampAttributeConverter.class)
     //@EqualsAndHashCode.Exclude
     private LocalDateTime joinDate;
-    private LocalDateTime lastLoginDate;
+    private LocalDateTime lastLoginDate; // TODO test this
 
     private LocalDate dateOfBirth;
 

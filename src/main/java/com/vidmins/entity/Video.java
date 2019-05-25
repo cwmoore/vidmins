@@ -30,6 +30,7 @@ public class Video implements java.io.Serializable {
 
     private String title;
     private LocalDateTime addDate;
+    private LocalDateTime lastAccessDate;
     private LocalDateTime lastViewedDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -190,6 +191,22 @@ public class Video implements java.io.Serializable {
      */
     public void setLastViewedDate(LocalDateTime lastViewedDate) {
         this.lastViewedDate = lastViewedDate;
+    }
+
+    /**
+     * Get last access date.
+     * @return the last access date
+     */
+    public LocalDateTime getLastAccessDate() {
+        return lastAccessDate;
+    }
+
+    /**
+     * Set last access date.
+     * @param lastAccessDate the last access date
+     */
+    public void setLastAccessDate(LocalDateTime lastAccessDate) {
+        this.lastAccessDate = lastAccessDate;
     }
 
     /**

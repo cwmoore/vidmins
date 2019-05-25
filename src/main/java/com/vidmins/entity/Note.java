@@ -29,6 +29,7 @@ public class Note implements java.io.Serializable {
     @Convert(converter = TimestampAttributeConverter.class)
     //@EqualsAndHashCode.Exclude
     private LocalDateTime createDatetime;
+    private LocalDateTime lastAccessDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "videoId", nullable = false)
@@ -167,6 +168,22 @@ public class Note implements java.io.Serializable {
      */
     public void setCreateDatetime(LocalDateTime createDatetime) {
         this.createDatetime = createDatetime;
+    }
+
+    /**
+     * Get last access date.
+     * @return the last access date
+     */
+    public LocalDateTime getLastAccessDate() {
+        return lastAccessDate;
+    }
+
+    /**
+     * Set last access date.
+     * @param lastAccessDate the last access date
+     */
+    public void setLastAccessDate(LocalDateTime lastAccessDate) {
+        this.lastAccessDate = lastAccessDate;
     }
 
     /**
