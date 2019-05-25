@@ -161,12 +161,13 @@ const showCurrentEntity = () => {
         } else {
             console.error(`Couldn't find any entity ${params}`);
         }
+    }
 
-        if (entity) {
-            showPanel(entity);
-        }
-
+    if (entity) {
         console.log(`entity ${entity}, id=${entityId}`);
+        showPanel(entity);
+    } else {
+        loadCallback();
     }
 }
 
