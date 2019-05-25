@@ -8,6 +8,7 @@ truncate auth_token;
 truncate contract;
 truncate subscription;
 truncate youTubeVideo;
+truncate hash_ids;
 SET FOREIGN_KEY_CHECKS = 1;
 INSERT INTO user (id, firstName, lastName, userName, password, enc_pass, dateOfBirth) VALUES (1, 'Joe','Coyne','jcoyne', 'password', 'supersecret1','1964-04-01'),(2, 'Fred','Hensen','fhensen', 'password','supersecret2','1988-05-08'),(3,'Barney','Curry','bcurry', 'password','supersecret3','1947-11-11'),(4,'Karen','Mack','kmack', 'password','supersecret4','1986-07-08'),(5, 'Dianne','Klein','dklein', 'password','supersecret5','1991-09-22'),(6, 'Dawn','Tillman','dtillman', 'password','supersecret6','1979-08-30');
 INSERT INTO role (id, role, userName) VALUES (1, 'guest', 'jcoyne'), (2, 'local', 'jcoyne'), (3, 'admin', 'fhensen'), (4, 'super', 'dtillman'), (5, 'local', 'bcurry'), (6, 'local', 'kmack'), (7, 'oauth', 'dklein');
@@ -18,3 +19,4 @@ INSERT INTO note (id, label, text, start, videoId) VALUES (1,'note one', 'one sh
 INSERT INTO auth_token (id, user_id, user_hash, token, expiration, status) VALUES (1, 1, '1', 'token1', NOW(), 0), (2, 1, '1', 'token2', NOW(), 0), (3, 2, '2', 'token3', NOW(), -1), (4, 2, '2', 'token4', NOW(), 0), (5, 3, '3', 'token5', NOW(), -1);
 INSERT INTO contract (id, name, description, priceForTimePeriod, timePeriodHours, authorId) VALUES (1, 'no contract', 'default contract is no contract', 0, 0, 4), (2, 'free contract', 'free contract is free', 0, 0, 4), (3, '$10 contract', '$10 contract is $10/year', 10, 8766, 4);
 INSERT INTO subscription (id, name, description, start, end, subscriberId, directoryId, contractId) VALUES (1, 'subscription 1', 'subscription description 1', NOW(), NOW(), 3, 2, 2), (2, 'subscription 2', 'subscription description 2', NOW(), NOW(), 2, 1, 3);
+INSERT INTO hash_ids (id, hashId, objectId, objectType) VALUES (1, 'asdf', 1, 'directory'),(2, 'qwer', 1, 'note'),(3, 'argblarg', 1, 'video'),(4, 'asasdfafdf', 2, 'directory');
