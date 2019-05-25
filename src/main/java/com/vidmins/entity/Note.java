@@ -19,7 +19,7 @@ public class Note implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private int id;
-    
+
     private String label;
     private String text;
     
