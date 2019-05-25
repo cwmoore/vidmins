@@ -15,6 +15,10 @@
         <label for="directoryDescriptionField">Description</label>
         <textarea name="directoryDescription" id="directoryDescriptionField"><c:if test="${sessionScope.editDirectory.description != null}"><c:out value="${sessionScope.editDirectory.description}"/></c:if></textarea><br />
 
+        <c:if test="${sessionScope.editDirectory != null}">
+            <input type="hidden" id="hidden_directory_id" name="directoryId" value="${sessionScope.editDirectory.id}"/><%-- TODO FIXME it is unsafe to expose internal ids to manipulation --%>
+        </c:if>
+
         <button type="submit" class="btn btn-primary" id="add_directory_button"><c:choose>
             <c:when test="${sessionScope.editDirectory != null}">Save</c:when>
             <c:otherwise>Create</c:otherwise></c:choose> Directory

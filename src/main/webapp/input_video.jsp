@@ -8,6 +8,12 @@
 
         <label for="youtube_url">YouTube Video URL</label><br />
         <input type="text" id="youtube_url" name="youtube_url" placeholder="https://youtu.be/R4nd0mCh4r5"<c:if test="${sessionScope.editVideo.youTubeVideo.youTubeId != null}"> value="<c:out value="${sessionScope.editVideo.youTubeVideo.youTubeId}"/>"</c:if>/><br />
+
+
+        <c:if test="${sessionScope.editVideo != null}">
+            <input type="hidden" id="hidden_video_id" name="videoId" value="${sessionScope.editVideo.id}" /><%-- TODO FIXME it is unsafe to expose internal ids to manipulation --%>
+        </c:if>
+
         <button type="submit" class="btn btn-primary" id="add_video_button"><c:choose>
             <c:when test="${sessionScope.editVideo != null}">Create</c:when>
             <c:otherwise>Save</c:otherwise>

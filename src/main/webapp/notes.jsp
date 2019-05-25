@@ -1,9 +1,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:if test="${notes != null}">
+<c:if test="${currentVideo != null}">
     <div class="aquapanel">
         <h3>Notes</h3>
-        <i>${notes[0].video.title}</i>
+        <i>${currentVideo.title}</i>
         <table id="note_table" class="table table-compact table-striped">
             <tr>
                 <th>Label</th>
@@ -12,7 +12,7 @@
                 <th>Created</th>
                 <th>Controls</th>
             </tr>
-            <c:forEach items="${notes}" var="note">
+            <c:forEach items="${currentVideo.notes}" var="note">
                 <tr class="">
                     <td>${note.label}</td>
                     <td>${note.text}</td>

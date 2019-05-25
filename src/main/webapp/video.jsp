@@ -1,7 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:choose>
-    <c:when test="${videos != null}">
+    <c:when test="${currentDirectory != null}">
     <div class="aquapanel">
         <h3>${currentDirectory.name}</h3>
         <p>${currentDirectory.description}</p>
@@ -18,12 +18,12 @@
                 <th>Add Date</th>
                 <th>Controls</th>
             </tr>
-            <c:forEach items="${videos}" var="video">
-                <tr class="">
+            <c:forEach items="${currentDirectory.videos}" var="video">
+                <tr class="video-row">
                     <%--td>${video.id}</td--%>
-                    <td><a href="loadClient?videoId=${video.id}">${video.title}</a></td>
+                    <td><a href="loadClient?videoId=${video.id}"><c:out value="${video.title}"/></a></td>
                     <td>${video.youTubeVideo.youTubeId}</td>
-                        <td><a href="loadClient?videoId=${video.id}">${video.youTubeVideo.title}</a></td>
+                    <td><a href="loadClient?videoId=${video.id}"><c:out value="${video.youTubeVideo.title}"/></a></td>
                     <td>${video.youTubeVideo.duration}</td>
                     <%--td--># Notes</td--%>
                     <td>${video.addDate}</td>

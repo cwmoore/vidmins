@@ -27,7 +27,7 @@
         <label>End:</label> <span id="time_stamp_end">0</span><br /--%>
 
         <c:if test="${sessionScope.editNote != null}">
-            <input type="hidden" id="hidden_note_id" name="noteId" value="${sessionScope.editNote.id}" />
+            <input type="hidden" id="hidden_note_id" name="noteId" value="${sessionScope.editNote.id}" /><%-- TODO FIXME it is unsafe to expose internal ids to manipulation --%>
         </c:if>
 
         <input type="hidden" name="videoId"
