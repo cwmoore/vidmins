@@ -1,6 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:if test="${directories != null}">
+<c:if test="${user != null}">
     <div class="aquapanel">
         <h3>Directories</h3>
         <table id="directory_table" class="table table-striped">
@@ -9,7 +9,7 @@
                 <th>Description</th>
                 <th>Controls</th>
             </tr>
-        <c:forEach items="${directories}" var="directory">
+        <c:forEach items="${user.directories}" var="directory">
             <tr>
                 <td>
                     <c:choose>
