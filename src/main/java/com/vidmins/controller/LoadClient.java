@@ -338,10 +338,11 @@ public class LoadClient extends HttpServlet {
             logger.debug("Using noteId");
             currentNote = dao.note.getById(Integer.parseInt(request.getParameter("noteId")));
             if (currentNote != null) {
+                setAllFromNote(session, currentNote);
+
                 previousNote = null;
                 previousVideo = null;
                 previousDirectory = null;
-                setAllFromNote(session, currentNote);
             }
 
         } else if (request.getParameter("videoId") != null
@@ -350,10 +351,11 @@ public class LoadClient extends HttpServlet {
             logger.debug("Using videoId");
             currentVideo = dao.video.getById(Integer.parseInt(request.getParameter("videoId")));
             if (currentVideo != null) {
+                setAllFromVideo(session, currentVideo);
+
                 previousNote = null;
                 previousVideo = null;
                 previousDirectory = null;
-                setAllFromVideo(session, currentVideo);
             }
 
         } else if (request.getParameter("directoryId") != null
@@ -362,15 +364,17 @@ public class LoadClient extends HttpServlet {
             logger.debug("Using directoryId");
             currentDirectory = dao.directory.getById(Integer.parseInt(request.getParameter("directoryId")));
             if (currentDirectory != null) {
+                setAllFromDirectory(session, currentDirectory);
+
                 previousNote = null;
                 previousVideo = null;
                 previousDirectory = null;
-                setAllFromDirectory(session, currentDirectory);
             }
 
         } else {
             logger.debug("else setAllFromUser");
             setAllFromUser(session, user);
+
             previousNote = null;
             previousVideo = null;
             previousDirectory = null;
@@ -464,6 +468,9 @@ public class LoadClient extends HttpServlet {
         session.setAttribute("currentNote", currentNote);
         session.setAttribute("currentVideo", currentVideo);
         session.setAttribute("currentDirectory", currentDirectory);
+
+        session.setAttribute("videos", currentDirectory.getVideos());
+        session.setAttribute("notes", currentVideo.getNotes());
     }
 
 
@@ -475,16 +482,19 @@ public class LoadClient extends HttpServlet {
      */
     private Note findLatestNoteFromVideo(Video video) {
         logger.debug("in findLatestNoteFromVideo");
-        Note latestNote = null;
-        if (video.getNotes().size() > 0) {
+        Note latestNote;
+        if (video.getNotes().size() == 1) {
             latestNote = video.getNotes().get(0);
-        }
-        LocalDateTime latest = LocalDateTime.MIN;
-        for (Note note : video.getNotes()) {
-            if (note.getLastAccessDate().isAfter(latest)) {
-                latest = note.getLastAccessDate();
-                latestNote = note;
+        } else if (video.getNotes().size() > 1) {
+
+            for (Note note : video.getNotes()) {
+                if (note.getLastAccessDate().isAfter(latestNote.getLastAccessDate())) {
+                    latestNote = note;
+                }
             }
+
+        } else {
+            latestNote = null;
         }
         return latestNote;
     }
@@ -496,17 +506,26 @@ public class LoadClient extends HttpServlet {
      */
     private Video findLatestVideoFromDirectory(Directory directory) {
         logger.debug("in findLatestVideoFromDirectory");
-        Video latestVideo = null;
-        if (directory.getVideos().size() > 0) {
+
+        Video latestVideo;
+
+        if (directory.getVideos().size() == 1) {
             latestVideo = directory.getVideos().get(0);
-        }
-        LocalDateTime latest = LocalDateTime.MIN;
-        for (Video video : directory.getVideos()) {
-            if (video.getLastAccessDate().isAfter(latest)) {
-                latest = video.getLastAccessDate();
-                latestVideo = video;
+
+        } else if (directory.getVideos().size() > 1) {
+
+            for (Video video : directory.getVideos()) {
+                if (video.getLastAccessDate().isAfter(
+                        latestVideo.getLastAccessDate()
+                )) {
+                    latestVideo = video;
+                }
             }
+
+        } else {
+            latestVideo = null;
         }
+
         return latestVideo;
     }
 
@@ -517,20 +536,27 @@ public class LoadClient extends HttpServlet {
      */
     private Directory findLatestDirectoryFromUser(User user) {
         logger.debug("in findLatestDirectoryFromUser");
-        Directory latestDirectory = null;
+
         if (user.getDirectories().size() == 0) {
-            latestDirectory = createDefaultDirectory(user);
-        } else {
-            latestDirectory = user.getDirectories().get(0);
+            createDefaultDirectory(user);
         }
 
-        LocalDateTime latest = LocalDateTime.MIN;
-        for (Directory directory : user.getDirectories()) {
-            if (directory.getLastAccessDate().isAfter(latest)) {
-                latest = directory.getLastAccessDate();
-                latestDirectory = directory;
+        // start with the first directory
+        Directory latestDirectory = user.getDirectories().get(0);
+
+        if (user.getDirectories().size() > 1) {
+            // look for a newer directory
+            for (Directory directory : user.getDirectories()) {
+                // if any is newer
+                if (directory.getLastAccessDate().isAfter(
+                        latestDirectory.getLastAccessDate()
+                )) {
+                    // use that one instead
+                    latestDirectory = directory;
+                }
             }
         }
+
         return latestDirectory;
     }
 }
