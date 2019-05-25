@@ -62,7 +62,6 @@ public class LoadClient extends HttpServlet {
         logger.debug(request.getUserPrincipal());
         logger.debug(request.getAuthType());
 
-        dao.loadHelpers(request);
 
         session = request.getSession();
 
@@ -381,19 +380,16 @@ public class LoadClient extends HttpServlet {
         logger.debug("in findLatestNoteFromVideo");
         if (video == null) return null;
 
-        Note latestNote;
-        if (video.getNotes().size() == 1) {
+        Note latestNote = null;
+        if (video.getNotes().size() > 0) {
             latestNote = video.getNotes().get(0);
             if (video.getNotes().size() > 1) {
-
                 for (Note note : video.getNotes()) {
                     if (note.getLastAccessDate().isAfter(latestNote.getLastAccessDate())) {
                         latestNote = note;
                     }
                 }
             }
-        } else {
-            latestNote = null;
         }
         return latestNote;
     }
@@ -407,14 +403,14 @@ public class LoadClient extends HttpServlet {
         logger.debug("in findLatestVideoFromDirectory");
         if (directory == null) return null;
 
-        Video latestVideo;
+        Video latestVideo = null;
 
-        if (directory.getVideos().size() == 1) {
+        if (directory.getVideos().size() > 0) {
             latestVideo = directory.getVideos().get(0);
 
             if (directory.getVideos().size() > 1) {
-
                 for (Video video : directory.getVideos()) {
+
                     if (video.getLastAccessDate().isAfter(
                             latestVideo.getLastAccessDate()
                     )) {
@@ -422,9 +418,6 @@ public class LoadClient extends HttpServlet {
                     }
                 }
             }
-
-        } else {
-            latestVideo = null;
         }
 
         return latestVideo;
