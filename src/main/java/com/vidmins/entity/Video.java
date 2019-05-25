@@ -1,10 +1,11 @@
 package com.vidmins.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +30,15 @@ public class Video implements java.io.Serializable {
     private YouTubeVideo youTubeVideo;
 
     private String title;
+
+    @CreationTimestamp
     private LocalDateTime addDate;
+
+    @UpdateTimestamp
     private LocalDateTime lastAccessDate;
-    private LocalDateTime lastViewedDate;
+
+    @UpdateTimestamp
+    private LocalDateTime lastViewedDate; // TODO this should only be updated when a video has been played
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "directoryId", nullable = false)

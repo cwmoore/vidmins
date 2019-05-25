@@ -81,7 +81,7 @@ public class LoadClient extends HttpServlet {
             try {
                 loadUserData(request);
             } catch (Exception e) {
-                logger.debug(e.toString());
+                logger.debug("Exception in loadUserData()", e);
             }
         } else {
             // user is not logged in
@@ -144,21 +144,325 @@ public class LoadClient extends HttpServlet {
 
         User user;
         List<User> users = dao.user.findByPropertyEqual("userName", userName);
-        if (users.size() == 1) {
-            user = users.get(0);
-        } else {
-            throw new Exception("userName mismatch: users.size!=1");
-        }
-
-        logger.debug("User: " + user);
-
-        session.setAttribute("user", user);
-
         try {
-            reliableContext(request, user);
+            if (users.size() == 1) {
+                user = users.get(0);
+            } else {
+                throw new Exception("userName mismatch: users.size!=1");
+            }
+
+            try {
+//                org.hibernate.HibernateException: Illegal attempt to associate a collection with two open sessions. Collection : [com.vidmins.entity.User.directories#73]
+//                Collection contents: [[com.vidmins.entity.Directory@60cba085, com.vidmins.entity.Directory@46aa0a43]]
+//                at org.hibernate.collection.internal.AbstractPersistentCollection.setCurrentSession(AbstractPersistentCollection.java:639) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
+//                at org.hibernate.event.internal.OnUpdateVisitor.processCollection(OnUpdateVisitor.java:46) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
+//                at org.hibernate.event.internal.AbstractVisitor.processValue(AbstractVisitor.java:104) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
+//                at org.hibernate.event.internal.AbstractVisitor.processValue(AbstractVisitor.java:65) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
+//                at org.hibernate.event.internal.AbstractVisitor.processEntityPropertyValues(AbstractVisitor.java:59) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
+//                at org.hibernate.event.internal.AbstractVisitor.process(AbstractVisitor.java:126) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
+//                at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.performUpdate(DefaultSaveOrUpdateEventListener.java:293) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
+//                at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.entityIsDetached(DefaultSaveOrUpdateEventListener.java:227) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
+//                at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.performSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:92) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
+//                at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.onSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:73) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
+//                at org.hibernate.internal.SessionImpl.fireSaveOrUpdate(SessionImpl.java:660) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
+//                at org.hibernate.internal.SessionImpl.saveOrUpdate(SessionImpl.java:652) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
+//                at org.hibernate.internal.SessionImpl.saveOrUpdate(SessionImpl.java:647) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
+//                at com.vidmins.persistence.GenericDao.saveOrUpdate(GenericDao.java:105) ~[classes/:?]
+                dao.user.saveOrUpdate(user);
+                // new GenericDao<>(User.class).saveOrUpdate(user); // fails the same
+            } catch (Exception e) {
+                logger.debug("can't saveorupdate", e);
+            }
+
+            logger.debug("User: " + user);
+
+            session.setAttribute("user", user);
+
+            try {
+                reliableContext(request, user);
+            } catch (Exception e) {
+                logger.debug("reliableContext error", e);
+            }
+
+            session.setAttribute("title", "The Video Minutes App");
+
         } catch (Exception e) {
-            logger.debug("reliableContext error", e);
+            logger.debug("size mismatch?", e);
         }
+    }
+
+    /**
+     * Creates a default directory for a new user account
+     * @param user the user
+     * @return the new directory
+     */
+    public Directory createDefaultDirectory(User user) {
+
+        Directory defaultDirectory = new Directory(
+                "First Directory"
+                , "Directories organize sets of videos."
+                , user
+        );
+
+        // add beginner video for first time user
+        Video newUserVideo = new Video(dao.youTubeVideo.getById(1), "To Begin");
+        defaultDirectory.addVideo(newUserVideo);
+
+        // create the directory
+        //int dirInsertId = dao.directory.insert(defaultDirectory);
+
+        // add the new directory to the user object
+        //defaultDirectory = dao.directory.getById(dirInsertId);
+        user.addDirectory(defaultDirectory);
+
+        // save
+        dao.user.saveOrUpdate(user);
+
+        return user.getDirectories().get(0);
+    }
+
+    /**
+     * Set all session data to a useful state, continuous with the previous actions
+     * @param request the HttpServletRequest
+     * @param user the user
+     */
+    public void reliableContext(HttpServletRequest request, User user) {
+        logger.debug("In reliableContext");
+        HttpSession session = request.getSession();
+
+        // store previous settings
+        Note previousNote = null;
+        if (session.getAttribute("currentNote") != null) {
+            previousNote = (Note) session.getAttribute("currentNote");
+        }
+        session.setAttribute("currentNote", null);
+
+        Video previousVideo = null;
+        if (session.getAttribute("currentVideo") != null) {
+            previousVideo = (Video) session.getAttribute("currentVideo");
+        }
+        session.setAttribute("currentVideo", null);
+
+        Directory previousDirectory = null;
+        if (session.getAttribute("currentDirectory") != null) {
+            previousDirectory = (Directory) session.getAttribute("currentDirectory");
+        }
+        session.setAttribute("currentDirectory", null);
+
+
+        Note currentNote = null;
+        Video currentVideo = null;
+        Directory currentDirectory = null;
+
+        if (request.getParameter("noteId") != request.getParameter("noteId")
+                && request.getParameter("noteId").matches("\\d+")) {
+
+            logger.debug("Using noteId");
+            currentNote = dao.note.getById(Integer.parseInt(request.getParameter("noteId")));
+            if (currentNote != null) {
+                setAllFromNote(session, currentNote);
+            }
+
+        } else if (request.getParameter("videoId") != null
+                && request.getParameter("videoId").matches("\\d+")) {
+
+            logger.debug("Using videoId");
+            currentVideo = dao.video.getById(Integer.parseInt(request.getParameter("videoId")));
+            if (currentVideo != null) {
+                setAllFromVideo(session, currentVideo);
+            }
+
+        } else if (request.getParameter("directoryId") != null
+                && request.getParameter("directoryId").matches("\\d+")) {
+
+            logger.debug("Using directoryId");
+            currentDirectory = dao.directory.getById(Integer.parseInt(request.getParameter("directoryId")));
+            if (currentDirectory != null) {
+                setAllFromDirectory(session, currentDirectory);
+            }
+
+        } else if (previousNote != null) {
+            logger.debug("Using previousNote");
+            setAllFromNote(session, previousNote);
+
+        } else if (previousVideo != null) {
+            logger.debug("Using previousVideo");
+            setAllFromVideo(session, previousVideo);
+
+        } else if (previousDirectory != null) {
+            logger.debug("Using previousDirectory");
+            setAllFromDirectory(session, previousDirectory);
+
+        } else {
+            logger.debug("else setAllFromUser");
+            setAllFromUser(session, user);
+        }
+
+        logger.debug("end reliableContext");
+    }
+
+    /**
+     * Given a note, sets all other current entities
+     */
+    public void setAllFromNote(HttpSession session, Note currentNote) {
+        // new current entities
+        logger.debug("In setAllFromNote");
+        Video currentVideo = currentNote.getVideo();
+        Directory currentDirectory = currentVideo.getDirectory();
+
+        setAll(session, currentNote, currentVideo, currentDirectory);
+    }
+
+    /**
+     * Given a video, sets all other current entities
+     */
+    public void setAllFromVideo(HttpSession session, Video currentVideo) {
+        // new current entities
+        logger.debug("In setAllFromVideo");
+        Directory currentDirectory = currentVideo.getDirectory();
+
+        Note currentNote = findLatestNoteFromVideo(currentVideo);
+
+        setAll(session, currentNote, currentVideo, currentDirectory);
+    }
+
+    /**
+     * Given a directory, sets all other current entities
+     */
+    public void setAllFromDirectory(HttpSession session, Directory currentDirectory) {
+        // new current entities
+        logger.debug("In setAllFromDirectory");
+        Video currentVideo = findLatestVideoFromDirectory(currentDirectory);
+
+        Note currentNote = null;
+        if (currentVideo != null){
+            currentNote = findLatestNoteFromVideo(currentVideo);
+        }
+
+        setAll(session, currentNote, currentVideo, currentDirectory);
+    }
+
+    /**
+     * Given a user, sets all other current entities
+     */
+    public void setAllFromUser(HttpSession session, User user) {
+        logger.debug("In setAllFromUser");
+
+        // findLatestObject(), select from the return based on type?
+
+        Directory currentDirectory = findLatestDirectoryFromUser(user);
+        Video currentVideo = findLatestVideoFromDirectory(currentDirectory);
+        Note currentNote = findLatestNoteFromVideo(currentVideo);
+        setAll(session, currentNote, currentVideo, currentDirectory);
+    }
+
+    /**
+     * Set all of the latest entities associated with the current user's session
+     * @param session
+     * @param currentNote the current note
+     * @param currentVideo the current video
+     * @param currentDirectory the current directory
+     */
+    public void setAll(HttpSession session, Note currentNote, Video currentVideo, Directory currentDirectory) {
+        logger.debug("in setAll");
+        session.setAttribute("currentNote", currentNote);
+        session.setAttribute("currentVideo", currentVideo);
+        session.setAttribute("currentDirectory", currentDirectory);
+    }
+
+
+
+    /**
+     * get latest accessed note in a video
+     * @param video the video object
+     * @return the latest accessed note
+     */
+    private Note findLatestNoteFromVideo(Video video) {
+        logger.debug("in findLatestNoteFromVideo");
+        if (video == null) return null;
+
+        Note latestNote;
+        if (video.getNotes().size() == 1) {
+            latestNote = video.getNotes().get(0);
+            if (video.getNotes().size() > 1) {
+
+                for (Note note : video.getNotes()) {
+                    if (note.getLastAccessDate().isAfter(latestNote.getLastAccessDate())) {
+                        latestNote = note;
+                    }
+                }
+            }
+        } else {
+            latestNote = null;
+        }
+        return latestNote;
+    }
+
+    /**
+     * get latest accessed video in a directory
+     * @param directory the directory object
+     * @return the latest accessed video
+     */
+    private Video findLatestVideoFromDirectory(Directory directory) {
+        logger.debug("in findLatestVideoFromDirectory");
+        if (directory == null) return null;
+
+        Video latestVideo;
+
+        if (directory.getVideos().size() == 1) {
+            latestVideo = directory.getVideos().get(0);
+
+            if (directory.getVideos().size() > 1) {
+
+                for (Video video : directory.getVideos()) {
+                    if (video.getLastAccessDate().isAfter(
+                            latestVideo.getLastAccessDate()
+                    )) {
+                        latestVideo = video;
+                    }
+                }
+            }
+
+        } else {
+            latestVideo = null;
+        }
+
+        return latestVideo;
+    }
+
+    /**
+     * get latest accessed directory for a user
+     * @param user the user object
+     * @return the latest accessed directory
+     */
+    private Directory findLatestDirectoryFromUser(User user) {
+        logger.debug("in findLatestDirectoryFromUser");
+        if (user == null) return null;
+
+        if (user.getDirectories().size() == 0) {
+            createDefaultDirectory(user);
+        }
+
+        // start with the first directory
+        Directory latestDirectory = user.getDirectories().get(0);
+
+        if (user.getDirectories().size() > 1) {
+            // look for a newer directory
+            for (Directory directory : user.getDirectories()) {
+                // if any is newer
+                if (directory.getLastAccessDate().isAfter(
+                        latestDirectory.getLastAccessDate()
+                )) {
+                    // use that one instead
+                    latestDirectory = directory;
+                }
+            }
+        }
+
+        return latestDirectory;
+    }
+}
+
 //
 //
 //// TODO proper logic use a method like requireContext()
@@ -264,299 +568,3 @@ public class LoadClient extends HttpServlet {
 //                }
 //            }
 //        }
-
-
-        session.setAttribute("title", "The Video Minutes App");
-    }
-
-    /**
-     * Creates a default directory for a new user account
-     * @param user the user
-     * @return the new directory
-     */
-    public Directory createDefaultDirectory(User user) {
-
-        Directory defaultDirectory = new Directory(
-                "First Directory"
-                , "Directories organize sets of videos."
-                , user
-        );
-
-        // add beginner video for first time user
-        Video newUserVideo = new Video(dao.youTubeVideo.getById(1), "To Begin");
-        defaultDirectory.addVideo(newUserVideo);
-
-        // create the directory
-        //int dirInsertId = dao.directory.insert(defaultDirectory);
-
-        // add the new directory to the user object
-        //defaultDirectory = dao.directory.getById(dirInsertId);
-        user.addDirectory(defaultDirectory);
-
-        // save
-        dao.user.saveOrUpdate(user);
-
-        return user.getDirectories().get(0);
-    }
-
-    /**
-     * Set all session data to a useful state, continuous with the previous actions
-     * @param request the HttpServletRequest
-     * @param user the user
-     */
-    public void reliableContext(HttpServletRequest request, User user) {
-        logger.debug("In reliableContext");
-        HttpSession session = request.getSession();
-
-        // store previous settings
-        Note previousNote = null;
-        if (session.getAttribute("currentNote") != null) {
-            previousNote = (Note) session.getAttribute("currentNote");
-        }
-        session.setAttribute("currentNote", null);
-
-        Video previousVideo = null;
-        if (session.getAttribute("currentVideo") != null) {
-            previousVideo = (Video) session.getAttribute("currentVideo");
-        }
-        session.setAttribute("currentVideo", null);
-
-        Directory previousDirectory = null;
-        if (session.getAttribute("currentDirectory") != null) {
-            previousDirectory = (Directory) session.getAttribute("currentDirectory");
-        }
-        session.setAttribute("currentDirectory", null);
-
-
-        Note currentNote = null;
-        Video currentVideo = null;
-        Directory currentDirectory = null;
-
-        if (request.getParameter("noteId") != request.getParameter("noteId")
-                && request.getParameter("noteId").matches("\\d+")) {
-
-            logger.debug("Using noteId");
-            currentNote = dao.note.getById(Integer.parseInt(request.getParameter("noteId")));
-            if (currentNote != null) {
-                setAllFromNote(session, currentNote);
-
-                previousNote = null;
-                previousVideo = null;
-                previousDirectory = null;
-            }
-
-        } else if (request.getParameter("videoId") != null
-                && request.getParameter("videoId").matches("\\d+")) {
-
-            logger.debug("Using videoId");
-            currentVideo = dao.video.getById(Integer.parseInt(request.getParameter("videoId")));
-            if (currentVideo != null) {
-                setAllFromVideo(session, currentVideo);
-
-                previousNote = null;
-                previousVideo = null;
-                previousDirectory = null;
-            }
-
-        } else if (request.getParameter("directoryId") != null
-                && request.getParameter("directoryId").matches("\\d+")) {
-
-            logger.debug("Using directoryId");
-            currentDirectory = dao.directory.getById(Integer.parseInt(request.getParameter("directoryId")));
-            if (currentDirectory != null) {
-                setAllFromDirectory(session, currentDirectory);
-
-                previousNote = null;
-                previousVideo = null;
-                previousDirectory = null;
-            }
-
-        } else {
-            logger.debug("else setAllFromUser");
-            setAllFromUser(session, user);
-
-            previousNote = null;
-            previousVideo = null;
-            previousDirectory = null;
-        }
-
-        if (previousNote != null) {
-            logger.debug("Using previousNote");
-            setAllFromNote(session, previousNote);
-
-        } else if (previousVideo != null) {
-            logger.debug("Using previousVideo");
-            setAllFromVideo(session, previousVideo);
-
-        } else if (previousDirectory != null) {
-            logger.debug("Using previousDirectory");
-            setAllFromDirectory(session, previousDirectory);
-
-        }
-        session.setAttribute("directories", user.getDirectories());
-
-        logger.debug("end reliableContext");
-    }
-
-    /**
-     * Given a note, sets all other current entities
-     */
-    public void setAllFromNote(HttpSession session, Note currentNote) {
-        // new current entities
-        logger.debug("In setAllFromNote");
-        Video currentVideo = currentNote.getVideo();
-        Directory currentDirectory = currentVideo.getDirectory();
-
-        setAll(session, currentNote, currentVideo, currentDirectory);
-    }
-
-    /**
-     * Given a video, sets all other current entities
-     */
-    public void setAllFromVideo(HttpSession session, Video currentVideo) {
-        // new current entities
-        logger.debug("In setAllFromVideo");
-        Directory currentDirectory = currentVideo.getDirectory();
-
-        Note currentNote = findLatestNoteFromVideo(currentVideo);
-
-        setAll(session, currentNote, currentVideo, currentDirectory);
-    }
-
-    /**
-     * Given a directory, sets all other current entities
-     */
-    public void setAllFromDirectory(HttpSession session, Directory currentDirectory) {
-        // new current entities
-        logger.debug("In setAllFromDirectory");
-        Video currentVideo = findLatestVideoFromDirectory(currentDirectory);
-
-        Note currentNote = null;
-        if (currentVideo != null){
-            currentNote = findLatestNoteFromVideo(currentVideo);
-        }
-
-        setAll(session, currentNote, currentVideo, currentDirectory);
-    }
-
-    /**
-     * Given a user, sets all other current entities
-     */
-    public void setAllFromUser(HttpSession session, User user) {
-        logger.debug("In setAllFromUser");
-        if (user.getDirectories().size() == 0) {
-            createDefaultDirectory(user);
-        }
-
-        // findLatestObject(), select from the return based on type?
-
-        Directory currentDirectory = findLatestDirectoryFromUser(user);
-        Video currentVideo = findLatestVideoFromDirectory(currentDirectory);
-        Note currentNote = findLatestNoteFromVideo(currentVideo);
-        setAll(session, currentNote, currentVideo, currentDirectory);
-    }
-
-    /**
-     * Set all of the latest entities associated with the current user's session
-     * @param session
-     * @param currentNote the current note
-     * @param currentVideo the current video
-     * @param currentDirectory the current directory
-     */
-    public void setAll(HttpSession session, Note currentNote, Video currentVideo, Directory currentDirectory) {
-        logger.debug("in setAll");
-        session.setAttribute("currentNote", currentNote);
-        session.setAttribute("currentVideo", currentVideo);
-        session.setAttribute("currentDirectory", currentDirectory);
-
-        session.setAttribute("videos", currentDirectory.getVideos());
-        session.setAttribute("notes", currentVideo.getNotes());
-    }
-
-
-
-    /**
-     * get latest accessed note in a video
-     * @param video the video object
-     * @return the latest accessed note
-     */
-    private Note findLatestNoteFromVideo(Video video) {
-        logger.debug("in findLatestNoteFromVideo");
-        Note latestNote;
-        if (video.getNotes().size() == 1) {
-            latestNote = video.getNotes().get(0);
-        } else if (video.getNotes().size() > 1) {
-
-            for (Note note : video.getNotes()) {
-                if (note.getLastAccessDate().isAfter(latestNote.getLastAccessDate())) {
-                    latestNote = note;
-                }
-            }
-
-        } else {
-            latestNote = null;
-        }
-        return latestNote;
-    }
-
-    /**
-     * get latest accessed video in a directory
-     * @param directory the directory object
-     * @return the latest accessed video
-     */
-    private Video findLatestVideoFromDirectory(Directory directory) {
-        logger.debug("in findLatestVideoFromDirectory");
-
-        Video latestVideo;
-
-        if (directory.getVideos().size() == 1) {
-            latestVideo = directory.getVideos().get(0);
-
-        } else if (directory.getVideos().size() > 1) {
-
-            for (Video video : directory.getVideos()) {
-                if (video.getLastAccessDate().isAfter(
-                        latestVideo.getLastAccessDate()
-                )) {
-                    latestVideo = video;
-                }
-            }
-
-        } else {
-            latestVideo = null;
-        }
-
-        return latestVideo;
-    }
-
-    /**
-     * get latest accessed directory for a user
-     * @param user the user object
-     * @return the latest accessed directory
-     */
-    private Directory findLatestDirectoryFromUser(User user) {
-        logger.debug("in findLatestDirectoryFromUser");
-
-        if (user.getDirectories().size() == 0) {
-            createDefaultDirectory(user);
-        }
-
-        // start with the first directory
-        Directory latestDirectory = user.getDirectories().get(0);
-
-        if (user.getDirectories().size() > 1) {
-            // look for a newer directory
-            for (Directory directory : user.getDirectories()) {
-                // if any is newer
-                if (directory.getLastAccessDate().isAfter(
-                        latestDirectory.getLastAccessDate()
-                )) {
-                    // use that one instead
-                    latestDirectory = directory;
-                }
-            }
-        }
-
-        return latestDirectory;
-    }
-}

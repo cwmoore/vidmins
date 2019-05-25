@@ -47,9 +47,11 @@ public class User implements java.io.Serializable {
     private List<Role> roles = new ArrayList<>();
 
     @CreationTimestamp
-    @Convert(converter = TimestampAttributeConverter.class)
+    //@Convert(converter = TimestampAttributeConverter.class)
     //@EqualsAndHashCode.Exclude
     private LocalDateTime joinDate;
+
+    @UpdateTimestamp
     private LocalDateTime lastLoginDate; // TODO test this
 
     private LocalDate dateOfBirth;
@@ -80,7 +82,6 @@ public class User implements java.io.Serializable {
         email = "";
         userName = "";
         enc_pass = "";
-        joinDate = LocalDateTime.now();
         dateOfBirth = LocalDate.now();
         organization = "";
         introduction = "";
@@ -110,6 +111,7 @@ public class User implements java.io.Serializable {
      * @param dateOfBirth the date of birth
      */
     public User(String firstName, String lastName, String userName, LocalDate dateOfBirth) {
+        this();
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
@@ -128,6 +130,7 @@ public class User implements java.io.Serializable {
      * @param dateOfBirth  the date of birth
      */
     public User(String firstName, String lastName, String userName, String organization, String introduction, LocalDate dateOfBirth) {
+        this();
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;

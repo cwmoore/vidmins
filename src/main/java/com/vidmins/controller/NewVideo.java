@@ -76,7 +76,6 @@ public class NewVideo extends HttpServlet {
         if (newVideo != null) {
             request.getSession().setAttribute("currentVideo", newVideo);
             request.getSession().setAttribute("currentDirectory", newVideo.getDirectory());
-            url += "?directoryId=" + newVideo.getDirectory().getId();
         } else {
             logger.debug("New Video was null");
         }

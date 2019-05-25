@@ -2,11 +2,12 @@ package com.vidmins.entity;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -22,6 +23,13 @@ public class Directory implements java.io.Serializable {
     private int id;
     private String name;
     private String description;
+
+    @Column
+    @CreationTimestamp
+    private LocalDateTime createDate;
+
+    @Column
+    @UpdateTimestamp
     private LocalDateTime lastAccessDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -133,6 +141,24 @@ public class Directory implements java.io.Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+
+    /**
+     * Get create date.
+     * @return the create date
+     */
+    public LocalDateTime getCreateDate() {
+        return createDate;
+    }
+
+    /**
+     * Set create  date.
+     * @param createDate the created date
+     */
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
+    }
+
 
     /**
      * Get last access date.

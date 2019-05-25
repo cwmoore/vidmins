@@ -4,6 +4,7 @@ import com.vidmins.util.TimestampAttributeConverter;
 //import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -27,8 +28,9 @@ public class Note implements java.io.Serializable {
 
     @CreationTimestamp
     @Convert(converter = TimestampAttributeConverter.class)
-    //@EqualsAndHashCode.Exclude
     private LocalDateTime createDatetime;
+
+    @UpdateTimestamp
     private LocalDateTime lastAccessDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -39,7 +41,7 @@ public class Note implements java.io.Serializable {
      * Instantiates a new Note.
      */
     public Note() {
-
+        // empty constructor
     }
 
     /**

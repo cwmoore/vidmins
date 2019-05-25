@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,7 +85,7 @@ class UserDaoTest {
      */
     @Test
     void updateSuccess() {
-        int updateId = 5;
+        int updateId = 1;
         String newFirstName = "Darlene";
         User userToUpdate = dao.getById(updateId);
         userToUpdate.setFirstName(newFirstName);
