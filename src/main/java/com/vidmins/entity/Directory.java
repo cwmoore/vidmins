@@ -16,7 +16,7 @@ import java.util.*;
  */
 @Entity(name = "Directory")
 @Table(name = "directory")
-public class Directory implements java.io.Serializable {
+public class Directory extends HashIdAble implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "native", strategy = "native")

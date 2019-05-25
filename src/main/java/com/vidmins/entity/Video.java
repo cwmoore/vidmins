@@ -18,7 +18,7 @@ import java.util.Objects;
  */
 @Entity(name = "Video")
 @Table(name = "video")
-public class Video implements java.io.Serializable {
+public class Video extends HashIdAble implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

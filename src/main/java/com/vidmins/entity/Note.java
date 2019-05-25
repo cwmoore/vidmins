@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  */
 @Entity(name = "Note")
 @Table(name = "note")
-public class Note implements java.io.Serializable {
+public class Note extends HashIdAble implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")

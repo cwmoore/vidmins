@@ -1,8 +1,10 @@
 package com.vidmins.entity;
 
+import com.vidmins.entity.HashIdAble;
 import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.UUID;
 
 /**
  *
@@ -27,19 +29,26 @@ public class HashId {
     private int objectId;
     private String objectType;
 
-    public HashId() {
-    }
+    public HashId() {}
 
     public HashId(int objectId, String objectType) {
-        // this.hashId = hashId; // new UUID?
+        this();
         this.objectId = objectId;
         this.objectType = objectType;
     }
 
     public HashId(String hashId, int objectId, String objectType) {
+        this();
         this.hashId = hashId;
         this.objectId = objectId;
         this.objectType = objectType;
+    }
+
+    public HashId(HashIdAble obj) {
+        this();
+        this.hashId = obj.getHashId();
+        this.objectId = obj.getId();
+        this.objectType = obj.getHashIdObjectType();
     }
 
     public int getId() {
