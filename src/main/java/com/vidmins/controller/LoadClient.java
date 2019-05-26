@@ -167,6 +167,7 @@ public class LoadClient extends HttpServlet {
 //                at org.hibernate.internal.SessionImpl.saveOrUpdate(SessionImpl.java:652) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
 //                at org.hibernate.internal.SessionImpl.saveOrUpdate(SessionImpl.java:647) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
 //                at com.vidmins.persistence.GenericDao.saveOrUpdate(GenericDao.java:105) ~[classes/:?]
+
                 dao.user.saveOrUpdate(user);
                 // new GenericDao<>(User.class).saveOrUpdate(user); // fails the same
             } catch (Exception e) {
@@ -253,6 +254,8 @@ public class LoadClient extends HttpServlet {
         Video currentVideo = null;
         Directory currentDirectory = null;
 
+        dao.loadHelpers(request);
+
         if (request.getParameter("noteId") != request.getParameter("noteId")
                 && request.getParameter("noteId").matches("\\d+")) {
 
@@ -295,6 +298,23 @@ public class LoadClient extends HttpServlet {
         } else {
             logger.debug("else setAllFromUser");
             setAllFromUser(session, user);
+        }
+
+        dao.loadHelpers(request);
+        // refresh last accessed in database
+        currentNote = (Note) session.getAttribute("currentNote");
+        if (currentNote != null) {
+            dao.note.saveOrUpdate(currentNote);
+        }
+
+        currentVideo = (Video) session.getAttribute("currentVideo");
+        if (currentVideo != null) {
+            dao.video.saveOrUpdate(currentVideo);
+        }
+
+        currentDirectory = (Directory) session.getAttribute("currentDirectory");
+        if (currentDirectory != null) {
+            dao.directory.saveOrUpdate(currentDirectory);
         }
 
         logger.debug("end reliableContext");
