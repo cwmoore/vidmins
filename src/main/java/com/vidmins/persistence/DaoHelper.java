@@ -19,11 +19,11 @@ public class DaoHelper {
     public DaoHelper() {
         logger = LogManager.getLogger(this.getClass());
     }
-    
+
     /**
      * Initialize database helpers
      */
-    public void loadHelpers(HttpServletRequest request) {
+    public void loadHelpers() {
         logger = LogManager.getLogger(this.getClass());
         logger.debug("loadHelpers()");
 
@@ -33,6 +33,16 @@ public class DaoHelper {
         video = new GenericDao<>(Video.class);
         note = new GenericDao<>(Note.class);
         youTubeVideo = new GenericDao<>(YouTubeVideo.class);
+    }
+
+    /**
+     * Initialize database helpers
+     */
+    public void loadHelpers(HttpServletRequest request) {
+        logger = LogManager.getLogger(this.getClass());
+        logger.debug("loadHelpers(request)");
+
+        loadHelpers();
 //
 //        if (user == null) {
 //            if (request.getSession().getAttribute("userDao") == null) {
