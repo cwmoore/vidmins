@@ -39,12 +39,14 @@ public class Directory extends HashIdAble implements java.io.Serializable {
     @OneToMany(cascade = CascadeType.ALL,
             /*fetch = FetchType.EAGER,*/
             mappedBy = "directory")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @Fetch(value = FetchMode.SUBSELECT)
+    //@LazyCollection(LazyCollectionOption.FALSE)
     private List<Video> videos;
 
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST},
             mappedBy = "directory")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @Fetch(value = FetchMode.SUBSELECT)
+    //@LazyCollection(LazyCollectionOption.FALSE)
     private List<Subscription> subscriptions;
 
     private static Logger logger;

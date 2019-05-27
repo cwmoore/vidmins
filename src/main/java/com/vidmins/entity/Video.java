@@ -47,7 +47,8 @@ public class Video extends HashIdAble implements java.io.Serializable {
     @OneToMany(cascade = CascadeType.ALL,
             /*fetch = FetchType.EAGER,*/
             mappedBy = "video")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @Fetch(value = FetchMode.SUBSELECT)
+    //@LazyCollection(LazyCollectionOption.FALSE)
     private List<Note> notes = new ArrayList<>();
 
     /**
