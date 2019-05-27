@@ -142,8 +142,9 @@ public class LoadClient extends HttpServlet {
         logger.debug(userName);
 
         User user;
-        List<User> users = dao.user.findByPropertyEqual("userName", userName);
         try {
+            List<User> users = dao.user.findByPropertyEqual("userName", userName);
+
             if (users.size() == 1) {
                 user = users.get(0);
             } else {
@@ -151,23 +152,6 @@ public class LoadClient extends HttpServlet {
             }
 
             try {
-//                org.hibernate.HibernateException: Illegal attempt to associate a collection with two open sessions. Collection : [com.vidmins.entity.User.directories#73]
-//                Collection contents: [[com.vidmins.entity.Directory@60cba085, com.vidmins.entity.Directory@46aa0a43]]
-//                at org.hibernate.collection.internal.AbstractPersistentCollection.setCurrentSession(AbstractPersistentCollection.java:639) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
-//                at org.hibernate.event.internal.OnUpdateVisitor.processCollection(OnUpdateVisitor.java:46) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
-//                at org.hibernate.event.internal.AbstractVisitor.processValue(AbstractVisitor.java:104) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
-//                at org.hibernate.event.internal.AbstractVisitor.processValue(AbstractVisitor.java:65) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
-//                at org.hibernate.event.internal.AbstractVisitor.processEntityPropertyValues(AbstractVisitor.java:59) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
-//                at org.hibernate.event.internal.AbstractVisitor.process(AbstractVisitor.java:126) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
-//                at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.performUpdate(DefaultSaveOrUpdateEventListener.java:293) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
-//                at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.entityIsDetached(DefaultSaveOrUpdateEventListener.java:227) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
-//                at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.performSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:92) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
-//                at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.onSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:73) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
-//                at org.hibernate.internal.SessionImpl.fireSaveOrUpdate(SessionImpl.java:660) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
-//                at org.hibernate.internal.SessionImpl.saveOrUpdate(SessionImpl.java:652) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
-//                at org.hibernate.internal.SessionImpl.saveOrUpdate(SessionImpl.java:647) ~[hibernate-core-5.2.13.Final.jar:5.2.13.Final]
-//                at com.vidmins.persistence.GenericDao.saveOrUpdate(GenericDao.java:105) ~[classes/:?]
-
                 dao.user.saveOrUpdate(user);
                 // new GenericDao<>(User.class).saveOrUpdate(user); // fails the same
             } catch (Exception e) {
