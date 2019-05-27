@@ -55,7 +55,7 @@
                 </resources>
             </build>
         </profile>
-        <!--<profile>
+        <profile>
             <id>build-prod</id>
             <activation>
              <activeByDefault>false</activeByDefault>
@@ -67,7 +67,7 @@
                     </resource>
                 </resources>
             </build>
-        </profile>-->
+        </profile>
     </profiles>
 <build>
 
