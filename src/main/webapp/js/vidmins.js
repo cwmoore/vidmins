@@ -133,6 +133,7 @@ const showSignup = () => {
 }
 
 const showCurrentEntity = () => {
+    let entity = false;
     let path = window.location.pathname;
     console.log(`url/path=${path}`);
 
