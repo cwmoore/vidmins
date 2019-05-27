@@ -62,6 +62,7 @@ public class User implements java.io.Serializable {
 
     @OneToMany(mappedBy = "user")/*fetch = FetchType.EAGER)*/
     @LazyCollection(LazyCollectionOption.FALSE)
+    //@Fetch(value = FetchMode.SUBSELECT)
     private List<Directory> directories = new ArrayList<>();
 
 //    @OneToMany(mappedBy = "newUser",
