@@ -55,10 +55,10 @@
                 </resources>
             </build>
         </profile>
-        <profile>
+        <!--<profile>
             <id>build-prod</id>
             <activation>
-             <!--   <activeByDefault>false</activeByDefault> -->
+             <activeByDefault>false</activeByDefault>
             </activation>
             <build>
                 <resources>
@@ -67,7 +67,7 @@
                     </resource>
                 </resources>
             </build>
-        </profile>
+        </profile>-->
     </profiles>
 <build>
 
