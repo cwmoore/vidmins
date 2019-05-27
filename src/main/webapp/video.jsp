@@ -21,9 +21,18 @@
             <c:forEach items="${currentDirectory.videos}" var="video">
                 <tr class="video-row">
                     <%--td>${video.id}</td--%>
-                    <td><a href="loadClient?videoId=${video.id}"><c:out value="${video.title}"/></a></td>
-                    <td>${video.youTubeVideo.youTubeId}</td>
-                    <td><a href="loadClient?videoId=${video.id}"><c:out value="${video.youTubeVideo.title}"/></a></td>
+                    <c:choose>
+                        <c:when test="${video.id == currentVideo.id || video.id == editVideo.id }">
+                            <td><c:out value="${video.title}"/></td>
+                            <td>${video.youTubeVideo.youTubeId}</td>
+                            <td><c:out value="${video.youTubeVideo.title}"/></td>
+                        </c:when>
+                        <c:otherwise>
+                            <td><a href="loadClient?videoId=${video.id}"><c:out value="${video.title}"/></a></td>
+                            <td>${video.youTubeVideo.youTubeId}</td>
+                            <td><a href="loadClient?videoId=${video.id}"><c:out value="${video.youTubeVideo.title}"/></a></td>
+                        </c:otherwise>
+                    </c:choose>
                     <td>${video.youTubeVideo.duration}</td>
                     <%--td--># Notes</td--%>
                     <td>${video.addDate}</td>

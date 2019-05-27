@@ -13,7 +13,7 @@
             <tr>
                 <td>
                     <c:choose>
-                        <c:when test="${directory.id == currentDirectory.id}">
+                        <c:when test="${directory.id == currentDirectory.id || directory.id == editDirectory.id}">
                             <c:out value="${directory.name}"/>
                         </c:when>
                         <c:otherwise>
