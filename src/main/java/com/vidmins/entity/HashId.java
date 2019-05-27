@@ -1,9 +1,11 @@
 package com.vidmins.entity;
 
 import com.vidmins.entity.HashIdAble;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
@@ -28,6 +30,10 @@ public class HashId {
     private String hashId;
     private int objectId;
     private String objectType;
+
+    @Column
+    @CreationTimestamp
+    private LocalDateTime createDate;
 
     public HashId() {}
 
@@ -81,6 +87,14 @@ public class HashId {
 
     public void setObjectType(String objectType) {
         this.objectType = objectType;
+    }
+
+    public LocalDateTime getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
     }
 
     @Override
