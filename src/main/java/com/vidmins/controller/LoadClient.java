@@ -287,19 +287,21 @@ public class LoadClient extends HttpServlet {
         dao.loadHelpers(request);
         // refresh last accessed in database
         currentNote = (Note) session.getAttribute("currentNote");
+        currentVideo = (Video) session.getAttribute("currentVideo");
+        currentDirectory = (Directory) session.getAttribute("currentDirectory");
+
         if (currentNote != null) {
             dao.note.saveOrUpdate(currentNote);
-        }
+            dao.video.saveOrUpdate(currentNote.getVideo());
+            dao.directory.saveOrUpdate(currentNote.getVideo().getDirectory());
 
-        currentVideo = (Video) session.getAttribute("currentVideo");
-        if (currentVideo != null) {
+        } else if (currentVideo != null) {
             dao.video.saveOrUpdate(currentVideo);
-        }
+            dao.directory.saveOrUpdate(currentVideo.getDirectory());
 
-        currentDirectory = (Directory) session.getAttribute("currentDirectory");
-        if (currentDirectory != null) {
+        } else if (currentDirectory != null) {
             dao.directory.saveOrUpdate(currentDirectory);
-        }
+        } // TODO stop this from cascading to videos, notes on SaveOrUpdate (lastAccessDate is useless when all are updated at once)
 
         logger.debug("end reliableContext");
     }

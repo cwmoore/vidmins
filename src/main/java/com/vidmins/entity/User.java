@@ -60,7 +60,7 @@ public class User implements java.io.Serializable {
     private String introduction;
     private String status;
 
-    @OneToMany(mappedBy = "user")/*fetch = FetchType.EAGER)*/
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @Fetch(value = FetchMode.SUBSELECT)
     //@LazyCollection(LazyCollectionOption.FALSE)
     private List<Directory> directories = new ArrayList<>();

@@ -36,8 +36,8 @@ public class Directory extends HashIdAble implements java.io.Serializable {
     @JoinColumn(name = "userId", nullable = false)
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL,
-            /*fetch = FetchType.EAGER,*/
+    @OneToMany(cascade = CascadeType.REMOVE,
+            fetch = FetchType.EAGER,
             mappedBy = "directory")
     @Fetch(value = FetchMode.SUBSELECT)
     //@LazyCollection(LazyCollectionOption.FALSE)

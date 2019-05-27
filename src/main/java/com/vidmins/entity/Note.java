@@ -33,7 +33,7 @@ public class Note extends HashIdAble implements java.io.Serializable {
     @UpdateTimestamp
     private LocalDateTime lastAccessDate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "videoId", nullable = false)
     private Video video;
 

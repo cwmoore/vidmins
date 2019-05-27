@@ -40,12 +40,12 @@ public class Video extends HashIdAble implements java.io.Serializable {
     @UpdateTimestamp
     private LocalDateTime lastViewedDate; // TODO this should only be updated when a video has been played
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "directoryId", nullable = false)
     private Directory directory;
 
-    @OneToMany(cascade = CascadeType.ALL,
-            /*fetch = FetchType.EAGER,*/
+    @OneToMany(cascade = CascadeType.REMOVE,
+            fetch = FetchType.EAGER,
             mappedBy = "video")
     @Fetch(value = FetchMode.SUBSELECT)
     //@LazyCollection(LazyCollectionOption.FALSE)

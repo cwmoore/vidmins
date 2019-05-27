@@ -138,8 +138,13 @@ public class NewVideo extends HttpServlet {
                     , currentDirectory
             );
             logger.debug("video: " + video.toString());
+
+            // TODO fix 'only updates when directory is reloaded'
             int insertId = dao.video.insert(video);
             video = dao.video.getById(insertId);
+            // TODO depending on CascadeType(s), which of these will work?
+//            currentDirectory.addVideo(video);
+//            dao.directory.saveOrUpdate(currentDirectory);
 
         } catch (IOException iox) {
             logger.debug(iox);
