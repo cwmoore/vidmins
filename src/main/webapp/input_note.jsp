@@ -2,6 +2,9 @@
 <div id="note_input" class="aquapanel">
 
     <form name="note_input_form" accept-charset="utf-8" action="new-note" method="post">
+        <%-- TODO provide feedback and instructions --%>
+        <%-- TODO properly prepopulate fields sessionScope.editNote is insufficent --%>
+
         <c:if test="${sessionScope.editNote != null}">
             <button type="button" class="btn btn-info" id="start_new_note_btn">Start New</button><br />
         </c:if>
@@ -18,6 +21,7 @@
         <button name="add-tag" onclick="addTag()">Add Tag</button><br />
         <span id="tags"></span--%>
 
+            <%-- TODO use player.getCurrentTime if no value is available in editNote --%>
         <input type="hidden" name="timeStampStart" value="<c:if test="${sessionScope.editNote.start != null}"><c:out value="${sessionScope.editNote.start}"/></c:if>" />
         <label>Start:</label> <span id="time_stamp_start"><c:if test="${sessionScope.editNote.start != null}"><c:out value="${sessionScope.editNote.start}"/></c:if></span><br />
 
