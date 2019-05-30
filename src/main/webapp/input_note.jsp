@@ -31,11 +31,11 @@
         <label>End:</label> <span id="time_stamp_end">0</span><br /--%>
 
         <c:if test="${sessionScope.editNote != null}">
-            <input type="hidden" id="hidden_note_id" name="noteId" value="${sessionScope.editNote.id}" /><%-- TODO FIXME it is unsafe to expose internal ids to manipulation --%>
+            <input type="hidden" id="hidden_note_id" name="noteId" value="<c:if test="${sessionScope.editNote.id != null}"><c:out value="${sessionScope.editNote.id}"/></c:if>" /><%-- TODO FIXME it is unsafe to expose internal ids to manipulation --%>
         </c:if>
 
         <input type="hidden" name="videoId"
-               value="<c:choose><c:when test="${sessionScope.editNote.video.id != null}">${sessionScope.editNote.video.id}</c:when><c:otherwise>${sessionScope.currentVideo.id}</c:otherwise></c:choose>" />
+               value="<c:choose><c:when test="${sessionScope.editNote.video.id != null}">${sessionScope.editNote.video.id}</c:when><c:when test="${sessionScope.currentVideo != null}">${sessionScope.currentVideo.id}</c:when><c:otherwise>1</c:otherwise></c:choose>" />
 
         <br />
 

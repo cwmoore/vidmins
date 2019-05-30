@@ -62,6 +62,8 @@ public class EditDirectory extends HttpServlet {
 
                 directory = dao.directory.getById(directoryId);
                 request.getSession().setAttribute("editDirectory", directory);
+                request.getSession().setAttribute("currentDirectory", directory);
+
             } catch (NumberFormatException nfe) {
                 logger.debug("directoryId didn't parse as an int", nfe);
             }

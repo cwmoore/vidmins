@@ -60,6 +60,7 @@ public class EditVideo extends HttpServlet {
             video = dao.video.getById(videoId);
 
             request.getSession().setAttribute("editVideo", video);
+            request.getSession().setAttribute("currentVideo", video);
         } catch (NumberFormatException nfe) {
             logger.debug("videoId is not a number", nfe);
         }
