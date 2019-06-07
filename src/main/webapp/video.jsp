@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:choose>
     <c:when test="${currentDirectory != null}">
@@ -42,6 +43,9 @@
                     </td>
                 </tr>
             </c:forEach>
+            <c:if test="${fn:length(currentDirectory.videos) == 0}">
+                <p>There are no videos in this directory.</p>
+            </c:if>
         </table>
     </div>
     </c:when>

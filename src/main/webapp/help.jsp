@@ -1,5 +1,15 @@
 
 <div id="help_input" class="aquapanel">
+    <h3>Basic Usage</h3>
+    <h4>Getting Started</h4>
+    <ol>
+        <li>Sign up</li>
+        <li>Log in</li>
+        <li>Create a directory</li>
+        <li>Add a video</li>
+        <li>Add notes while playing video</li>
+    </ol>
+    <%--
     <h3>App use cases:</h3>
     <h4>One might:</h4>
     <ul>
@@ -39,5 +49,5 @@
         <li>Investigator analyzing event footage</li>
         <li>Content owners defending copyright</li>
         <li>Trend/topic exploration</li>
-    </ul>
+    </ul> --%>
 </div>

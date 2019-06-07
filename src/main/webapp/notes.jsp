@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:if test="${currentVideo != null}">
     <div class="aquapanel">
@@ -21,6 +22,9 @@
                     <td><a href="edit-note?noteId=${note.id}">Edit</a></td>
                 </tr>
             </c:forEach>
+            <c:if test="${fn:length(currentVideo.notes) == 0}">
+                <p>There are no notes for this video.</p>
+            </c:if>
         </table>
     </div>
 </c:if>

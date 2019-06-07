@@ -5,9 +5,9 @@
     <div class="menu">
         <%-- these buttons show or hide the corresponding panels below --%>
         <button id="help_button" name="help" class="btn btn-info" onclick="showPanel('help');">?</button>
-        <button id="directory_button" name="new-directory" class="btn btn-info" onclick="showDirectory();">Directory</button>
-        <button id="video_button" name="new-video" class="btn btn-info" onclick="showVideo();">Video</button>
-        <button id="note_button" name="show-time" class="btn btn-info" onclick="showNote();">Note</button>
+        <button id="directory_button" name="new-directory" class="btn<c:choose><c:when test="${ user != null }"> btn-info" onclick="showDirectory();"</c:when><c:otherwise>"</c:otherwise></c:choose>>Directory</button>
+        <button id="video_button" name="new-video" class="btn<c:choose><c:when test="${ currentDirectory != null }"> btn-info" onclick="showVideo();"</c:when><c:otherwise>"</c:otherwise></c:choose>>Video</button>
+            <button id="note_button" name="show-time" class="btn<c:choose><c:when test="${ currentVideo != null }"> btn-info" onclick="showNote();"</c:when><c:otherwise>"</c:otherwise></c:choose>>Note</button>
         <%-- <button id="survey_button" name="survey" class="btn btn-info" onclick="showPanel('survey');makeSurveyQuestion();">Survey</button>
         <button id="comment_button" name="feedback" class="btn btn-info" onclick="makeComment();">Comment</button>
         <button id="ask_button" name="ask-question" class="btn btn-info" onclick="makeAskQuestion();">Ask</button>
