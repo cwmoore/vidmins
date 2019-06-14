@@ -301,7 +301,7 @@ public class LoadClient extends HttpServlet {
 
         } else if (currentDirectory != null) {
             dao.directory.saveOrUpdate(currentDirectory);
-        } // TODO stop this from cascading to videos, notes on SaveOrUpdate (lastAccessDate is useless when all are updated at once)
+        }
 
         logger.debug("end reliableContext");
     }

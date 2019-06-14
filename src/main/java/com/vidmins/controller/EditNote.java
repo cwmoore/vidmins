@@ -59,6 +59,7 @@ public class EditNote extends HttpServlet {
             int noteId = Integer.parseInt(request.getParameter("noteId"));
             note = dao.note.getById(noteId);
             request.getSession().setAttribute("editNote", note);
+            request.getSession().setAttribute("currentNote", note);
         } else {
             request.getSession().removeAttribute("editNote");
         }
