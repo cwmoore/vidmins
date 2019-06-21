@@ -62,8 +62,11 @@ public class ReadHtml extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        if (isUrl(request.getParameter("url"))) {
-            this.url = request.getParameter("url");
+        String requestUrl = request.getParameter("url");
+        if (requestUrl == null) {
+            this.url = "https://github.com/MadJavaEntSpring2019/home/tree/master/References";
+        } else if (isUrl(requestUrl)) {
+            this.url = requestUrl;
         }
 
         loadFromUrl();
