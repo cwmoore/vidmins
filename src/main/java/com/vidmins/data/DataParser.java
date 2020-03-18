@@ -1,13 +1,13 @@
 package com.vidmins.data;
 
-import java.io.BufferedReader;
-import java.io.*;
+//import java.io.BufferedReader;
+//import java.io.*;
 import java.io.IOException;
 import java.util.*;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
-import com.vidmins.entity.*;
-import com.vidmins.persistence.*;
+//import com.sun.org.apache.xpath.internal.SourceTree;
+//import com.vidmins.entity.*;
+//import com.vidmins.persistence.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
@@ -15,9 +15,9 @@ import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.jsoup.select.Selector;
-
-import org.apache.logging.log4j.Logger;
+//import org.jsoup.select.Selector;
+//
+//import org.apache.logging.log4j.Logger;
 
 public class DataParser {
     Logger logger = LogManager.getLogger(this.getClass());

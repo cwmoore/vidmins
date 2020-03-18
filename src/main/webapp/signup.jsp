@@ -1,5 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%-- TODO style with Bootstrap --%>
 <c:if test="${user == null}"> <%-- TODO update logged in test and behavior --%>
     <div id="access_form_container" class="aquapanel">
 
