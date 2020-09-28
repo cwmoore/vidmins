@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-mysql vidmins_test -uvidmins_test -pvidmins_test -pvidmins_test < ~/IdeaProjects/vidmins/src/test/resources/reset_db.sql
+mysql vidmins_test -utomcat -ptomcaterwaul < /var/www/vidmins.com/dev/src/test/resources/reset_db.sql

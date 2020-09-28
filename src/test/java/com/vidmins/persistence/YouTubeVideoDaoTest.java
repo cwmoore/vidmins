@@ -4,8 +4,11 @@ import com.vidmins.entity.YouTubeVideo;
 import com.vidmins.entity.Directory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -17,19 +20,30 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * The type YouTubeVideo dao test.
  */
+@TestInstance(Lifecycle.PER_METHOD)
 class YouTubeVideoDaoTest {
 
-    GenericDao<YouTubeVideo> dao;
+    static GenericDao<YouTubeVideo> dao;
     Logger logger = LogManager.getLogger(this.getClass());
+    static com.vidmins.test.util.Database database;
 
     /**
      * Creating the dao.
      */
-    @BeforeEach
-    void setUp() {
+    @BeforeAll
+    static void setUp() {
+        System.out.println("YouTubeVideoDaoTest.setUp()");
         dao = new GenericDao<>(YouTubeVideo.class);
+       
+        database = com.vidmins.test.util.Database.getInstance();
+    }
 
-        com.vidmins.test.util.Database database = com.vidmins.test.util.Database.getInstance();
+    /**
+     * Resetting the DB.
+     */
+    @BeforeEach
+    void resetDb() {
+        System.out.println("YouTubeVideoDaoTest.resetDb()");
         database.runSQL("reset_db.sql");
     }
 

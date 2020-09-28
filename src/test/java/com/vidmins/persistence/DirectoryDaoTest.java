@@ -4,8 +4,11 @@ import com.vidmins.entity.Directory;
 import com.vidmins.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -17,19 +20,30 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * The type Directory dao test.
  */
+@TestInstance(Lifecycle.PER_METHOD)
 class DirectoryDaoTest {
 
-    GenericDao<Directory> dao;
+    static GenericDao<Directory> dao;
     Logger logger = LogManager.getLogger(this.getClass());
+    static com.vidmins.test.util.Database database;
 
     /**
      * Creating the dao.
      */
-    @BeforeEach
-    void setUp() {
+    @BeforeAll
+    static void setUp() {
+        System.out.println("DirectoryDaoTest.setUp()");
         dao = new GenericDao<>(Directory.class);
 
-        com.vidmins.test.util.Database database = com.vidmins.test.util.Database.getInstance();
+        database = com.vidmins.test.util.Database.getInstance();
+    }
+
+    /**
+     * Resetting the DB.
+     */
+    @BeforeEach
+    void resetDb() {
+        System.out.println("DirectoryDaoTest.resetDb()");
         database.runSQL("reset_db.sql");
     }
 

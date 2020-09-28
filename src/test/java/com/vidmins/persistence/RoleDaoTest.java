@@ -5,8 +5,11 @@ import com.vidmins.entity.User;
 import com.vidmins.entity.Video;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 import java.io.IOException;
 import java.util.*;
@@ -16,18 +19,30 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * The type Role dao test.
  */
+@TestInstance(Lifecycle.PER_METHOD)
 class RoleDaoTest {
 
-    GenericDao<Role> dao;
+    static GenericDao<Role> dao;
     Logger logger = LogManager.getLogger(this.getClass());
+    static com.vidmins.test.util.Database database;
 
     /**
      * Creating the dao.
      */
-    @BeforeEach
-    void setUp() {
+    @BeforeAll
+    static void setUp() {
+        System.out.println("RoleDaoTest.setUp()");
         dao = new GenericDao<>(Role.class);
-        com.vidmins.test.util.Database database = com.vidmins.test.util.Database.getInstance();
+
+        database = com.vidmins.test.util.Database.getInstance();
+    }
+
+    /**
+     * Restting the DB.
+     */
+    @BeforeEach
+    void resetDb() {
+        System.out.println("RoleDaoTest.resetDb()");
         database.runSQL("reset_db.sql");
     }
 
