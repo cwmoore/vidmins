@@ -1,11 +1,11 @@
-SET FOREIGN_KEY_CHECKS = 0; # https://stackoverflow.com/a/8074510
-truncate `role`;
+SET FOREIGN_KEY_CHECKS = 0;
+truncate role;
 truncate user;
 truncate directory;
 truncate video;
 truncate note;
 truncate auth_token;
-truncate `contract`;
+truncate contract;
 truncate subscription;
 truncate youTubeVideo;
 truncate hash_ids;
@@ -20,4 +20,3 @@ INSERT INTO auth_token (id, user_id, user_hash, token, expiration, status) VALUE
 INSERT INTO contract (id, name, description, priceForTimePeriod, timePeriodHours, authorId) VALUES (1, 'no contract', 'default contract is no contract', 0, 0, 4), (2, 'free contract', 'free contract is free', 0, 0, 4), (3, '$10 contract', '$10 contract is $10/year', 10, 8766, 4);
 INSERT INTO subscription (id, name, description, start, end, subscriberId, directoryId, contractId) VALUES (1, 'subscription 1', 'subscription description 1', NOW(), NOW(), 3, 2, 2), (2, 'subscription 2', 'subscription description 2', NOW(), NOW(), 2, 1, 3);
 INSERT INTO hash_ids (id, hashId, objectId, objectType) VALUES (1, 'asdf', 1, 'directory'),(2, 'qwer', 1, 'note'),(3, 'argblarg', 1, 'video'),(4, 'asasdfafdf', 2, 'directory');
-SET FOREIGN_KEY_CHECKS = 1;
